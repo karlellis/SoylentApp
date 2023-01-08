@@ -1,0 +1,497 @@
+/* :root {
+	--logo-color: rgba(0, 119, 200, 0.7);
+	--head-color: rgba(0, 119, 200, 0.95);
+	--footinfo-color: rgba(0, 119, 200, 0.7);
+	--footcredit-color: rgba(0, 177, 64, 0.95);
+	--clock-color: rgba(216, 66, 6, 0.7);
+	--background-color: rgb(255, 238, 204);
+	--background-image: rgb(204, 255, 205);
+	--background-image: url(./srcimg/background.jpg);
+} */
+
+body {
+	background-color: black;
+}
+
+a,
+a:hover {
+	color: white !important;
+	text-decoration: none;
+}
+
+p {
+	margin-bottom: 0.5rem !important;
+}
+
+th,
+td {
+	background-color: #4CAF50;
+	border: 3px solid white;
+	color: white;
+	padding: 5px 12px;
+	margin: 5px;
+	text-align: center;
+	text-decoration: none;
+	display: flexbox;
+	font-size: 16px;
+}
+
+.button {
+	/* background-color: #4CAF50;  Green */
+	border: none;
+	color: white;
+	padding: 5px 12px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+}
+
+.extcredits {
+	/* background-color: #4CAF50;  Green */
+	border: none;
+	color: white;
+	padding: 5px 12px;
+	text-align: center;
+	text-decoration: none;
+	font-size: 16px;
+}
+
+.appbutton {
+	/* background-color: #4CAF50;  Green */
+	border: none;
+	color: white;
+	padding: 5px 12px;
+	text-align: center;
+	text-decoration: none;
+	max-width: 100px;
+	font-size: 16px;
+}
+
+.addbutton {
+	/* background-color: #4CAF50;  Green */
+	border: none;
+	color: white;
+	padding: 5px 12px;
+	text-align: center;
+	text-decoration: none;
+	max-width: 200px;
+	font-size: 16px;
+}
+
+.flexbutton {
+	/* background-color: #4CAF50;  Green */
+	border: none;
+	color: white;
+	padding: 5px 12px;
+	text-align: center;
+	text-decoration: none;
+	max-width: 200px;
+	font-size: 16px;
+}
+
+.red {
+	background-color: rgba(186, 12, 47, 0.7);
+}
+
+.white {
+	background-color: rgba(240, 240, 240, 0.7);
+}
+
+.green {
+	background-color: rgba(0, 177, 64, 0.5);
+}
+
+.solidgreen {
+	background-color: rgba(0, 177, 64, 0.95);
+}
+
+.indaco {
+	background-color: rgba(17, 31, 118, 0.5);
+}
+
+.solidindaco {
+	background-color: rgba(124, 0, 196, 0.95);
+}
+
+.yellow {
+	background-color: rgb(255, 251, 0, 0.5);
+}
+
+.blue {
+	background-color: rgba(0, 119, 200, 0.7);
+}
+
+.solidblue {
+	background-color: rgba(0, 119, 200, 0.95);
+}
+
+.brick {
+	background-color: rgba(216, 66, 6, 0.7);
+}
+
+.solidbrick {
+	background-color: rgba(216, 66, 6, 0.95);
+}
+
+.orange {
+	background-color: rgba(243, 146, 0, 0.699);
+}
+
+.solidorange {
+	background-color: rgba(243, 146, 0, 0.95);
+}
+
+.contenitore {
+	/* display:table; */
+	max-width: 90%;
+	margin: auto;
+	box-sizing: border-box;
+}
+
+.appcontainer {
+	display: inline-block;
+	max-width: 277px;
+	margin: auto;
+	box-sizing: border-box;
+}
+
+.btncontainer {
+	display: inline;
+	max-width: 277px;
+	margin: auto;
+	box-sizing: border-box;
+}
+
+/* The switch - the box around the slider */
+.switch {
+	position: relative;
+	display: inline-block;
+	width: 2.2em;
+	height: 1.2em;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+	opacity: 0;
+	width: 0;
+	height: 0;
+}
+
+/* The slider */
+.slider {
+	position: absolute;
+	cursor: pointer;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: #ccc;
+	-webkit-transition: .4s;
+	transition: .4s;
+}
+
+.slider:before {
+	position: absolute;
+	content: "";
+	height: 1em;
+	width: 1em;
+	left: 0.1em;
+	bottom: 0.1em;
+	background-color: white;
+	-webkit-transition: .4s;
+	transition: .4s;
+}
+
+input:checked+.slider {
+	background-color: #2196F3;
+}
+
+input:focus+.slider {
+	box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked+.slider:before {
+	-webkit-transform: translateX(1em);
+	-ms-transform: translateX(1em);
+	transform: translateX(1em);
+}
+
+/* Rounded sliders */
+.slider.round {
+	border-radius: 1em;
+}
+
+.slider.round:before {
+	border-radius: 50%;
+}
+
+.check {
+	max-width: 1em;
+	min-height: 1em;
+}
+
+.zoomin img {
+	-webkit-transition: all 0.2s linear;
+	-moz-transition: all 0.2s linear;
+	-o-transition: all 0.2s linear;
+	-ms-transition: all 0.2s linear;
+	transition: all 0.2s linear;
+}
+
+.zoomin:hover img {
+	-webkit-transform: scale(1.05, 1.05);
+	-moz-transform: scale(1.05, 1.05);
+	-o-transform: scale(1.05, 1.05);
+	-ms-transform: scale(1.05, 1.05);
+	transform: scale(1.05, 1.05);
+}
+
+.apps {
+	/* Geometry */
+	width: 16em;
+	/* width: 277px;
+	height: 240px; */
+	/* ZoomIn */
+	padding: 3em;
+	/* padding-right: 2em;
+	padding-top: 2em;
+	padding-bottom: 2em; */
+	-webkit-transition: all 0.2s linear;
+	-moz-transition: all 0.2s linear;
+	-o-transition: all 0.2s linear;
+	-ms-transition: all 0.2s linear;
+	transition: all 0.2s linear;
+	position: sticky;
+}
+
+.gear {
+	width: 2em;
+	height: 2em;
+	position: sticky;
+	/* cursor: pointer; */
+}
+
+.logo {
+	/* width: 9em; */
+	min-height: 1em;
+	max-height: 9em;
+	min-width: 1em;
+	max-width: 80%;
+	position: sticky;
+	/*cursor: pointer; */
+	/* box-sizing: unset; */
+}
+
+.crediti {
+	width: 8em;
+	/* height: 6em !important; 
+	position: sticky;
+	cursor: pointer;
+    box-sizing: unset; */
+}
+
+.stretch {
+	align-self: stretch;
+}
+
+.icons {
+	color: white !important;
+	margin-top: 0.5em;
+	position: sticky;
+}
+
+.latowhite {
+	color: white !important;
+	font-family: Lato, monospace;
+	font-style: normal;
+	/* margin: auto;
+	text-align: center; */
+}
+
+.lato {
+	color: gainsboro !important;
+	background-color: rgba(47, 79, 79, 0.7) !important;
+	font-family: Lato, monospace;
+	font-style: normal;
+	margin-left: 0.2em;
+	margin-right: 0.2em;
+	/* margin: auto;
+	text-align: center; */
+}
+
+.latoNoBack {
+	color: gainsboro !important;
+	/* background-color: rgba(47,79,79, 0.7) !important; */
+	font-family: Lato, monospace;
+	font-style: normal;
+	margin-left: 0.2em;
+	margin-right: 0.2em;
+	/* margin: auto;
+	text-align: center; */
+}
+
+.textcenter {
+	text-align: center;
+}
+
+.verysmallfont {
+	font-size: 0.5em;
+}
+
+.smallfont {
+	font-size: 1em;
+}
+
+.stickytop {
+	position: -webkit-sticky;
+	position: sticky;
+	z-index: +1;
+	top: 0;
+}
+
+.medfont {
+	font-size: 2.5em;
+	/* font-size: calc(1.375rem + 1.5vw); */
+}
+
+.norfont {
+	font-size: 1.5em;
+	/* font-size: calc(1.375rem + 1.5vw); */
+}
+
+.apps:hover {
+	/* ZoomIn */
+	-webkit-transform: scale(1.05, 1.05);
+	-moz-transform: scale(1.05, 1.05);
+	-o-transform: scale(1.05, 1.05);
+	-ms-transform: scale(1.05, 1.05);
+	transform: scale(1.05, 1.05);
+}
+
+.modal {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.6);
+}
+
+.modal-main {
+	position: fixed;
+	background: white;
+	border-radius: 5px;
+	width: 80%;
+	height: auto;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.modal-body-dark {
+	background: rgb(40, 39, 39);
+	height: 25em;
+	overflow-y: scroll;
+	scrollbar-width: none;
+	overflow-x: hidden;
+}
+
+.modal-body-dark::-webkit-scrollbar {
+	display: none;
+}
+
+.modal-header-dark {
+	background: rgb(40, 39, 39);
+	padding-left: 1em;
+	padding-top: 1em;
+	padding-bottom: 1em;
+}
+
+.modal-title-dark {
+	color: white;
+	background: rgb(40, 39, 39);
+}
+
+.modal-main-dark {
+	position: fixed;
+	background: rgb(40, 39, 39);
+	border-radius: 5px;
+	width: 80%;
+	height: auto;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.display-block {
+	display: block;
+}
+
+.display-none {
+	display: none;
+}
+
+.dropdown-menu a:hover {
+	background-color: rgba(102, 102, 255, 0.3) !important;
+}
+
+.dropdown-menu {
+	width: 3em;
+}
+
+.btn-block::after {
+	content: none;
+}
+
+.btn-block {
+	height: 100% !important;
+	appearance: none !important;
+	outline: none !important;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+}
+
+.btn-block:hover,
+.btn-bloc:focus {
+	background-color: rgba(102, 102, 255, 0.3) !important;
+	outline: none;
+}
+
+.blue-dark-solid {
+	background-color: rgb(0, 30, 55);
+}
+
+.menuStyle {
+	position: absolute;
+	inset: 0px auto auto 0px;
+	margin: 0px;
+	transform: translate(81px, 198px);
+}
+
+.menuItem {
+	/* background-color: #4CAF50;  Green */
+	border: none;
+	color: white;
+	padding: 5px 12px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+	width: 80%;
+}
+
+.menuBG {
+	background: rgb(40, 39, 39);
+	/* display: flex;
+	align-items: center;
+	justify-content: center; */
+	/* height: 25em;
+	overflow-y: scroll;
+	scrollbar-width: none;
+	overflow-x: hidden; */
+}
+
+.disNone {
+	display: none !important;
+}
