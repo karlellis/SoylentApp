@@ -82,21 +82,28 @@ const EditInfo = ({ editInfoShow, children, hidden }) => {
   );
 };
 
-const Crediti = ({ creditShow, children, infoShow }) => {
+const Crediti = ({ creditShow, children, infoShow, mainBtn }) => {
   const showHideClassName = creditShow ? "d-block" : "d-none";
-  if (infoShow === true) {
-    return (
-      <section id="FootCrediti" style={{ backgroundColor: spData.footCreditColor }} className={showHideClassName + " col-md-3 pt-1 latowhite d-flex flex-column justify-content-center align-items-center"}>
-        {children}
-      </section>
-    );
-  } else {
-    return (
-      <section id="FootCrediti" style={{ backgroundColor: spData.footCreditColor }} className={showHideClassName + " col pt-1 latowhite d-flex flex-column justify-content-center align-items-center"}>
-        {children}
-      </section>
-    );
-  }
+  const justifyCenterEnd = mainBtn ? "justify-content-end" : "justify-content-center";
+  const colMd3 = infoShow ? "col-md-3 pt-1" : "col pt-1";
+  // if (mainBtn === false) {
+  //   return (
+  //     <section id="FootCrediti" style={{ backgroundColor: spData.footCreditColor }} className={showHideClassName + " " + colMd3 + " latowhite d-flex justify-content-center align-items-center"}>
+  //       {children}
+  //     </section>
+  //   );
+  // } else {
+  //   return (
+  //     <section id="FootCrediti" style={{ backgroundColor: spData.footCreditColor }} className={showHideClassName + " " + colMd3 + " latowhite d-flex flex-column justify-content-end align-items-center"}>
+  //       {children}
+  //     </section>
+  //   );
+  // }
+  return (
+    <section id="FootCrediti" style={{ backgroundColor: spData.footCreditColor }} className={showHideClassName + " " + justifyCenterEnd + " " + colMd3 + " latowhite d-flex flex-column align-items-center"}>
+      {children}
+    </section>
+  );
 };
 
 const EditCrediti = ({ editCreditShow, children, hidden }) => {
@@ -599,7 +606,7 @@ class Main extends React.Component {
     this.resAppVideo = this.resAppVideo.bind(this);
 
     this.exCrsShow = this.exCrsShow.bind(this);
-    
+
     this.search = this.search.bind(this);
     // this.toggleHeadShow = this.toggleHeadShow.bind(this);
     // this.toggleFootShow = this.toggleFootShow.bind(this);
@@ -1442,7 +1449,7 @@ class Main extends React.Component {
     let menuButtons = (
       <>
         {/* <div className="row"> */}
-        <Dropdown search={this.search} exCrsShow={this.exCrsShow}/>
+        <Dropdown search={this.search} exCrsShow={this.exCrsShow} />
 
         {/* <button className="col button green m-1"
             onClick={() => {
@@ -1580,7 +1587,7 @@ class Main extends React.Component {
               </EditInfo>
             </Info>
             {/* CREDITI */}
-            <Crediti creditShow={this.state.creditShow} infoShow={this.state.infoShow}>
+            <Crediti creditShow={this.state.creditShow} infoShow={this.state.infoShow} mainBtn={this.state.mainBtn}>
               <div>
                 <p className="smallfont">{spData.footCreditiTitle}</p>
                 <p className="smallfont"><i>{spData.footCreditiSubtitle}</i></p>
@@ -3058,10 +3065,10 @@ class Dropdown extends React.Component {
         <div className={menuClass + " menuBG"} aria-labelledby="dropdownMenuButton">
 
           <button className="col menuItem green m-1"
-             onClick={() => {
-               // window.location = "./searching.php";
-               this.props.search();
-             }}>
+            onClick={() => {
+              // window.location = "./searching.php";
+              this.props.search();
+            }}>
             Search
           </button>
           <button className="col menuItem blue m-1"
@@ -3077,7 +3084,7 @@ class Dropdown extends React.Component {
               // window.location = "./searching.php";
               this.props.search();
             }}> */}
-           {/* href="#nogo"> */}
+          {/* href="#nogo"> */}
           {/* Search
           </a> */}
           {/* <a className="menuItem blue m-1"
