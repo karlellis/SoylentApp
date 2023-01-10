@@ -1,9 +1,11 @@
 <?php
-header('Content-Type: application/json; charset=utf-8');
+header("Content-Type: application/json");
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: PUT, GET, POST");
 
-
+// For XAMPP suppress notice and warning
+ini_set('display_errors', 0);
+error_reporting(E_WARNING | E_PARSE);
 
 $response = array();
 if ($_FILES['logo']) {
@@ -16,7 +18,7 @@ if ($_FILES['logo']) {
         $response = array(
             "status" => "error",
             "error" => true,
-            "message" => "Error uploading the file!"
+            "message" => "Error uploading the logo file!"
         );
     } else {
         $random_name = rand(1000, 1000000) . "-" . $logo_name;
@@ -34,7 +36,7 @@ if ($_FILES['logo']) {
             $response = array(
                 "status" => "error",
                 "error" => true,
-                "message" => "UploadError"
+                "message" => "LogoUploadError"
             );
         }
     }
@@ -48,7 +50,7 @@ if ($_FILES['logo']) {
         $response = array(
             "status" => "error",
             "error" => true,
-            "message" => "Error uploading the file!"
+            "message" => "Error uploading the Back file!"
         );
     } else {
         $random_name = rand(1000, 1000000) . "-" . $back_name;
@@ -66,7 +68,7 @@ if ($_FILES['logo']) {
             $response = array(
                 "status" => "error",
                 "error" => true,
-                "message" => "UploadError"
+                "message" => "BackUploadError"
             );
         }
     }
@@ -80,7 +82,7 @@ if ($_FILES['logo']) {
         $response = array(
             "status" => "error",
             "error" => true,
-            "message" => "UploadError"
+            "message" => "Error uploading the Icon file!"
         );
     } else {
         $random_name = rand(1000, 1000000) . "-" . $icon_name;
@@ -98,19 +100,25 @@ if ($_FILES['logo']) {
             $response = array(
                 "status" => "error",
                 "error" => true,
-                "message" => "UploadError"
+                "message" => "IconUploadError"
             );
         }
     }
 } else if ($_POST['config']) {
     $json = $_POST["config"];
+    // $error = null;
+    // if (is_array($_POST) && !empty($_POST["error"])) {
+    if (is_array($_POST) && !empty($_POST["config"]["error"])) {
+    // $error = $_POST["error"];
     $error = $_POST["config"]["error"];
+    }
+    // $error = array('err' => $_POST["config"]["error"]);
 
     if ($error > 0) {
         $response = array(
             "status" => "error",
             "error" => true,
-            "message" => "DeleteError"
+            "message" => "Error uploading the Icon file!"
         );
     } else {
         //write json to file
@@ -118,88 +126,100 @@ if ($_FILES['logo']) {
             $response = array(
                 "status" => "success",
                 "error" => false,
-                "message" => "JsonOk",
+                "message" => "ConfigJsonOk",
             );
         } else {
             $response = array(
                 "status" => "error",
                 "error" => true,
-                "message" => "JsonError"
+                "message" => "ConfigJsonError"
             );
         }
     }
 } else if ($_POST['logo']) {
     $del_name = $_POST["logo"];
-    $error = $_POST["logo"]["error"];
+    if (is_array($_POST) && !empty($_POST["logo"]["error"])) {
+    // $error = $_POST["error"];
+        $error = $_POST["logo"]["error"];
+    }
+    // $error[] = $_POST["logo"]["error"];
 
     if ($error > 0) {
         $response = array(
             "status" => "error",
             "error" => true,
-            "message" => "DeleteError"
+            "message" => "Error deleting the Logo file!"
         );
     } else {
         if (unlink("." . $del_name)) {
             $response = array(
                 "status" => "success",
                 "error" => false,
-                "message" => "DeleteOk",
+                "message" => "LogoDeleteOk",
             );
         } else {
             $response = array(
                 "status" => "error",
                 "error" => true,
-                "message" => "DeleteError"
+                "message" => "LogoDeleteError"
             );
         }
     }
 }  else if ($_POST['back']) {
     $del_name = $_POST["back"];
-    $error = $_POST["back"]["error"];
+    if (is_array($_POST) && !empty($_POST["back"]["error"])) {
+    // $error = $_POST["error"];
+        $error = $_POST["back"]["error"];
+    }
+    // $error = $_POST["back"]["error"];
 
     if ($error > 0) {
         $response = array(
             "status" => "error",
             "error" => true,
-            "message" => "DeleteError"
+            "message" => "Error deleting the Back file!"
         );
     } else {
         if (unlink("." . $del_name)) {
             $response = array(
                 "status" => "success",
                 "error" => false,
-                "message" => "DeleteOk",
+                "message" => "BackDeleteOk",
             );
         } else {
             $response = array(
                 "status" => "error",
                 "error" => true,
-                "message" => "DeleteError"
+                "message" => "BackDeleteError"
             );
         }
     }
 } else if ($_POST['icon']) {
     $del_name = $_POST["icon"];
-    $error = $_POST["icon"]["error"];
+    if (is_array($_POST) && !empty($_POST["icon"]["error"])) {
+    // $error = $_POST["error"];
+        $error = $_POST["icon"]["error"];
+    }
+    // $error = $_POST["icon"]["error"];
 
     if ($error > 0) {
         $response = array(
             "status" => "error",
             "error" => true,
-            "message" => "DeleteError"
+            "message" => "Error deleting the Icon file!"
         );
     } else {
         if (unlink("." . $del_name)) {
             $response = array(
                 "status" => "success",
                 "error" => false,
-                "message" => "DeleteOk",
+                "message" => "IconDeleteOk",
             );
         } else {
             $response = array(
                 "status" => "error",
                 "error" => true,
-                "message" => "DeleteError"
+                "message" => "IconDeleteError"
             );
         }
     }
