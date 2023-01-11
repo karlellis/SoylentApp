@@ -45,10 +45,11 @@ var spData = require("./initData.json");
 //   return new Promise(resolve => setTimeout(resolve, milliseconds))
 // }
 
-const Menu = ({ menuShow, children }) => {
+const Menu = ({ menuShow, children, mainBtn }) => {
   const showHideClassName = menuShow ? "d-block" : "d-none";
+  const justifyCenterEnd = mainBtn ? "justify-content-end" : "justify-content-center";
   return (
-    <section id="HeadMenu" style={{ backgroundColor: spData.menuColor }} className={showHideClassName + " col-md-1 d-flex flex-column justify-content-center align-items-center"}>
+    <section id="HeadMenu" style={{ backgroundColor: spData.menuColor }} className={showHideClassName + " " + justifyCenterEnd + " col-md-1 d-flex flex-column align-items-center"}>
       {children}
     </section>
   );
@@ -64,10 +65,11 @@ const EditMenu = ({ editMenuShow, children, hidden }) => {
   );
 };
 
-const Info = ({ infoShow, children }) => {
+const Info = ({ infoShow, children, mainBtn }) => {
   const showHideClassName = infoShow ? "d-block" : "d-none";
+  const justifyCenterEnd = mainBtn ? "justify-content-end" : "justify-content-center";
   return (
-    <section id="FootInfo" style={{ backgroundColor: spData.footInfoColor }} className={showHideClassName + " col pb-1 latowhite d-flex flex-column justify-content-center align-items-center"}>
+    <section id="FootInfo" style={{ backgroundColor: spData.footInfoColor }} className={showHideClassName + " " + justifyCenterEnd + " col latowhite d-flex flex-column align-items-center"}>
       {children}
     </section>
   );
@@ -86,20 +88,7 @@ const EditInfo = ({ editInfoShow, children, hidden }) => {
 const Crediti = ({ creditShow, children, infoShow, mainBtn }) => {
   const showHideClassName = creditShow ? "d-block" : "d-none";
   const justifyCenterEnd = mainBtn ? "justify-content-end" : "justify-content-center";
-  const colMd3 = infoShow ? "col-md-3 pt-1" : "col pt-1";
-  // if (mainBtn === false) {
-  //   return (
-  //     <section id="FootCrediti" style={{ backgroundColor: spData.footCreditColor }} className={showHideClassName + " " + colMd3 + " latowhite d-flex justify-content-center align-items-center"}>
-  //       {children}
-  //     </section>
-  //   );
-  // } else {
-  //   return (
-  //     <section id="FootCrediti" style={{ backgroundColor: spData.footCreditColor }} className={showHideClassName + " " + colMd3 + " latowhite d-flex flex-column justify-content-end align-items-center"}>
-  //       {children}
-  //     </section>
-  //   );
-  // }
+  const colMd3 = infoShow ? "col-md-3" : "col";
   return (
     <section id="FootCrediti" style={{ backgroundColor: spData.footCreditColor }} className={showHideClassName + " " + justifyCenterEnd + " " + colMd3 + " latowhite d-flex flex-column align-items-center"}>
       {children}
@@ -117,10 +106,11 @@ const EditCrediti = ({ editCreditShow, children, hidden }) => {
   );
 };
 
-const Titolo = ({ titleShow, children }) => {
+const Titolo = ({ titleShow, children, mainBtn }) => {
   const showHideClassName = titleShow ? "d-block" : "d-none";
+  const justifyCenterEnd = mainBtn ? "justify-content-end" : "justify-content-center";
   return (
-    <section id="HeadTitle" style={{ backgroundColor: spData.headColor }} className={showHideClassName + " col latowhite d-flex flex-column justify-content-end align-items-center"}>
+    <section id="HeadTitle" style={{ backgroundColor: spData.headColor }} className={showHideClassName + " " + justifyCenterEnd + " col latowhite d-flex flex-column align-items-center"}>
       {children}
     </section>
   );
@@ -138,19 +128,12 @@ const EditTitolo = ({ editTitleShow, children, hidden }) => {
 
 const Logo = ({ logoShow, children, mainBtn }) => {
   const showHideClassName = logoShow ? "d-block" : "d-none";
-  if (mainBtn === false) {
-    return (
-      <section id="HeadLogo" style={{ backgroundColor: spData.logoColor }} className={showHideClassName + " col-md d-flex justify-content-center align-items-center"}>
-        {children}
-      </section>
-    );
-  } else {
-    return (
-      <section id="HeadLogo" style={{ backgroundColor: spData.logoColor }} className={showHideClassName + " col-md d-flex flex-column justify-content-end align-items-center"}>
-        {children}
-      </section>
-    );
-  }
+  const justifyCenterEnd = mainBtn ? "justify-content-end" : "justify-content-center";
+  return (
+    <section id="HeadLogo" style={{ backgroundColor: spData.logoColor }} className={showHideClassName + " " + justifyCenterEnd + " col-md d-flex flex-column justify-content-end align-items-center"}>
+      {children}
+    </section>
+  );
 };
 
 const EditLogo = ({ editLogoShow, children, hidden }) => {
@@ -163,10 +146,11 @@ const EditLogo = ({ editLogoShow, children, hidden }) => {
   );
 };
 
-const Clock = ({ clockShow, children }) => {
+const Clock = ({ clockShow, children, mainBtn }) => {
   const showHideClassName = clockShow ? "d-block" : "d-none";
+  const justifyCenterEnd = mainBtn ? "justify-content-end" : "justify-content-center";
   return (
-    <section id="HeadDate" style={{ backgroundColor: spData.clockColor }} className={showHideClassName + " col-md latowhite d-flex flex-column justify-content-end align-items-center"}>
+    <section id="HeadDate" style={{ backgroundColor: spData.clockColor }} className={showHideClassName + " " + justifyCenterEnd + " col-md latowhite d-flex flex-column align-items-center"}>
       {children}
     </section>
   );
@@ -179,6 +163,19 @@ const EditClock = ({ editClockShow, children, hidden }) => {
     <div className={showHideClassName + " stretch d-flex justify-content-center align-items-center"}>
       {children} {hide}
     </div>
+  );
+};
+
+const Set = ({ children, mainBtn }) => {
+  // const showHideClassName = menuShow ? "d-block" : "d-none";
+  const justifyCenterEnd = mainBtn ? "justify-content-end" : "justify-content-center";
+  return (
+    <section id="HeadSettings" className={justifyCenterEnd + " col-md-1 indaco d-flex flex-column align-items-center"}>
+      {children}
+    </section>
+    // <section id="HeadMenu" style={{ backgroundColor: spData.menuColor }} className={showHideClassName + " " + justifyCenterEnd + " col-md-1 d-flex flex-column align-items-center"}>
+    //  {children}
+    // </section>
   );
 };
 
@@ -929,7 +926,7 @@ class Main extends React.Component {
     // console.log(tempColor);
     spData.clockColor = this.hexToRgb(tempColor) + ", 0.7)";
     // clockColor = spData.clockColor;
-    
+
     if (blockHide !== "none") {
       spData.clockShow = blockHide;
     }
@@ -975,7 +972,7 @@ class Main extends React.Component {
     spData.footInfoColor = this.hexToRgb(tempColor) + ", 0.7)";
 
     if (blockHide !== "none") {
-      spData.infoShow  = blockHide;
+      spData.infoShow = blockHide;
     }
 
     blockHide = "none";
@@ -1009,7 +1006,7 @@ class Main extends React.Component {
     spData.footCreditColor = this.hexToRgb(tempColor) + ", 0.7)";
 
     if (blockHide !== "none") {
-      spData.creditShow  = blockHide;
+      spData.creditShow = blockHide;
     }
 
     blockHide = "none";
@@ -1131,7 +1128,7 @@ class Main extends React.Component {
       if (blockHide !== "none") {
         spData.logoShow = blockHide;
       }
-  
+
       blockHide = "none";
 
     } else {
@@ -1140,7 +1137,7 @@ class Main extends React.Component {
       if (blockHide !== "none") {
         spData.logoShow = blockHide;
       }
-  
+
       blockHide = "none";
 
       this.setState({ upShow: false });
@@ -1503,7 +1500,7 @@ class Main extends React.Component {
       <div className="row text-center mt-2 mb-2">
         <div className="col">
           <div className="row">
-            <Menu menuShow={this.state.menuShow}>
+            <Menu menuShow={this.state.menuShow} mainBtn={this.state.mainBtn}>
               {/* MENU */}
               {menuButtons}
               <EditMenu editMenuShow={this.state.mainBtn} hidden={spData.menuShow}>
@@ -1512,7 +1509,7 @@ class Main extends React.Component {
                 </button>
               </EditMenu>
             </Menu>
-            <Titolo titleShow={this.state.titleShow}>
+            <Titolo titleShow={this.state.titleShow} mainBtn={this.state.mainBtn}>
               {/* TITOLO */}
               <div>
                 <p className="medfont">{spData.headTitle}</p>
@@ -1537,7 +1534,7 @@ class Main extends React.Component {
                 </button>
               </EditLogo>
             </Logo>
-            <Clock clockShow={this.state.clockShow}>
+            <Clock clockShow={this.state.clockShow} mainBtn={this.state.mainBtn}>
               {/* OROLOGIO */}
               <Orologio />
               <EditClock editClockShow={this.state.mainBtn} hidden={spData.clockShow}>
@@ -1547,14 +1544,16 @@ class Main extends React.Component {
               </EditClock>
             </Clock>
             {/* SETTINGS */}
-            <div id="HeadSettings" className="col-md-1 indaco d-flex flex-column justify-content-center align-items-center">
+            <Set clockShow={this.state.clockShow} mainBtn={this.state.mainBtn}>
+              {/* <div id="HeadSettings" className="col-md-1 indaco d-flex flex-column justify-content-center align-items-center"> */}
               <SettingsGear handleShowButtons={this.loginSession} />
               <EditSet editSetShow={this.state.mainBtn}>
                 <button className="col latowhite flexbutton solidgreen m-1" onClick={() => this.loginEditSession("LoginEdit")}>
                   Edit Login
                 </button>
               </EditSet>
-            </div>
+              {/* </div> */}
+            </Set>
           </div>
         </div>
       </div>
@@ -1584,7 +1583,7 @@ class Main extends React.Component {
         <div className="col">
           <div className="row">
             {/* INFO */}
-            <Info infoShow={this.state.infoShow}>
+            <Info infoShow={this.state.infoShow} mainBtn={this.state.mainBtn}>
               <div>
                 <p className="medfont">{spData.footTitle}</p>
                 <p className="smallfont">{spData.footSubtitle}</p>

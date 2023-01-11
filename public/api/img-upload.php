@@ -11,9 +11,17 @@ $default = [
     'logo' => '',
     'back' => '',
     'icon' => ''
- ];
+];
 
-$_FILES = array_replace( $default, $_FILES );
+$default2 = [
+    'logo' => '',
+    'back' => '',
+    'icon' => '',
+    'config' => ''
+];
+
+$_POST = array_replace($default2, $_POST);
+$_FILES = array_replace($default, $_FILES);
 
 $response = array();
 if ($_FILES['logo']) {
@@ -117,8 +125,8 @@ if ($_FILES['logo']) {
     $error = null;
     // if (is_array($_POST) && !empty($_POST["error"])) {
     if (is_array($_POST) && !empty($_POST["config"]["error"])) {
-    // $error = $_POST["error"];
-    $error = $_POST["config"]["error"];
+        // $error = $_POST["error"];
+        $error = $_POST["config"]["error"];
     }
     // $error = array('err' => $_POST["config"]["error"]);
 
@@ -146,8 +154,9 @@ if ($_FILES['logo']) {
     }
 } else if ($_POST['logo']) {
     $del_name = $_POST["logo"];
+    $error = null;
     if (is_array($_POST) && !empty($_POST["logo"]["error"])) {
-    // $error = $_POST["error"];
+        // $error = $_POST["error"];
         $error = $_POST["logo"]["error"];
     }
     // $error[] = $_POST["logo"]["error"];
@@ -173,10 +182,11 @@ if ($_FILES['logo']) {
             );
         }
     }
-}  else if ($_POST['back']) {
+} else if ($_POST['back']) {
     $del_name = $_POST["back"];
+    $error = null;
     if (is_array($_POST) && !empty($_POST["back"]["error"])) {
-    // $error = $_POST["error"];
+        // $error = $_POST["error"];
         $error = $_POST["back"]["error"];
     }
     // $error = $_POST["back"]["error"];
@@ -204,8 +214,9 @@ if ($_FILES['logo']) {
     }
 } else if ($_POST['icon']) {
     $del_name = $_POST["icon"];
+    $error = null;
     if (is_array($_POST) && !empty($_POST["icon"]["error"])) {
-    // $error = $_POST["error"];
+        // $error = $_POST["error"];
         $error = $_POST["icon"]["error"];
     }
     // $error = $_POST["icon"]["error"];
