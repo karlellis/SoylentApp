@@ -25,6 +25,7 @@ var login = false;
 var array = [];
 var arrayAdd = [];
 var inPos = 0;
+var blockHide = "none";
 var appNewItem = {
   "title": "",
   "link": "",
@@ -863,6 +864,13 @@ class Main extends React.Component {
       // console.log("Titolo: " + spData.headTitle);
       spData.headColor = this.hexToRgb(tempColor) + ", 0.95)";
       // console.log("Colore: " + spData.headColor);
+
+      if (blockHide !== "none") {
+        spData.titleShow = blockHide;
+      }
+
+      blockHide = "none";
+
       temp = "";
       this.setState({ alShow: true });
       this.setState({ alErrShow: false });
@@ -921,6 +929,13 @@ class Main extends React.Component {
     // console.log(tempColor);
     spData.clockColor = this.hexToRgb(tempColor) + ", 0.7)";
     // clockColor = spData.clockColor;
+    
+    if (blockHide !== "none") {
+      spData.clockShow = blockHide;
+    }
+
+    blockHide = "none";
+
     this.setState({ alShow: true });
     this.setState({ alErrShow: false });
     this.saveFile(spData, "./api/img-upload.php", "config");
@@ -929,10 +944,13 @@ class Main extends React.Component {
   saveMenu = () => {
     // console.log(tempColor);
     spData.menuColor = this.hexToRgb(tempColor) + ", 0.5)";
-    // clockColor = spData.clockColor;
+    if (blockHide !== "none") {
+      spData.menuShow = blockHide;
+    }
     this.setState({ alShow: true });
     this.setState({ alErrShow: false });
     this.saveFile(spData, "./api/img-upload.php", "config");
+    blockHide = "none";
   }
 
   saveInfo = () => {
@@ -955,6 +973,13 @@ class Main extends React.Component {
       spData.footSubtitle2 = "";
     }
     spData.footInfoColor = this.hexToRgb(tempColor) + ", 0.7)";
+
+    if (blockHide !== "none") {
+      spData.infoShow  = blockHide;
+    }
+
+    blockHide = "none";
+
     temp = "";
     temp2 = "";
     temp3 = "";
@@ -982,6 +1007,13 @@ class Main extends React.Component {
       spData.footCreditiSubtitle2 = "";
     }
     spData.footCreditColor = this.hexToRgb(tempColor) + ", 0.7)";
+
+    if (blockHide !== "none") {
+      spData.creditShow  = blockHide;
+    }
+
+    blockHide = "none";
+
     temp = "";
     temp2 = "";
     temp3 = "";
@@ -1095,8 +1127,22 @@ class Main extends React.Component {
       tempIcon = spData.LogoIcon;
       this.saveImgFile(fileImg, "logo", "edit");
       spData.logoColor = this.hexToRgb(tempColor) + ", 0.7)";
+
+      if (blockHide !== "none") {
+        spData.logoShow = blockHide;
+      }
+  
+      blockHide = "none";
+
     } else {
       spData.logoColor = this.hexToRgb(tempColor) + ", 0.7)";
+
+      if (blockHide !== "none") {
+        spData.logoShow = blockHide;
+      }
+  
+      blockHide = "none";
+
       this.setState({ upShow: false });
       this.setState({ alShow: true });
       this.setState({ alErrShow: false });
@@ -1247,7 +1293,6 @@ class Main extends React.Component {
     this.setState({ appAddDiaShow: false });
     this.setState({ appVideoDiaShow: false });
     this.setState({ exCrsDiaShow: false });
-    // this.setState({ searchDiaShow: false });
     this.setState({ backEditDiaShow: false });
     this.setState({ clockDiaShow: false });
     this.setState({ alShow: false });
@@ -1263,7 +1308,6 @@ class Main extends React.Component {
     document.getElementById('appAddForm').reset();
     document.getElementById('backEditForm').reset();
     document.getElementById('clockForm').reset();
-    // document.getElementById('searchForm').reset();
     tempColor = "";
     // temp = "";
     // temp2 = "";
@@ -1271,7 +1315,6 @@ class Main extends React.Component {
     this.setState({
       activityChanged: false
     });
-    // this.setState({ resAppItems: [] });
     this.stopVideos();
   };
 
@@ -1450,33 +1493,12 @@ class Main extends React.Component {
     let head = "";
     let menuButtons = (
       <>
-        {/* <div className="row"> */}
         <Dropdown search={this.search} exCrsShow={this.exCrsShow} />
-
-        {/* <button className="col button green m-1"
-            onClick={() => {
-              // window.location = "./searching.php";
-              this.search();
-            }}>
-            Search
-          </button>
-          <button className="col button blue m-1"
-            onClick={() => {
-              // window.location = "./credits.html";
-              this.exCrsShow();
-            }}>
-            Credits
-          </button>
-        </div> */}
       </>
     );
     let buttons = "";
     let foot = "";
 
-    // if (headShow === "null") {
-    //   head = "";
-    //   // console.log("headShow = null");
-    // } else {
     head = (
       <div className="row text-center mt-2 mb-2">
         <div className="col">
@@ -1526,29 +1548,18 @@ class Main extends React.Component {
             </Clock>
             {/* SETTINGS */}
             <div id="HeadSettings" className="col-md-1 indaco d-flex flex-column justify-content-center align-items-center">
-              {/* <div id="HeadSettings" className="col-md-1 indaco d-flex justify-content-center align-items-center"> */}
               <SettingsGear handleShowButtons={this.loginSession} />
               <EditSet editSetShow={this.state.mainBtn}>
                 <button className="col latowhite flexbutton solidgreen m-1" onClick={() => this.loginEditSession("LoginEdit")}>
                   Edit Login
                 </button>
               </EditSet>
-              {/* <div className="stretch d-flex justify-content-center align-items-center">
-                  <button className="col latowhite flexbutton solidgreen m-1" onClick={() => this.loginEditSession("LoginEdit")}>
-                    Settings
-                  </button>
-                </div> */}
             </div>
           </div>
         </div>
       </div>
     )
-    // }
 
-    // if (mainBtn === "null") {
-    //   buttons = "";
-    //   console.log("mainBtn = null");
-    // } else 
     if (mainBtn === false) {
       buttons = ""
     } else {
@@ -1568,9 +1579,6 @@ class Main extends React.Component {
       )
     }
 
-    // if (footShow === "null") {
-    //   foot = "";
-    // } else {
     foot = (
       <div className="row mt-2 mb-2">
         <div className="col">
@@ -1605,7 +1613,6 @@ class Main extends React.Component {
         </div>
       </div >
     )
-    // }
 
     return (
       // TITOLO, OROLOGIO E BUTTONS
@@ -1707,9 +1714,11 @@ class Main extends React.Component {
                             <label class="switch">
                               <input type="checkbox" className="form-control" defaultChecked={!spData.menuShow} onClick={e => {
                                 if (spData.menuShow === false) {
-                                  spData.menuShow = true;
+                                  blockHide = true;
+                                  // spData.menuShow = true;
                                 } else {
-                                  spData.menuShow = false;
+                                  blockHide = false;
+                                  // spData.menuShow = false;
                                 }
                               }} />
                               <span class="slider round"></span>
@@ -1785,9 +1794,11 @@ class Main extends React.Component {
                             <label class="switch">
                               <input type="checkbox" className="form-control" defaultChecked={!spData.titleShow} onClick={e => {
                                 if (spData.titleShow === false) {
-                                  spData.titleShow = true;
+                                  blockHide = true;
+                                  // spData.titleShow = true;
                                 } else {
-                                  spData.titleShow = false;
+                                  blockHide = false;
+                                  // spData.titleShow = false;
                                 }
                               }} />
                               <span class="slider round"></span>
@@ -1867,9 +1878,11 @@ class Main extends React.Component {
                             <label class="switch">
                               <input type="checkbox" className="form-control" defaultChecked={!spData.clockShow} onClick={e => {
                                 if (spData.clockShow === false) {
-                                  spData.clockShow = true;
+                                  blockHide = true;
+                                  // spData.clockShow = true;
                                 } else {
-                                  spData.clockShow = false;
+                                  blockHide = false;
+                                  // spData.clockShow = false;
                                 }
                               }} />
                               <span class="slider round"></span>
@@ -1945,9 +1958,11 @@ class Main extends React.Component {
                             <label class="switch">
                               <input type="checkbox" className="form-control" defaultChecked={!spData.logoShow} onClick={e => {
                                 if (spData.logoShow === false) {
-                                  spData.logoShow = true;
+                                  blockHide = true;
+                                  // spData.logoShow = true;
                                 } else {
-                                  spData.logoShow = false;
+                                  blockHide = false;
+                                  // spData.logoShow = false;
                                 }
                               }} />
                               <span class="slider round"></span>
@@ -2027,9 +2042,11 @@ class Main extends React.Component {
                             <label class="switch">
                               <input type="checkbox" className="form-control" defaultChecked={!spData.infoShow} onClick={e => {
                                 if (spData.infoShow === false) {
-                                  spData.infoShow = true;
+                                  blockHide = true;
+                                  // spData.infoShow = true;
                                 } else {
-                                  spData.infoShow = false;
+                                  blockHide = false;
+                                  // spData.infoShow = false;
                                 }
                               }} />
                               <span class="slider round"></span>
@@ -2179,9 +2196,11 @@ class Main extends React.Component {
                             <label class="switch">
                               <input type="checkbox" className="form-control" defaultChecked={!spData.creditShow} onClick={e => {
                                 if (spData.creditShow === false) {
-                                  spData.creditShow = true;
+                                  blockHide = true;
+                                  // spData.creditShow = true;
                                 } else {
-                                  spData.creditShow = false;
+                                  blockHide = false;
+                                  // spData.creditShow = false;
                                 }
                               }} />
                               <span class="slider round"></span>
