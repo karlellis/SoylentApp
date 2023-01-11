@@ -1700,27 +1700,38 @@ class Main extends React.Component {
                   <form id="menuForm">
 
                     <label>Hide block</label>
+                    <div className="row text-center mt-2 mb-2">
+                      <div className="col">
+                        <div className="row">
+                          <div className="col-md-1 pt-2 pb-2 d-flex flex-column justify-content-center align-items-center">
+                            <label class="switch">
+                              <input type="checkbox" className="form-control" defaultChecked={!spData.menuShow} onClick={e => {
+                                if (spData.menuShow === false) {
+                                  spData.menuShow = true;
+                                } else {
+                                  spData.menuShow = false;
+                                }
+                              }} />
+                              <span class="slider round"></span>
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* <label>Hide block</label>
                     <div>
                       <label class="switch">
                         <input type="checkbox" className="form-control" defaultChecked={!spData.menuShow} onClick={e => {
                           if (spData.menuShow === false) {
-                            // this.setState({
-                            //   titleShow: true
-                            // });
                             spData.menuShow = true;
-                            // console.log("Title show: ", spData.titleShow);
                           } else {
-                            // this.setState({
-                            //   titleShow: false
-                            // });
                             spData.menuShow = false;
-                            // console.log("Title show: ", spData.titleShow);
                           }
-                          // temp = e.target.value;
                         }} />
                         <span class="slider round"></span>
                       </label>
-                    </div>
+                    </div> */}
 
                     <div className="form-group">
                       <label>Background color</label>
@@ -1767,27 +1778,38 @@ class Main extends React.Component {
                   <form id="titleForm" onKeyDown={this.handleKeyDown}>
 
                     <label>Hide block</label>
+                    <div className="row text-center mt-2 mb-2">
+                      <div className="col">
+                        <div className="row">
+                          <div className="col-md-1 pt-2 pb-2 d-flex flex-column justify-content-center align-items-center">
+                            <label class="switch">
+                              <input type="checkbox" className="form-control" defaultChecked={!spData.titleShow} onClick={e => {
+                                if (spData.titleShow === false) {
+                                  spData.titleShow = true;
+                                } else {
+                                  spData.titleShow = false;
+                                }
+                              }} />
+                              <span class="slider round"></span>
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* <label>Hide block</label>
                     <div>
                       <label class="switch">
                         <input type="checkbox" className="form-control" defaultChecked={!spData.titleShow} onClick={e => {
                           if (spData.titleShow === false) {
-                            // this.setState({
-                            //   titleShow: true
-                            // });
                             spData.titleShow = true;
-                            // console.log("Title show: ", spData.titleShow);
                           } else {
-                            // this.setState({
-                            //   titleShow: false
-                            // });
                             spData.titleShow = false;
-                            // console.log("Title show: ", spData.titleShow);
                           }
-                          // temp = e.target.value;
                         }} />
                         <span class="slider round"></span>
                       </label>
-                    </div>
+                    </div> */}
 
                     <div className="form-group">
                       <label>Site name</label>
@@ -1838,27 +1860,38 @@ class Main extends React.Component {
                   <form id="clockForm">
 
                     <label>Hide block</label>
+                    <div className="row text-center mt-2 mb-2">
+                      <div className="col">
+                        <div className="row">
+                          <div className="col-md-1 pt-2 pb-2 d-flex flex-column justify-content-center align-items-center">
+                            <label class="switch">
+                              <input type="checkbox" className="form-control" defaultChecked={!spData.clockShow} onClick={e => {
+                                if (spData.clockShow === false) {
+                                  spData.clockShow = true;
+                                } else {
+                                  spData.clockShow = false;
+                                }
+                              }} />
+                              <span class="slider round"></span>
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* <label>Hide block</label>
                     <div>
                       <label class="switch">
                         <input type="checkbox" className="form-control" defaultChecked={!spData.clockShow} onClick={e => {
                           if (spData.clockShow === false) {
-                            // this.setState({
-                            //   titleShow: true
-                            // });
                             spData.clockShow = true;
-                            // console.log("Title show: ", spData.titleShow);
                           } else {
-                            // this.setState({
-                            //   titleShow: false
-                            // });
                             spData.clockShow = false;
-                            // console.log("Title show: ", spData.titleShow);
                           }
-                          // temp = e.target.value;
                         }} />
                         <span class="slider round"></span>
                       </label>
-                    </div>
+                    </div> */}
 
                     <div className="form-group">
                       <label>Background color</label>
@@ -1905,27 +1938,38 @@ class Main extends React.Component {
                   <form id="logoForm">
 
                     <label>Hide block</label>
+                    <div className="row text-center mt-2 mb-2">
+                      <div className="col">
+                        <div className="row">
+                          <div className="col-md-1 pt-2 pb-2 d-flex flex-column justify-content-center align-items-center">
+                            <label class="switch">
+                              <input type="checkbox" className="form-control" defaultChecked={!spData.logoShow} onClick={e => {
+                                if (spData.logoShow === false) {
+                                  spData.logoShow = true;
+                                } else {
+                                  spData.logoShow = false;
+                                }
+                              }} />
+                              <span class="slider round"></span>
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* <label>Hide block</label>
                     <div>
                       <label class="switch">
                         <input type="checkbox" className="form-control" defaultChecked={!spData.logoShow} onClick={e => {
                           if (spData.logoShow === false) {
-                            // this.setState({
-                            //   titleShow: true
-                            // });
                             spData.logoShow = true;
-                            // console.log("Title show: ", spData.titleShow);
                           } else {
-                            // this.setState({
-                            //   titleShow: false
-                            // });
                             spData.logoShow = false;
-                            // console.log("Title show: ", spData.titleShow);
                           }
-                          // temp = e.target.value;
                         }} />
                         <span class="slider round"></span>
                       </label>
-                    </div>
+                    </div> */}
 
                     <div className="form-group">
                       <label>Choose an image file for the logo (Max 1 MB)</label>
@@ -1976,7 +2020,26 @@ class Main extends React.Component {
                   <form id="infoForm">
 
                     <label>Hide block</label>
-                    <div>
+                    <div className="row text-center mt-2 mb-2">
+                      <div className="col">
+                        <div className="row">
+                          <div className="col-md-1 pt-2 pb-2 d-flex flex-column justify-content-center align-items-center">
+                            <label class="switch">
+                              <input type="checkbox" className="form-control" defaultChecked={!spData.infoShow} onClick={e => {
+                                if (spData.infoShow === false) {
+                                  spData.infoShow = true;
+                                } else {
+                                  spData.infoShow = false;
+                                }
+                              }} />
+                              <span class="slider round"></span>
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* <div>
                       <label class="switch">
                         <input type="checkbox" className="form-control" defaultChecked={!spData.infoShow} onClick={e => {
                           if (spData.infoShow === false) {
@@ -1987,36 +2050,14 @@ class Main extends React.Component {
                         }} />
                         <span class="slider round"></span>
                       </label>
-                    </div>
-
-                    {/* <label>Disable</label>
-                    <div>
-                      <label class="switch">
-                        <input type="checkbox" className="form-control" defaultChecked={spData.noFootTitle} onClick={e => {
-                          if (this.state.disField === false) {
-                            this.setState({
-                              disField: true
-                            });
-                            spData.noFootTitle = true;
-                          } else {
-                            this.setState({
-                              disField: false
-                            });
-                            spData.noFootTitle = false;
-                          }
-                          // temp = e.target.value;
-                        }} />
-                        <span class="slider round"></span>
-                      </label>
                     </div> */}
+
                     <div className="form-group">
                       <label>Site name</label>
-
                       <div className="row text-center mt-2 mb-2">
                         <div className="col">
                           <div className="row">
                             <div className="col-md-1 pt-2 pb-2 d-flex flex-column justify-content-center align-items-center">
-
                               <label className="switch">
                                 <input type="checkbox" className="form-control" defaultChecked={spData.noFootTitle} onClick={e => {
                                   if (this.state.disField === false) {
@@ -2030,52 +2071,23 @@ class Main extends React.Component {
                                     });
                                     spData.noFootTitle = false;
                                   }
-                                  // temp = e.target.value;
                                 }} />
                                 <span class="slider round" title="Enable/Disable"></span>
                               </label>
-
                             </div>
                             <div className="col">
-                              {/* <div className="col d-flex flex-column justify-content-center align-items-center"> */}
                               <input type="text" disabled={disField} className="form-control" defaultValue={spData.footTitle} onChange={e => temp = e.target.value} /*placeholder={spData.footTitle}*/ />
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
-
-                    {/* <label>Disable</label>
-                    <div> */}
-
-                    {/* <label class="switch">
-                        <input type="checkbox" className="form-control" defaultChecked={spData.noFootSubtitle} onClick={e => {
-                          if (this.state.disField2 === false) {
-                            this.setState({
-                              disField2: true
-                            });
-                            spData.noFootSubtitle = true;
-                          } else {
-                            this.setState({
-                              disField2: false
-                            });
-                            spData.noFootSubtitle = false;
-                          }
-                          // temp = e.target.value;
-                        }} />
-                        <span class="slider round"></span>
-                      </label> */}
-
-                    {/* </div> */}
                     <div className="form-group">
                       <label>Subtitle #1</label>
-
                       <div className="row text-center mt-2 mb-2">
                         <div className="col">
                           <div className="row">
                             <div className="col-md-1 pt-2 pb-2 d-flex flex-column justify-content-center align-items-center">
-
-
                               <label class="switch">
                                 <input type="checkbox" className="form-control" defaultChecked={spData.noFootSubtitle} onClick={e => {
                                   if (this.state.disField2 === false) {
@@ -2089,7 +2101,6 @@ class Main extends React.Component {
                                     });
                                     spData.noFootSubtitle = false;
                                   }
-                                  // temp = e.target.value;
                                 }} />
                                 <span class="slider round" title="Enable/Disable"></span>
                               </label>
@@ -2101,36 +2112,12 @@ class Main extends React.Component {
                         </div>
                       </div>
                     </div>
-
-                    {/* <label>Disable</label>
-                    <div> */}
-                    {/* <label class="switch">
-                        <input type="checkbox" className="form-control" defaultChecked={spData.noFootSubtitle2} onClick={e => {
-                          if (this.state.disField3 === false) {
-                            this.setState({
-                              disField3: true
-                            });
-                            spData.noFootSubtitle2 = true;
-                          } else {
-                            this.setState({
-                              disField3: false
-                            });
-                            spData.noFootSubtitle2 = false;
-                          }
-                          // temp = e.target.value;
-                        }} />
-                        <span class="slider round"></span>
-                      </label> */}
-                    {/* </div> */}
                     <div className="form-group">
                       <label>Subtitle #2</label>
-
                       <div className="row text-center mt-2 mb-2">
                         <div className="col">
                           <div className="row">
                             <div className="col-md-1 pt-2 pb-2 d-flex flex-column justify-content-center align-items-center">
-
-
                               <label class="switch">
                                 <input type="checkbox" className="form-control" defaultChecked={spData.noFootSubtitle2} onClick={e => {
                                   if (this.state.disField3 === false) {
@@ -2144,7 +2131,6 @@ class Main extends React.Component {
                                     });
                                     spData.noFootSubtitle2 = false;
                                   }
-                                  // temp = e.target.value;
                                 }} />
                                 <span class="slider round" title="Enable/Disable"></span>
                               </label>
@@ -2156,7 +2142,6 @@ class Main extends React.Component {
                         </div>
                       </div>
                     </div>
-
                     <div className="form-group">
                       <label>Background color</label>
                       <input type="color" className="form-control" defaultValue={this.rgbToHex(spData.footInfoColor)} onChange={e => tempColor = e.target.value} />
@@ -2168,7 +2153,6 @@ class Main extends React.Component {
                             <section className="col pt-2 contenitore solidgreen latowhite d-flex justify-content-center align-items-center ">
                               <div>
                                 <p className="norfont">Changes made!</p>
-                                {/* <p className="smallfont">Press "Close" to apply.</p> */}
                               </div>
                             </section>
                           </div>
@@ -2188,6 +2172,26 @@ class Main extends React.Component {
                   <form id="creditForm">
 
                     <label>Hide block</label>
+                    <div className="row text-center mt-2 mb-2">
+                      <div className="col">
+                        <div className="row">
+                          <div className="col-md-1 pt-2 pb-2 d-flex flex-column justify-content-center align-items-center">
+                            <label class="switch">
+                              <input type="checkbox" className="form-control" defaultChecked={!spData.creditShow} onClick={e => {
+                                if (spData.creditShow === false) {
+                                  spData.creditShow = true;
+                                } else {
+                                  spData.creditShow = false;
+                                }
+                              }} />
+                              <span class="slider round"></span>
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* <label>Hide block</label>
                     <div>
                       <label class="switch">
                         <input type="checkbox" className="form-control" defaultChecked={!spData.creditShow} onClick={e => {
@@ -2196,27 +2200,6 @@ class Main extends React.Component {
                           } else {
                             spData.creditShow = false;
                           }
-                        }} />
-                        <span class="slider round"></span>
-                      </label>
-                    </div>
-
-                    {/* <label>Disable</label> */}
-                    {/* <div>
-                      <label class="switch">
-                        <input type="checkbox" className="form-control" defaultChecked={spData.noFootCreditiTitle} onClick={e => {
-                          if (this.state.disFieldC === false) {
-                            this.setState({
-                              disFieldC: true
-                            });
-                            spData.noFootCreditiTitle = true;
-                          } else {
-                            this.setState({
-                              disFieldC: false
-                            });
-                            spData.noFootCreditiTitle = false;
-                          }
-                          // temp = e.target.value;
                         }} />
                         <span class="slider round"></span>
                       </label>
@@ -2244,7 +2227,6 @@ class Main extends React.Component {
                                     });
                                     spData.noFootCreditiTitle = false;
                                   }
-                                  // temp = e.target.value;
                                 }} />
                                 <span class="slider round"></span>
                               </label>
@@ -2256,27 +2238,6 @@ class Main extends React.Component {
                         </div>
                       </div>
                     </div>
-
-                    {/* <label>Disable</label>
-                    <div> */}
-                    {/* <label class="switch">
-                        <input type="checkbox" className="form-control" defaultChecked={spData.noFootCreditiSubtitle} onClick={e => {
-                          if (this.state.disFieldC2 === false) {
-                            this.setState({
-                              disFieldC2: true
-                            });
-                            spData.noFootCreditiSubtitle = true;
-                          } else {
-                            this.setState({
-                              disFieldC2: false
-                            });
-                            spData.noFootCreditiSubtitle = false;
-                          }
-                          // temp = e.target.value;
-                        }} />
-                        <span class="slider round"></span>
-                      </label> */}
-                    {/* </div> */}
 
                     <div className="form-group">
                       <label>Main credits</label>
@@ -2300,7 +2261,6 @@ class Main extends React.Component {
                                     });
                                     spData.noFootCreditiSubtitle = false;
                                   }
-                                  // temp = e.target.value;
                                 }} />
                                 <span class="slider round"></span>
                               </label>
@@ -2312,27 +2272,6 @@ class Main extends React.Component {
                         </div>
                       </div>
                     </div>
-
-                    {/* <label>Disable</label>
-                    <div> */}
-                    {/* <label class="switch">
-                      <input type="checkbox" className="form-control" defaultChecked={spData.noFootCreditiSubtitle2} onClick={e => {
-                        if (this.state.disFieldC3 === false) {
-                          this.setState({
-                            disFieldC3: true
-                          });
-                          spData.noFootCreditiSubtitle2 = true;
-                        } else {
-                          this.setState({
-                            disFieldC3: false
-                          });
-                          spData.noFootCreditiSubtitle2 = false;
-                        }
-                        // temp = e.target.value;
-                      }} />
-                      <span class="slider round"></span>
-                    </label> */}
-                    {/* </div> */}
 
                     <div className="form-group">
                       <label>Secondary Credits</label>
@@ -2356,7 +2295,6 @@ class Main extends React.Component {
                                     });
                                     spData.noFootCreditiSubtitle2 = false;
                                   }
-                                  // temp = e.target.value;
                                 }} />
                                 <span class="slider round"></span>
                               </label>
@@ -2380,7 +2318,6 @@ class Main extends React.Component {
                             <section className="col pt-2 contenitore solidgreen latowhite d-flex justify-content-center align-items-center ">
                               <div>
                                 <p className="norfont">Changes made!</p>
-                                {/* <p className="smallfont">Press "Close" to apply.</p> */}
                               </div>
                             </section>
                           </div>
@@ -2398,40 +2335,57 @@ class Main extends React.Component {
                 </div>
                 <div className="modal-body">
                   <form id="backEditForm">
-                    <div className="form-group">
-                      <label>No Image</label>
-                      <div>
-                        <label class="switch">
-                          <input type="checkbox" className="form-control" defaultChecked={spData.noBackImage} onClick={e => {
-                            if (this.state.disFieldB === false) {
-                              this.setState({
-                                disFieldB: true
-                              });
-                              spData.noBackImage = true;
-                            } else {
-                              this.setState({
-                                disFieldB: false
-                              });
-                              spData.noBackImage = false;
-                            }
-                            // temp = e.target.value;
-                          }} />
-                          <span class="slider round"></span>
-                        </label>
+
+                    <label>No Image</label>
+                    <div className="row text-center mt-2 mb-2">
+                      <div className="col">
+                        <div className="row">
+                          <div className="col-md-1 pt-2 pb-2 d-flex flex-column justify-content-center align-items-center">
+                            <label class="switch">
+                              <input type="checkbox" className="form-control" defaultChecked={spData.noBackImage} onClick={e => {
+                                if (this.state.disFieldB === false) {
+                                  this.setState({
+                                    disFieldB: true
+                                  });
+                                  spData.noBackImage = true;
+                                } else {
+                                  this.setState({
+                                    disFieldB: false
+                                  });
+                                  spData.noBackImage = false;
+                                }
+                              }} />
+                              <span class="slider round"></span>
+                            </label>
+                          </div>
+                        </div>
                       </div>
-                      {/* <input type="checkbox" className="form-control check" onChange={e => {
-                        temp = e.target.value;
-                        this.setState({
-                          disField: true
-                        });
-                      }} /> */}
+                    </div>
+
+                    {/* <label>No Image</label>
+                    <div>
+                      <label class="switch">
+                        <input type="checkbox" className="form-control" defaultChecked={spData.noBackImage} onClick={e => {
+                          if (this.state.disFieldB === false) {
+                            this.setState({
+                              disFieldB: true
+                            });
+                            spData.noBackImage = true;
+                          } else {
+                            this.setState({
+                              disFieldB: false
+                            });
+                            spData.noBackImage = false;
+                          }
+                        }} />
+                        <span class="slider round"></span>
+                      </label>
+                    </div> */}
+
+                    <div className="form-group">
                       <label>Choose an image file for the background (Max 1 MB)</label>
                       <input type="file" disabled={disFieldB} className="form-control" name="icon" onChange={e => fileImg = e.target.files[0]} />
                     </div>
-                    {/* <div className="form-group">
-                      <label>Nessuna immagine.</label>
-                      <input type="checkbox" className="form-control" name="icon" onChange={e => temp = e.target.value} />
-                    </div> */}
                     <div className="form-group">
                       <label>Background color</label>
                       <input type="color" className="form-control" defaultValue={this.rgbToHex(spData.backgroundColor)} onChange={e => tempColor = e.target.value} />
@@ -2443,7 +2397,6 @@ class Main extends React.Component {
                             <section className="col pt-2 contenitore solidgreen latowhite d-flex justify-content-center align-items-center ">
                               <div>
                                 <p className="norfont">Changes made!</p>
-                                {/* <p className="smallfont">Press "Close" to apply.</p> */}
                               </div>
                             </section>
                           </div>
@@ -2457,7 +2410,6 @@ class Main extends React.Component {
                             <section className="col pt-2 contenitore solidblue latowhite d-flex justify-content-center align-items-center ">
                               <div>
                                 <p className="norfont">Loading data... Please wait.</p>
-                                {/* <p className="smallfont">Please wait.</p> */}
                               </div>
                             </section>
                           </div>
