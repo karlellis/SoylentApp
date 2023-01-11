@@ -167,15 +167,11 @@ const EditClock = ({ editClockShow, children, hidden }) => {
 };
 
 const Set = ({ children, mainBtn }) => {
-  // const showHideClassName = menuShow ? "d-block" : "d-none";
   const justifyCenterEnd = mainBtn ? "justify-content-end" : "justify-content-center";
   return (
     <section id="HeadSettings" className={justifyCenterEnd + " col-md-1 indaco d-flex flex-column align-items-center"}>
       {children}
     </section>
-    // <section id="HeadMenu" style={{ backgroundColor: spData.menuColor }} className={showHideClassName + " " + justifyCenterEnd + " col-md-1 d-flex flex-column align-items-center"}>
-    //  {children}
-    // </section>
   );
 };
 
@@ -497,7 +493,6 @@ async function fetchUpPHP(file, url, key) {
     .then((json) => {
       nome = json.filename;
       // console.log("Image Upload:", nome);
-      // flag = json.status;
     });
 }
 
@@ -531,11 +526,6 @@ async function fetchDelPHP(appIcon, url, key) {
     });
 }
 
-// async function hashPassword(plaintextPassword) {
-//   const hash = await bcrypt.hash(plaintextPassword, 10);
-//   return hash;
-// }
-
 async function hashUsrPsw(plaintextUser, plaintextPass) {
   const hashUsr = await bcrypt.hash(plaintextUser, 10);
   const hashPsw = await bcrypt.hash(plaintextPass, 10);
@@ -551,8 +541,6 @@ class Main extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      // headShow: "null",
-      // footShow: "null",
       infoShow: false,
       creditShow: false,
       mainBtn: false,
@@ -602,12 +590,8 @@ class Main extends React.Component {
     this.appAddItem = this.appAddItem.bind(this);
     this.appVideo = this.appVideo.bind(this);
     this.resAppVideo = this.resAppVideo.bind(this);
-
     this.exCrsShow = this.exCrsShow.bind(this);
-
     this.search = this.search.bind(this);
-    // this.toggleHeadShow = this.toggleHeadShow.bind(this);
-    // this.toggleFootShow = this.toggleFootShow.bind(this);
     this.showMainButtons = this.showMainButtons.bind(this);
     this.headLogoEdit = this.headLogoEdit.bind(this);
     this.showModal = this.showModal.bind(this);
@@ -625,8 +609,6 @@ class Main extends React.Component {
       response.json().then(settings => {
         spData = settings;
         this.setState({
-          // headShow: spData.headShow,
-          // footShow: spData.footShow,
           infoShow: spData.infoShow,
           creditShow: spData.creditShow,
           mainBtn: spData.mainBtn,
@@ -689,7 +671,6 @@ class Main extends React.Component {
 
   saveImgFile(file, url, op) {
     if (fileImg !== null) {
-      // tempIcon = spData.LogoIcon;
       fetchDelPHP(tempIcon, "./api/img-upload.php", url)
         .then(res => {
           // console.log("Seems deleted!");
@@ -809,9 +790,6 @@ class Main extends React.Component {
           }));
         } else if (url === "back" && op === "edit") {
           spData.backgroundImage = "./img/" + nome;
-          // spData.logoColor = this.hexToRgb(tempColor) + ", 0.7)";
-          // logoColor = spData.logoColor;
-          // tempColor = "";
           spData.backgroundColor = this.hexToRgb(tempColor) + ", 0.7)";
           this.setState({
             backStyle: {
@@ -861,13 +839,10 @@ class Main extends React.Component {
       // console.log("Titolo: " + spData.headTitle);
       spData.headColor = this.hexToRgb(tempColor) + ", 0.95)";
       // console.log("Colore: " + spData.headColor);
-
       if (blockHide !== "none") {
         spData.titleShow = blockHide;
       }
-
       blockHide = "none";
-
       temp = "";
       this.setState({ alShow: true });
       this.setState({ alErrShow: false });
@@ -915,8 +890,7 @@ class Main extends React.Component {
       };
       this.setState({ alShow: true });
       this.setState({ alErrShow: false });
-    }
-    else {
+    } else {
       this.setState({ alErrShow: true });
       this.setState({ alShow: false });
     }
@@ -925,14 +899,10 @@ class Main extends React.Component {
   saveClock = () => {
     // console.log(tempColor);
     spData.clockColor = this.hexToRgb(tempColor) + ", 0.7)";
-    // clockColor = spData.clockColor;
-
     if (blockHide !== "none") {
       spData.clockShow = blockHide;
     }
-
     blockHide = "none";
-
     this.setState({ alShow: true });
     this.setState({ alErrShow: false });
     this.saveFile(spData, "./api/img-upload.php", "config");
@@ -970,13 +940,10 @@ class Main extends React.Component {
       spData.footSubtitle2 = "";
     }
     spData.footInfoColor = this.hexToRgb(tempColor) + ", 0.7)";
-
     if (blockHide !== "none") {
       spData.infoShow = blockHide;
     }
-
     blockHide = "none";
-
     temp = "";
     temp2 = "";
     temp3 = "";
@@ -1004,13 +971,10 @@ class Main extends React.Component {
       spData.footCreditiSubtitle2 = "";
     }
     spData.footCreditColor = this.hexToRgb(tempColor) + ", 0.7)";
-
     if (blockHide !== "none") {
       spData.creditShow = blockHide;
     }
-
     blockHide = "none";
-
     temp = "";
     temp2 = "";
     temp3 = "";
@@ -1058,7 +1022,6 @@ class Main extends React.Component {
 
   applyAppAdd = () => {
     array = [...this.state.appItems];
-
     // console.log("Image:", fileImg);
     // console.log("temp2:", temp2);
     // console.log("temp3:", temp3);
@@ -1124,22 +1087,16 @@ class Main extends React.Component {
       tempIcon = spData.LogoIcon;
       this.saveImgFile(fileImg, "logo", "edit");
       spData.logoColor = this.hexToRgb(tempColor) + ", 0.7)";
-
       if (blockHide !== "none") {
         spData.logoShow = blockHide;
       }
-
       blockHide = "none";
-
     } else {
       spData.logoColor = this.hexToRgb(tempColor) + ", 0.7)";
-
       if (blockHide !== "none") {
         spData.logoShow = blockHide;
       }
-
       blockHide = "none";
-
       this.setState({ upShow: false });
       this.setState({ alShow: true });
       this.setState({ alErrShow: false });
@@ -1196,7 +1153,6 @@ class Main extends React.Component {
 
   loginEditCheck = () => {
     if (temp !== "" || temp2 !== "") {
-      // spData.user = temp;
       // console.log("User: " + temp)
       // console.log("Psw: " + temp2)
       hashUsrPsw(temp, temp2)
@@ -1306,8 +1262,6 @@ class Main extends React.Component {
     document.getElementById('backEditForm').reset();
     document.getElementById('clockForm').reset();
     tempColor = "";
-    // temp = "";
-    // temp2 = "";
     temp3 = "";
     this.setState({
       activityChanged: false
@@ -1369,7 +1323,6 @@ class Main extends React.Component {
         spData.appItems = array;
       }
       spData.appItems = array;
-      // this.saveFile(spData, "./api/img-upload.php", "config");
       window.location.reload();
     }
   }
@@ -1433,8 +1386,6 @@ class Main extends React.Component {
     temp3 = pos;
     array = [...this.state.appItems];
     tempAppTitle = array[pos].title;
-    // tempAppLink = array[pos].link;
-    // tempIcon = array[pos].icon;
     // console.log(id, " for ", pos);
     this.setState({
       videoLink: array[pos].link
@@ -1446,8 +1397,6 @@ class Main extends React.Component {
     temp3 = pos;
     array = [...this.state.resAppItems];
     tempAppTitle = array[pos].title;
-    // tempAppLink = array[pos].link;
-    // tempIcon = array[pos].icon;
     // console.log(id, " for ", pos);
     this.setState({
       videoLink: array[pos].link
@@ -1477,8 +1426,6 @@ class Main extends React.Component {
   }
 
   render() {
-    // const { headShow: headShow } = this.state;
-    // const { footShow: footShow } = this.state;
     const { mainBtn: mainBtn } = this.state;
     const { disFieldB: disFieldB } = this.state;
     const { disField: disField } = this.state;
@@ -1545,14 +1492,12 @@ class Main extends React.Component {
             </Clock>
             {/* SETTINGS */}
             <Set clockShow={this.state.clockShow} mainBtn={this.state.mainBtn}>
-              {/* <div id="HeadSettings" className="col-md-1 indaco d-flex flex-column justify-content-center align-items-center"> */}
               <SettingsGear handleShowButtons={this.loginSession} />
               <EditSet editSetShow={this.state.mainBtn}>
                 <button className="col latowhite flexbutton solidgreen m-1" onClick={() => this.loginEditSession("LoginEdit")}>
                   Edit Login
                 </button>
               </EditSet>
-              {/* </div> */}
             </Set>
           </div>
         </div>
@@ -1640,7 +1585,6 @@ class Main extends React.Component {
                             <section className="col pt-2 contenitore brick latowhite d-flex justify-content-center align-items-center ">
                               <div>
                                 <p className="norfont">Wrong user name or password!</p>
-                                {/* <p className="smallfont">Try signing in again.</p> */}
                               </div>
                             </section>
                           </div>
@@ -1672,7 +1616,6 @@ class Main extends React.Component {
                             <section className="col pt-2 contenitore solidgreen latowhite d-flex justify-content-center align-items-center ">
                               <div>
                                 <p className="norfont">Username and password changed successfully!</p>
-                                {/* <p className="smallfont">Press "Close" to apply.</p> */}
                               </div>
                             </section>
                           </div>
@@ -1686,7 +1629,6 @@ class Main extends React.Component {
                             <section className="col pt-2 contenitore brick latowhite d-flex justify-content-center align-items-center ">
                               <div>
                                 <p className="norfont">Error! Fill in at least one field.</p>
-                                {/* <p className="smallfont">Make sure you have filled in at least one field.</p> */}
                               </div>
                             </section>
                           </div>
@@ -1714,10 +1656,8 @@ class Main extends React.Component {
                               <input type="checkbox" className="form-control" defaultChecked={!spData.menuShow} onClick={e => {
                                 if (spData.menuShow === false) {
                                   blockHide = true;
-                                  // spData.menuShow = true;
                                 } else {
                                   blockHide = false;
-                                  // spData.menuShow = false;
                                 }
                               }} />
                               <span class="slider round"></span>
@@ -1726,21 +1666,6 @@ class Main extends React.Component {
                         </div>
                       </div>
                     </div>
-
-                    {/* <label>Hide block</label>
-                    <div>
-                      <label class="switch">
-                        <input type="checkbox" className="form-control" defaultChecked={!spData.menuShow} onClick={e => {
-                          if (spData.menuShow === false) {
-                            spData.menuShow = true;
-                          } else {
-                            spData.menuShow = false;
-                          }
-                        }} />
-                        <span class="slider round"></span>
-                      </label>
-                    </div> */}
-
                     <div className="form-group">
                       <label>Background color</label>
                       <input type="color" className="form-control" defaultValue={this.rgbToHex(spData.menuColor)} onChange={e => tempColor = e.target.value} />
@@ -1752,7 +1677,6 @@ class Main extends React.Component {
                             <section className="col pt-2 contenitore solidgreen latowhite d-flex justify-content-center align-items-center ">
                               <div>
                                 <p className="norfont">Changes made!</p>
-                                {/* <p className="smallfont">Press "Close" to apply.</p> */}
                               </div>
                             </section>
                           </div>
@@ -1766,7 +1690,6 @@ class Main extends React.Component {
                             <section className="col pt-2 contenitore brick latowhite d-flex justify-content-center align-items-center ">
                               <div>
                                 <p className="norfont">Error! Enter at least one character.</p>
-                                {/* <p className="smallfont">Make sure you have entered at least one character.</p> */}
                               </div>
                             </section>
                           </div>
@@ -1794,10 +1717,8 @@ class Main extends React.Component {
                               <input type="checkbox" className="form-control" defaultChecked={!spData.titleShow} onClick={e => {
                                 if (spData.titleShow === false) {
                                   blockHide = true;
-                                  // spData.titleShow = true;
                                 } else {
                                   blockHide = false;
-                                  // spData.titleShow = false;
                                 }
                               }} />
                               <span class="slider round"></span>
@@ -1806,21 +1727,6 @@ class Main extends React.Component {
                         </div>
                       </div>
                     </div>
-
-                    {/* <label>Hide block</label>
-                    <div>
-                      <label class="switch">
-                        <input type="checkbox" className="form-control" defaultChecked={!spData.titleShow} onClick={e => {
-                          if (spData.titleShow === false) {
-                            spData.titleShow = true;
-                          } else {
-                            spData.titleShow = false;
-                          }
-                        }} />
-                        <span class="slider round"></span>
-                      </label>
-                    </div> */}
-
                     <div className="form-group">
                       <label>Site name</label>
                       <input type="text" className="form-control" defaultValue={spData.headTitle} onChange={e => temp = e.target.value} /*placeholder={spData.headTitle}*/ />
@@ -1836,7 +1742,6 @@ class Main extends React.Component {
                             <section className="col pt-2 contenitore solidgreen latowhite d-flex justify-content-center align-items-center ">
                               <div>
                                 <p className="norfont">Changes made!</p>
-                                {/* <p className="smallfont">Press "Close" to apply.</p> */}
                               </div>
                             </section>
                           </div>
@@ -1850,7 +1755,6 @@ class Main extends React.Component {
                             <section className="col pt-2 contenitore brick latowhite d-flex justify-content-center align-items-center ">
                               <div>
                                 <p className="norfont">Error! Enter at least one character.</p>
-                                {/* <p className="smallfont">Make sure you have entered at least one character.</p> */}
                               </div>
                             </section>
                           </div>
@@ -1878,10 +1782,8 @@ class Main extends React.Component {
                               <input type="checkbox" className="form-control" defaultChecked={!spData.clockShow} onClick={e => {
                                 if (spData.clockShow === false) {
                                   blockHide = true;
-                                  // spData.clockShow = true;
                                 } else {
                                   blockHide = false;
-                                  // spData.clockShow = false;
                                 }
                               }} />
                               <span class="slider round"></span>
@@ -1890,21 +1792,6 @@ class Main extends React.Component {
                         </div>
                       </div>
                     </div>
-
-                    {/* <label>Hide block</label>
-                    <div>
-                      <label class="switch">
-                        <input type="checkbox" className="form-control" defaultChecked={!spData.clockShow} onClick={e => {
-                          if (spData.clockShow === false) {
-                            spData.clockShow = true;
-                          } else {
-                            spData.clockShow = false;
-                          }
-                        }} />
-                        <span class="slider round"></span>
-                      </label>
-                    </div> */}
-
                     <div className="form-group">
                       <label>Background color</label>
                       <input type="color" className="form-control" defaultValue={this.rgbToHex(spData.clockColor)} onChange={e => tempColor = e.target.value} />
@@ -1916,7 +1803,6 @@ class Main extends React.Component {
                             <section className="col pt-2 contenitore solidgreen latowhite d-flex justify-content-center align-items-center ">
                               <div>
                                 <p className="norfont">Changes made!</p>
-                                {/* <p className="smallfont">Press "Close" to apply.</p> */}
                               </div>
                             </section>
                           </div>
@@ -1930,7 +1816,6 @@ class Main extends React.Component {
                             <section className="col pt-2 contenitore brick latowhite d-flex justify-content-center align-items-center ">
                               <div>
                                 <p className="norfont">Error! Enter at least one character.</p>
-                                {/* <p className="smallfont">Make sure you have entered at least one character.</p> */}
                               </div>
                             </section>
                           </div>
@@ -1958,10 +1843,8 @@ class Main extends React.Component {
                               <input type="checkbox" className="form-control" defaultChecked={!spData.logoShow} onClick={e => {
                                 if (spData.logoShow === false) {
                                   blockHide = true;
-                                  // spData.logoShow = true;
                                 } else {
                                   blockHide = false;
-                                  // spData.logoShow = false;
                                 }
                               }} />
                               <span class="slider round"></span>
@@ -1970,21 +1853,6 @@ class Main extends React.Component {
                         </div>
                       </div>
                     </div>
-
-                    {/* <label>Hide block</label>
-                    <div>
-                      <label class="switch">
-                        <input type="checkbox" className="form-control" defaultChecked={!spData.logoShow} onClick={e => {
-                          if (spData.logoShow === false) {
-                            spData.logoShow = true;
-                          } else {
-                            spData.logoShow = false;
-                          }
-                        }} />
-                        <span class="slider round"></span>
-                      </label>
-                    </div> */}
-
                     <div className="form-group">
                       <label>Choose an image file for the logo (Max 1 MB)</label>
                       <input type="file" className="form-control" name="image" onChange={e => fileImg = e.target.files[0]} />
@@ -2000,7 +1868,6 @@ class Main extends React.Component {
                             <section className="col pt-2 contenitore solidgreen latowhite d-flex justify-content-center align-items-center ">
                               <div>
                                 <p className="norfont">Changes made!</p>
-                                {/* <p className="smallfont">Press "Close" to apply.</p> */}
                               </div>
                             </section>
                           </div>
@@ -2014,7 +1881,6 @@ class Main extends React.Component {
                             <section className="col pt-2 contenitore solidblue latowhite d-flex justify-content-center align-items-center ">
                               <div>
                                 <p className="norfont">Loading data... Please wait.</p>
-                                {/* <p className="smallfont">Please wait.</p> */}
                               </div>
                             </section>
                           </div>
@@ -2042,10 +1908,8 @@ class Main extends React.Component {
                               <input type="checkbox" className="form-control" defaultChecked={!spData.infoShow} onClick={e => {
                                 if (spData.infoShow === false) {
                                   blockHide = true;
-                                  // spData.infoShow = true;
                                 } else {
                                   blockHide = false;
-                                  // spData.infoShow = false;
                                 }
                               }} />
                               <span class="slider round"></span>
@@ -2054,22 +1918,8 @@ class Main extends React.Component {
                         </div>
                       </div>
                     </div>
-
-                    {/* <div>
-                      <label class="switch">
-                        <input type="checkbox" className="form-control" defaultChecked={!spData.infoShow} onClick={e => {
-                          if (spData.infoShow === false) {
-                            spData.infoShow = true;
-                          } else {
-                            spData.infoShow = false;
-                          }
-                        }} />
-                        <span class="slider round"></span>
-                      </label>
-                    </div> */}
-
                     <div className="form-group">
-                      <label>Site name</label>
+                      <label>Main info</label>
                       <div className="row text-center mt-2 mb-2">
                         <div className="col">
                           <div className="row">
@@ -2099,7 +1949,7 @@ class Main extends React.Component {
                       </div>
                     </div>
                     <div className="form-group">
-                      <label>Subtitle #1</label>
+                      <label>Sub info #1</label>
                       <div className="row text-center mt-2 mb-2">
                         <div className="col">
                           <div className="row">
@@ -2129,7 +1979,7 @@ class Main extends React.Component {
                       </div>
                     </div>
                     <div className="form-group">
-                      <label>Subtitle #2</label>
+                      <label>Sub info #2</label>
                       <div className="row text-center mt-2 mb-2">
                         <div className="col">
                           <div className="row">
@@ -2196,10 +2046,8 @@ class Main extends React.Component {
                               <input type="checkbox" className="form-control" defaultChecked={!spData.creditShow} onClick={e => {
                                 if (spData.creditShow === false) {
                                   blockHide = true;
-                                  // spData.creditShow = true;
                                 } else {
                                   blockHide = false;
-                                  // spData.creditShow = false;
                                 }
                               }} />
                               <span class="slider round"></span>
@@ -2208,30 +2056,12 @@ class Main extends React.Component {
                         </div>
                       </div>
                     </div>
-
-                    {/* <label>Hide block</label>
-                    <div>
-                      <label class="switch">
-                        <input type="checkbox" className="form-control" defaultChecked={!spData.creditShow} onClick={e => {
-                          if (spData.creditShow === false) {
-                            spData.creditShow = true;
-                          } else {
-                            spData.creditShow = false;
-                          }
-                        }} />
-                        <span class="slider round"></span>
-                      </label>
-                    </div> */}
-
                     <div className="form-group">
-                      <label>Credits label</label>
-
+                      <label>Main credit</label>
                       <div className="row text-center mt-2 mb-2">
                         <div className="col">
                           <div className="row">
                             <div className="col-md-1 pt-2 pb-2 d-flex flex-column justify-content-center align-items-center">
-
-
                               <label class="switch">
                                 <input type="checkbox" className="form-control" defaultChecked={spData.noFootCreditiTitle} onClick={e => {
                                   if (this.state.disFieldC === false) {
@@ -2256,16 +2086,12 @@ class Main extends React.Component {
                         </div>
                       </div>
                     </div>
-
                     <div className="form-group">
-                      <label>Main credits</label>
-
+                      <label>Sub credit #1</label>
                       <div className="row text-center mt-2 mb-2">
                         <div className="col">
                           <div className="row">
                             <div className="col-md-1 pt-2 pb-2 d-flex flex-column justify-content-center align-items-center">
-
-
                               <label class="switch">
                                 <input type="checkbox" className="form-control" defaultChecked={spData.noFootCreditiSubtitle} onClick={e => {
                                   if (this.state.disFieldC2 === false) {
@@ -2290,16 +2116,12 @@ class Main extends React.Component {
                         </div>
                       </div>
                     </div>
-
                     <div className="form-group">
-                      <label>Secondary Credits</label>
-
+                      <label>Sub credit #2</label>
                       <div className="row text-center mt-2 mb-2">
                         <div className="col">
                           <div className="row">
                             <div className="col-md-1 pt-2 pb-2 d-flex flex-column justify-content-center align-items-center">
-
-
                               <label class="switch">
                                 <input type="checkbox" className="form-control" defaultChecked={spData.noFootCreditiSubtitle2} onClick={e => {
                                   if (this.state.disFieldC3 === false) {
@@ -2324,7 +2146,6 @@ class Main extends React.Component {
                         </div>
                       </div>
                     </div>
-
                     <div className="form-group">
                       <label>Background color</label>
                       <input type="color" className="form-control" defaultValue={this.rgbToHex(spData.footCreditColor)} onChange={e => tempColor = e.target.value} />
@@ -2353,7 +2174,6 @@ class Main extends React.Component {
                 </div>
                 <div className="modal-body">
                   <form id="backEditForm">
-
                     <label>No Image</label>
                     <div className="row text-center mt-2 mb-2">
                       <div className="col">
@@ -2379,27 +2199,6 @@ class Main extends React.Component {
                         </div>
                       </div>
                     </div>
-
-                    {/* <label>No Image</label>
-                    <div>
-                      <label class="switch">
-                        <input type="checkbox" className="form-control" defaultChecked={spData.noBackImage} onClick={e => {
-                          if (this.state.disFieldB === false) {
-                            this.setState({
-                              disFieldB: true
-                            });
-                            spData.noBackImage = true;
-                          } else {
-                            this.setState({
-                              disFieldB: false
-                            });
-                            spData.noBackImage = false;
-                          }
-                        }} />
-                        <span class="slider round"></span>
-                      </label>
-                    </div> */}
-
                     <div className="form-group">
                       <label>Choose an image file for the background (Max 1 MB)</label>
                       <input type="file" disabled={disFieldB} className="form-control" name="icon" onChange={e => fileImg = e.target.files[0]} />
@@ -2464,7 +2263,6 @@ class Main extends React.Component {
                             <section className="col pt-2 contenitore solidgreen latowhite d-flex justify-content-center align-items-center ">
                               <div>
                                 <p className="norfont">Changes made!</p>
-                                {/* <p className="smallfont">Press "Close" to apply.</p> */}
                               </div>
                             </section>
                           </div>
@@ -2478,7 +2276,6 @@ class Main extends React.Component {
                             <section className="col pt-2 contenitore solidblue latowhite d-flex justify-content-center align-items-center ">
                               <div>
                                 <p className="norfont">Loading data... Please wait.</p>
-                                {/* <p className="smallfont">Please wait.</p> */}
                               </div>
                             </section>
                           </div>
@@ -2519,7 +2316,6 @@ class Main extends React.Component {
                             <section className="col pt-2 contenitore solidgreen latowhite d-flex justify-content-center align-items-center ">
                               <div>
                                 <p className="norfont">App added!</p>
-                                {/* <p className="smallfont">Press "Close" to apply.</p> */}
                               </div>
                             </section>
                           </div>
@@ -2533,7 +2329,6 @@ class Main extends React.Component {
                             <section className="col pt-2 contenitore solidblue latowhite d-flex justify-content-center align-items-center ">
                               <div>
                                 <p className="norfont">Loading data... Please wait.</p>
-                                {/* <p className="smallfont">Please wait.</p> */}
                               </div>
                             </section>
                           </div>
@@ -2547,7 +2342,6 @@ class Main extends React.Component {
                             <section className="col pt-2 contenitore brick latowhite d-flex justify-content-center align-items-center ">
                               <div>
                                 <p className="norfont">Error! Fill in all fields.</p>
-                                {/* <p className="smallfont">Make sure you have filled in all fields.</p> */}
                               </div>
                             </section>
                           </div>
@@ -2571,7 +2365,6 @@ class Main extends React.Component {
                           <section className="col pt-2 contenitore solidgreen latowhite d-flex justify-content-center align-items-center ">
                             <div>
                               <p className="norfont">Application removed!</p>
-                              {/* <p className="smallfont">Press "Close" to apply.</p> */}
                             </div>
                           </section>
                         </div>
@@ -2794,7 +2587,6 @@ class Main extends React.Component {
                 <div className="modal-body-dark">
                   <form id="searchForm" onKeyDown={this.handleKeyDown}>
                     <div className="form-group">
-                      {/* <label>Search</label> */}
                       <input type="text" className="form-control contenitore" onChange={e => temp = e.target.value} placeholder={"Search movie..."} />
                     </div>
                     <Conferma alShow={this.state.alShow} handleClose={this.hideAlert}>
@@ -2846,12 +2638,6 @@ class Main extends React.Component {
                   <h5 className="modal-title-dark" >"{tempAppTitle}"</h5>
                 </div>
                 <div className="modal-body-dark">
-                  {/* <VideoPlayer vLink={tempAppLink}></VideoPlayer> */}
-                  {/* <center>
-                    <video controls width="70%" class="rounded">
-                      <source src={this.state.videoLink}></source>
-                    </video>
-                  </center> */}
                   <center>
                     <iframe width="100%" height="350" src={this.state.videoLink} frameborder="0" allowfullscreen="true"></iframe>
                   </center>
@@ -2860,7 +2646,6 @@ class Main extends React.Component {
             </AppVideoDialog>
             <div className="stickytop">
               {head}
-              {/* {headButtons} */}
               {buttons}
             </div>
             {/* APPS */}
@@ -2939,7 +2724,6 @@ class App extends React.Component {
       appBtn = (
         <div className="appcontainer">
           <a title={this.props.title} onClick={() => this.props.appVideo("AppVideo", this.props.pos)}>
-            {/* < a title={this.props.title} href={this.props.link} target="_blank"> */}
             <img className="apps" title={this.props.title} alt={this.props.title} src={this.props.icon} />
           </a>
           <h4><p className="lato"><b>{this.props.title}</b></p></h4>
@@ -3108,26 +2892,6 @@ class Dropdown extends React.Component {
             }}>
             Credits
           </button>
-
-          {/* <a className="menuItem green m-1"
-            onClick={() => {
-              // window.location = "./searching.php";
-              this.props.search();
-            }}> */}
-          {/* href="#nogo"> */}
-          {/* Search
-          </a> */}
-          {/* <a className="menuItem blue m-1"
-          onClick={() => {
-            // window.location = "./credits.html";
-            this.props.exCrsShow();
-          }}>
-          Credits
-          </a> */}
-          {/* <a className="dropdown-item" href="#nogo">
-            Item 3
-          </a> */}
-
         </div>
       </div>
     );

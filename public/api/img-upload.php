@@ -3,7 +3,7 @@ header("Content-Type: application/json");
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: PUT, GET, POST");
 
-// For XAMPP suppress notice and warning
+// For XAMPP - Suppress notice and warning
 // ini_set('display_errors', 0);
 // error_reporting(E_ERROR | E_WARNING | E_PARSE);
 
@@ -123,12 +123,9 @@ if ($_FILES['logo']) {
 } else if ($_POST['config']) {
     $json = $_POST["config"];
     $error = null;
-    // if (is_array($_POST) && !empty($_POST["error"])) {
     if (is_array($_POST) && !empty($_POST["config"]["error"])) {
-        // $error = $_POST["error"];
         $error = $_POST["config"]["error"];
     }
-    // $error = array('err' => $_POST["config"]["error"]);
 
     if ($error > 0) {
         $response = array(
@@ -156,10 +153,8 @@ if ($_FILES['logo']) {
     $del_name = $_POST["logo"];
     $error = null;
     if (is_array($_POST) && !empty($_POST["logo"]["error"])) {
-        // $error = $_POST["error"];
         $error = $_POST["logo"]["error"];
     }
-    // $error[] = $_POST["logo"]["error"];
 
     if ($error > 0) {
         $response = array(
@@ -186,10 +181,8 @@ if ($_FILES['logo']) {
     $del_name = $_POST["back"];
     $error = null;
     if (is_array($_POST) && !empty($_POST["back"]["error"])) {
-        // $error = $_POST["error"];
         $error = $_POST["back"]["error"];
     }
-    // $error = $_POST["back"]["error"];
 
     if ($error > 0) {
         $response = array(
@@ -216,10 +209,8 @@ if ($_FILES['logo']) {
     $del_name = $_POST["icon"];
     $error = null;
     if (is_array($_POST) && !empty($_POST["icon"]["error"])) {
-        // $error = $_POST["error"];
         $error = $_POST["icon"]["error"];
     }
-    // $error = $_POST["icon"]["error"];
 
     if ($error > 0) {
         $response = array(
