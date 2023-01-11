@@ -2986,6 +2986,64 @@ class App extends React.Component {
   }
 }
 
+class Credit extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    let creditBtn = ""
+    if (this.props.showCreditBtn === "ShowCreditBtn" && this.props.title !== "Add Item") {
+      creditBtn = (
+        <div className="appcontainer">
+          <a title={this.props.title} onClick={() => this.props.appVideo("AppVideo", this.props.pos)}>
+            {/* < a title={this.props.title} href={this.props.link} target="_blank"> */}
+            <img className="apps" title={this.props.title} alt={this.props.title} src={this.props.icon} />
+          </a>
+          <h4><p className="lato"><b>{this.props.title}</b></p></h4>
+          <div className="row btncontainer">
+            <button className="col appbutton solidgreen m-1" onClick={() => this.props.appEditDel("AppEdit", this.props.pos)}>
+              Edit
+            </button>
+            <button className="col appbutton solidbrick m-1" onClick={() => this.props.appEditDel("AppDel", this.props.pos)}>
+              Remove
+            </button>
+          </div>
+        </div>
+      )
+    } else if (this.props.title === "Add Item") {
+      creditBtn = (
+        <div className="appcontainer">
+          < a title={this.props.title} target="_blank" onClick={() => this.props.appAddItem("AddItem", this.props.pos)} >
+            <img className="apps" title={this.props.title} alt={this.props.title} src={this.props.icon} />
+          </a>
+          <h4><p className="lato"><b>{this.props.title}</b></p></h4>
+          <div className="row btncontainer">
+            <button className="col addbutton solidgreen m-1" onClick={() => this.props.appAddItem("AddItem", this.props.pos)}>
+              Add Item
+            </button>
+          </div>
+        </div>
+      )
+    } else {
+      creditBtn = (
+        <div className="appcontainer">
+          < a title={this.props.title} onClick={() => this.props.appVideo("AppVideo", this.props.pos)}>
+            {/* < a title={this.props.title} href={this.props.link} target="_blank" > */}
+            <img className="apps" title={this.props.title} alt={this.props.title} src={this.props.icon} />
+          </a>
+          <h4><p className="lato"><b>{this.props.title}</b></p></h4>
+        </div>
+      )
+    }
+    return (
+      <>
+        {creditBtn}
+      </>
+    );
+  }
+}
+
 class AppSearchRes extends React.Component {
   constructor(props) {
     super(props);
