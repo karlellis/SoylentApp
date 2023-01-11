@@ -863,6 +863,7 @@ class Main extends React.Component {
       // console.log("Titolo: " + spData.headTitle);
       spData.headColor = this.hexToRgb(tempColor) + ", 0.95)";
       // console.log("Colore: " + spData.headColor);
+      temp = "";
       this.setState({ alShow: true });
       this.setState({ alErrShow: false });
       this.saveFile(spData, "./api/img-upload.php", "config");
@@ -1434,6 +1435,7 @@ class Main extends React.Component {
     }
 
   }
+
   render() {
     // const { headShow: headShow } = this.state;
     // const { footShow: footShow } = this.state;
