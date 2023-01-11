@@ -4,8 +4,16 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: PUT, GET, POST");
 
 // For XAMPP suppress notice and warning
-ini_set('display_errors', 0);
-error_reporting(E_WARNING | E_PARSE);
+// ini_set('display_errors', 0);
+// error_reporting(E_ERROR | E_WARNING | E_PARSE);
+
+$default = [
+    'logo' => '',
+    'back' => '',
+    'icon' => ''
+ ];
+
+$_FILES = array_replace( $default, $_FILES );
 
 $response = array();
 if ($_FILES['logo']) {
@@ -106,7 +114,7 @@ if ($_FILES['logo']) {
     }
 } else if ($_POST['config']) {
     $json = $_POST["config"];
-    // $error = null;
+    $error = null;
     // if (is_array($_POST) && !empty($_POST["error"])) {
     if (is_array($_POST) && !empty($_POST["config"]["error"])) {
     // $error = $_POST["error"];
