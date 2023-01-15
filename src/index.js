@@ -6,6 +6,8 @@ import "./index.css";
 // import { ReactComponent as GearIcon } from "./srcimg/gear.svg";
 const bcrypt = require("bcryptjs")
 
+// var title = "Page Title";
+// var description = "Page descriptiion"
 var fileImg = null;
 var tempUser = "";
 var tempPsw = "";
@@ -44,6 +46,24 @@ var spData = require("./initData.json");
 // const sleep = (milliseconds) => {
 //   return new Promise(resolve => setTimeout(resolve, milliseconds))
 // }
+
+const metaAdder = (queryProperty, value) => {
+  // Get an element if it exists already
+  let element = document.querySelector(`meta[${queryProperty}]`);
+
+  // Check if the element exists
+  if (element) {
+    // If it does just change the content of the element
+    element.setAttribute("content", value);
+  } else {
+    // It doesn't exist so lets make a HTML element string with the info we want
+    element = `<meta ${queryProperty} content="${value}" />`;
+
+    // And insert it into the head
+    document.head.insertAdjacentHTML("beforeend", element);
+
+  }
+};
 
 const Menu = ({ menuShow, children, mainBtn }) => {
   const showHideClassName = menuShow ? "d-block" : "d-none";
@@ -626,6 +646,8 @@ class Main extends React.Component {
           disFieldC2: spData.noFootCreditiSubtitle,
           disFieldC3: spData.noFootCreditiSubtitle2
         });
+        document.title = spData.headTitle;
+        document.querySelector('meta[name="description"]').setAttribute("content", spData.footTitle);
         // console.log("NobackImage:", spData.noBackImage);
         if (spData.noBackImage === true) {
           this.setState({
@@ -654,11 +676,14 @@ class Main extends React.Component {
         // console.log("Hashed first password: ", hashPassword(password));
       })
     })
+    // document.title = spData.headTitle;
+    // document.querySelector('meta[name="description"]').setAttribute("content", spData.footTitle);
   }
 
   componentDidUpdate() {
     this.userInput.focus();
     this.userChangeInput.focus();
+    this.searchInput.focus();
   }
 
   saveFile(file, url, key) {
@@ -1410,6 +1435,7 @@ class Main extends React.Component {
 
   search() {
     this.showModal("search");
+    this.searchInput.focus();
   }
 
   stopVideos = () => {
@@ -1434,16 +1460,16 @@ class Main extends React.Component {
     const { disFieldC: disFieldC } = this.state;
     const { disFieldC2: disFieldC2 } = this.state;
     const { disFieldC3: disFieldC3 } = this.state;
-    let head = "";
+    // let head = "";
     let menuButtons = (
       <>
         <Dropdown search={this.search} exCrsShow={this.exCrsShow} />
       </>
     );
     let buttons = "";
-    let foot = "";
+    // let foot = "";
 
-    head = (
+    let head = (
       <div className="row text-center mt-2 mb-2">
         <div className="col">
           <div className="row">
@@ -1523,7 +1549,7 @@ class Main extends React.Component {
       )
     }
 
-    foot = (
+    let foot = (
       <div className="row mt-2 mb-2">
         <div className="col">
           <div className="row">
@@ -1728,7 +1754,7 @@ class Main extends React.Component {
                       </div>
                     </div>
                     <div className="form-group">
-                      <label>Site name</label>
+                      <label>Site name - used as "Page Title"</label>
                       <input type="text" className="form-control" defaultValue={spData.headTitle} onChange={e => temp = e.target.value} /*placeholder={spData.headTitle}*/ />
                     </div>
                     <div className="form-group">
@@ -1919,7 +1945,7 @@ class Main extends React.Component {
                       </div>
                     </div>
                     <div className="form-group">
-                      <label>Main info</label>
+                      <label>Main info - used as "Page Description"</label>
                       <div className="row text-center mt-2 mb-2">
                         <div className="col">
                           <div className="row">
@@ -2587,7 +2613,7 @@ class Main extends React.Component {
                 <div className="modal-body-dark">
                   <form id="searchForm" onKeyDown={this.handleKeyDown}>
                     <div className="form-group">
-                      <input type="text" className="form-control contenitore" onChange={e => temp = e.target.value} placeholder={"Search movie..."} />
+                      <input type="text" className="form-control contenitore" ref={(input) => { this.searchInput = input; }} onChange={e => temp = e.target.value} placeholder={"Search movie..."} />
                     </div>
                     <Conferma alShow={this.state.alShow} handleClose={this.hideAlert}>
                       <div className="row text-center pt-2">
