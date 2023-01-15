@@ -21,8 +21,6 @@
     "footCreditColor": "rgba(0, 177, 64, 0.95)",
     "clockColor": "rgba(216, 66, 6, 0.7)",
     "backgroundColor": "rgb(255, 234, 154)",
-    "user": "$2a$10$oUUfl/54KgMkkiFdkICeMeXIAqS5Y/GXaYKIEvLAwqCZc2svcOLK.",
-    "password": "$2a$10$oUUfl/54KgMkkiFdkICeMeXIAqS5Y/GXaYKIEvLAwqCZc2svcOLK.",
     "headShow": false,
     "footShow": false,
     "infoShow": true,

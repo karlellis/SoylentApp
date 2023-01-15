@@ -21,8 +21,6 @@
   "footCreditColor": "rgba(0, 177, 64, 0.95)",
   "clockColor": "rgba(216, 66, 6, 0.7)",
   "backgroundColor": "rgba(255, 238, 204, 0.7)",
-  "user": "",
-  "password": "",
   "headShow": false,
   "footShow": false,
   "infoShow": true,

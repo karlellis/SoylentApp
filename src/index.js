@@ -9,6 +9,7 @@ const bcrypt = require("bcryptjs")
 // var title = "Page Title";
 // var description = "Page descriptiion"
 var fileImg = null;
+var credentials = require("./initSec.json");
 var tempUser = "";
 var tempPsw = "";
 var temp = "";
@@ -528,6 +529,23 @@ async function fetchUpConfig(file, url, key) {
   }).then((response) => response.json())
     .then((json) => {
       // console.log("Json status: " + json.status);
+    });
+}
+
+async function fetchDownCredentials(url) {
+  // var data = new FormData()
+  // data.append(key, JSON.stringify(file))
+  const response = await fetch(url, {
+    method: 'GET',
+    headers: {
+      'Accept': '*/*'
+    },
+    // body: data
+  }).then((response) => response.json())
+    .then((json) => {
+      credentials = json;
+      // console.log("User: " + credentials.user);
+      // console.log("Password: " + credentials.password);
     });
 }
 
@@ -1133,6 +1151,7 @@ class Main extends React.Component {
     if (login === false) {
       this.showModal("login");
       this.userInput.focus();
+      fetchDownCredentials("./api/img-upload.php");
     } else {
       this.showMainButtons();
     }
@@ -1147,9 +1166,9 @@ class Main extends React.Component {
   loginCheck = () => {
     // console.log("Login User: " + temp);
     // console.log("Login Psw: " + temp2);
-    comparePassword(temp2, spData.password)
+    comparePassword(temp2, credentials.password)
       .then(pass => {
-        comparePassword(temp, spData.user)
+        comparePassword(temp, credentials.user)
           .then(user => {
             // console.log("PassResult: ", pass)
             // console.log("UserResult: ", user)
@@ -1183,13 +1202,16 @@ class Main extends React.Component {
       hashUsrPsw(temp, temp2)
         .then(result => {
           // console.log(result)
-          spData.user = result[0];
+          credentials.user = result[0];
           // console.log("User: " + temp)
           // console.log("UserHash: " + spData.user)
-          spData.password = result[1];
+          credentials.password = result[1];
           // console.log("Psw: " + temp2)
           // console.log("PswHash: " + spData.password)
-          this.saveFile(spData, "./api/img-upload.php", "config");
+
+          this.saveFile(credentials, "./api/img-upload.php", "credentials");
+          // this.saveFile(spData, "./api/img-upload.php", "config");
+
           temp = "";
           temp2 = "";
           this.setState({ alShow: true });

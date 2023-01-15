@@ -17,11 +17,19 @@ $default2 = [
     'logo' => '',
     'back' => '',
     'icon' => '',
-    'config' => ''
+    'config' => '',
+    'credentials' => ''
+];
+
+$default3 = [
+    'credentials' => '',
 ];
 
 $_POST = array_replace($default2, $_POST);
 $_FILES = array_replace($default, $_FILES);
+$_GET = array_replace($default3, $_GET);
+
+$credentials = json_decode(file_get_contents('../sec/sec.json'), true);
 
 $response = array();
 if ($_FILES['logo']) {
@@ -149,6 +157,35 @@ if ($_FILES['logo']) {
             );
         }
     }
+} else if ($_POST['credentials']) {
+    $json = $_POST["credentials"];
+    $error = null;
+    if (is_array($_POST) && !empty($_POST["credentials"]["error"])) {
+        $error = $_POST["credentials"]["error"];
+    }
+
+    if ($error > 0) {
+        $response = array(
+            "status" => "error",
+            "error" => true,
+            "message" => "Error uploading credentials file!"
+        );
+    } else {
+        //write json to file
+        if (file_put_contents("../sec/sec.json", $json)) {
+            $response = array(
+                "status" => "success",
+                "error" => false,
+                "message" => "CredentialsJsonOk",
+            );
+        } else {
+            $response = array(
+                "status" => "error",
+                "error" => true,
+                "message" => "CredentialsJsonError"
+            );
+        }
+    }
 } else if ($_POST['logo']) {
     $del_name = $_POST["logo"];
     $error = null;
@@ -233,6 +270,8 @@ if ($_FILES['logo']) {
             );
         }
     }
+} else if ($_GET) {
+    $response = $credentials;
 } else {
     $response = array(
         "status" => "error",
