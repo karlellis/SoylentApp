@@ -309,6 +309,14 @@ input:checked+.slider:before {
 	text-align: center; */
 }
 
+.latoplain {
+	/* color: white !important; */
+	font-family: Lato, monospace;
+	font-style: normal;
+	/* margin: auto;
+	text-align: center; */
+}
+
 .lato {
 	color: gainsboro !important;
 	background-color: rgba(47, 79, 79, 0.7) !important;

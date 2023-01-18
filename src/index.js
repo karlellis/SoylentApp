@@ -90,7 +90,7 @@ const Info = ({ infoShow, children, mainBtn }) => {
   const showHideClassName = infoShow ? "d-block" : "d-none";
   const justifyCenterEnd = mainBtn ? "justify-content-end" : "justify-content-center";
   return (
-    <section id="FootInfo" style={{ backgroundColor: spData.footInfoColor }} className={showHideClassName + " " + justifyCenterEnd + " col latowhite d-flex flex-column align-items-center"}>
+    <section id="FootInfo" style={{ backgroundColor: spData.footInfoColor, color: "black" }} className={showHideClassName + " " + justifyCenterEnd + " col latoplain d-flex flex-column align-items-center"}>
       {children}
     </section>
   );
@@ -151,7 +151,7 @@ const Logo = ({ logoShow, children, mainBtn }) => {
   const showHideClassName = logoShow ? "d-block" : "d-none";
   const justifyCenterEnd = mainBtn ? "justify-content-end" : "justify-content-center";
   return (
-    <section id="HeadLogo" style={{ backgroundColor: spData.logoColor }} className={showHideClassName + " " + justifyCenterEnd + " col-md d-flex flex-column justify-content-end align-items-center"}>
+    <section id="HeadLogo" style={{ backgroundColor: spData.logoColor }} className={showHideClassName + " " + justifyCenterEnd + " col d-flex flex-column justify-content-end align-items-center"}>
       {children}
     </section>
   );
