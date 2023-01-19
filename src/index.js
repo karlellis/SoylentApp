@@ -1511,11 +1511,11 @@ class Main extends React.Component {
               {/* TITOLO */}
               <div>
                 <p className="medfont">{spData.headTitle}</p>
-                <p className="smallfont lato button" title={spData.headSubtitle}>
+                {/* <p className="smallfont lato button" title={spData.headSubtitle}>
                   <a href={spData.headSubtitleLink}>
                     {spData.headSubtitle}
                   </a>
-                </p>
+                </p> */}
               </div>
               <EditTitolo editTitleShow={this.state.mainBtn} hidden={spData.titleShow}>
                 <button className="col flexbutton solidgreen m-1" onClick={() => this.headTitleEdit("TitleEdit")}>
@@ -1800,12 +1800,22 @@ class Main extends React.Component {
                       </div>
                     </div>
 
-                    {/* <div className="form-group">
-                      <label>Background color</label>
+                    <div class="form-group">
+                      <label class="col-sm-4 control-label">Block width</label>
+                      <div class="col-sm-8 ml-2 mr-2">
+                        <label class="radio-inline"> <input type="radio" name="Block width" id="col" value="col" checked /> Auto </label>
+                        <label class="radio-inline"> <input type="radio" name="Block width" id="col1" value="col-1" /> 1 </label>
+                        <label class="radio-inline"> <input type="radio" name="Block width" id="col2" value="col-2" /> 2 </label>
+                        <label class="radio-inline"> <input type="radio" name="Block width" id="col3" value="col-3" /> 3 </label>
+                        <label class="radio-inline"> <input type="radio" name="Block width" id="col4" value="col-4" /> 4 </label>
+                        <label class="radio-inline"> <input type="radio" name="Block width" id="col5" value="col-5" /> 5 </label>
+                      </div>
+                    </div>
+
+                    <div className="form-group">
+                      <label>Block width</label>
                       <input type="color" className="form-control" defaultValue={this.rgbToHex(spData.headColor)} onChange={e => tempColor = e.target.value} />
-                      <label>Text color</label>
-                      <input type="color" className="form-control" defaultValue={this.rgbToHex(spData.headTextColor)} onChange={e => tempTextColor = e.target.value} />
-                    </div> */}
+                    </div>
 
                     <Conferma alShow={this.state.alShow} handleClose={this.hideAlert}>
                       <div className="row text-center pt-2">
@@ -2778,9 +2788,14 @@ class LogoImg extends React.Component {
   constructor(props) {
     super(props);
   }
+  link = spData.homeLink;
   render() {
+    const logoClick = () => {
+      window.location.href = spData.homeLink;
+    }
     return (
-      <img className="logo mt-2 mb-2" title="Logo" alt="Logo" src={spData.LogoIcon} />
+      <img className="logo mt-2 mb-2" title="Home" alt="Logo" src={spData.LogoIcon}
+        onClick={() => logoClick()} />
     );
   }
 }
