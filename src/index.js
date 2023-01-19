@@ -16,6 +16,7 @@ var temp = "";
 var temp2 = "";
 var temp3 = "";
 var tempColor = "#0077c8";
+var tempTextColor = "#0077c8";
 // var tempOpacity = "";
 var tempAppTitle = "";
 var tempAppLink = "";
@@ -48,29 +49,29 @@ var spData = require("./initData.json");
 //   return new Promise(resolve => setTimeout(resolve, milliseconds))
 // }
 
-const metaAdder = (queryProperty, value) => {
-  // Get an element if it exists already
-  let element = document.querySelector(`meta[${queryProperty}]`);
+// const metaAdder = (queryProperty, value) => {
+//   // Get an element if it exists already
+//   let element = document.querySelector(`meta[${queryProperty}]`);
 
-  // Check if the element exists
-  if (element) {
-    // If it does just change the content of the element
-    element.setAttribute("content", value);
-  } else {
-    // It doesn't exist so lets make a HTML element string with the info we want
-    element = `<meta ${queryProperty} content="${value}" />`;
+//   // Check if the element exists
+//   if (element) {
+//     // If it does just change the content of the element
+//     element.setAttribute("content", value);
+//   } else {
+//     // It doesn't exist so lets make a HTML element string with the info we want
+//     element = `<meta ${queryProperty} content="${value}" />`;
 
-    // And insert it into the head
-    document.head.insertAdjacentHTML("beforeend", element);
+//     // And insert it into the head
+//     document.head.insertAdjacentHTML("beforeend", element);
 
-  }
-};
+//   }
+// };
 
 const Menu = ({ menuShow, children, mainBtn }) => {
   const showHideClassName = menuShow ? "d-block" : "d-none";
   const justifyCenterEnd = mainBtn ? "justify-content-end" : "justify-content-center";
   return (
-    <section id="HeadMenu" style={{ backgroundColor: spData.menuColor }} className={showHideClassName + " " + justifyCenterEnd + " col-md-1 d-flex flex-column align-items-center"}>
+    <section id="HeadMenu" style={{ backgroundColor: spData.menuColor, color: spData.menuTextColor }} className={showHideClassName + " " + justifyCenterEnd + " col-md-1 d-flex flex-column align-items-center"}>
       {children}
     </section>
   );
@@ -90,7 +91,7 @@ const Info = ({ infoShow, children, mainBtn }) => {
   const showHideClassName = infoShow ? "d-block" : "d-none";
   const justifyCenterEnd = mainBtn ? "justify-content-end" : "justify-content-center";
   return (
-    <section id="FootInfo" style={{ backgroundColor: spData.footInfoColor, color: "black" }} className={showHideClassName + " " + justifyCenterEnd + " col latoplain d-flex flex-column align-items-center"}>
+    <section id="FootInfo" style={{ backgroundColor: spData.footInfoColor, color: spData.footInfoTextColor }} className={showHideClassName + " " + justifyCenterEnd + " col latoplain d-flex flex-column align-items-center"}>
       {children}
     </section>
   );
@@ -111,7 +112,7 @@ const Crediti = ({ creditShow, children, infoShow, mainBtn }) => {
   const justifyCenterEnd = mainBtn ? "justify-content-end" : "justify-content-center";
   const colMd3 = infoShow ? "col-md-3" : "col";
   return (
-    <section id="FootCrediti" style={{ backgroundColor: spData.footCreditColor }} className={showHideClassName + " " + justifyCenterEnd + " " + colMd3 + " latowhite d-flex flex-column align-items-center"}>
+    <section id="FootCrediti" style={{ backgroundColor: spData.footCreditColor, color: spData.footCreditTextColor }} className={showHideClassName + " " + justifyCenterEnd + " " + colMd3 + " latowhite d-flex flex-column align-items-center"}>
       {children}
     </section>
   );
@@ -131,7 +132,7 @@ const Titolo = ({ titleShow, children, mainBtn }) => {
   const showHideClassName = titleShow ? "d-block" : "d-none";
   const justifyCenterEnd = mainBtn ? "justify-content-end" : "justify-content-center";
   return (
-    <section id="HeadTitle" style={{ backgroundColor: spData.headColor }} className={showHideClassName + " " + justifyCenterEnd + " col latowhite d-flex flex-column align-items-center"}>
+    <section id="HeadTitle" style={{ backgroundColor: spData.headColor, color: spData.headTextColor }} className={showHideClassName + " " + justifyCenterEnd + " col latoplain d-flex flex-column align-items-center"}>
       {children}
     </section>
   );
@@ -171,7 +172,7 @@ const Clock = ({ clockShow, children, mainBtn }) => {
   const showHideClassName = clockShow ? "d-block" : "d-none";
   const justifyCenterEnd = mainBtn ? "justify-content-end" : "justify-content-center";
   return (
-    <section id="HeadDate" style={{ backgroundColor: spData.clockColor }} className={showHideClassName + " " + justifyCenterEnd + " col-md latowhite d-flex flex-column align-items-center"}>
+    <section id="HeadDate" style={{ backgroundColor: spData.clockColor, color: spData.clockTextColor }} className={showHideClassName + " " + justifyCenterEnd + " col-md latowhite d-flex flex-column align-items-center"}>
       {children}
     </section>
   );
@@ -881,6 +882,7 @@ class Main extends React.Component {
       spData.headTitle = temp;
       // console.log("Titolo: " + spData.headTitle);
       spData.headColor = this.hexToRgb(tempColor) + ", 0.95)";
+      spData.headTextColor = this.hexToRgb(tempTextColor) + ", 1)";
       // console.log("Colore: " + spData.headColor);
       if (blockHide !== "none") {
         spData.titleShow = blockHide;
@@ -1231,6 +1233,7 @@ class Main extends React.Component {
     if (id === "title") {
       temp = spData.headTitle;
       tempColor = this.rgbToHex(spData.headColor);
+      tempTextColor = this.rgbToHex(spData.headTextColor);
       // console.log("Titolo Colore showModal:", this.rgbToHex(spData.headColor));
       this.setState({ titleDiaShow: true });
     } else if (id === "login") {
@@ -1508,7 +1511,7 @@ class Main extends React.Component {
               {/* TITOLO */}
               <div>
                 <p className="medfont">{spData.headTitle}</p>
-                <p className="smallfont" title={spData.headSubtitle}>
+                <p className="smallfont lato button" title={spData.headSubtitle}>
                   <a href={spData.headSubtitleLink}>
                     {spData.headSubtitle}
                   </a>
@@ -1779,10 +1782,31 @@ class Main extends React.Component {
                       <label>Site name - used as "Page Title"</label>
                       <input type="text" className="form-control" defaultValue={spData.headTitle} onChange={e => temp = e.target.value} /*placeholder={spData.headTitle}*/ />
                     </div>
+
                     <div className="form-group">
+                      <div className="row text-center mt-2 mb-2">
+                        <div className="col">
+                          <div className="row">
+                            <div className="col pt-2 pb-2 d-flex flex-column justify-content-end align-items-center">
+                              <label>Background color</label>
+                              <input type="color" className="form-control" defaultValue={this.rgbToHex(spData.headColor)} onChange={e => tempColor = e.target.value} />
+                            </div>
+                            <div className="col pt-2 pb-2 d-flex flex-column justify-content-end align-items-center">
+                              <label>Text color</label>
+                              <input type="color" className="form-control" defaultValue={this.rgbToHex(spData.headTextColor)} onChange={e => tempTextColor = e.target.value} />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* <div className="form-group">
                       <label>Background color</label>
                       <input type="color" className="form-control" defaultValue={this.rgbToHex(spData.headColor)} onChange={e => tempColor = e.target.value} />
-                    </div>
+                      <label>Text color</label>
+                      <input type="color" className="form-control" defaultValue={this.rgbToHex(spData.headTextColor)} onChange={e => tempTextColor = e.target.value} />
+                    </div> */}
+
                     <Conferma alShow={this.state.alShow} handleClose={this.hideAlert}>
                       <div className="row text-center pt-2">
                         <div className="col">
