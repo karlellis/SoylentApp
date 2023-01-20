@@ -882,24 +882,25 @@ class Main extends React.Component {
   saveTitle = () => {
     if (temp !== "") {
       spData.headTitle = temp;
-      // console.log("Titolo: " + spData.headTitle);
-      spData.headColor = this.hexToRgb(tempColor) + ", 0.95)";
-      spData.headTextColor = this.hexToRgb(tempTextColor) + ", 1)";
-      spData.headColW = tempColW;
-      // console.log("Colore: " + spData.headColor);
-      if (blockHide !== "none") {
-        spData.titleShow = blockHide;
-      }
-      blockHide = "none";
-      temp = "";
-      this.setState({ alShow: true });
-      this.setState({ alErrShow: false });
-      this.saveFile(spData, "./api/img-upload.php", "config");
+    } 
+    // else {
+    //   this.setState({ alErrShow: true });
+    //   this.setState({ alShow: false });
+    // }
+    // console.log("Titolo: " + spData.headTitle);
+    spData.headColor = this.hexToRgb(tempColor) + ", 0.95)";
+    spData.headTextColor = this.hexToRgb(tempTextColor) + ", 1)";
+    spData.headColW = tempColW;
+    // console.log("Colore: " + spData.headColor);
+    if (blockHide !== "none") {
+      spData.titleShow = blockHide;
     }
-    else {
-      this.setState({ alErrShow: true });
-      this.setState({ alShow: false });
-    }
+    blockHide = "none";
+    temp = "";
+    this.setState({ alShow: true });
+    this.setState({ alErrShow: false });
+    this.saveFile(spData, "./api/img-upload.php", "config");
+
   }
 
   appSearchReset = () => {
