@@ -93,7 +93,7 @@ const Info = ({ infoShow, children, mainBtn }) => {
   const showHideClassName = infoShow ? "d-block" : "d-none";
   const justifyCenterEnd = mainBtn ? "justify-content-end" : "justify-content-center";
   return (
-    <section id="FootInfo" style={{ backgroundColor: spData.footInfoColor, color: spData.footInfoTextColor }} className={showHideClassName + " " + justifyCenterEnd + " col latoplain d-flex flex-column align-items-center"}>
+    <section id="FootInfo" style={{ backgroundColor: spData.footInfoColor, color: spData.footInfoTextColor }} className={showHideClassName + " " + justifyCenterEnd + " " + spData.footInfoColW + " latoplain d-flex flex-column align-items-center"}>
       {children}
     </section>
   );
@@ -112,9 +112,9 @@ const EditInfo = ({ editInfoShow, children, hidden }) => {
 const Crediti = ({ creditShow, children, infoShow, mainBtn }) => {
   const showHideClassName = creditShow ? "d-block" : "d-none";
   const justifyCenterEnd = mainBtn ? "justify-content-end" : "justify-content-center";
-  const colMd3 = infoShow ? "col-md-3" : "col";
+  // const colMd3 = infoShow ? "col-md-3" : "col";
   return (
-    <section id="FootCrediti" style={{ backgroundColor: spData.footCreditColor, color: spData.footCreditTextColor }} className={showHideClassName + " " + justifyCenterEnd + " " + colMd3 + " latowhite d-flex flex-column align-items-center"}>
+    <section id="FootCrediti" style={{ backgroundColor: spData.footCreditColor, color: spData.footCreditTextColor }} className={showHideClassName + " " + justifyCenterEnd + " " + spData.footCreditColW + " latoplain d-flex flex-column align-items-center"}>
       {children}
     </section>
   );
@@ -154,7 +154,7 @@ const Logo = ({ logoShow, children, mainBtn }) => {
   const showHideClassName = logoShow ? "d-block" : "d-none";
   const justifyCenterEnd = mainBtn ? "justify-content-end" : "justify-content-center";
   return (
-    <section id="HeadLogo" style={{ backgroundColor: spData.logoColor }} className={showHideClassName + " " + justifyCenterEnd + " col d-flex flex-column justify-content-end align-items-center"}>
+    <section id="HeadLogo" style={{ backgroundColor: spData.logoColor }} className={showHideClassName + " " + justifyCenterEnd + " " + spData.logoColW + " d-flex flex-column justify-content-end align-items-center"}>
       {children}
     </section>
   );
@@ -174,7 +174,7 @@ const Clock = ({ clockShow, children, mainBtn }) => {
   const showHideClassName = clockShow ? "d-block" : "d-none";
   const justifyCenterEnd = mainBtn ? "justify-content-end" : "justify-content-center";
   return (
-    <section id="HeadDate" style={{ backgroundColor: spData.clockColor, color: spData.clockTextColor }} className={showHideClassName + " " + justifyCenterEnd + " col-md latowhite d-flex flex-column align-items-center"}>
+    <section id="HeadDate" style={{ backgroundColor: spData.clockColor, color: spData.clockTextColor }} className={showHideClassName + " " + justifyCenterEnd + " " + spData.clockColW + " latoplain d-flex flex-column align-items-center"}>
       {children}
     </section>
   );
@@ -947,6 +947,8 @@ class Main extends React.Component {
   saveClock = () => {
     // console.log(tempColor);
     spData.clockColor = this.hexToRgb(tempColor) + ", 0.7)";
+    spData.clockTextColor = this.hexToRgb(tempTextColor) + ", 1)";
+    spData.clockColW = tempColW;
     if (blockHide !== "none") {
       spData.clockShow = blockHide;
     }
@@ -988,6 +990,8 @@ class Main extends React.Component {
       spData.footSubtitle2 = "";
     }
     spData.footInfoColor = this.hexToRgb(tempColor) + ", 0.7)";
+    spData.footInfoTextColor = this.hexToRgb(tempTextColor) + ", 1)";
+    spData.footInfoColW = tempColW;
     if (blockHide !== "none") {
       spData.infoShow = blockHide;
     }
@@ -1019,6 +1023,8 @@ class Main extends React.Component {
       spData.footCreditiSubtitle2 = "";
     }
     spData.footCreditColor = this.hexToRgb(tempColor) + ", 0.7)";
+    spData.footCreditTextColor = this.hexToRgb(tempTextColor) + ", 1)";
+    spData.footCreditColW = tempColW;
     if (blockHide !== "none") {
       spData.creditShow = blockHide;
     }
@@ -1135,12 +1141,14 @@ class Main extends React.Component {
       tempIcon = spData.LogoIcon;
       this.saveImgFile(fileImg, "logo", "edit");
       spData.logoColor = this.hexToRgb(tempColor) + ", 0.7)";
+      spData.logoColW = tempColW;
       if (blockHide !== "none") {
         spData.logoShow = blockHide;
       }
       blockHide = "none";
     } else {
       spData.logoColor = this.hexToRgb(tempColor) + ", 0.7)";
+      spData.logoColW = tempColW;
       if (blockHide !== "none") {
         spData.logoShow = blockHide;
       }
@@ -1235,8 +1243,6 @@ class Main extends React.Component {
   showModal(id) {
     if (id === "title") {
       temp = spData.headTitle;
-      tempColor = this.rgbToHex(spData.headColor);
-      tempTextColor = this.rgbToHex(spData.headTextColor);
       tempColW = spData.headColW;
       switch (spData.headColW) {
         case "col":
@@ -1263,6 +1269,8 @@ class Main extends React.Component {
           radiobtn = document.getElementById("headCol5");
           radiobtn.checked = true;
       }
+      tempColor = this.rgbToHex(spData.headColor);
+      tempTextColor = this.rgbToHex(spData.headTextColor);
       // console.log("Titolo Colore showModal:", this.rgbToHex(spData.headColor));
       this.setState({ titleDiaShow: true });
     } else if (id === "login") {
@@ -1302,10 +1310,64 @@ class Main extends React.Component {
       tempColor = this.rgbToHex(spData.logoColor);
       this.setState({ logoDiaShow: true });
     } else if (id === "info") {
+      tempColW = spData.footInfoColW;
+      switch (spData.footInfoColW) {
+        case "col":
+          radiobtn = document.getElementById("infoColAuto");
+          radiobtn.checked = true;
+          break;
+        case "col-1":
+          radiobtn = document.getElementById("infoCol1");
+          radiobtn.checked = true;
+          break;
+        case "col-2":
+          radiobtn = document.getElementById("infoCol2");
+          radiobtn.checked = true;
+          break;
+        case "col-3":
+          radiobtn = document.getElementById("infoCol3");
+          radiobtn.checked = true;
+          break;
+        case "col-4":
+          radiobtn = document.getElementById("infoCol4");
+          radiobtn.checked = true;
+          break;
+        case "col-5":
+          radiobtn = document.getElementById("infoCol5");
+          radiobtn.checked = true;
+      }
       tempColor = this.rgbToHex(spData.footInfoColor);
+      tempTextColor = this.rgbToHex(spData.footInfoTextColor);
       this.setState({ infoDiaShow: true });
     } else if (id === "credit") {
+      tempColW = spData.footCreditColW;
+      switch (spData.footCreditColW) {
+        case "col":
+          radiobtn = document.getElementById("creditColAuto");
+          radiobtn.checked = true;
+          break;
+        case "col-1":
+          radiobtn = document.getElementById("creditCol1");
+          radiobtn.checked = true;
+          break;
+        case "col-2":
+          radiobtn = document.getElementById("creditCol2");
+          radiobtn.checked = true;
+          break;
+        case "col-3":
+          radiobtn = document.getElementById("creditCol3");
+          radiobtn.checked = true;
+          break;
+        case "col-4":
+          radiobtn = document.getElementById("creditCol4");
+          radiobtn.checked = true;
+          break;
+        case "col-5":
+          radiobtn = document.getElementById("creditCol5");
+          radiobtn.checked = true;
+      }
       tempColor = this.rgbToHex(spData.footCreditColor);
+      tempTextColor = this.rgbToHex(spData.footCreditTextColor);
       this.setState({ creditDiaShow: true });
     } else if (id === "appEdit") {
       this.setState({ appEditDiaShow: true });
@@ -1323,7 +1385,34 @@ class Main extends React.Component {
       tempColor = this.rgbToHex(spData.backgroundColor);
       this.setState({ backEditDiaShow: true });
     } else if (id === "clock") {
+      tempColW = spData.clockColW;
+      switch (spData.clockColW) {
+        case "col":
+          radiobtn = document.getElementById("clockColAuto");
+          radiobtn.checked = true;
+          break;
+        case "col-1":
+          radiobtn = document.getElementById("clockCol1");
+          radiobtn.checked = true;
+          break;
+        case "col-2":
+          radiobtn = document.getElementById("clockCol2");
+          radiobtn.checked = true;
+          break;
+        case "col-3":
+          radiobtn = document.getElementById("clockCol3");
+          radiobtn.checked = true;
+          break;
+        case "col-4":
+          radiobtn = document.getElementById("clockCol4");
+          radiobtn.checked = true;
+          break;
+        case "col-5":
+          radiobtn = document.getElementById("clockCol5");
+          radiobtn.checked = true;
+      }
       tempColor = this.rgbToHex(spData.clockColor);
+      tempTextColor = this.rgbToHex(spData.clockTextColor);
       this.setState({ clockDiaShow: true });
     }
   };
@@ -1367,6 +1456,7 @@ class Main extends React.Component {
     document.getElementById('backEditForm').reset();
     document.getElementById('clockForm').reset();
     tempColor = "";
+    tempTextColor = "";
     tempColW = "";
     temp3 = "";
     this.setState({
@@ -1840,7 +1930,7 @@ class Main extends React.Component {
                     </div>
 
                     <div class="form-group mt-2 mb-2" name="headBlockWidth" >
-                      <label>Column width</label>
+                      <label>Block width</label>
                       <div className="row border rounded m-auto">
                         <div className="col radio">
                           <label class="radio-inline"> <input type="radio" name="blockWidth" id="headColAuto" value="col" onChange={e => tempColW = e.target.value} /> Auto </label>
@@ -1937,10 +2027,52 @@ class Main extends React.Component {
                         </div>
                       </div>
                     </div>
+
+                    <div class="form-group mt-2 mb-2" name="clockBlockWidth" >
+                      <label>Block width</label>
+                      <div className="row border rounded m-auto">
+                        <div className="col radio">
+                          <label class="radio-inline"> <input type="radio" name="blockWidth" id="clockColAuto" value="col" onChange={e => tempColW = e.target.value} /> Auto </label>
+                        </div>
+                        <div className="col radio">
+                          <label class="radio-inline"> <input type="radio" name="blockWidth" id="clockCol1" value="col-1" onChange={e => tempColW = e.target.value} /> 1 </label>
+                        </div>
+                        <div className="col radio">
+                          <label class="radio-inline"> <input type="radio" name="blockWidth" id="clockCol2" value="col-2" onChange={e => tempColW = e.target.value} /> 2 </label>
+                        </div>
+                        <div className="col radio">
+                          <label class="radio-inline"> <input type="radio" name="blockWidth" id="clockCol3" value="col-3" onChange={e => tempColW = e.target.value} /> 3 </label>
+                        </div>
+                        <div className="col radio">
+                          <label class="radio-inline"> <input type="radio" name="blockWidth" id="clockCol4" value="col-4" onChange={e => tempColW = e.target.value} /> 4 </label>
+                        </div>
+                        <div className="col radio">
+                          <label class="radio-inline"> <input type="radio" name="blockWidth" id="clockCol5" value="col-5" onChange={e => tempColW = e.target.value} /> 5 </label>
+                        </div>
+                      </div>
+                    </div>
+
                     <div className="form-group">
+                      <div className="row mt-2 mb-2">
+                        <div className="col">
+                          <div className="row">
+                            <div className="col pt-2 pb-2 d-flex flex-column justify-content-end align-items-start">
+                              <label>Background color</label>
+                              <input type="color" className="form-control" defaultValue={this.rgbToHex(spData.clockColor)} onChange={e => tempColor = e.target.value} />
+                            </div>
+                            <div className="col pt-2 pb-2 d-flex flex-column justify-content-end align-items-start">
+                              <label>Text color</label>
+                              <input type="color" className="form-control" defaultValue={this.rgbToHex(spData.clockTextColor)} onChange={e => tempTextColor = e.target.value} />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* <div className="form-group">
                       <label>Background color</label>
                       <input type="color" className="form-control" defaultValue={this.rgbToHex(spData.clockColor)} onChange={e => tempColor = e.target.value} />
-                    </div>
+                    </div> */}
                     <Conferma alShow={this.state.alShow} handleClose={this.hideAlert}>
                       <div className="row text-center pt-2">
                         <div className="col">
@@ -2002,6 +2134,31 @@ class Main extends React.Component {
                       <label>Choose an image file for the logo (Max 1 MB)</label>
                       <input type="file" className="form-control" name="image" onChange={e => fileImg = e.target.files[0]} />
                     </div>
+
+                    <div class="form-group mt-2 mb-2" name="logoBlockWidth" >
+                      <label>Block width</label>
+                      <div className="row border rounded m-auto">
+                        <div className="col radio">
+                          <label class="radio-inline"> <input type="radio" name="blockWidth" id="logoColAuto" value="col" onChange={e => tempColW = e.target.value} /> Auto </label>
+                        </div>
+                        <div className="col radio">
+                          <label class="radio-inline"> <input type="radio" name="blockWidth" id="logoCol1" value="col-1" onChange={e => tempColW = e.target.value} /> 1 </label>
+                        </div>
+                        <div className="col radio">
+                          <label class="radio-inline"> <input type="radio" name="blockWidth" id="logoCol2" value="col-2" onChange={e => tempColW = e.target.value} /> 2 </label>
+                        </div>
+                        <div className="col radio">
+                          <label class="radio-inline"> <input type="radio" name="blockWidth" id="logoCol3" value="col-3" onChange={e => tempColW = e.target.value} /> 3 </label>
+                        </div>
+                        <div className="col radio">
+                          <label class="radio-inline"> <input type="radio" name="blockWidth" id="logoCol4" value="col-4" onChange={e => tempColW = e.target.value} /> 4 </label>
+                        </div>
+                        <div className="col radio">
+                          <label class="radio-inline"> <input type="radio" name="blockWidth" id="logoCol5" value="col-5" onChange={e => tempColW = e.target.value} /> 5 </label>
+                        </div>
+                      </div>
+                    </div>
+
                     <div className="form-group">
                       <label>Background color</label>
                       <input type="color" className="form-control" defaultValue={this.rgbToHex(spData.logoColor)} onChange={e => tempColor = e.target.value} />
@@ -2153,10 +2310,52 @@ class Main extends React.Component {
                         </div>
                       </div>
                     </div>
+
+                    <div class="form-group mt-2 mb-2" name="infoBlockWidth" >
+                      <label>Block width</label>
+                      <div className="row border rounded m-auto">
+                        <div className="col radio">
+                          <label class="radio-inline"> <input type="radio" name="blockWidth" id="infoColAuto" value="col" onChange={e => tempColW = e.target.value} /> Auto </label>
+                        </div>
+                        <div className="col radio">
+                          <label class="radio-inline"> <input type="radio" name="blockWidth" id="infoCol1" value="col-1" onChange={e => tempColW = e.target.value} /> 1 </label>
+                        </div>
+                        <div className="col radio">
+                          <label class="radio-inline"> <input type="radio" name="blockWidth" id="infoCol2" value="col-2" onChange={e => tempColW = e.target.value} /> 2 </label>
+                        </div>
+                        <div className="col radio">
+                          <label class="radio-inline"> <input type="radio" name="blockWidth" id="infoCol3" value="col-3" onChange={e => tempColW = e.target.value} /> 3 </label>
+                        </div>
+                        <div className="col radio">
+                          <label class="radio-inline"> <input type="radio" name="blockWidth" id="infoCol4" value="col-4" onChange={e => tempColW = e.target.value} /> 4 </label>
+                        </div>
+                        <div className="col radio">
+                          <label class="radio-inline"> <input type="radio" name="blockWidth" id="infoCol5" value="col-5" onChange={e => tempColW = e.target.value} /> 5 </label>
+                        </div>
+                      </div>
+                    </div>
+
                     <div className="form-group">
+                      <div className="row mt-2 mb-2">
+                        <div className="col">
+                          <div className="row">
+                            <div className="col pt-2 pb-2 d-flex flex-column justify-content-end align-items-start">
+                              <label>Background color</label>
+                              <input type="color" className="form-control" defaultValue={this.rgbToHex(spData.footInfoColor)} onChange={e => tempColor = e.target.value} />
+                            </div>
+                            <div className="col pt-2 pb-2 d-flex flex-column justify-content-end align-items-start">
+                              <label>Text color</label>
+                              <input type="color" className="form-control" defaultValue={this.rgbToHex(spData.footInfoTextColor)} onChange={e => tempTextColor = e.target.value} />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* <div className="form-group">
                       <label>Background color</label>
                       <input type="color" className="form-control" defaultValue={this.rgbToHex(spData.footInfoColor)} onChange={e => tempColor = e.target.value} />
-                    </div>
+                    </div> */}
                     <Conferma alShow={this.state.alShow} handleClose={this.hideAlert}>
                       <div className="row text-center pt-2">
                         <div className="col">
@@ -2291,10 +2490,52 @@ class Main extends React.Component {
                         </div>
                       </div>
                     </div>
+
+                    <div class="form-group mt-2 mb-2" name="creditBlockWidth" >
+                      <label>Block width</label>
+                      <div className="row border rounded m-auto">
+                        <div className="col radio">
+                          <label class="radio-inline"> <input type="radio" name="blockWidth" id="creditColAuto" value="col" onChange={e => tempColW = e.target.value} /> Auto </label>
+                        </div>
+                        <div className="col radio">
+                          <label class="radio-inline"> <input type="radio" name="blockWidth" id="creditCol1" value="col-1" onChange={e => tempColW = e.target.value} /> 1 </label>
+                        </div>
+                        <div className="col radio">
+                          <label class="radio-inline"> <input type="radio" name="blockWidth" id="creditCol2" value="col-2" onChange={e => tempColW = e.target.value} /> 2 </label>
+                        </div>
+                        <div className="col radio">
+                          <label class="radio-inline"> <input type="radio" name="blockWidth" id="creditCol3" value="col-3" onChange={e => tempColW = e.target.value} /> 3 </label>
+                        </div>
+                        <div className="col radio">
+                          <label class="radio-inline"> <input type="radio" name="blockWidth" id="creditCol4" value="col-4" onChange={e => tempColW = e.target.value} /> 4 </label>
+                        </div>
+                        <div className="col radio">
+                          <label class="radio-inline"> <input type="radio" name="blockWidth" id="creditCol5" value="col-5" onChange={e => tempColW = e.target.value} /> 5 </label>
+                        </div>
+                      </div>
+                    </div>
+
                     <div className="form-group">
+                      <div className="row mt-2 mb-2">
+                        <div className="col">
+                          <div className="row">
+                            <div className="col pt-2 pb-2 d-flex flex-column justify-content-end align-items-start">
+                              <label>Background color</label>
+                              <input type="color" className="form-control" defaultValue={this.rgbToHex(spData.footCreditColor)} onChange={e => tempColor = e.target.value} />
+                            </div>
+                            <div className="col pt-2 pb-2 d-flex flex-column justify-content-end align-items-start">
+                              <label>Text color</label>
+                              <input type="color" className="form-control" defaultValue={this.rgbToHex(spData.footCreditTextColor)} onChange={e => tempTextColor = e.target.value} />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* <div className="form-group">
                       <label>Background color</label>
                       <input type="color" className="form-control" defaultValue={this.rgbToHex(spData.footCreditColor)} onChange={e => tempColor = e.target.value} />
-                    </div>
+                    </div> */}
                     <Conferma alShow={this.state.alShow} handleClose={this.hideAlert}>
                       <div className="row text-center pt-2">
                         <div className="col">
