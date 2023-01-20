@@ -17,6 +17,8 @@ var temp2 = "";
 var temp3 = "";
 var tempColor = "#0077c8";
 var tempTextColor = "#0077c8";
+var tempColW = "";
+var radiobtn = "";
 // var tempOpacity = "";
 var tempAppTitle = "";
 var tempAppLink = "";
@@ -132,7 +134,7 @@ const Titolo = ({ titleShow, children, mainBtn }) => {
   const showHideClassName = titleShow ? "d-block" : "d-none";
   const justifyCenterEnd = mainBtn ? "justify-content-end" : "justify-content-center";
   return (
-    <section id="HeadTitle" style={{ backgroundColor: spData.headColor, color: spData.headTextColor }} className={showHideClassName + " " + justifyCenterEnd + " col latoplain d-flex flex-column align-items-center"}>
+    <section id="HeadTitle" style={{ backgroundColor: spData.headColor, color: spData.headTextColor }} className={showHideClassName + " " + justifyCenterEnd + " " + spData.headColW + " latoplain d-flex flex-column align-items-center"}>
       {children}
     </section>
   );
@@ -883,6 +885,7 @@ class Main extends React.Component {
       // console.log("Titolo: " + spData.headTitle);
       spData.headColor = this.hexToRgb(tempColor) + ", 0.95)";
       spData.headTextColor = this.hexToRgb(tempTextColor) + ", 1)";
+      spData.headColW = tempColW;
       // console.log("Colore: " + spData.headColor);
       if (blockHide !== "none") {
         spData.titleShow = blockHide;
@@ -1234,6 +1237,32 @@ class Main extends React.Component {
       temp = spData.headTitle;
       tempColor = this.rgbToHex(spData.headColor);
       tempTextColor = this.rgbToHex(spData.headTextColor);
+      tempColW = spData.headColW;
+      switch (spData.headColW) {
+        case "col":
+          radiobtn = document.getElementById("headColAuto");
+          radiobtn.checked = true;
+          break;
+        case "col-1":
+          radiobtn = document.getElementById("headCol1");
+          radiobtn.checked = true;
+          break;
+        case "col-2":
+          radiobtn = document.getElementById("headCol2");
+          radiobtn.checked = true;
+          break;
+        case "col-3":
+          radiobtn = document.getElementById("headCol3");
+          radiobtn.checked = true;
+          break;
+        case "col-4":
+          radiobtn = document.getElementById("headCol4");
+          radiobtn.checked = true;
+          break;
+        case "col-5":
+          radiobtn = document.getElementById("headCol5");
+          radiobtn.checked = true;
+      }
       // console.log("Titolo Colore showModal:", this.rgbToHex(spData.headColor));
       this.setState({ titleDiaShow: true });
     } else if (id === "login") {
@@ -1244,6 +1273,32 @@ class Main extends React.Component {
       tempColor = this.rgbToHex(spData.menuColor);
       this.setState({ menuDiaShow: true });
     } else if (id === "logo") {
+      tempColW = spData.logoColW;
+      switch (spData.logoColW) {
+        case "col":
+          radiobtn = document.getElementById("logoColAuto");
+          radiobtn.checked = true;
+          break;
+        case "col-1":
+          radiobtn = document.getElementById("logoCol1");
+          radiobtn.checked = true;
+          break;
+        case "col-2":
+          radiobtn = document.getElementById("logoCol2");
+          radiobtn.checked = true;
+          break;
+        case "col-3":
+          radiobtn = document.getElementById("logoCol3");
+          radiobtn.checked = true;
+          break;
+        case "col-4":
+          radiobtn = document.getElementById("logoCol4");
+          radiobtn.checked = true;
+          break;
+        case "col-5":
+          radiobtn = document.getElementById("logoCol5");
+          radiobtn.checked = true;
+      }
       tempColor = this.rgbToHex(spData.logoColor);
       this.setState({ logoDiaShow: true });
     } else if (id === "info") {
@@ -1312,6 +1367,7 @@ class Main extends React.Component {
     document.getElementById('backEditForm').reset();
     document.getElementById('clockForm').reset();
     tempColor = "";
+    tempColW = "";
     temp3 = "";
     this.setState({
       activityChanged: false
@@ -1783,38 +1839,45 @@ class Main extends React.Component {
                       <input type="text" className="form-control" defaultValue={spData.headTitle} onChange={e => temp = e.target.value} /*placeholder={spData.headTitle}*/ />
                     </div>
 
+                    <div class="form-group mt-2 mb-2" name="headBlockWidth" >
+                      <label>Column width</label>
+                      <div className="row border rounded m-auto">
+                        <div className="col radio">
+                          <label class="radio-inline"> <input type="radio" name="blockWidth" id="headColAuto" value="col" onChange={e => tempColW = e.target.value} /> Auto </label>
+                        </div>
+                        <div className="col radio">
+                          <label class="radio-inline"> <input type="radio" name="blockWidth" id="headCol1" value="col-1" onChange={e => tempColW = e.target.value} /> 1 </label>
+                        </div>
+                        <div className="col radio">
+                          <label class="radio-inline"> <input type="radio" name="blockWidth" id="headCol2" value="col-2" onChange={e => tempColW = e.target.value} /> 2 </label>
+                        </div>
+                        <div className="col radio">
+                          <label class="radio-inline"> <input type="radio" name="blockWidth" id="headCol3" value="col-3" onChange={e => tempColW = e.target.value} /> 3 </label>
+                        </div>
+                        <div className="col radio">
+                          <label class="radio-inline"> <input type="radio" name="blockWidth" id="headCol4" value="col-4" onChange={e => tempColW = e.target.value} /> 4 </label>
+                        </div>
+                        <div className="col radio">
+                          <label class="radio-inline"> <input type="radio" name="blockWidth" id="headCol5" value="col-5" onChange={e => tempColW = e.target.value} /> 5 </label>
+                        </div>
+                      </div>
+                    </div>
+
                     <div className="form-group">
-                      <div className="row text-center mt-2 mb-2">
+                      <div className="row mt-2 mb-2">
                         <div className="col">
                           <div className="row">
-                            <div className="col pt-2 pb-2 d-flex flex-column justify-content-end align-items-center">
+                            <div className="col pt-2 pb-2 d-flex flex-column justify-content-end align-items-start">
                               <label>Background color</label>
                               <input type="color" className="form-control" defaultValue={this.rgbToHex(spData.headColor)} onChange={e => tempColor = e.target.value} />
                             </div>
-                            <div className="col pt-2 pb-2 d-flex flex-column justify-content-end align-items-center">
+                            <div className="col pt-2 pb-2 d-flex flex-column justify-content-end align-items-start">
                               <label>Text color</label>
                               <input type="color" className="form-control" defaultValue={this.rgbToHex(spData.headTextColor)} onChange={e => tempTextColor = e.target.value} />
                             </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-
-                    <div class="form-group">
-                      <label class="col-sm-4 control-label">Block width</label>
-                      <div class="col-sm-8 ml-2 mr-2">
-                        <label class="radio-inline"> <input type="radio" name="Block width" id="col" value="col" checked /> Auto </label>
-                        <label class="radio-inline"> <input type="radio" name="Block width" id="col1" value="col-1" /> 1 </label>
-                        <label class="radio-inline"> <input type="radio" name="Block width" id="col2" value="col-2" /> 2 </label>
-                        <label class="radio-inline"> <input type="radio" name="Block width" id="col3" value="col-3" /> 3 </label>
-                        <label class="radio-inline"> <input type="radio" name="Block width" id="col4" value="col-4" /> 4 </label>
-                        <label class="radio-inline"> <input type="radio" name="Block width" id="col5" value="col-5" /> 5 </label>
-                      </div>
-                    </div>
-
-                    <div className="form-group">
-                      <label>Block width</label>
-                      <input type="color" className="form-control" defaultValue={this.rgbToHex(spData.headColor)} onChange={e => tempColor = e.target.value} />
                     </div>
 
                     <Conferma alShow={this.state.alShow} handleClose={this.hideAlert}>
