@@ -882,7 +882,7 @@ class Main extends React.Component {
   saveTitle = () => {
     if (temp !== "") {
       spData.headTitle = temp;
-    } 
+    }
     // else {
     //   this.setState({ alErrShow: true });
     //   this.setState({ alShow: false });
@@ -1845,7 +1845,42 @@ class Main extends React.Component {
                 <div className="modal-body">
                   <form id="menuForm">
 
-                    <label>Hide block</label>
+                    <div className="row text-center mt-2 mb-2">
+                      <div className="col">
+                        <div className="row">
+                          <div className="col-1 m-2 d-flex flex-column justify-content-center align-items-center">
+
+                            <label class="switch">
+                              <input type="checkbox" className="form-control" defaultChecked={!spData.menuShow} onClick={e => {
+                                if (spData.menuShow === false) {
+                                  blockHide = true;
+                                } else {
+                                  blockHide = false;
+                                }
+                              }} />
+                              <span class="slider round" title="Hide"></span>
+                            </label>
+
+                            {/* <label class="switch">
+                              <input type="checkbox" className="form-control" defaultChecked={!spData.titleShow} onClick={e => {
+                                if (spData.titleShow === false) {
+                                  blockHide = true;
+                                } else {
+                                  blockHide = false;
+                                }
+                              }} />
+                              <span class="slider round" title="Hide"></span>
+                            </label> */}
+
+                          </div>
+                          <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
+                            <label>Hide block</label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* <label>Hide block</label>
                     <div className="row text-center mt-2 mb-2">
                       <div className="col">
                         <div className="row">
@@ -1863,7 +1898,8 @@ class Main extends React.Component {
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </div> */}
+
                     <div className="form-group">
                       <label>Background color</label>
                       <input type="color" className="form-control" defaultValue={this.rgbToHex(spData.menuColor)} onChange={e => tempColor = e.target.value} />
@@ -1906,7 +1942,7 @@ class Main extends React.Component {
                 <div className="modal-body">
                   <form id="titleForm" onKeyDown={this.handleKeyDown}>
 
-                    <label>Hide block</label>
+                    {/* <label className="latomenu">Hide block</label>
                     <div className="row text-center mt-2 mb-2">
                       <div className="col">
                         <div className="row">
@@ -1919,19 +1955,98 @@ class Main extends React.Component {
                                   blockHide = false;
                                 }
                               }} />
-                              <span class="slider round"></span>
+                              <span class="slider round" title="Hide"></span>
                             </label>
                           </div>
                         </div>
                       </div>
-                    </div>
-                    <div className="form-group">
-                      <label>Site name - used as "Page Title"</label>
-                      <input type="text" className="form-control" defaultValue={spData.headTitle} onChange={e => temp = e.target.value} /*placeholder={spData.headTitle}*/ />
+                    </div> */}
+
+                    <div className="row text-center mb-1 m-auto">
+                      <div className="col">
+                        <div className="row">
+                          <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
+                            <label>Hide block</label>
+                          </div>
+                          <div className="col-1 m-2 d-flex flex-column justify-content-center align-items-center">
+
+                            <label class="switch">
+                              <input type="checkbox" className="form-control" defaultChecked={!spData.titleShow} onClick={e => {
+                                if (spData.titleShow === false) {
+                                  blockHide = true;
+                                } else {
+                                  blockHide = false;
+                                }
+                              }} />
+                              <span class="slider round" title="Hide"></span>
+                            </label>
+
+                          </div>
+
+                        </div>
+                      </div>
                     </div>
 
-                    <div class="form-group mt-2 mb-2" name="headBlockWidth" >
-                      <label>Block width</label>
+                    <div className="form-group">
+                      <div className="row text-center mb-1 m-auto">
+                        <div className="col">
+                          <div className="row">
+                            <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
+                              <label>Site name</label>
+                            </div>
+                            <div className="col d-flex flex-column justify-content-center align-items-center">
+                              <input type="text" className="form-control" defaultValue={spData.headTitle} onChange={e => temp = e.target.value} />
+                            </div>
+                            {/* <div className="col-1 m-2 d-flex flex-column justify-content-center align-items-center">
+                            </div> */}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-group" name="headBlockWidth" >
+                      <div className="row text-center mb-1 m-auto">
+                        <div className="col">
+                          <div className="row">
+                            <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
+                              <label>Block width</label>
+                            </div>
+                            <div className="col">
+                              <div className="row border rounded m-auto">
+                                <div className="col radio">
+                                  <label class="radio-inline"> <input type="radio" name="blockWidth" id="headColAuto" value="col" onChange={e => tempColW = e.target.value} /> Auto </label>
+                                </div>
+                                <div className="col radio">
+                                  <label class="radio-inline"> <input type="radio" name="blockWidth" id="headCol1" value="col-1" onChange={e => tempColW = e.target.value} /> 1 </label>
+                                </div>
+                                <div className="col radio">
+                                  <label class="radio-inline"> <input type="radio" name="blockWidth" id="headCol2" value="col-2" onChange={e => tempColW = e.target.value} /> 2 </label>
+                                </div>
+                                <div className="col radio">
+                                  <label class="radio-inline"> <input type="radio" name="blockWidth" id="headCol3" value="col-3" onChange={e => tempColW = e.target.value} /> 3 </label>
+                                </div>
+                                <div className="col radio">
+                                  <label class="radio-inline"> <input type="radio" name="blockWidth" id="headCol4" value="col-4" onChange={e => tempColW = e.target.value} /> 4 </label>
+                                </div>
+                                <div className="col radio">
+                                  <label class="radio-inline"> <input type="radio" name="blockWidth" id="headCol5" value="col-5" onChange={e => tempColW = e.target.value} /> 5 </label>
+                                </div>
+                              </div>
+                            </div>
+                            {/* <div className="col-1 m-2 d-flex flex-column justify-content-center align-items-center">
+                            </div> */}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* <div className="form-group">
+                      <label className="latomenu">Site name</label>
+                      <input type="text" className="form-control" defaultValue={spData.headTitle} onChange={e => temp = e.target.value} />
+                    </div> */}
+
+                    {/* <div class="form-group mt-2 mb-2" name="headBlockWidth" >
+                      <label className="latomenu">Block width</label>
                       <div className="row border rounded m-auto">
                         <div className="col radio">
                           <label class="radio-inline"> <input type="radio" name="blockWidth" id="headColAuto" value="col" onChange={e => tempColW = e.target.value} /> Auto </label>
@@ -1952,18 +2067,18 @@ class Main extends React.Component {
                           <label class="radio-inline"> <input type="radio" name="blockWidth" id="headCol5" value="col-5" onChange={e => tempColW = e.target.value} /> 5 </label>
                         </div>
                       </div>
-                    </div>
+                    </div> */}
 
                     <div className="form-group">
                       <div className="row mt-2 mb-2">
                         <div className="col">
                           <div className="row">
                             <div className="col pt-2 pb-2 d-flex flex-column justify-content-end align-items-start">
-                              <label>Background color</label>
+                              <label className="latomenu">Background color</label>
                               <input type="color" className="form-control" defaultValue={this.rgbToHex(spData.headColor)} onChange={e => tempColor = e.target.value} />
                             </div>
                             <div className="col pt-2 pb-2 d-flex flex-column justify-content-end align-items-start">
-                              <label>Text color</label>
+                              <label className="latomenu">Text color</label>
                               <input type="color" className="form-control" defaultValue={this.rgbToHex(spData.headTextColor)} onChange={e => tempTextColor = e.target.value} />
                             </div>
                           </div>
@@ -2202,11 +2317,11 @@ class Main extends React.Component {
                 <div className="modal-body">
                   <form id="infoForm">
 
-                    <label>Hide block</label>
+                    {/* <label>Hide block</label> */}
                     <div className="row text-center mt-2 mb-2">
                       <div className="col">
                         <div className="row">
-                          <div className="col-md-1 pt-2 pb-2 d-flex flex-column justify-content-center align-items-center">
+                          <div className="col-1 m-2 d-flex flex-column justify-content-center align-items-center">
                             <label class="switch">
                               <input type="checkbox" className="form-control" defaultChecked={!spData.infoShow} onClick={e => {
                                 if (spData.infoShow === false) {
@@ -2215,18 +2330,21 @@ class Main extends React.Component {
                                   blockHide = false;
                                 }
                               }} />
-                              <span class="slider round"></span>
+                              <span class="slider round" title="Hide"></span>
                             </label>
+                          </div>
+                          <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
+                            <label>Hide block</label>
                           </div>
                         </div>
                       </div>
                     </div>
                     <div className="form-group">
-                      <label>Main info - used as "Page Description"</label>
+                      {/* <label>Main info - Page Descr."</label> */}
                       <div className="row text-center mt-2 mb-2">
                         <div className="col">
                           <div className="row">
-                            <div className="col-md-1 pt-2 pb-2 d-flex flex-column justify-content-center align-items-center">
+                            <div className="col-1 m-2 d-flex flex-column justify-content-center align-items-center">
                               <label className="switch">
                                 <input type="checkbox" className="form-control" defaultChecked={spData.noFootTitle} onClick={e => {
                                   if (this.state.disField === false) {
@@ -2241,10 +2359,13 @@ class Main extends React.Component {
                                     spData.noFootTitle = false;
                                   }
                                 }} />
-                                <span class="slider round" title="Enable/Disable"></span>
+                                <span class="slider round" title="Hide"></span>
                               </label>
                             </div>
-                            <div className="col">
+                            <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
+                              <label>Info</label>
+                            </div>
+                            <div className="col d-flex flex-column justify-content-center align-items-center">
                               <input type="text" disabled={disField} className="form-control" defaultValue={spData.footTitle} onChange={e => temp = e.target.value} /*placeholder={spData.footTitle}*/ />
                             </div>
                           </div>
@@ -2252,11 +2373,11 @@ class Main extends React.Component {
                       </div>
                     </div>
                     <div className="form-group">
-                      <label>Sub info #1</label>
+                      {/* <label>Sub info #1</label> */}
                       <div className="row text-center mt-2 mb-2">
                         <div className="col">
                           <div className="row">
-                            <div className="col-md-1 pt-2 pb-2 d-flex flex-column justify-content-center align-items-center">
+                            <div className="col-1 m-2 d-flex flex-column justify-content-center align-items-center">
                               <label class="switch">
                                 <input type="checkbox" className="form-control" defaultChecked={spData.noFootSubtitle} onClick={e => {
                                   if (this.state.disField2 === false) {
@@ -2271,10 +2392,13 @@ class Main extends React.Component {
                                     spData.noFootSubtitle = false;
                                   }
                                 }} />
-                                <span class="slider round" title="Enable/Disable"></span>
+                                <span class="slider round" title="Hide"></span>
                               </label>
                             </div>
-                            <div className="col">
+                            <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
+                              <label>Info #2</label>
+                            </div>
+                            <div className="col d-flex flex-column justify-content-center align-items-center">
                               <input type="text" disabled={disField2} className="form-control" defaultValue={spData.footSubtitle} onChange={e => temp2 = e.target.value} /*placeholder={spData.footSubtitle}*/ />
                             </div>
                           </div>
@@ -2282,11 +2406,11 @@ class Main extends React.Component {
                       </div>
                     </div>
                     <div className="form-group">
-                      <label>Sub info #2</label>
+                      {/* <label>Sub info #2</label> */}
                       <div className="row text-center mt-2 mb-2">
                         <div className="col">
                           <div className="row">
-                            <div className="col-md-1 pt-2 pb-2 d-flex flex-column justify-content-center align-items-center">
+                            <div className="col-1 m-2 d-flex flex-column justify-content-center align-items-center">
                               <label class="switch">
                                 <input type="checkbox" className="form-control" defaultChecked={spData.noFootSubtitle2} onClick={e => {
                                   if (this.state.disField3 === false) {
@@ -2301,10 +2425,13 @@ class Main extends React.Component {
                                     spData.noFootSubtitle2 = false;
                                   }
                                 }} />
-                                <span class="slider round" title="Enable/Disable"></span>
+                                <span class="slider round" title="Hide"></span>
                               </label>
                             </div>
-                            <div className="col">
+                            <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
+                              <label>Info #3</label>
+                            </div>
+                            <div className="col d-flex flex-column justify-content-center align-items-center">
                               <input type="text" disabled={disField3} className="form-control" defaultValue={spData.footSubtitle2} onChange={e => temp3 = e.target.value} /*placeholder={spData.footSubtitle2}*/ />
                             </div>
                           </div>
@@ -2382,7 +2509,29 @@ class Main extends React.Component {
                 <div className="modal-body">
                   <form id="creditForm">
 
-                    <label>Hide block</label>
+                    <div className="row text-center mt-2 mb-2">
+                      <div className="col">
+                        <div className="row">
+                          <div className="col-1 m-2 d-flex flex-column justify-content-center align-items-center">
+                            <label class="switch">
+                              <input type="checkbox" className="form-control" defaultChecked={!spData.creditShow} onClick={e => {
+                                if (spData.creditShow === false) {
+                                  blockHide = true;
+                                } else {
+                                  blockHide = false;
+                                }
+                              }} />
+                              <span class="slider round" title="Hide"></span>
+                            </label>
+                          </div>
+                          <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
+                            <label>Hide block</label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* <label>Hide block</label>
                     <div className="row text-center mt-2 mb-2">
                       <div className="col">
                         <div className="row">
@@ -2400,8 +2549,59 @@ class Main extends React.Component {
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </div> */}
+
                     <div className="form-group">
+                      {/* <label>Main info - Page Descr."</label> */}
+                      <div className="row text-center mt-2 mb-2">
+                        <div className="col">
+                          <div className="row">
+                            <div className="col-1 m-2 d-flex flex-column justify-content-center align-items-center">
+                              <label class="switch">
+                                <input type="checkbox" className="form-control" defaultChecked={spData.noFootCreditiTitle} onClick={e => {
+                                  if (this.state.disFieldC === false) {
+                                    this.setState({
+                                      disFieldC: true
+                                    });
+                                    spData.noFootCreditiTitle = true;
+                                  } else {
+                                    this.setState({
+                                      disFieldC: false
+                                    });
+                                    spData.noFootCreditiTitle = false;
+                                  }
+                                }} />
+                                <span class="slider round" title="Hide"></span>
+                              </label>
+                              {/* <label className="switch">
+                                <input type="checkbox" className="form-control" defaultChecked={spData.noFootTitle} onClick={e => {
+                                  if (this.state.disField === false) {
+                                    this.setState({
+                                      disField: true
+                                    });
+                                    spData.noFootTitle = true;
+                                  } else {
+                                    this.setState({
+                                      disField: false
+                                    });
+                                    spData.noFootTitle = false;
+                                  }
+                                }} />
+                                <span class="slider round" title="Hide"></span>
+                              </label> */}
+                            </div>
+                            <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
+                              <label>Credit</label>
+                            </div>
+                            <div className="col d-flex flex-column justify-content-center align-items-center">
+                              <input type="text" disabled={disFieldC} className="form-control" defaultValue={spData.footCreditiTitle} onChange={e => temp = e.target.value} /*placeholder={spData.footCreditiTitle}*/ />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* <div className="form-group">
                       <label>Main credit</label>
                       <div className="row text-center mt-2 mb-2">
                         <div className="col">
@@ -2425,13 +2625,64 @@ class Main extends React.Component {
                               </label>
                             </div>
                             <div className="col">
-                              <input type="text" disabled={disFieldC} className="form-control" defaultValue={spData.footCreditiTitle} onChange={e => temp = e.target.value} /*placeholder={spData.footCreditiTitle}*/ />
+                              <input type="text" disabled={disFieldC} className="form-control" defaultValue={spData.footCreditiTitle} onChange={e => temp = e.target.value} />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div> */}
+
+                    <div className="form-group">
+                      {/* <label>Sub info #1</label> */}
+                      <div className="row text-center mt-2 mb-2">
+                        <div className="col">
+                          <div className="row">
+                            <div className="col-1 m-2 d-flex flex-column justify-content-center align-items-center">
+                              <label class="switch">
+                                <input type="checkbox" className="form-control" defaultChecked={spData.noFootCreditiSubtitle} onClick={e => {
+                                  if (this.state.disFieldC2 === false) {
+                                    this.setState({
+                                      disFieldC2: true
+                                    });
+                                    spData.noFootCreditiSubtitle = true;
+                                  } else {
+                                    this.setState({
+                                      disFieldC2: false
+                                    });
+                                    spData.noFootCreditiSubtitle = false;
+                                  }
+                                }} />
+                                <span class="slider round" title="Hide"></span>
+                              </label>
+                              {/* <label class="switch">
+                                <input type="checkbox" className="form-control" defaultChecked={spData.noFootSubtitle} onClick={e => {
+                                  if (this.state.disField2 === false) {
+                                    this.setState({
+                                      disField2: true
+                                    });
+                                    spData.noFootSubtitle = true;
+                                  } else {
+                                    this.setState({
+                                      disField2: false
+                                    });
+                                    spData.noFootSubtitle = false;
+                                  }
+                                }} />
+                                <span class="slider round" title="Hide"></span>
+                              </label> */}
+                            </div>
+                            <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
+                              <label>Credit #2</label>
+                            </div>
+                            <div className="col d-flex flex-column justify-content-center align-items-center">
+                              <input type="text" disabled={disFieldC2} className="form-control" defaultValue={spData.footCreditiSubtitle} onChange={e => temp2 = e.target.value} />
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                    <div className="form-group">
+
+                    {/* <div className="form-group">
                       <label>Sub credit #1</label>
                       <div className="row text-center mt-2 mb-2">
                         <div className="col">
@@ -2455,13 +2706,64 @@ class Main extends React.Component {
                               </label>
                             </div>
                             <div className="col">
-                              <input type="text" disabled={disFieldC2} className="form-control" defaultValue={spData.footCreditiSubtitle} onChange={e => temp2 = e.target.value} /*placeholder={spData.footCreditiSubtitle}*/ />
+                              <input type="text" disabled={disFieldC2} className="form-control" defaultValue={spData.footCreditiSubtitle} onChange={e => temp2 = e.target.value} />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div> */}
+
+                    <div className="form-group">
+                      {/* <label>Sub info #2</label> */}
+                      <div className="row text-center mt-2 mb-2">
+                        <div className="col">
+                          <div className="row">
+                            <div className="col-1 m-2 d-flex flex-column justify-content-center align-items-center">
+                              <label class="switch">
+                                <input type="checkbox" className="form-control" defaultChecked={spData.noFootCreditiSubtitle2} onClick={e => {
+                                  if (this.state.disFieldC3 === false) {
+                                    this.setState({
+                                      disFieldC3: true
+                                    });
+                                    spData.noFootCreditiSubtitle2 = true;
+                                  } else {
+                                    this.setState({
+                                      disFieldC3: false
+                                    });
+                                    spData.noFootCreditiSubtitle2 = false;
+                                  }
+                                }} />
+                                <span class="slider round" title="Hide"></span>
+                              </label>
+                              {/* <label class="switch">
+                                <input type="checkbox" className="form-control" defaultChecked={spData.noFootSubtitle2} onClick={e => {
+                                  if (this.state.disField3 === false) {
+                                    this.setState({
+                                      disField3: true
+                                    });
+                                    spData.noFootSubtitle2 = true;
+                                  } else {
+                                    this.setState({
+                                      disField3: false
+                                    });
+                                    spData.noFootSubtitle2 = false;
+                                  }
+                                }} />
+                                <span class="slider round" title="Hide"></span>
+                              </label> */}
+                            </div>
+                            <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
+                              <label>Credit #3</label>
+                            </div>
+                            <div className="col d-flex flex-column justify-content-center align-items-center">
+                              <input type="text" disabled={disFieldC3} className="form-control" defaultValue={spData.footCreditiSubtitle2} onChange={e => temp3 = e.target.value} />
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                    <div className="form-group">
+
+                    {/* <div className="form-group">
                       <label>Sub credit #2</label>
                       <div className="row text-center mt-2 mb-2">
                         <div className="col">
@@ -2485,12 +2787,12 @@ class Main extends React.Component {
                               </label>
                             </div>
                             <div className="col">
-                              <input type="text" disabled={disFieldC3} className="form-control" defaultValue={spData.footCreditiSubtitle2} onChange={e => temp3 = e.target.value} /*placeholder={spData.footCreditiSubtitle2}*/ />
+                              <input type="text" disabled={disFieldC3} className="form-control" defaultValue={spData.footCreditiSubtitle2} onChange={e => temp3 = e.target.value} />
                             </div>
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </div> */}
 
                     <div class="form-group mt-2 mb-2" name="creditBlockWidth" >
                       <label>Block width</label>
