@@ -1992,16 +1992,21 @@ class Main extends React.Component {
                     </div>
 
                     <div className="form-group">
-                      <div className="row mb-1">
+                      <div className="row mb-1 m-auto">
                         <div className="col">
-                          <div className="row m-auto">
-                            <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
+                          <div className="row border">
+                            <div className="col latomenu d-flex flex-column justify-content-center align-items-center">
                               <label>Back color</label>
                             </div>
                             <div className="col d-flex flex-column justify-content-center align-items-center">
                               <input type="color" className="form-control" defaultValue={this.rgbToHex(spData.headColor)} onChange={e => tempColor = e.target.value} />
                             </div>
-                            <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
+                          </div>
+                        </div>
+                        <div className="col-1"></div>
+                        <div className="col">
+                          <div className="row border">
+                            <div className="col latomenu d-flex flex-column justify-content-center align-items-center">
                               <label>Text color</label>
                             </div>
                             <div className="col d-flex flex-column justify-content-center align-items-center">
@@ -2012,31 +2017,58 @@ class Main extends React.Component {
                       </div>
                     </div>
 
-                    <div class="form-group" >
-                      <div className="row text-center mb-1 m-auto">
+                    <div className="form-group">
+                      <div className="row mb-1 m-auto">
                         <div className="col">
-                          <div className="row">
-                            <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
-                              <label>Hide</label>
+                          <div className="row border">
+                            <div className="col latomenu d-flex flex-column justify-content-center align-items-center">
+                              <label>Hide block</label>
                             </div>
-                            <div className="col">
-                              <div className="row border rounded m-auto margintb d-flex flex-column justify-content-center align-items-center">
-                                <label class="switch">
-                                  <input type="checkbox" className="form-control" defaultChecked={!spData.titleShow} onClick={e => {
-                                    if (spData.titleShow === false) {
-                                      blockHide = true;
-                                    } else {
-                                      blockHide = false;
-                                    }
-                                  }} />
-                                  <span class="slider round" title="Hide"></span>
-                                </label>
-                              </div>
+                            <div className="col d-flex flex-column justify-content-center align-items-center">
+                              <label class="switch">
+                                <input type="checkbox" className="form-control" defaultChecked={!spData.titleShow} onClick={e => {
+                                  if (spData.titleShow === false) {
+                                    blockHide = true;
+                                  } else {
+                                    blockHide = false;
+                                  }
+                                }} />
+                                <span class="slider round" title="Hide"></span>
+                              </label>
                             </div>
                           </div>
                         </div>
+                        <div className="col-1"></div>
+                        <div className="col">
+                        </div>
                       </div>
                     </div>
+
+                    {/* <div class="form-group" >
+                      <div className="row text-center mb-1 m-auto">
+                        <div className="col">
+                          <div className="row border rounded">
+                            <div className="col latomenu d-flex flex-column justify-content-center align-items-center">
+                              <label>Hide block</label>
+                            </div>
+                            <div className="col border rounded margintb d-flex flex-column justify-content-center align-items-center">
+                              <label class="switch">
+                                <input type="checkbox" className="form-control" defaultChecked={!spData.titleShow} onClick={e => {
+                                  if (spData.titleShow === false) {
+                                    blockHide = true;
+                                  } else {
+                                    blockHide = false;
+                                  }
+                                }} />
+                                <span class="slider round" title="Hide"></span>
+                              </label>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="col">
+                        </div>
+                      </div>
+                    </div> */}
 
                     {/* <div className="form-group">
                       <div className="row text-center mb-1 m-auto">
