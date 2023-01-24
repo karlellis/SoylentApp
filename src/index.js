@@ -2641,9 +2641,12 @@ class Main extends React.Component {
                     <div className="form-group">
                       <div className="row text-center mb-1 m-auto">
                         <div className="col">
-                          <div className="row border rounded">
+                          <div className="row border">
                             <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
                               <label>Info</label>
+                            </div>
+                            <div className="col d-flex flex-column justify-content-center align-items-center">
+                              <input type="text" disabled={disField} className="form-control border-0" defaultValue={spData.footTitle} onChange={e => temp = e.target.value} />
                             </div>
                             <div className="col-2 border d-flex flex-column justify-content-center align-items-center">
                               <label className="switch">
@@ -2662,9 +2665,6 @@ class Main extends React.Component {
                                 }} />
                                 <span class="slider round" title="Hide"></span>
                               </label>
-                            </div>
-                            <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="text" disabled={disField} className="form-control border-0" defaultValue={spData.footTitle} onChange={e => temp = e.target.value} />
                             </div>
                           </div>
                         </div>
@@ -2741,9 +2741,12 @@ class Main extends React.Component {
                     <div className="form-group">
                       <div className="row text-center mb-1 m-auto">
                         <div className="col">
-                          <div className="row border rounded">
+                          <div className="row border">
                             <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
                               <label>Info #2</label>
+                            </div>
+                            <div className="col d-flex flex-column justify-content-center align-items-center">
+                              <input type="text" disabled={disField2} className="form-control border-0" defaultValue={spData.footSubtitle} onChange={e => temp2 = e.target.value} /*placeholder={spData.footSubtitle}*/ />
                             </div>
                             <div className="col-2 border d-flex flex-column justify-content-center align-items-center">
                               <label class="switch">
@@ -2762,9 +2765,6 @@ class Main extends React.Component {
                                 }} />
                                 <span class="slider round" title="Hide"></span>
                               </label>
-                            </div>
-                            <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="text" disabled={disField2} className="form-control border-0" defaultValue={spData.footSubtitle} onChange={e => temp2 = e.target.value} /*placeholder={spData.footSubtitle}*/ />
                             </div>
                           </div>
                         </div>
@@ -2811,9 +2811,13 @@ class Main extends React.Component {
                     <div className="form-group">
                       <div className="row text-center mb-1 m-auto">
                         <div className="col">
-                          <div className="row border rounded">
+                          <div className="row border">
                             <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
                               <label>Info #3</label>
+                            </div>
+
+                            <div className="col d-flex flex-column justify-content-center align-items-center">
+                              <input type="text" disabled={disField3} className="form-control border-0" defaultValue={spData.footSubtitle2} onChange={e => temp3 = e.target.value} /*placeholder={spData.footSubtitle2}*/ />
                             </div>
                             <div className="col-2 border d-flex flex-column justify-content-center align-items-center">
                               <label class="switch">
@@ -2832,9 +2836,6 @@ class Main extends React.Component {
                                 }} />
                                 <span class="slider round" title="Hide"></span>
                               </label>
-                            </div>
-                            <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="text" disabled={disField3} className="form-control border-0" defaultValue={spData.footSubtitle2} onChange={e => temp3 = e.target.value} /*placeholder={spData.footSubtitle2}*/ />
                             </div>
                           </div>
                         </div>
@@ -2877,8 +2878,8 @@ class Main extends React.Component {
                     <div class="form-group" >
                       <div className="row text-center mb-1 m-auto">
                         <div className="col">
-                          <div className="row border rounded">
-                            <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
+                          <div className="row border">
+                            <div className="col-2 pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
                               <label>Width</label>
                             </div>
                             <div className="col">
@@ -2979,7 +2980,7 @@ class Main extends React.Component {
                       <div className="row mb-1 m-auto">
                         <div className="col">
                           <div className="row border">
-                            <div className="col latomenu d-flex flex-column justify-content-center align-items-center">
+                            <div className="col pt-1 pb-1 padlr latomenu d-flex flex-column justify-content-center align-items-center">
                               <label>Hide</label>
                             </div>
                             <div className="col d-flex flex-column justify-content-center align-items-center">
@@ -3070,9 +3071,13 @@ class Main extends React.Component {
                     <div className="form-group">
                       <div className="row text-center mb-1 m-auto">
                         <div className="col">
-                          <div className="row border rounded">
+                          <div className="row border">
                             <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
                               <label>Credit</label>
+                            </div>
+
+                            <div className="col d-flex flex-column justify-content-center align-items-center">
+                              <input type="text" disabled={disFieldC} className="form-control border-0" defaultValue={spData.footCreditiTitle} onChange={e => temp = e.target.value} /*placeholder={spData.footCreditiTitle}*/ />
                             </div>
                             <div className="col-2 border d-flex flex-column justify-content-center align-items-center">
                               <label class="switch">
@@ -3108,9 +3113,6 @@ class Main extends React.Component {
                                 <span class="slider round" title="Hide"></span>
                               </label> */}
                             </div>
-                            <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="text" disabled={disFieldC} className="form-control border-0" defaultValue={spData.footCreditiTitle} onChange={e => temp = e.target.value} /*placeholder={spData.footCreditiTitle}*/ />
-                            </div>
                           </div>
                         </div>
                       </div>
@@ -3119,9 +3121,13 @@ class Main extends React.Component {
                     <div className="form-group">
                       <div className="row text-center mb-1 m-auto">
                         <div className="col">
-                          <div className="row border rounded">
+                          <div className="row border">
                             <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
                               <label>Credit #2</label>
+                            </div>
+
+                            <div className="col d-flex flex-column justify-content-center align-items-center">
+                              <input type="text" disabled={disFieldC2} className="form-control border-0" defaultValue={spData.footCreditiSubtitle} onChange={e => temp2 = e.target.value} />
                             </div>
                             <div className="col-2 border d-flex flex-column justify-content-center align-items-center">
                               <label class="switch">
@@ -3157,9 +3163,6 @@ class Main extends React.Component {
                                 <span class="slider round" title="Hide"></span>
                               </label> */}
                             </div>
-                            <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="text" disabled={disFieldC2} className="form-control border-0" defaultValue={spData.footCreditiSubtitle} onChange={e => temp2 = e.target.value} />
-                            </div>
                           </div>
                         </div>
                       </div>
@@ -3168,9 +3171,13 @@ class Main extends React.Component {
                     <div className="form-group">
                       <div className="row text-center mb-1 m-auto">
                         <div className="col">
-                          <div className="row border rounded">
+                          <div className="row border">
                             <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
                               <label>Credit #3</label>
+                            </div>
+
+                            <div className="col d-flex flex-column justify-content-center align-items-center">
+                              <input type="text" disabled={disFieldC3} className="form-control border-0" defaultValue={spData.footCreditiSubtitle2} onChange={e => temp3 = e.target.value} />
                             </div>
                             <div className="col-2 border d-flex flex-column justify-content-center align-items-center">
                               <label class="switch">
@@ -3206,9 +3213,6 @@ class Main extends React.Component {
                                 <span class="slider round" title="Hide"></span>
                               </label> */}
                             </div>
-                            <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="text" disabled={disFieldC3} className="form-control border-0" defaultValue={spData.footCreditiSubtitle2} onChange={e => temp3 = e.target.value} />
-                            </div>
                           </div>
                         </div>
                       </div>
@@ -3217,8 +3221,8 @@ class Main extends React.Component {
                     <div class="form-group" >
                       <div className="row text-center mb-1 m-auto">
                         <div className="col">
-                          <div className="row border rounded">
-                            <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
+                          <div className="row border">
+                            <div className="col-2 pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
                               <label>Width</label>
                             </div>
                             <div className="col">
@@ -3296,7 +3300,7 @@ class Main extends React.Component {
                       <div className="row mb-1 m-auto">
                         <div className="col">
                           <div className="row border">
-                            <div className="col latomenu d-flex flex-column justify-content-center align-items-center">
+                            <div className="col pt-1 pb-1 padlr latomenu d-flex flex-column justify-content-center align-items-center">
                               <label>Hide</label>
                             </div>
                             <div className="col d-flex flex-column justify-content-center align-items-center">
@@ -3574,7 +3578,45 @@ class Main extends React.Component {
                     <div className="form-group">
                       <div className="row text-center mb-1 m-auto">
                         <div className="col">
-                          <div className="row border rounded">
+                          <div className="row border">
+
+                            {/* <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
+                              <label>Image</label>
+                            </div> */}
+
+                            <div className="col d-flex flex-column justify-content-center align-items-center">
+                              <input type="file" disabled={disFieldB} id="files" className="form-control boxs border-0" name="icon" onChange={e => fileImg = e.target.files[0]} />
+                              {/* <label for="files">Select image</label> */}
+                            </div>
+
+                            <div className="col-2 border d-flex flex-column justify-content-center align-items-center">
+                              <label class="switch">
+                                <input type="checkbox" className="form-control" defaultChecked={spData.noBackImage} onClick={e => {
+                                  if (this.state.disFieldB === false) {
+                                    this.setState({
+                                      disFieldB: true
+                                    });
+                                    spData.noBackImage = true;
+                                  } else {
+                                    this.setState({
+                                      disFieldB: false
+                                    });
+                                    spData.noBackImage = false;
+                                  }
+                                }} />
+                                <span class="slider round" title="No image"></span>
+                              </label>
+                            </div>
+
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* <div className="form-group">
+                      <div className="row text-center mb-1 m-auto">
+                        <div className="col">
+                          <div className="row border">
                             <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
                               <label>Image</label>
                             </div>
@@ -3584,7 +3626,7 @@ class Main extends React.Component {
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </div> */}
 
                     {/* <div className="form-group">
                       <label>Choose an image file for the background (Max 1 MB)</label>
@@ -3622,11 +3664,11 @@ class Main extends React.Component {
                       <input type="color" className="form-control" defaultValue={this.rgbToHex(spData.backgroundColor)} onChange={e => tempColor = e.target.value} />
                     </div> */}
 
-                    <div className="form-group">
+                    {/* <div className="form-group">
                       <div className="row mb-1 m-auto">
                         <div className="col">
                           <div className="row border">
-                            <div className="col latomenu d-flex flex-column justify-content-center align-items-center">
+                            <div className="col pt-1 pb-1 padlr latomenu d-flex flex-column justify-content-center align-items-center">
                               <label>No Image</label>
                             </div>
                             <div className="col d-flex flex-column justify-content-center align-items-center">
@@ -3645,7 +3687,7 @@ class Main extends React.Component {
                                   }
                                 }} />
                                 <span class="slider round"></span>
-                              </label>
+                              </label> */}
                               {/* <label class="switch">
                                 <input type="checkbox" className="form-control" defaultChecked={!spData.logoShow} onClick={e => {
                                   if (spData.logoShow === false) {
@@ -3656,14 +3698,14 @@ class Main extends React.Component {
                                 }} />
                                 <span class="slider round"></span>
                               </label> */}
-                            </div>
+                            {/* </div>
                           </div>
                         </div>
                         <div className="col-1"></div>
                         <div className="col">
                         </div>
                       </div>
-                    </div>
+                    </div> */}
 
                     {/* <label>No Image</label>
                     <div className="row text-center mt-2 mb-2">
