@@ -303,7 +303,7 @@ const BackEditDialog = ({ handleSave, handleClose, backEditDiaShow, children, ac
         {children}
         <div className="modal-footer">
           <button type="button" disabled={(activityChanged) ? true : false} className="btn btn-primary" onClick={handleSave}>Apply</button>
-          <button type="button" disabled={(activityChanged) ? true : false} className="btn btn-secondary" data-dismiss="modal" onClick={handleClose}>Close</button>
+          <button type="button" /* disabled={(activityChanged) ? true : false} */ className="btn btn-secondary" data-dismiss="modal" onClick={handleClose}>Close</button>
         </div>
       </section>
     </div>
@@ -497,7 +497,7 @@ const LogoDialog = ({ handleUpload, handleClose, logoDiaShow, children, activity
         {children}
         <div className="modal-footer">
           <button type="button" disabled={(activityChanged) ? true : false} className="btn btn-primary" onClick={handleUpload}>Apply</button>
-          <button type="button" disabled={(activityChanged) ? true : false} className="btn btn-secondary" data-dismiss="modal" onClick={handleClose}>Close</button>
+          <button type="button" /* disabled={(activityChanged) ? true : false} */ className="btn btn-secondary" data-dismiss="modal" onClick={handleClose}>Close</button>
         </div>
       </section>
     </div>
@@ -1041,6 +1041,10 @@ class Main extends React.Component {
     array = [...this.state.appItems];
     if (fileImg !== null || temp2 !== "" || temp3 !== "") {
       this.saveImgFile(fileImg, "icon", "edit");
+    } else {
+      console.log("fileImg - temp2 - temp3 are Null!!!");
+      this.setState({ alShow: false });
+      this.setState({ alErrShow: true });
     }
   }
 
@@ -1081,6 +1085,7 @@ class Main extends React.Component {
     // console.log("temp2:", temp2);
     // console.log("temp3:", temp3);
     // console.log("temp:", temp);
+    tempIcon = "";
     if (fileImg !== null && temp2 !== "" && temp3 !== "") {
       if (temp !== "") {
         inPos = parseInt(temp) - 1;
@@ -1107,6 +1112,9 @@ class Main extends React.Component {
       this.saveImgFile(fileImg, "back", "edit");
     } else {
       spData.backgroundColor = this.hexToRgb(tempColor) + ", 0.7)";
+      this.setState({
+        activityChanged: true
+      })
       if (spData.noBackImage === true) {
         this.setState({
           backStyle: {
@@ -2965,6 +2973,19 @@ class Main extends React.Component {
                         </div>
                       </div>
                     </Upload>
+                    <Errore alErrShow={this.state.alErrShow} handleClose={this.hideAlert}>
+                      <div className="row text-center pt-2">
+                        <div className="col">
+                          <div className="row">
+                            <section className="col pt-2 contenitore solidblue latowhite d-flex justify-content-center align-items-center ">
+                              <div>
+                                <p className="norfont">No changes made!</p>
+                              </div>
+                            </section>
+                          </div>
+                        </div>
+                      </div>
+                    </Errore>
                   </form>
                 </div>
               </div>
@@ -3463,6 +3484,9 @@ class App extends React.Component {
           <div className="row btncontainer">
             <button className="col appbutton solidgreen m-1" onClick={() => this.props.appEditDel("AppEdit", this.props.pos)}>
               Edit
+            </button>
+            <button className="col-1 appbutton black m-1 p-1">
+              {this.props.pos + 1}
             </button>
             <button className="col appbutton solidbrick m-1" onClick={() => this.props.appEditDel("AppDel", this.props.pos)}>
               Remove

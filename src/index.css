@@ -94,6 +94,10 @@ td {
 	background-color: rgba(186, 12, 47, 0.7);
 }
 
+.black {
+	background-color: rgba(22, 22, 22, 0.7);
+}
+
 .white {
 	background-color: rgba(240, 240, 240, 0.7);
 }

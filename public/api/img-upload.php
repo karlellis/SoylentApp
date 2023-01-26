@@ -256,19 +256,32 @@ if ($_FILES['logo']) {
             "message" => "Error deleting the Icon file!"
         );
     } else {
-        if (unlink("." . $del_name)) {
+        if (file_exists("." . $del_name)) {
+            unlink("." . $del_name);
             $response = array(
                 "status" => "success",
                 "error" => false,
                 "message" => "IconDeleteOk",
             );
+            // unlink('your_file_name');
         } else {
-            $response = array(
-                "status" => "error",
-                "error" => true,
-                "message" => "IconDeleteError"
-            );
+            $data = '{"Error":[{"Type":"File", "Details":"File not found!"}]}';
+            $response = json_decode($data);
+            // echo 'File not found!';
         }
+        // if (unlink("." . $del_name)) {
+        //     $response = array(
+        //         "status" => "success",
+        //         "error" => false,
+        //         "message" => "IconDeleteOk",
+        //     );
+        // } else {
+        //     $response = array(
+        //         "status" => "error",
+        //         "error" => true,
+        //         "message" => "IconDeleteError"
+        //     );
+        // }
     }
 } else if ($_GET) {
     $response = $credentials;
