@@ -1081,14 +1081,15 @@ class Main extends React.Component {
 
   applyAppAdd = () => {
     array = [...this.state.appItems];
-    // console.log("Image:", fileImg);
-    // console.log("temp2:", temp2);
-    // console.log("temp3:", temp3);
-    // console.log("temp:", temp);
+    // console.log("Image: ", fileImg);
+    // console.log("Name: ", temp2);
+    // console.log("Link: ", temp3);
+    // console.log("Pos: ", temp);
     tempIcon = "";
     if (fileImg !== null && temp2 !== "" && temp3 !== "") {
       if (temp !== "") {
         inPos = parseInt(temp) - 1;
+        console.log("InPos: ", inPos);
         if (inPos < arrayLength) {
           this.saveImgFile(fileImg, "icon", "add");
         } else {
@@ -1568,6 +1569,9 @@ class Main extends React.Component {
   appAddItem(id, pos) {
     array = [...this.state.appItems];
     arrayLength = (array.length - 1);
+    document.getElementById('clearapppos').value= "" ;
+    document.getElementById('clearapptitle').value= "" ;
+    document.getElementById('clearapplink').value= "" ;
     this.showModal("appAdd");
     // console.log("Adding IT!");
   }
@@ -1949,7 +1953,7 @@ class Main extends React.Component {
                         </div>
                       </div>
                     </div>
-                    
+
                     <Conferma alShow={this.state.alShow} handleClose={this.hideAlert}>
                       <div className="row text-center pt-2">
                         <div className="col">
@@ -2128,7 +2132,7 @@ class Main extends React.Component {
                 <div className="modal-body">
                   <form id="clockForm">
 
-                   <div class="form-group" >
+                    <div class="form-group" >
                       <div className="row text-center mb-1 m-auto">
                         <div className="col">
                           <div className="row border">
@@ -2254,7 +2258,7 @@ class Main extends React.Component {
                 </div>
                 <div className="modal-body">
                   <form id="logoForm">
-                    
+
                     <div className="form-group">
                       <div className="row text-center mb-1 m-auto">
                         <div className="col">
@@ -2300,7 +2304,7 @@ class Main extends React.Component {
                         </div>
                       </div>
                     </div>
-                 
+
                     <div className="form-group">
                       <div className="row mb-1 m-auto">
                         <div className="col">
@@ -2385,7 +2389,7 @@ class Main extends React.Component {
                 </div>
                 <div className="modal-body">
                   <form id="infoForm">
-                 
+
                     <div className="form-group">
                       <div className="row text-center mb-1 m-auto">
                         <div className="col">
@@ -2858,7 +2862,7 @@ class Main extends React.Component {
                         <div className="col-1"></div>
                         <div className="col">
                           <div className="row">
-                           
+
                           </div>
                         </div>
                       </div>
@@ -3021,7 +3025,13 @@ class Main extends React.Component {
                               <label>Pos</label>
                             </div>
                             <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="text" title="Leave blank for last" className="form-control border-0" onChange={e => temp = e.target.value} />
+                              <input type="text" title="Leave blank for last" id="clearapppos" className="form-control border-0"
+                                onChange={e => {
+                                  temp = e.target.value;
+                                  console.log("POS Changed!");
+                                  
+                                }
+                                } />
                             </div>
                           </div>
                         </div>
@@ -3036,7 +3046,7 @@ class Main extends React.Component {
                               <label>Title</label>
                             </div>
                             <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="text" className="form-control border-0" onChange={e => temp2 = e.target.value} />
+                              <input type="text" className="form-control border-0" id="clearapptitle" onChange={e => temp2 = e.target.value} />
                             </div>
                           </div>
                         </div>
@@ -3051,7 +3061,7 @@ class Main extends React.Component {
                               <label>Link</label>
                             </div>
                             <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="text" className="form-control border-0" onChange={e => temp3 = e.target.value} />
+                              <input type="text" className="form-control border-0" id="clearapplink" onChange={e => temp3 = e.target.value} />
                             </div>
                           </div>
                         </div>
