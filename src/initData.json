@@ -1,7 +1,7 @@
 {
   "headTitle": "",
   "headSubtitle": "Home Page",
-  "homeLink": "../index.html",
+  "homeLink": "./index.html",
   "headColor": "rgba(0, 119, 200, 0.95)",
   "headTextColor": "rgba(255, 255, 255, 1)",
   "headColW": "col",
