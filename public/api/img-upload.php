@@ -253,7 +253,7 @@ if ($_FILES['logo']) {
         $response = array(
             "status" => "error",
             "error" => true,
-            "message" => "Error deleting the Icon file!"
+            "message" => "Post Error deleting Icon file!"
         );
     } else {
         if (file_exists("." . $del_name)) {

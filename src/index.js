@@ -15,6 +15,7 @@ var tempPsw = "";
 var temp = "";
 var temp2 = "";
 var temp3 = "";
+var temp4 = "";
 var tempColor = "#0077c8";
 var tempTextColor = "#0077c8";
 var tempColW = "";
@@ -22,6 +23,7 @@ var radiobtn = "";
 // var tempOpacity = "";
 var tempAppTitle = "";
 var tempAppLink = "";
+var tempAppVideo = false;
 var tempExCrsTitle = "";
 var tempExCrsLink = "";
 var tempExCrsDescr = "";
@@ -35,7 +37,8 @@ var blockHide = "none";
 var appNewItem = {
   "title": "",
   "link": "",
-  "icon": ""
+  "icon": "",
+  "video": false
 };
 var exCrsNewItem = {
   "title": "",
@@ -50,24 +53,6 @@ var spData = require("./initData.json");
 // const sleep = (milliseconds) => {
 //   return new Promise(resolve => setTimeout(resolve, milliseconds))
 // }
-
-// const metaAdder = (queryProperty, value) => {
-//   // Get an element if it exists already
-//   let element = document.querySelector(`meta[${queryProperty}]`);
-
-//   // Check if the element exists
-//   if (element) {
-//     // If it does just change the content of the element
-//     element.setAttribute("content", value);
-//   } else {
-//     // It doesn't exist so lets make a HTML element string with the info we want
-//     element = `<meta ${queryProperty} content="${value}" />`;
-
-//     // And insert it into the head
-//     document.head.insertAdjacentHTML("beforeend", element);
-
-//   }
-// };
 
 const Menu = ({ menuShow, children, mainBtn }) => {
   const showHideClassName = menuShow ? "d-block" : "d-none";
@@ -754,11 +739,13 @@ class Main extends React.Component {
           if (temp3 !== "") {
             array[temp].link = temp3;
           }
+          array[temp].video = temp4;
           this.setState({ appItems: array });
           spData.appItems = array;
           temp = "";
           temp2 = "";
           temp3 = "";
+          temp4 = "";
           this.setState({ upShow: false });
           this.setState({ alShow: true });
           this.setState({ alErrShow: false });
@@ -775,6 +762,7 @@ class Main extends React.Component {
           appNewItem.icon = "./appicons/" + nome;
           appNewItem.title = temp2;
           appNewItem.link = temp3;
+          appNewItem.video = temp4;
           tempIcon = "";
           arrayAdd = this.addAfter(array, inPos, appNewItem);
           // console.log("Insert pos=", (inPos));
@@ -785,10 +773,12 @@ class Main extends React.Component {
           temp = "";
           temp2 = "";
           temp3 = "";
+          temp4 = "";
           appNewItem = {
             "title": "",
             "link": "",
-            "icon": ""
+            "icon": "",
+            "video": false
           };
           this.setState({ upShow: false });
           this.setState({ alShow: true });
@@ -807,6 +797,7 @@ class Main extends React.Component {
           appNewItem.icon = "./appicons/" + nome;
           appNewItem.title = temp2;
           appNewItem.link = temp3;
+          appNewItem.video = temp4;
           inPos = arrayLength;
           tempIcon = "";
           arrayAdd = this.addAfter(array, inPos, appNewItem);
@@ -817,10 +808,12 @@ class Main extends React.Component {
           temp = "";
           temp2 = "";
           temp3 = "";
+          temp4 = "";
           appNewItem = {
             "title": "",
             "link": "",
-            "icon": ""
+            "icon": "",
+            "video": false
           };
           this.setState({ upShow: false });
           this.setState({ alShow: true });
@@ -1039,7 +1032,7 @@ class Main extends React.Component {
 
   saveAppEdit = () => {
     array = [...this.state.appItems];
-    if (fileImg !== null || temp2 !== "" || temp3 !== "") {
+    if (fileImg !== null || temp2 !== "" || temp3 !== "" || temp4 !== "") {
       this.saveImgFile(fileImg, "icon", "edit");
     } else {
       console.log("fileImg - temp2 - temp3 are Null!!!");
@@ -1569,9 +1562,11 @@ class Main extends React.Component {
   appAddItem(id, pos) {
     array = [...this.state.appItems];
     arrayLength = (array.length - 1);
-    document.getElementById('clearapppos').value= "" ;
-    document.getElementById('clearapptitle').value= "" ;
-    document.getElementById('clearapplink').value= "" ;
+    tempAppVideo = false;
+    temp4 = false;
+    document.getElementById('clearapppos').value = "";
+    document.getElementById('clearapptitle').value = "";
+    document.getElementById('clearapplink').value = "";
     this.showModal("appAdd");
     // console.log("Adding IT!");
   }
@@ -1582,6 +1577,8 @@ class Main extends React.Component {
     array = [...this.state.appItems];
     tempAppTitle = array[pos].title;
     tempAppLink = array[pos].link;
+    tempAppVideo = array[pos].video;
+    temp4 = array[pos].video;
     tempIcon = array[pos].icon;
     // console.log(id, " for ", pos);
     if (id === "AppEdit") {
@@ -2951,6 +2948,33 @@ class Main extends React.Component {
                       </div>
                     </div>
 
+                    <div className="form-group">
+                      <div className="row mb-1 m-auto">
+                        <div className="col">
+                          <div className="row border">
+                            <div className="col pt-1 pb-1 padlr latomenu d-flex flex-column justify-content-center align-items-center">
+                              <label>Video</label>
+                            </div>
+                            <div className="col d-flex flex-column justify-content-center align-items-center">
+                              <label class="switch">
+                                <input type="checkbox" className="form-control" defaultChecked={tempAppVideo} onClick={e => {
+                                  if (tempAppVideo === false) {
+                                    temp4 = true;
+                                  } else {
+                                    temp4 = false;
+                                  }
+                                }} />
+                                <span class="slider round" title="Video Player"></span>
+                              </label>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="col-1"></div>
+                        <div className="col">
+                        </div>
+                      </div>
+                    </div>
+
                     <Conferma alShow={this.state.alShow} handleClose={this.hideAlert}>
                       <div className="row text-center pt-2">
                         <div className="col">
@@ -3029,7 +3053,7 @@ class Main extends React.Component {
                                 onChange={e => {
                                   temp = e.target.value;
                                   console.log("POS Changed!");
-                                  
+
                                 }
                                 } />
                             </div>
@@ -3068,6 +3092,33 @@ class Main extends React.Component {
                       </div>
                     </div>
 
+                    <div className="form-group">
+                      <div className="row mb-1 m-auto">
+                        <div className="col">
+                          <div className="row border">
+                            <div className="col pt-1 pb-1 padlr latomenu d-flex flex-column justify-content-center align-items-center">
+                              <label>Video</label>
+                            </div>
+                            <div className="col d-flex flex-column justify-content-center align-items-center">
+                              <label class="switch">
+                                <input type="checkbox" className="form-control" defaultChecked={tempAppVideo} onClick={e => {
+                                  if (tempAppVideo === false) {
+                                    temp4 = true;
+                                  } else {
+                                    temp4 = false;
+                                  }
+                                }} />
+                                <span class="slider round" title="Video Player"></span>
+                              </label>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="col-1"></div>
+                        <div className="col">
+                        </div>
+                      </div>
+                    </div>
+
                     <Conferma alShow={this.state.alShow} handleClose={this.hideAlert}>
                       <div className="row text-center pt-2">
                         <div className="col">
@@ -3100,7 +3151,7 @@ class Main extends React.Component {
                           <div className="row">
                             <section className="col pt-2 contenitore brick latowhite d-flex justify-content-center align-items-center ">
                               <div>
-                                <p className="norfont">Error! Fill in all fields.</p>
+                                <p className="norfont">Error! Fill in all fields / Check position.</p>
                               </div>
                             </section>
                           </div>
@@ -3410,10 +3461,10 @@ class Main extends React.Component {
             {/* APPS */}
             <div className="textcenter">
               {
-                this.state.appItems.map(({ id, title, link, icon }, i) => {
+                this.state.appItems.map(({ id, title, link, icon, video }, i) => {
                   return (
                     <App showAppsBtn={this.state.appsBtnShow} key={i} pos={i}
-                      title={title} link={link} icon={icon}
+                      title={title} link={link} icon={icon} video={video}
                       appEditDel={this.appEditDel} appAddItem={this.appAddItem} appVideo={this.appVideo} />
                   )
                 })
@@ -3483,19 +3534,31 @@ class App extends React.Component {
   }
 
   render() {
+
+    const linkOrVideo = this.props.video
+      ?
+      (<a title={this.props.title} onClick={() => this.props.appVideo("AppVideo", this.props.pos)}>
+        <img className="apps" title={this.props.title} alt={this.props.title} src={this.props.icon} />
+      </a>)
+      :
+      (< a title={this.props.title} href={this.props.link} target="_blank" >
+        <img className="apps" title={this.props.title} alt={this.props.title} src={this.props.icon} />
+      </a>);
+
     let appBtn = ""
     if (this.props.showAppsBtn === "ShowAppBtn" && this.props.title !== "Add Item") {
       appBtn = (
         <div className="appcontainer">
-          <a title={this.props.title} onClick={() => this.props.appVideo("AppVideo", this.props.pos)}>
+          {linkOrVideo}
+          {/* <a title={this.props.title} onClick={() => this.props.appVideo("AppVideo", this.props.pos)}>
             <img className="apps" title={this.props.title} alt={this.props.title} src={this.props.icon} />
-          </a>
+          </a> */}
           <h4><p className="lato"><b>{this.props.title}</b></p></h4>
           <div className="row btncontainer">
             <button className="col appbutton solidgreen m-1" onClick={() => this.props.appEditDel("AppEdit", this.props.pos)}>
               Edit
             </button>
-            <button className="col-1 appbutton black m-1 p-1">
+            <button className="col-1 appbutton black m-1 pad01">
               {this.props.pos + 1}
             </button>
             <button className="col appbutton solidbrick m-1" onClick={() => this.props.appEditDel("AppDel", this.props.pos)}>
@@ -3521,10 +3584,11 @@ class App extends React.Component {
     } else {
       appBtn = (
         <div className="appcontainer">
-          < a title={this.props.title} onClick={() => this.props.appVideo("AppVideo", this.props.pos)}>
-            {/* < a title={this.props.title} href={this.props.link} target="_blank" > */}
-            <img className="apps" title={this.props.title} alt={this.props.title} src={this.props.icon} />
-          </a>
+          {linkOrVideo}
+          {/* < a title={this.props.title} onClick={() => this.props.appVideo("AppVideo", this.props.pos)}> */}
+          {/* < a title={this.props.title} href={this.props.link} target="_blank" > */}
+          {/* <img className="apps" title={this.props.title} alt={this.props.title} src={this.props.icon} />
+          </a> */}
           <h4><p className="lato"><b>{this.props.title}</b></p></h4>
         </div>
       )

@@ -387,6 +387,9 @@ input:checked+.slider:before {
 	font-size: 0.5em;
 }
 
+.pad01 {
+	padding: 0.1rem !important;
+}
 
 label{
 	padding-left: .2em;
