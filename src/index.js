@@ -309,6 +309,20 @@ const AppVideoDialog = ({ handleClose, appVideoDiaShow, children, activityChange
   );
 };
 
+const AppCategory = ({ handleClose, appVideoDiaShow, children, activityChanged }) => {
+  const showHideClassName = appVideoDiaShow ? "modal display-block" : "modal display-none";
+  return (
+    <div className={showHideClassName}>
+      <section className="modal-main-dark">
+        {children}
+        <div className="modal-footer">
+          <button type="button" disabled={(activityChanged) ? true : false} className="btn btn-secondary" data-dismiss="modal" onClick={handleClose}>Close</button>
+        </div>
+      </section>
+    </div>
+  );
+};
+
 const ExCrsDialog = ({ handleClose, exCrsDiaShow, children, activityChanged }) => {
   const showHideClassName = exCrsDiaShow ? "modal display-block" : "modal display-none";
   return (
