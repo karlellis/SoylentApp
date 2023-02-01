@@ -16,6 +16,7 @@ var temp = "";
 var temp2 = "";
 var temp3 = "";
 var temp4 = "";
+var temp5 = "";
 var tempColor = "#0077c8";
 var tempTextColor = "#0077c8";
 var tempColW = "";
@@ -24,9 +25,11 @@ var radiobtn = "";
 var tempAppTitle = "";
 var tempAppLink = "";
 var tempAppVideo = false;
+var tempCatTitle = "";
 var tempExCrsTitle = "";
 var tempExCrsLink = "";
 var tempExCrsDescr = "";
+var tempAppCat = false;
 var tempIcon = "";
 var arrayLength = 0;
 var login = false;
@@ -38,8 +41,14 @@ var appNewItem = {
   "title": "",
   "link": "",
   "icon": "",
-  "video": false
+  "video": false,
+  "cat": ""
 };
+var catNewItem = {
+  "title": "",
+  "icon": ""
+};
+
 var exCrsNewItem = {
   "title": "",
   "link": "",
@@ -235,6 +244,21 @@ const MenuDialog = ({ handleSave, handleClose, menuDiaShow, children }) => {
   );
 };
 
+const AppOrCatDialog = ({ handleApp, handleCat, aocDiaShow, children }) => {
+  const showHideClassName = aocDiaShow ? "modal display-block" : "modal display-none";
+  return (
+    <div className={showHideClassName}>
+      <section className="modal-main">
+        {children}
+        <div className="modal-footer">
+          <button type="button" className="btn btn-primary" data-dismiss="modal" onClick={handleApp}>App</button>
+          <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={handleCat}>Category</button>
+        </div>
+      </section>
+    </div>
+  );
+};
+
 const TitleDialog = ({ handleSave, handleClose, titleDiaShow, children }) => {
   const showHideClassName = titleDiaShow ? "modal display-block" : "modal display-none";
   return (
@@ -296,20 +320,6 @@ const BackEditDialog = ({ handleSave, handleClose, backEditDiaShow, children, ac
 };
 
 const AppVideoDialog = ({ handleClose, appVideoDiaShow, children, activityChanged }) => {
-  const showHideClassName = appVideoDiaShow ? "modal display-block" : "modal display-none";
-  return (
-    <div className={showHideClassName}>
-      <section className="modal-main-dark">
-        {children}
-        <div className="modal-footer">
-          <button type="button" disabled={(activityChanged) ? true : false} className="btn btn-secondary" data-dismiss="modal" onClick={handleClose}>Close</button>
-        </div>
-      </section>
-    </div>
-  );
-};
-
-const AppCategory = ({ handleClose, appVideoDiaShow, children, activityChanged }) => {
   const showHideClassName = appVideoDiaShow ? "modal display-block" : "modal display-none";
   return (
     <div className={showHideClassName}>
@@ -392,6 +402,51 @@ const AppAddDialog = ({ handleSave, handleClose, appAddDiaShow, children, activi
         <div className="modal-footer">
           <button type="button" disabled={(activityChanged) ? true : false} className="btn btn-primary" onClick={handleSave}>Add</button>
           <button type="button" /* disabled={(activityChanged) ? true : false} */ className="btn btn-secondary" data-dismiss="modal" onClick={handleClose}>Close</button>
+        </div>
+      </section>
+    </div>
+  );
+};
+
+const CatAddDialog = ({ handleSave, handleClose, catAddDiaShow, children, activityChanged }) => {
+  const showHideClassName = catAddDiaShow ? "modal display-block" : "modal display-none";
+  return (
+    <div className={showHideClassName}>
+      <section className="modal-main-dark">
+        {children}
+        <div className="modal-footer">
+        <button type="button" disabled={(activityChanged) ? true : false} className="btn btn-primary" onClick={handleSave}>Add</button>
+          <button type="button" /* disabled={(activityChanged) ? true : false} */ className="btn btn-secondary" data-dismiss="modal" onClick={handleClose}>Close</button>
+        </div>
+      </section>
+    </div>
+  );
+};
+
+const CatDelDialog = ({ handleSave, handleClose, catDelDiaShow, children, activityChanged }) => {
+  const showHideClassName = catDelDiaShow ? "modal display-block" : "modal display-none";
+  return (
+    <div className={showHideClassName}>
+      <section className="modal-main">
+        {children}
+        <div className="modal-footer">
+          <button type="button" disabled={(activityChanged) ? true : false} className="btn btn-primary" onClick={handleSave}>Remove</button>
+          <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={handleClose}>Close</button>
+        </div>
+      </section>
+    </div>
+  );
+};
+
+const CatEditDialog = ({ handleSave, handleClose, catEditDiaShow, children, activityChanged }) => {
+  const showHideClassName = catEditDiaShow ? "modal display-block" : "modal display-none";
+  return (
+    <div className={showHideClassName}>
+      <section className="modal-main">
+        {children}
+        <div className="modal-footer">
+          <button type="button" disabled={(activityChanged) ? true : false} className="btn btn-primary" onClick={handleSave}>Remove</button>
+          <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={handleClose}>Close</button>
         </div>
       </section>
     </div>
@@ -586,6 +641,7 @@ class Main extends React.Component {
       mainBtn: false,
       appsBtnShow: "null",
       appItems: [],
+      catItems: [],
       resAppItems: [],
       creditsItems: [],
       menuShow: false,
@@ -603,8 +659,12 @@ class Main extends React.Component {
       appDelDiaShow: false,
       appAddDiaShow: false,
       appVideoDiaShow: false,
+      catEditDiaShow: false,
+      catDelDiaShow: false,
+      catAddDiaShow: false,
       searchDiaShow: false,
       creditsDiaShow: false,
+      aocDiaShow: false,
       videoLink: tempAppLink,
       alShow: false,
       alErrShow: false,
@@ -628,6 +688,8 @@ class Main extends React.Component {
     }
     this.appEditDel = this.appEditDel.bind(this);
     this.appAddItem = this.appAddItem.bind(this);
+    this.catEditDel = this.catEditDel.bind(this);
+    this.catAddItem = this.catAddItem.bind(this);
     this.appVideo = this.appVideo.bind(this);
     this.resAppVideo = this.resAppVideo.bind(this);
     this.exCrsShow = this.exCrsShow.bind(this);
@@ -1578,6 +1640,7 @@ class Main extends React.Component {
     arrayLength = (array.length - 1);
     tempAppVideo = false;
     temp4 = false;
+    temp5 = false;
     document.getElementById('clearapppos').value = "";
     document.getElementById('clearapptitle').value = "";
     document.getElementById('clearapplink').value = "";
@@ -1593,6 +1656,7 @@ class Main extends React.Component {
     tempAppLink = array[pos].link;
     tempAppVideo = array[pos].video;
     temp4 = array[pos].video;
+    temp5 = array[pos].cat;
     tempIcon = array[pos].icon;
     // console.log(id, " for ", pos);
     if (id === "AppEdit") {
@@ -1601,6 +1665,8 @@ class Main extends React.Component {
       this.showModal("appDel");
     }
   }
+
+
 
   appVideo(id, pos) {
     temp3 = pos;
@@ -3044,9 +3110,6 @@ class Main extends React.Component {
                       <div className="row text-center mb-1 m-auto">
                         <div className="col">
                           <div className="row border">
-                            {/* <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
-                              <label>Image</label>
-                            </div> */}
                             <div className="col d-flex flex-column justify-content-center align-items-center">
                               <input type="file" className="form-control boxs border-0" name="icon" onChange={e => fileImg = e.target.files[0]} />
                             </div>
@@ -3066,8 +3129,7 @@ class Main extends React.Component {
                               <input type="text" title="Leave blank for last" id="clearapppos" className="form-control border-0"
                                 onChange={e => {
                                   temp = e.target.value;
-                                  console.log("POS Changed!");
-
+                                  // console.log("POS Changed!");
                                 }
                                 } />
                             </div>
@@ -3120,6 +3182,33 @@ class Main extends React.Component {
                                     temp4 = true;
                                   } else {
                                     temp4 = false;
+                                  }
+                                }} />
+                                <span class="slider round" title="Video Player"></span>
+                              </label>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="col-1"></div>
+                        <div className="col">
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="form-group">
+                      <div className="row mb-1 m-auto">
+                        <div className="col">
+                          <div className="row border">
+                            <div className="col pt-1 pb-1 padlr latomenu d-flex flex-column justify-content-center align-items-center">
+                              <label>Category</label>
+                            </div>
+                            <div className="col d-flex flex-column justify-content-center align-items-center">
+                              <label class="switch">
+                                <input type="checkbox" className="form-control" defaultChecked={tempAppCat} onClick={e => {
+                                  if (tempAppCat === false) {
+                                    temp5 = true;
+                                  } else {
+                                    temp5 = false;
                                   }
                                 }} />
                                 <span class="slider round" title="Video Player"></span>
@@ -3198,6 +3287,209 @@ class Main extends React.Component {
                 </div>
               </div>
             </AppDelDialog>
+            <CatEditDialog catEditDiaShow={this.state.catEditDiaShow} activityChanged={this.state.activityChanged} handleClose={this.hideModal} handleSave={this.saveCatEdit}>
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h5 className="modal-title" >Edit Category</h5>
+                </div>
+                <div className="modal-body">
+                  <form id="appEditForm">
+
+                    <div className="form-group">
+                      <div className="row text-center mb-1 m-auto">
+                        <div className="col">
+                          <div className="row border">
+                            {/* <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
+                              <label>Image</label>
+                            </div> */}
+                            <div className="col d-flex flex-column justify-content-center align-items-center">
+                              <input type="file" className="form-control boxs border-0" name="icon" onChange={e => fileImg = e.target.files[0]} />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="form-group">
+                      <div className="row text-center mb-1 m-auto">
+                        <div className="col">
+                          <div className="row border">
+                            <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
+                              <label>Title</label>
+                            </div>
+                            <div className="col d-flex flex-column justify-content-center align-items-center">
+                              <input type="text" className="form-control border-0" defaultValue={tempAppTitle} onChange={e => temp2 = e.target.value} /*placeholder={tempAppTitle}*/ />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <Conferma alShow={this.state.alShow} handleClose={this.hideAlert}>
+                      <div className="row text-center pt-2">
+                        <div className="col">
+                          <div className="row">
+                            <section className="col pt-2 contenitore solidgreen latowhite d-flex justify-content-center align-items-center ">
+                              <div>
+                                <p className="norfont">Changes made!</p>
+                              </div>
+                            </section>
+                          </div>
+                        </div>
+                      </div>
+                    </Conferma>
+                    <Upload upShow={this.state.upShow} handleClose={this.hideAlert}>
+                      <div className="row text-center pt-2">
+                        <div className="col">
+                          <div className="row">
+                            <section className="col pt-2 contenitore solidblue latowhite d-flex justify-content-center align-items-center ">
+                              <div>
+                                <p className="norfont">Loading data... Please wait.</p>
+                              </div>
+                            </section>
+                          </div>
+                        </div>
+                      </div>
+                    </Upload>
+                    <Errore alErrShow={this.state.alErrShow} handleClose={this.hideAlert}>
+                      <div className="row text-center pt-2">
+                        <div className="col">
+                          <div className="row">
+                            <section className="col pt-2 contenitore solidblue latowhite d-flex justify-content-center align-items-center ">
+                              <div>
+                                <p className="norfont">No changes made!</p>
+                              </div>
+                            </section>
+                          </div>
+                        </div>
+                      </div>
+                    </Errore>
+                  </form>
+                </div>
+              </div>
+            </CatEditDialog>
+            <CatAddDialog catAddDiaShow={this.state.catAddDiaShow} activityChanged={this.state.activityChanged} handleClose={this.hideModal} handleSave={this.applyCatAdd}>
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h5 className="modal-title" >Add Category</h5>
+                </div>
+                <div className="modal-body">
+                  <form id="appAddForm">
+
+                    <div className="form-group">
+                      <div className="row text-center mb-1 m-auto">
+                        <div className="col">
+                          <div className="row border">
+                            <div className="col d-flex flex-column justify-content-center align-items-center">
+                              <input type="file" className="form-control boxs border-0" name="icon" onChange={e => fileImg = e.target.files[0]} />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="form-group">
+                      <div className="row text-center mb-1 m-auto">
+                        <div className="col">
+                          <div className="row border">
+                            <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
+                              <label>Title</label>
+                            </div>
+                            <div className="col d-flex flex-column justify-content-center align-items-center">
+                              <input type="text" className="form-control border-0" id="clearapptitle" onChange={e => temp2 = e.target.value} />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <Conferma alShow={this.state.alShow} handleClose={this.hideAlert}>
+                      <div className="row text-center pt-2">
+                        <div className="col">
+                          <div className="row">
+                            <section className="col pt-2 contenitore solidgreen latowhite d-flex justify-content-center align-items-center ">
+                              <div>
+                                <p className="norfont">Cat added!</p>
+                              </div>
+                            </section>
+                          </div>
+                        </div>
+                      </div>
+                    </Conferma>
+                    <Upload upShow={this.state.upShow} handleClose={this.hideAlert}>
+                      <div className="row text-center pt-2">
+                        <div className="col">
+                          <div className="row">
+                            <section className="col pt-2 contenitore solidblue latowhite d-flex justify-content-center align-items-center ">
+                              <div>
+                                <p className="norfont">Loading data... Please wait.</p>
+                              </div>
+                            </section>
+                          </div>
+                        </div>
+                      </div>
+                    </Upload>
+                    <Errore alErrShow={this.state.alErrShow} handleClose={this.hideAlert}>
+                      <div className="row text-center pt-2">
+                        <div className="col">
+                          <div className="row">
+                            <section className="col pt-2 contenitore brick latowhite d-flex justify-content-center align-items-center ">
+                              <div>
+                                <p className="norfont">Error! Fill in all fields.</p>
+                              </div>
+                            </section>
+                          </div>
+                        </div>
+                      </div>
+                    </Errore>
+                  </form>
+                </div>
+              </div>
+            </CatAddDialog>
+            <CatDelDialog catDelDiaShow={this.state.catDelDiaShow} activityChanged={this.state.activityChanged} handleClose={this.hideModal} handleSave={this.applycatDel}>
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h5 className="modal-title" >Permanently delete this category?</h5>
+                </div>
+                <div className="modal-body">
+                  <Conferma alShow={this.state.alShow} handleClose={this.hideAlert}>
+                    <div className="row text-center pt-2">
+                      <div className="col">
+                        <div className="row">
+                          <section className="col pt-2 contenitore solidgreen latowhite d-flex justify-content-center align-items-center ">
+                            <div>
+                              <p className="norfont">Category removed!</p>
+                            </div>
+                          </section>
+                        </div>
+                      </div>
+                    </div>
+                  </Conferma>
+                </div>
+              </div>
+            </CatDelDialog>
+            <AppOrCatDialog aocDiaShow={this.state.aocDiaShow} activityChanged={this.state.activityChanged} handleApp={this.applyAppAdd} handleCat={this.applyCatAdd}>
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h5 className="modal-title" >Add App or Category?</h5>
+                </div>
+                <div className="modal-body">
+                  <Conferma alShow={this.state.alShow} handleClose={this.hideAlert}>
+                    <div className="row text-center pt-2">
+                      <div className="col">
+                        <div className="row">
+                          <section className="col pt-2 contenitore solidgreen latowhite d-flex justify-content-center align-items-center ">
+                            <div>
+                              <p className="norfont">Category removed!</p>
+                            </div>
+                          </section>
+                        </div>
+                      </div>
+                    </div>
+                  </Conferma>
+                </div>
+              </div>
+            </AppOrCatDialog>
             <ExCrsDialog exCrsDiaShow={this.state.exCrsDiaShow} activityChanged={this.state.activityChanged} handleClose={this.hideModal} handleSave={this.saveAppEdit}>
               <div className="modal-content">
                 <div className="modal-header-dark">
@@ -3472,8 +3764,19 @@ class Main extends React.Component {
               {head}
               {buttons}
             </div>
-            {/* APPS */}
+            {/* BODY */}
             <div className="textcenter">
+              {/* CATEGORIES */}
+              {
+                this.state.catItems.map(({ id, title, icon }, i) => {
+                  return (
+                    <Cat showAppsBtn={this.state.appsBtnShow} key={i} 
+                      title={title} icon={icon} catEditDel={this.catEditDel} 
+                      catAddItem={this.catAddItem} />
+                  )
+                })
+              }
+              {/* APPS */}
               {
                 this.state.appItems.map(({ id, title, link, icon, video }, i) => {
                   return (

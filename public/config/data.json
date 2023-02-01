@@ -47,6 +47,7 @@
     "backgroundImage": "./img/background.jpg",
     "noBackImage": false,
     "appItems": [],
+    "catItems": [],
     "creditsItems": [],
     "appAdd": {
         "title": "Add Item",

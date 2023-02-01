@@ -43,6 +43,7 @@
   "backgroundImage": "",
   "noBackImage": false,
   "appItems": [],
+  "catItems": [],
   "appAdd": [
     {
       "title": "Add Item",
