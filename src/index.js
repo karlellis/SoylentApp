@@ -408,15 +408,15 @@ const AppAddDialog = ({ handleSave, handleClose, appAddDiaShow, children, activi
   );
 };
 
-const CatAddDialog = ({ handleSave, handleClose, catAddDiaShow, children, activityChanged }) => {
-  const showHideClassName = catAddDiaShow ? "modal display-block" : "modal display-none";
+const CatEditDialog = ({ handleSave, handleClose, catEditDiaShow, children, activityChanged }) => {
+  const showHideClassName = catEditDiaShow ? "modal display-block" : "modal display-none";
   return (
     <div className={showHideClassName}>
-      <section className="modal-main-dark">
+      <section className="modal-main">
         {children}
         <div className="modal-footer">
-        <button type="button" disabled={(activityChanged) ? true : false} className="btn btn-primary" onClick={handleSave}>Add</button>
-          <button type="button" /* disabled={(activityChanged) ? true : false} */ className="btn btn-secondary" data-dismiss="modal" onClick={handleClose}>Close</button>
+          <button type="button" disabled={(activityChanged) ? true : false} className="btn btn-primary" onClick={handleSave}>Remove</button>
+          <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={handleClose}>Close</button>
         </div>
       </section>
     </div>
@@ -438,15 +438,15 @@ const CatDelDialog = ({ handleSave, handleClose, catDelDiaShow, children, activi
   );
 };
 
-const CatEditDialog = ({ handleSave, handleClose, catEditDiaShow, children, activityChanged }) => {
-  const showHideClassName = catEditDiaShow ? "modal display-block" : "modal display-none";
+const CatAddDialog = ({ handleSave, handleClose, catAddDiaShow, children, activityChanged }) => {
+  const showHideClassName = catAddDiaShow ? "modal display-block" : "modal display-none";
   return (
     <div className={showHideClassName}>
-      <section className="modal-main">
+      <section className="modal-main-dark">
         {children}
         <div className="modal-footer">
-          <button type="button" disabled={(activityChanged) ? true : false} className="btn btn-primary" onClick={handleSave}>Remove</button>
-          <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={handleClose}>Close</button>
+          <button type="button" disabled={(activityChanged) ? true : false} className="btn btn-primary" onClick={handleSave}>Add</button>
+          <button type="button" /* disabled={(activityChanged) ? true : false} */ className="btn btn-secondary" data-dismiss="modal" onClick={handleClose}>Close</button>
         </div>
       </section>
     </div>
@@ -590,14 +590,11 @@ async function fetchUpConfig(file, url, key) {
 }
 
 async function fetchDownCredentials(url) {
-  // var data = new FormData()
-  // data.append(key, JSON.stringify(file))
   const response = await fetch(url, {
     method: 'GET',
     headers: {
       'Accept': '*/*'
     },
-    // body: data
   }).then((response) => response.json())
     .then((json) => {
       credentials = json;
@@ -688,6 +685,7 @@ class Main extends React.Component {
     }
     this.appEditDel = this.appEditDel.bind(this);
     this.appAddItem = this.appAddItem.bind(this);
+    this.appOrCatItem = this.appOrCatItem.bind(this);
     this.catEditDel = this.catEditDel.bind(this);
     this.catAddItem = this.catAddItem.bind(this);
     this.appVideo = this.appVideo.bind(this);
@@ -720,6 +718,7 @@ class Main extends React.Component {
           logoShow: spData.logoShow,
           clockShow: spData.clockShow,
           appItems: spData.appItems,
+          catItems: spData.catItems,
           disFieldB: spData.noBackImage,
           disField: spData.noFootTitle,
           disField2: spData.noFootSubtitle,
@@ -988,12 +987,14 @@ class Main extends React.Component {
           appNewItem.icon = this.state.appItems[i].icon;
           appNewItem.title = this.state.appItems[i].title;
           appNewItem.link = this.state.appItems[i].link;
+          appNewItem.video = this.state.appItems[i].video;
           arrayAdd = this.addAfter(arrayAdd, count, appNewItem);
           count = count++;
           appNewItem = {
             "title": "",
             "link": "",
-            "icon": ""
+            "icon": "",
+            "video": false
           };
         }
       }
@@ -1004,7 +1005,8 @@ class Main extends React.Component {
       appNewItem = {
         "title": "",
         "link": "",
-        "icon": ""
+        "icon": "",
+        "video": false
       };
       this.setState({ alShow: true });
       this.setState({ alErrShow: false });
@@ -1454,6 +1456,8 @@ class Main extends React.Component {
       this.setState({ appDelDiaShow: true });
     } else if (id === "appAdd") {
       this.setState({ appAddDiaShow: true });
+    } else if (id === "appOrCatAdd") {
+      this.setState({ aocDiaShow: true });
     } else if (id === "appVideo") {
       this.setState({ appVideoDiaShow: true });
     } else if (id === "exCrs") {
@@ -1518,6 +1522,7 @@ class Main extends React.Component {
     this.setState({ appDelDiaShow: false });
     this.setState({ appAddDiaShow: false });
     this.setState({ appVideoDiaShow: false });
+    this.setState({ aocDiaShow: false });
     this.setState({ exCrsDiaShow: false });
     this.setState({ backEditDiaShow: false });
     this.setState({ clockDiaShow: false });
@@ -1635,7 +1640,20 @@ class Main extends React.Component {
     // console.log("Info Edit Clicked:", id);
   }
 
+  appOrCatItem(id, pos) {
+    this.showModal("appOrCatAdd");
+  }
+
+  catEditDel() {
+
+  }
+
+  catAddItem() {
+
+  }
+
   appAddItem(id, pos) {
+    this.hideModal();
     array = [...this.state.appItems];
     arrayLength = (array.length - 1);
     tempAppVideo = false;
@@ -1665,8 +1683,6 @@ class Main extends React.Component {
       this.showModal("appDel");
     }
   }
-
-
 
   appVideo(id, pos) {
     temp3 = pos;
@@ -3468,12 +3484,12 @@ class Main extends React.Component {
                 </div>
               </div>
             </CatDelDialog>
-            <AppOrCatDialog aocDiaShow={this.state.aocDiaShow} activityChanged={this.state.activityChanged} handleApp={this.applyAppAdd} handleCat={this.applyCatAdd}>
+            <AppOrCatDialog aocDiaShow={this.state.aocDiaShow} activityChanged={this.state.activityChanged} handleApp={this.appAddItem} handleCat={this.catAddItem}>
               <div className="modal-content">
                 <div className="modal-header">
                   <h5 className="modal-title" >Add App or Category?</h5>
                 </div>
-                <div className="modal-body">
+                {/* <div className="modal-body">
                   <Conferma alShow={this.state.alShow} handleClose={this.hideAlert}>
                     <div className="row text-center pt-2">
                       <div className="col">
@@ -3487,7 +3503,7 @@ class Main extends React.Component {
                       </div>
                     </div>
                   </Conferma>
-                </div>
+                </div> */}
               </div>
             </AppOrCatDialog>
             <ExCrsDialog exCrsDiaShow={this.state.exCrsDiaShow} activityChanged={this.state.activityChanged} handleClose={this.hideModal} handleSave={this.saveAppEdit}>
@@ -3733,11 +3749,21 @@ class Main extends React.Component {
                     </Errore>
                     {/* RESAPPS */}
                     <div className="textcenter">
-                      {
-                        this.state.resAppItems.map(({ id, title, link, icon }, i) => {
+                      {/* {
+                        this.state.appItems.map(({ id, title, link, icon, video }, i) => {
                           return (
+                            <App showAppsBtn={this.state.appsBtnShow} key={i} pos={i}
+                              title={title} link={link} icon={icon} video={video}
+                              appEditDel={this.appEditDel} appAddItem={this.appAddItem} appVideo={this.appVideo} />
+                          )
+                        })
+                      } */}
+                      {
+                        this.state.resAppItems.map(({ id, title, link, icon, video }, i) => {
+                          return (
+                            // *** Have to include also links not only video ***
                             <AppSearchRes key={i} pos={i}
-                              title={title} link={link} icon={icon}
+                              title={title} link={link} icon={icon} video={video}
                               appVideo={this.resAppVideo} />
                           )
                         })
@@ -3770,8 +3796,8 @@ class Main extends React.Component {
               {
                 this.state.catItems.map(({ id, title, icon }, i) => {
                   return (
-                    <Cat showAppsBtn={this.state.appsBtnShow} key={i} 
-                      title={title} icon={icon} catEditDel={this.catEditDel} 
+                    <Cat showAppsBtn={this.state.appsBtnShow} key={i}
+                      title={title} icon={icon} catEditDel={this.catEditDel}
                       catAddItem={this.catAddItem} />
                   )
                 })
@@ -3782,7 +3808,7 @@ class Main extends React.Component {
                   return (
                     <App showAppsBtn={this.state.appsBtnShow} key={i} pos={i}
                       title={title} link={link} icon={icon} video={video}
-                      appEditDel={this.appEditDel} appAddItem={this.appAddItem} appVideo={this.appVideo} />
+                      appEditDel={this.appEditDel} addItem={this.appOrCatItem} appVideo={this.appVideo} />
                   )
                 })
               }
@@ -3887,12 +3913,12 @@ class App extends React.Component {
     } else if (this.props.title === "Add Item") {
       appBtn = (
         <div className="appcontainer">
-          < a title={this.props.title} target="_blank" onClick={() => this.props.appAddItem("AddItem", this.props.pos)} >
+          < a title={this.props.title} target="_blank" onClick={() => this.props.addItem("AddItem", this.props.pos)} >
             <img className="apps" title={this.props.title} alt={this.props.title} src={this.props.icon} />
           </a>
           <h4><p className="lato"><b>{this.props.title}</b></p></h4>
           <div className="row btncontainer">
-            <button className="col addbutton solidgreen m-1" onClick={() => this.props.appAddItem("AddItem", this.props.pos)}>
+            <button className="col addbutton solidgreen m-1" onClick={() => this.props.addItem("AddItem", this.props.pos)}>
               Add Item
             </button>
           </div>
@@ -3913,6 +3939,79 @@ class App extends React.Component {
     return (
       <>
         {appBtn}
+      </>
+    );
+  }
+}
+
+class Cat extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+
+    const linkOrVideo = this.props.video
+      ?
+      (<a title={this.props.title} onClick={() => this.props.appVideo("AppVideo", this.props.pos)}>
+        <img className="apps" title={this.props.title} alt={this.props.title} src={this.props.icon} />
+      </a>)
+      :
+      (< a title={this.props.title} href={this.props.link} target="_blank" >
+        <img className="apps" title={this.props.title} alt={this.props.title} src={this.props.icon} />
+      </a>);
+
+    let catBtn = ""
+    if (this.props.showAppsBtn === "ShowAppBtn" && this.props.title !== "Add Item") {
+      catBtn = (
+        <div className="appcontainer">
+          {linkOrVideo}
+          {/* <a title={this.props.title} onClick={() => this.props.appVideo("AppVideo", this.props.pos)}>
+            <img className="apps" title={this.props.title} alt={this.props.title} src={this.props.icon} />
+          </a> */}
+          <h4><p className="lato"><b>{this.props.title}</b></p></h4>
+          <div className="row btncontainer">
+            <button className="col appbutton solidgreen m-1" onClick={() => this.props.appEditDel("AppEdit", this.props.pos)}>
+              Edit
+            </button>
+            <button className="col-1 appbutton black m-1 pad01">
+              {this.props.pos + 1}
+            </button>
+            <button className="col appbutton solidbrick m-1" onClick={() => this.props.appEditDel("AppDel", this.props.pos)}>
+              Remove
+            </button>
+          </div>
+        </div>
+      )
+    } else if (this.props.title === "Add Item") {
+      catBtn = (
+        <div className="appcontainer">
+          < a title={this.props.title} target="_blank" onClick={() => this.props.addItem("AddItem", this.props.pos)} >
+            <img className="apps" title={this.props.title} alt={this.props.title} src={this.props.icon} />
+          </a>
+          <h4><p className="lato"><b>{this.props.title}</b></p></h4>
+          <div className="row btncontainer">
+            <button className="col addbutton solidgreen m-1" onClick={() => this.props.addItem("AddItem", this.props.pos)}>
+              Add Item
+            </button>
+          </div>
+        </div>
+      )
+    } else {
+      catBtn = (
+        <div className="appcontainer">
+          {linkOrVideo}
+          {/* < a title={this.props.title} onClick={() => this.props.appVideo("AppVideo", this.props.pos)}> */}
+          {/* < a title={this.props.title} href={this.props.link} target="_blank" > */}
+          {/* <img className="apps" title={this.props.title} alt={this.props.title} src={this.props.icon} />
+          </a> */}
+          <h4><p className="lato"><b>{this.props.title}</b></p></h4>
+        </div>
+      )
+    }
+    return (
+      <>
+        {catBtn}
       </>
     );
   }
@@ -3982,15 +4081,34 @@ class AppSearchRes extends React.Component {
   }
 
   render() {
+    const linkOrVideo = this.props.video
+      ?
+      (<a title={this.props.title} onClick={() => this.props.appVideo("AppVideo", this.props.pos)}>
+        <img className="apps" title={this.props.title} alt={this.props.title} src={this.props.icon} />
+      </a>)
+      :
+      (< a title={this.props.title} href={this.props.link} target="_blank" >
+        <img className="apps" title={this.props.title} alt={this.props.title} src={this.props.icon} />
+      </a>);
+
     let appBtn = ""
+
     appBtn = (
       <div className="appcontainer">
-        < a title={this.props.title} onClick={() => this.props.appVideo("AppVideo", this.props.pos)}>
-          <img className="apps" title={this.props.title} alt={this.props.title} src={this.props.icon} />
-        </a>
+        {linkOrVideo}
         <h4><p className="lato"><b>{this.props.title}</b></p></h4>
       </div>
     )
+
+    // appBtn = (
+    //   <div className="appcontainer">
+    //     < a title={this.props.title} onClick={() => this.props.appVideo("AppVideo", this.props.pos)}>
+    //       <img className="apps" title={this.props.title} alt={this.props.title} src={this.props.icon} />
+    //     </a>
+    //     <h4><p className="lato"><b>{this.props.title}</b></p></h4>
+    //   </div>
+    // )
+
     return (
       <>
         {appBtn}
