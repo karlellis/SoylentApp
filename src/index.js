@@ -347,6 +347,20 @@ const ExCrsDialog = ({ handleClose, exCrsDiaShow, children, activityChanged }) =
   );
 };
 
+const CatDialog = ({ handleClose, catDiaShow, children, activityChanged }) => {
+  const showHideClassName = catDiaShow ? "modal display-block" : "modal display-none";
+  return (
+    <div className={showHideClassName}>
+      <section className="modal-main-dark">
+        {children}
+        <div className="modal-footer">
+          <button type="button" disabled={(activityChanged) ? true : false} className="btn btn-secondary" data-dismiss="modal" onClick={handleClose}>Close</button>
+        </div>
+      </section>
+    </div>
+  );
+};
+
 const SearchDialog = ({ handleClose, handleSave, handleReset, searchDiaShow, children, activityChanged }) => {
   const showHideClassName = searchDiaShow ? "modal display-block" : "modal display-none";
   return (
@@ -660,6 +674,7 @@ class Main extends React.Component {
       catDelDiaShow: false,
       catAddDiaShow: false,
       searchDiaShow: false,
+      catDiaShow: false,
       creditsDiaShow: false,
       aocDiaShow: false,
       videoLink: tempAppLink,
@@ -838,6 +853,7 @@ class Main extends React.Component {
           appNewItem.title = temp2;
           appNewItem.link = temp3;
           appNewItem.video = temp4;
+          appNewItem.cat = temp5;
           tempIcon = "";
           arrayAdd = this.addAfter(array, inPos, appNewItem);
           // console.log("Insert pos=", (inPos));
@@ -849,11 +865,13 @@ class Main extends React.Component {
           temp2 = "";
           temp3 = "";
           temp4 = "";
+          temp5 = "";
           appNewItem = {
             "title": "",
             "link": "",
             "icon": "",
-            "video": false
+            "video": false,
+            "cat": ""
           };
           this.setState({ upShow: false });
           this.setState({ alShow: true });
@@ -868,11 +886,90 @@ class Main extends React.Component {
           this.setState(previousState => ({
             appItems: [...previousState.appItems, spData.appAdd]
           }));
+        } else if (url === "cat" && op === "edit") {
+          if (fileImg !== null) {
+            // console.log("Icon edit!");
+            array[temp].icon = "./appicons/" + nome;
+          }
+          if (temp2 !== "") {
+            array[temp].title = temp2;
+          }
+          this.setState({ catItems: array });
+          spData.catItems = array;
+          temp2 = "";
+          this.setState({ upShow: false });
+          this.setState({ alShow: true });
+          this.setState({ alErrShow: false });
+          // console.log("Edit Icon correctly Uploaded!");
+          // this.setState({
+          //   activityChanged: false
+          // });
+          spData.catItems.pop();
+          this.saveFile(spData, "./api/img-upload.php", "config");
+          this.setState(previousState => ({
+            catItems: [...previousState.catItems, spData.appAdd]
+          }));
+        } else if (url === "cat" && op === "add") {
+          catNewItem.icon = "./appicons/" + nome;
+          catNewItem.title = temp2;
+          tempIcon = "";
+          arrayAdd = this.addAfter(array, inPos, catNewItem);
+          // console.log("Insert pos=", (inPos));
+          this.setState({ catItems: arrayAdd });
+          spData.catItems = arrayAdd;
+          arrayAdd = [];
+          arrayLength = arrayLength + 1;
+          temp2 = "";
+          catNewItem = {
+            "title": "",
+            "icon": ""
+          };
+          this.setState({ upShow: false });
+          this.setState({ alShow: true });
+          this.setState({ alErrShow: false });
+          // console.log("Add Icon correctly Uploaded!");
+          // this.setState({
+          //   activityChanged: false
+          // });
+
+          spData.catItems.pop();
+          this.saveFile(spData, "./api/img-upload.php", "config");
+          this.setState(previousState => ({
+            catItems: [...previousState.catItems, spData.appAdd]
+          }));
+        } else if (url === "cat" && op === "addlast") {
+          catNewItem.icon = "./appicons/" + nome;
+          catNewItem.title = temp2;
+          inPos = arrayLength;
+          tempIcon = "";
+          arrayAdd = this.addAfter(array, inPos, catNewItem);
+          this.setState({ catItems: arrayAdd });
+          spData.catItems = arrayAdd;
+          arrayAdd = [];
+          arrayLength = arrayLength + 1;
+          temp2 = "";
+          catNewItem = {
+            "title": "",
+            "icon": ""
+          };
+          this.setState({ upShow: false });
+          this.setState({ alShow: true });
+          this.setState({ alErrShow: false });
+          // console.log("Add Last Icon correctly Uploaded!");
+          // this.setState({
+          //   activityChanged: false
+          // });
+          spData.catItems.pop();
+          this.saveFile(spData, "./api/img-upload.php", "config");
+          this.setState(previousState => ({
+            appItems: [...previousState.appItems, spData.appAdd]
+          }));
         } else if (url === "icon" && op === "addlast") {
           appNewItem.icon = "./appicons/" + nome;
           appNewItem.title = temp2;
           appNewItem.link = temp3;
           appNewItem.video = temp4;
+          appNewItem.cat = temp5;
           inPos = arrayLength;
           tempIcon = "";
           arrayAdd = this.addAfter(array, inPos, appNewItem);
@@ -884,11 +981,13 @@ class Main extends React.Component {
           temp2 = "";
           temp3 = "";
           temp4 = "";
+          temp5 = "";
           appNewItem = {
             "title": "",
             "link": "",
             "icon": "",
-            "video": false
+            "video": false,
+            "cat": ""
           };
           this.setState({ upShow: false });
           this.setState({ alShow: true });
@@ -994,7 +1093,8 @@ class Main extends React.Component {
             "title": "",
             "link": "",
             "icon": "",
-            "video": false
+            "video": false,
+            "cat": ""
           };
         }
       }
@@ -1006,7 +1106,8 @@ class Main extends React.Component {
         "title": "",
         "link": "",
         "icon": "",
-        "video": false
+        "video": false,
+        "cat": ""
       };
       this.setState({ alShow: true });
       this.setState({ alErrShow: false });
@@ -1108,12 +1209,38 @@ class Main extends React.Component {
     this.saveFile(spData, "./api/img-upload.php", "config");
   }
 
-  saveAppEdit = () => {
+  applyAppEdit = () => {
     array = [...this.state.appItems];
     if (fileImg !== null || temp2 !== "" || temp3 !== "" || temp4 !== "") {
       this.saveImgFile(fileImg, "icon", "edit");
     } else {
       console.log("fileImg - temp2 - temp3 are Null!!!");
+      this.setState({ alShow: false });
+      this.setState({ alErrShow: true });
+    }
+  }
+
+  applyAppAdd = () => {
+    array = [...this.state.appItems];
+    // console.log("Image: ", fileImg);
+    // console.log("Name: ", temp2);
+    // console.log("Link: ", temp3);
+    // console.log("Pos: ", temp);
+    tempIcon = "";
+    if (fileImg !== null && temp2 !== "" && temp3 !== "") {
+      if (temp !== "") {
+        inPos = parseInt(temp) - 1;
+        console.log("InPos: ", inPos);
+        if (inPos < arrayLength) {
+          this.saveImgFile(fileImg, "icon", "add");
+        } else {
+          this.setState({ alShow: false });
+          this.setState({ alErrShow: true });
+        }
+      } else {
+        this.saveImgFile(fileImg, "icon", "addlast");
+      }
+    } else {
       this.setState({ alShow: false });
       this.setState({ alErrShow: true });
     }
@@ -1150,30 +1277,64 @@ class Main extends React.Component {
     ];
   }
 
-  applyAppAdd = () => {
-    array = [...this.state.appItems];
+  applyCatEdit = () => {
+    array = [...this.state.catItems];
+    if (fileImg !== null || temp2 !== "") {
+      this.saveImgFile(fileImg, "cat", "edit");
+    } else {
+      console.log("fileImg - temp2 are Null!!!");
+      this.setState({ alShow: false });
+      this.setState({ alErrShow: true });
+    }
+  }
+
+  applyCatAdd = () => {
+    array = [...this.state.catItems];
     // console.log("Image: ", fileImg);
     // console.log("Name: ", temp2);
     // console.log("Link: ", temp3);
     // console.log("Pos: ", temp);
     tempIcon = "";
-    if (fileImg !== null && temp2 !== "" && temp3 !== "") {
+    if (fileImg !== null && temp2 !== "") {
       if (temp !== "") {
         inPos = parseInt(temp) - 1;
         console.log("InPos: ", inPos);
         if (inPos < arrayLength) {
-          this.saveImgFile(fileImg, "icon", "add");
+          this.saveImgFile(fileImg, "cat", "add");
         } else {
           this.setState({ alShow: false });
           this.setState({ alErrShow: true });
         }
       } else {
-        this.saveImgFile(fileImg, "icon", "addlast");
+        this.saveImgFile(fileImg, "cat", "addlast");
       }
     } else {
       this.setState({ alShow: false });
       this.setState({ alErrShow: true });
     }
+  }
+
+  applyCatDel = () => {
+    var array = [...this.state.catItems];
+    var index = temp;
+    // console.log("Index: ", temp);
+    if (index !== -1) {
+      fetchDelPHP(tempIcon, "./api/img-upload.php", "icon");
+      tempIcon = "";
+      array.splice(index, 1);
+      var noAddArray = [...array];
+      this.setState({ catItems: array });
+      noAddArray.pop();
+      spData.catItems = noAddArray;
+    }
+    temp = "";
+    temp2 = "";
+    temp3 = "";
+    this.setState({ alShow: true });
+    this.saveFile(spData, "./api/img-upload.php", "config");
+    this.setState({
+      activityChanged: true
+    });
   }
 
   saveBack = () => {
@@ -1456,6 +1617,14 @@ class Main extends React.Component {
       this.setState({ appDelDiaShow: true });
     } else if (id === "appAdd") {
       this.setState({ appAddDiaShow: true });
+    } else if (id === "catEdit") {
+      this.setState({ catEditDiaShow: true });
+    } else if (id === "catDel") {
+      this.setState({ catDelDiaShow: true });
+    } else if (id === "catAdd") {
+      this.setState({ catAddDiaShow: true });
+    } else if (id === "cat") {
+      this.setState({ catDiaShow: true });
     } else if (id === "appOrCatAdd") {
       this.setState({ aocDiaShow: true });
     } else if (id === "appVideo") {
@@ -1521,6 +1690,10 @@ class Main extends React.Component {
     this.setState({ appEditDiaShow: false });
     this.setState({ appDelDiaShow: false });
     this.setState({ appAddDiaShow: false });
+    this.setState({ catEditDiaShow: false });
+    this.setState({ catDelDiaShow: false });
+    this.setState({ catAddDiaShow: false });
+    this.setState({ catDiaShow: false });
     this.setState({ appVideoDiaShow: false });
     this.setState({ aocDiaShow: false });
     this.setState({ exCrsDiaShow: false });
@@ -1537,6 +1710,8 @@ class Main extends React.Component {
     document.getElementById('creditForm').reset();
     document.getElementById('appEditForm').reset();
     document.getElementById('appAddForm').reset();
+    document.getElementById('catEditForm').reset();
+    document.getElementById('catAddForm').reset();
     document.getElementById('backEditForm').reset();
     document.getElementById('clockForm').reset();
     tempColor = "";
@@ -1649,7 +1824,15 @@ class Main extends React.Component {
   }
 
   catAddItem() {
-
+    this.hideModal();
+    array = [...this.state.catItems];
+    arrayLength = (array.length - 1);
+    temp4 = false;
+    temp5 = false;
+    document.getElementById('clearcatpos').value = "";
+    document.getElementById('clearcattitle').value = "";
+    this.showModal("catAdd");
+    // console.log("Adding IT!");
   }
 
   appAddItem(id, pos) {
@@ -1693,6 +1876,17 @@ class Main extends React.Component {
       videoLink: array[pos].link
     })
     this.showModal("appVideo");
+  }
+
+  catCont(id, pos) {
+    temp3 = pos;
+    array = [...this.state.catItems];
+    tempCatTitle = array[pos].title;
+    // console.log(id, " for ", pos);
+    // this.setState({
+    //   videoLink: array[pos].link
+    // })
+    this.showModal("cat");
   }
 
   resAppVideo(id, pos) {
@@ -2991,7 +3185,7 @@ class Main extends React.Component {
                 </div>
               </div>
             </BackEditDialog>
-            <AppEditDialog appEditDiaShow={this.state.appEditDiaShow} activityChanged={this.state.activityChanged} handleClose={this.hideModal} handleSave={this.saveAppEdit}>
+            <AppEditDialog appEditDiaShow={this.state.appEditDiaShow} activityChanged={this.state.activityChanged} handleClose={this.hideModal} handleSave={this.applyAppEdit}>
               <div className="modal-content">
                 <div className="modal-header">
                   <h5 className="modal-title" >Edit Web Application</h5>
@@ -3303,13 +3497,13 @@ class Main extends React.Component {
                 </div>
               </div>
             </AppDelDialog>
-            <CatEditDialog catEditDiaShow={this.state.catEditDiaShow} activityChanged={this.state.activityChanged} handleClose={this.hideModal} handleSave={this.saveCatEdit}>
+            <CatEditDialog catEditDiaShow={this.state.catEditDiaShow} activityChanged={this.state.activityChanged} handleClose={this.hideModal} handleSave={this.applyCatEdit}>
               <div className="modal-content">
                 <div className="modal-header">
                   <h5 className="modal-title" >Edit Category</h5>
                 </div>
                 <div className="modal-body">
-                  <form id="appEditForm">
+                  <form id="catEditForm">
 
                     <div className="form-group">
                       <div className="row text-center mb-1 m-auto">
@@ -3390,7 +3584,7 @@ class Main extends React.Component {
                   <h5 className="modal-title" >Add Category</h5>
                 </div>
                 <div className="modal-body">
-                  <form id="appAddForm">
+                  <form id="catAddForm">
 
                     <div className="form-group">
                       <div className="row text-center mb-1 m-auto">
@@ -3409,10 +3603,30 @@ class Main extends React.Component {
                         <div className="col">
                           <div className="row border">
                             <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
+                              <label>Pos</label>
+                            </div>
+                            <div className="col d-flex flex-column justify-content-center align-items-center">
+                              <input type="text" title="Leave blank for last" id="clearcatpos" className="form-control border-0"
+                                onChange={e => {
+                                  temp = e.target.value;
+                                  // console.log("POS Changed!");
+                                }
+                                } />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="form-group">
+                      <div className="row text-center mb-1 m-auto">
+                        <div className="col">
+                          <div className="row border">
+                            <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
                               <label>Title</label>
                             </div>
                             <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="text" className="form-control border-0" id="clearapptitle" onChange={e => temp2 = e.target.value} />
+                              <input type="text" className="form-control border-0" id="clearcattitle" onChange={e => temp2 = e.target.value} />
                             </div>
                           </div>
                         </div>
@@ -3462,7 +3676,7 @@ class Main extends React.Component {
                 </div>
               </div>
             </CatAddDialog>
-            <CatDelDialog catDelDiaShow={this.state.catDelDiaShow} activityChanged={this.state.activityChanged} handleClose={this.hideModal} handleSave={this.applycatDel}>
+            <CatDelDialog catDelDiaShow={this.state.catDelDiaShow} activityChanged={this.state.activityChanged} handleClose={this.hideModal} handleSave={this.applyCatDel}>
               <div className="modal-content">
                 <div className="modal-header">
                   <h5 className="modal-title" >Permanently delete this category?</h5>
@@ -3506,7 +3720,7 @@ class Main extends React.Component {
                 </div> */}
               </div>
             </AppOrCatDialog>
-            <ExCrsDialog exCrsDiaShow={this.state.exCrsDiaShow} activityChanged={this.state.activityChanged} handleClose={this.hideModal} handleSave={this.saveAppEdit}>
+            <ExCrsDialog exCrsDiaShow={this.state.exCrsDiaShow} activityChanged={this.state.activityChanged} handleClose={this.hideModal} handleSave={this.applyAppEdit}>
               <div className="modal-content">
                 <div className="modal-header-dark">
                   <h5 className="modal-title-dark" >Soylent Credits</h5>
@@ -3774,7 +3988,84 @@ class Main extends React.Component {
                 </div>
               </div>
             </SearchDialog>
-            <AppVideoDialog appVideoDiaShow={this.state.appVideoDiaShow} activityChanged={this.state.activityChanged} handleClose={this.hideModal} handleSave={this.saveAppEdit}>
+
+            <CatDialog catDiaShow={this.state.catDiaShow} activityChanged={this.state.activityChanged} handleClose={this.hideModal}>
+              <div className="modal-content">
+                <div className="modal-header-dark">
+                  <h5 className="modal-title-dark" >Category: {tempCatTitle}</h5>
+                </div>
+                <div className="modal-body-dark">
+                  <div className="textcenter">
+                    {
+                      this.state.resAppItems.map(({ id, title, link, icon, video }, i) => {
+                        return (
+                          // *** Have to include also links not only video ***
+                          <AppSearchRes key={i} pos={i}
+                            title={title} link={link} icon={icon} video={video}
+                            appVideo={this.resAppVideo} />
+                        )
+                      })
+                    }
+                  </div>
+                  {/* <form id="searchForm" onKeyDown={this.handleKeyDown}> */}
+                  {/* <div className="form-group">
+                      <input type="text" className="form-control contenitore pt-2" ref={(input) => { this.searchInput = input; }} onChange={e => temp = e.target.value} placeholder={"Search movie..."} />
+                    </div>
+                    <Conferma alShow={this.state.alShow} handleClose={this.hideAlert}>
+                      <div className="row text-center pt-2">
+                        <div className="col">
+                          <div className="row">
+                            <section className="col pt-2 contenitore solidgreen latowhite d-flex justify-content-center align-items-center ">
+                              <div>
+                                <p className="norfont">Search results:</p>
+                              </div>
+                            </section>
+                          </div>
+                        </div>
+                      </div>
+                    </Conferma>
+                    <Errore alErrShow={this.state.alErrShow} handleClose={this.hideAlert}>
+                      <div className="row text-center pt-2">
+                        <div className="col">
+                          <div className="row">
+                            <section className="col pt-2 contenitore brick latowhite d-flex justify-content-center align-items-center ">
+                              <div>
+                                <p className="norfont">Error! Enter at least one character.</p>
+                              </div>
+                            </section>
+                          </div>
+                        </div>
+                      </div>
+                    </Errore> */}
+                  {/* RESAPPS */}
+                  {/* <div className="textcenter"> */}
+                  {/* {
+                        this.state.appItems.map(({ id, title, link, icon, video }, i) => {
+                          return (
+                            <App showAppsBtn={this.state.appsBtnShow} key={i} pos={i}
+                              title={title} link={link} icon={icon} video={video}
+                              appEditDel={this.appEditDel} appAddItem={this.appAddItem} appVideo={this.appVideo} />
+                          )
+                        })
+                      } */}
+                  {/* {
+                        this.state.resAppItems.map(({ id, title, link, icon, video }, i) => {
+                          return (
+                            // *** Have to include also links not only video ***
+                            <AppSearchRes key={i} pos={i}
+                              title={title} link={link} icon={icon} video={video}
+                              appVideo={this.resAppVideo} />
+                          )
+                        })
+                      }
+                    </div>
+                  </form> */}
+
+                </div>
+              </div>
+            </CatDialog>
+
+            <AppVideoDialog appVideoDiaShow={this.state.appVideoDiaShow} activityChanged={this.state.activityChanged} handleClose={this.hideModal} handleSave={this.applyAppEdit}>
               <div className="modal-content">
                 <div className="modal-header-dark">
                   <h5 className="modal-title-dark" >"{tempAppTitle}"</h5>
@@ -3798,7 +4089,7 @@ class Main extends React.Component {
                   return (
                     <Cat showAppsBtn={this.state.appsBtnShow} key={i}
                       title={title} icon={icon} catEditDel={this.catEditDel}
-                      catAddItem={this.catAddItem} />
+                      catAddItem={this.catAddItem} catCont={this.catCont} />
                   )
                 })
               }
@@ -3951,56 +4242,64 @@ class Cat extends React.Component {
 
   render() {
 
-    const linkOrVideo = this.props.video
-      ?
-      (<a title={this.props.title} onClick={() => this.props.appVideo("AppVideo", this.props.pos)}>
-        <img className="apps" title={this.props.title} alt={this.props.title} src={this.props.icon} />
-      </a>)
-      :
-      (< a title={this.props.title} href={this.props.link} target="_blank" >
-        <img className="apps" title={this.props.title} alt={this.props.title} src={this.props.icon} />
-      </a>);
+    // const linkOrVideo = this.props.video
+    //   ?
+    //   (<a title={this.props.title} onClick={() => this.props.catCont("catCont", this.props.pos)}>
+    //     <img className="apps" title={this.props.title} alt={this.props.title} src={this.props.icon} />
+    //   </a>)
+    //   :
+    //   (< a title={this.props.title} href={this.props.link} target="_blank" >
+    //     <img className="apps" title={this.props.title} alt={this.props.title} src={this.props.icon} />
+    //   </a>);
 
     let catBtn = ""
     if (this.props.showAppsBtn === "ShowAppBtn" && this.props.title !== "Add Item") {
       catBtn = (
         <div className="appcontainer">
-          {linkOrVideo}
+          <a title={this.props.title} onClick={() => this.props.catCont("catCont", this.props.pos)}>
+            <img className="apps" title={this.props.title} alt={this.props.title} src={this.props.icon} />
+          </a>
+          {/* {linkOrVideo} */}
           {/* <a title={this.props.title} onClick={() => this.props.appVideo("AppVideo", this.props.pos)}>
             <img className="apps" title={this.props.title} alt={this.props.title} src={this.props.icon} />
           </a> */}
           <h4><p className="lato"><b>{this.props.title}</b></p></h4>
           <div className="row btncontainer">
-            <button className="col appbutton solidgreen m-1" onClick={() => this.props.appEditDel("AppEdit", this.props.pos)}>
+            <button className="col appbutton solidgreen m-1" onClick={() => this.props.catEditDel("CatEdit", this.props.pos)}>
               Edit
             </button>
             <button className="col-1 appbutton black m-1 pad01">
               {this.props.pos + 1}
             </button>
-            <button className="col appbutton solidbrick m-1" onClick={() => this.props.appEditDel("AppDel", this.props.pos)}>
+            <button className="col appbutton solidbrick m-1" onClick={() => this.props.catEditDel("CatDel", this.props.pos)}>
               Remove
             </button>
           </div>
         </div>
       )
-    } else if (this.props.title === "Add Item") {
+    } 
+    // else if (this.props.title === "Add Item") {
+    //   catBtn = (
+    //     <div className="appcontainer">
+    //       < a title={this.props.title} target="_blank" onClick={() => this.props.addItem("AddItem", this.props.pos)} >
+    //         <img className="apps" title={this.props.title} alt={this.props.title} src={this.props.icon} />
+    //       </a>
+    //       <h4><p className="lato"><b>{this.props.title}</b></p></h4>
+    //       <div className="row btncontainer">
+    //         <button className="col addbutton solidgreen m-1" onClick={() => this.props.addItem("AddItem", this.props.pos)}>
+    //           Add Item
+    //         </button>
+    //       </div>
+    //     </div>
+    //   )
+    // }
+     else {
       catBtn = (
         <div className="appcontainer">
-          < a title={this.props.title} target="_blank" onClick={() => this.props.addItem("AddItem", this.props.pos)} >
+          <a title={this.props.title} onClick={() => this.props.catCont("catCont", this.props.pos)}>
             <img className="apps" title={this.props.title} alt={this.props.title} src={this.props.icon} />
           </a>
-          <h4><p className="lato"><b>{this.props.title}</b></p></h4>
-          <div className="row btncontainer">
-            <button className="col addbutton solidgreen m-1" onClick={() => this.props.addItem("AddItem", this.props.pos)}>
-              Add Item
-            </button>
-          </div>
-        </div>
-      )
-    } else {
-      catBtn = (
-        <div className="appcontainer">
-          {linkOrVideo}
+          {/* {linkOrVideo} */}
           {/* < a title={this.props.title} onClick={() => this.props.appVideo("AppVideo", this.props.pos)}> */}
           {/* < a title={this.props.title} href={this.props.link} target="_blank" > */}
           {/* <img className="apps" title={this.props.title} alt={this.props.title} src={this.props.icon} />
