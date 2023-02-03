@@ -10,7 +10,8 @@ header("Access-Control-Allow-Methods: PUT, GET, POST");
 $default = [
     'logo' => '',
     'back' => '',
-    'icon' => ''
+    'icon' => '',
+    'cat' => ''
 ];
 
 $default2 = [
@@ -18,7 +19,8 @@ $default2 = [
     'back' => '',
     'icon' => '',
     'config' => '',
-    'credentials' => ''
+    'credentials' => '',
+    'cat' => ''
 ];
 
 $default3 = [
@@ -93,6 +95,38 @@ if ($_FILES['logo']) {
                 "status" => "error",
                 "error" => true,
                 "message" => "BackUploadError"
+            );
+        }
+    }
+} else if ($_FILES['cat']) {
+    $upload_dir = '../appicons/';
+    $icon_name = $_FILES["cat"]["name"];
+    $icon_tmp_name = $_FILES["cat"]["tmp_name"];
+    $error = $_FILES["cat"]["error"];
+
+    if ($error > 0) {
+        $response = array(
+            "status" => "error",
+            "error" => true,
+            "message" => "Error uploading the Cat Icon file!"
+        );
+    } else {
+        $random_name = rand(1000, 1000000) . "-" . $icon_name;
+        $upload_name = $upload_dir . $random_name;
+        $upload_name = preg_replace('/\s+/', '-', $upload_name);
+
+        if (move_uploaded_file($icon_tmp_name, $upload_name)) {
+            $response = array(
+                "status" => "success",
+                "error" => false,
+                "message" => "CatUploadOk",
+                "filename" => $random_name
+            );
+        } else {
+            $response = array(
+                "status" => "error",
+                "error" => true,
+                "message" => "CatUploadError"
             );
         }
     }
@@ -241,6 +275,47 @@ if ($_FILES['logo']) {
                 "message" => "BackDeleteError"
             );
         }
+    }
+} else if ($_POST['cat']) {
+    $del_name = $_POST["cat"];
+    $error = null;
+    if (is_array($_POST) && !empty($_POST["cat"]["error"])) {
+        $error = $_POST["cat"]["error"];
+    }
+
+    if ($error > 0) {
+        $response = array(
+            "status" => "error",
+            "error" => true,
+            "message" => "Post Error deleting Icon file!"
+        );
+    } else {
+        if (file_exists("." . $del_name)) {
+            unlink("." . $del_name);
+            $response = array(
+                "status" => "success",
+                "error" => false,
+                "message" => "IconDeleteOk",
+            );
+            // unlink('your_file_name');
+        } else {
+            $data = '{"Error":[{"Type":"File", "Details":"File not found!"}]}';
+            $response = json_decode($data);
+            // echo 'File not found!';
+        }
+        // if (unlink("." . $del_name)) {
+        //     $response = array(
+        //         "status" => "success",
+        //         "error" => false,
+        //         "message" => "IconDeleteOk",
+        //     );
+        // } else {
+        //     $response = array(
+        //         "status" => "error",
+        //         "error" => true,
+        //         "message" => "IconDeleteError"
+        //     );
+        // }
     }
 } else if ($_POST['icon']) {
     $del_name = $_POST["icon"];

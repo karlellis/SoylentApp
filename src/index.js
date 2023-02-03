@@ -573,6 +573,7 @@ const LogoDialog = ({ handleUpload, handleClose, logoDiaShow, children, activity
 };
 
 async function fetchUpPHP(file, url, key) {
+  // console.log("fetchUpPHP...");
   var data = new FormData()
   data.append(key, file)
   const response = await fetch(url, {
@@ -584,7 +585,7 @@ async function fetchUpPHP(file, url, key) {
   }).then((response) => response.json())
     .then((json) => {
       nome = json.filename;
-      // console.log("Image Upload:", nome);
+      console.log("Image Upload:", nome);
     });
 }
 
@@ -886,6 +887,47 @@ class Main extends React.Component {
           this.setState(previousState => ({
             appItems: [...previousState.appItems, spData.appAdd]
           }));
+        } else if (url === "icon" && op === "addlast") {
+          appNewItem.icon = "./appicons/" + nome;
+          appNewItem.title = temp2;
+          appNewItem.link = temp3;
+          appNewItem.video = temp4;
+          appNewItem.cat = temp5;
+          inPos = arrayLength;
+          console.log("Pos: ", inPos);
+          tempIcon = "";
+          arrayAdd = this.addAfter(array, inPos, appNewItem);
+          this.setState({ appItems: arrayAdd });
+          spData.appItems = arrayAdd;
+          console.log("Array: ", array);
+          console.log("ArrayAdd: ", arrayAdd);
+          console.log("CatItems: ", spData.appItems);
+          arrayAdd = [];
+          arrayLength = arrayLength + 1;
+          temp = "";
+          temp2 = "";
+          temp3 = "";
+          temp4 = "";
+          temp5 = "";
+          appNewItem = {
+            "title": "",
+            "link": "",
+            "icon": "",
+            "video": false,
+            "cat": ""
+          };
+          this.setState({ upShow: false });
+          this.setState({ alShow: true });
+          this.setState({ alErrShow: false });
+          // console.log("Add Last Icon correctly Uploaded!");
+          // this.setState({
+          //   activityChanged: false
+          // });
+          spData.appItems.pop();
+          this.saveFile(spData, "./api/img-upload.php", "config");
+          this.setState(previousState => ({
+            appItems: [...previousState.appItems, spData.appAdd]
+          }));
         } else if (url === "cat" && op === "edit") {
           if (fileImg !== null) {
             // console.log("Icon edit!");
@@ -938,15 +980,21 @@ class Main extends React.Component {
             catItems: [...previousState.catItems, spData.appAdd]
           }));
         } else if (url === "cat" && op === "addlast") {
+          console.log("CatAddLast...");
           catNewItem.icon = "./appicons/" + nome;
           catNewItem.title = temp2;
+          console.log("CatNewItem: ", catNewItem);
           inPos = arrayLength;
+          console.log("Pos: ", inPos);
           tempIcon = "";
           arrayAdd = this.addAfter(array, inPos, catNewItem);
           this.setState({ catItems: arrayAdd });
           spData.catItems = arrayAdd;
+          console.log("Array: ", array);
+          console.log("ArrayAdd: ", arrayAdd);
+          console.log("CatItems: ", spData.catItems);
           arrayAdd = [];
-          arrayLength = arrayLength + 1;
+          // arrayLength = arrayLength + 1;
           temp2 = "";
           catNewItem = {
             "title": "",
@@ -959,48 +1007,11 @@ class Main extends React.Component {
           // this.setState({
           //   activityChanged: false
           // });
-          spData.catItems.pop();
+          // spData.catItems.pop();
           this.saveFile(spData, "./api/img-upload.php", "config");
-          this.setState(previousState => ({
-            appItems: [...previousState.appItems, spData.appAdd]
-          }));
-        } else if (url === "icon" && op === "addlast") {
-          appNewItem.icon = "./appicons/" + nome;
-          appNewItem.title = temp2;
-          appNewItem.link = temp3;
-          appNewItem.video = temp4;
-          appNewItem.cat = temp5;
-          inPos = arrayLength;
-          tempIcon = "";
-          arrayAdd = this.addAfter(array, inPos, appNewItem);
-          this.setState({ appItems: arrayAdd });
-          spData.appItems = arrayAdd;
-          arrayAdd = [];
-          arrayLength = arrayLength + 1;
-          temp = "";
-          temp2 = "";
-          temp3 = "";
-          temp4 = "";
-          temp5 = "";
-          appNewItem = {
-            "title": "",
-            "link": "",
-            "icon": "",
-            "video": false,
-            "cat": ""
-          };
-          this.setState({ upShow: false });
-          this.setState({ alShow: true });
-          this.setState({ alErrShow: false });
-          // console.log("Add Last Icon correctly Uploaded!");
-          // this.setState({
-          //   activityChanged: false
-          // });
-          spData.appItems.pop();
-          this.saveFile(spData, "./api/img-upload.php", "config");
-          this.setState(previousState => ({
-            appItems: [...previousState.appItems, spData.appAdd]
-          }));
+          // this.setState(previousState => ({
+          //   appItems: [...previousState.appItems, spData.appAdd]
+          // }));
         } else if (url === "back" && op === "edit") {
           spData.backgroundImage = "./img/" + nome;
           spData.backgroundColor = this.hexToRgb(tempColor) + ", 0.7)";
@@ -1826,13 +1837,13 @@ class Main extends React.Component {
   catAddItem() {
     this.hideModal();
     array = [...this.state.catItems];
-    arrayLength = (array.length - 1);
+    arrayLength = (array.length);
     temp4 = false;
     temp5 = false;
     document.getElementById('clearcatpos').value = "";
     document.getElementById('clearcattitle').value = "";
     this.showModal("catAdd");
-    // console.log("Adding IT!");
+    // console.log("CATAdding IT!");
   }
 
   appAddItem(id, pos) {
@@ -1846,7 +1857,7 @@ class Main extends React.Component {
     document.getElementById('clearapptitle').value = "";
     document.getElementById('clearapplink').value = "";
     this.showModal("appAdd");
-    // console.log("Adding IT!");
+    // console.log("APPAdding IT!");
   }
 
   appEditDel(id, pos) {
@@ -4241,16 +4252,6 @@ class Cat extends React.Component {
   }
 
   render() {
-
-    // const linkOrVideo = this.props.video
-    //   ?
-    //   (<a title={this.props.title} onClick={() => this.props.catCont("catCont", this.props.pos)}>
-    //     <img className="apps" title={this.props.title} alt={this.props.title} src={this.props.icon} />
-    //   </a>)
-    //   :
-    //   (< a title={this.props.title} href={this.props.link} target="_blank" >
-    //     <img className="apps" title={this.props.title} alt={this.props.title} src={this.props.icon} />
-    //   </a>);
 
     let catBtn = ""
     if (this.props.showAppsBtn === "ShowAppBtn" && this.props.title !== "Add Item") {
