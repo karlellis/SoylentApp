@@ -655,6 +655,7 @@ class Main extends React.Component {
       appItems: [],
       catItems: [],
       resAppItems: [],
+      catAppItems: [],
       creditsItems: [],
       menuShow: false,
       titleShow: false,
@@ -1891,12 +1892,12 @@ class Main extends React.Component {
 
   catCont(id, pos) {
     temp3 = pos;
-    array = [...this.state.catItems];
-    tempCatTitle = array[pos].title;
+    array = [...this.state.catAppItems];
+    tempAppTitle = array[pos].title;
     // console.log(id, " for ", pos);
-    // this.setState({
-    //   videoLink: array[pos].link
-    // })
+    this.setState({
+      videoLink: array[pos].link
+    })
     this.showModal("cat");
   }
 
@@ -4008,7 +4009,7 @@ class Main extends React.Component {
                 <div className="modal-body-dark">
                   <div className="textcenter">
                     {
-                      this.state.resAppItems.map(({ id, title, link, icon, video }, i) => {
+                      this.state.catResAppItems.map(({ id, title, link, icon, video }, i) => {
                         return (
                           // *** Have to include also links not only video ***
                           <AppSearchRes key={i} pos={i}
