@@ -16,7 +16,7 @@ var temp = "";
 var temp2 = "";
 var temp3 = "";
 var temp4 = "";
-var temp5 = "";
+var temp5 = "root";
 var tempColor = "#0077c8";
 var tempTextColor = "#0077c8";
 var tempColW = "";
@@ -29,7 +29,7 @@ var tempCatTitle = "";
 var tempExCrsTitle = "";
 var tempExCrsLink = "";
 var tempExCrsDescr = "";
-var tempAppCat = false;
+var tempAppCat = "";
 var tempIcon = "";
 var arrayLength = 0;
 var login = false;
@@ -42,7 +42,7 @@ var appNewItem = {
   "link": "",
   "icon": "",
   "video": false,
-  "cat": ""
+  "cat": "root"
 };
 var catNewItem = {
   "title": "",
@@ -706,6 +706,7 @@ class Main extends React.Component {
     this.catEditDel = this.catEditDel.bind(this);
     this.catAddItem = this.catAddItem.bind(this);
     this.appVideo = this.appVideo.bind(this);
+    this.catCont = this.catCont.bind(this);
     this.resAppVideo = this.resAppVideo.bind(this);
     this.exCrsShow = this.exCrsShow.bind(this);
     this.search = this.search.bind(this);
@@ -867,7 +868,7 @@ class Main extends React.Component {
           temp2 = "";
           temp3 = "";
           temp4 = "";
-          temp5 = "";
+          temp5 = "root";
           appNewItem = {
             "title": "",
             "link": "",
@@ -909,7 +910,7 @@ class Main extends React.Component {
           temp2 = "";
           temp3 = "";
           temp4 = "";
-          temp5 = "";
+          temp5 = "root";
           appNewItem = {
             "title": "",
             "link": "",
@@ -1127,6 +1128,47 @@ class Main extends React.Component {
       this.setState({ alErrShow: true });
       this.setState({ alShow: false });
     }
+  }
+
+  appCatSearch = () => {
+    if (this.state.appItems.length > 0) {
+      console.log("AppCatSearch: ", tempCatTitle);
+      let count = 0;
+      for (let i = 0; i < this.state.appItems.length; i++) {
+        if (this.state.appItems[i].cat.toLowerCase().includes(tempCatTitle.toLowerCase())) {
+          appNewItem.icon = this.state.appItems[i].icon;
+          appNewItem.title = this.state.appItems[i].title;
+          appNewItem.link = this.state.appItems[i].link;
+          appNewItem.video = this.state.appItems[i].video;
+          arrayAdd = this.addAfter(arrayAdd, count, appNewItem);
+          count = count++;
+          appNewItem = {
+            "title": "",
+            "link": "",
+            "icon": "",
+            "video": false,
+            "cat": "root"
+          };
+        }
+      }
+      count = 0;
+      // console.log("Insert pos=", (inPos));
+      this.setState({ catAppItems: arrayAdd });
+      arrayAdd = [];
+      appNewItem = {
+        "title": "",
+        "link": "",
+        "icon": "",
+        "video": false,
+        "cat": ""
+      };
+      // this.setState({ alShow: true });
+      // this.setState({ alErrShow: false });
+    }
+    // else {
+    //   this.setState({ alErrShow: true });
+    //   this.setState({ alShow: false });
+    // }
   }
 
   saveClock = () => {
@@ -1840,7 +1882,7 @@ class Main extends React.Component {
     array = [...this.state.catItems];
     arrayLength = (array.length);
     temp4 = false;
-    temp5 = false;
+    temp5 = "root";
     document.getElementById('clearcatpos').value = "";
     document.getElementById('clearcattitle').value = "";
     this.showModal("catAdd");
@@ -1853,7 +1895,7 @@ class Main extends React.Component {
     arrayLength = (array.length - 1);
     tempAppVideo = false;
     temp4 = false;
-    temp5 = false;
+    temp5 = "root";
     document.getElementById('clearapppos').value = "";
     document.getElementById('clearapptitle').value = "";
     document.getElementById('clearapplink').value = "";
@@ -1891,13 +1933,11 @@ class Main extends React.Component {
   }
 
   catCont(id, pos) {
-    temp3 = pos;
-    array = [...this.state.catAppItems];
-    tempAppTitle = array[pos].title;
-    // console.log(id, " for ", pos);
-    this.setState({
-      videoLink: array[pos].link
-    })
+    array = [...this.state.catItems];
+    // console.log("Cat Array: ", array);
+    tempCatTitle = array[pos].title;
+    // console.log("TempCatTitle: ", tempCatTitle);
+    this.appCatSearch(tempCatTitle);
     this.showModal("cat");
   }
 
@@ -1919,6 +1959,10 @@ class Main extends React.Component {
   search() {
     this.showModal("search");
     this.searchInput.focus();
+  }
+
+  setCat(catName) {
+    temp5 = catName;
   }
 
   stopVideos = () => {
@@ -3425,16 +3469,7 @@ class Main extends React.Component {
                               <label>Category</label>
                             </div>
                             <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <label class="switch">
-                                <input type="checkbox" className="form-control" defaultChecked={tempAppCat} onClick={e => {
-                                  if (tempAppCat === false) {
-                                    temp5 = true;
-                                  } else {
-                                    temp5 = false;
-                                  }
-                                }} />
-                                <span class="slider round" title="Video Player"></span>
-                              </label>
+                              <DropdownCat catTitle={temp5} catItems={this.state.catItems} setCat={this.setCat}></DropdownCat>
                             </div>
                           </div>
                         </div>
@@ -4009,70 +4044,16 @@ class Main extends React.Component {
                 <div className="modal-body-dark">
                   <div className="textcenter">
                     {
-                      this.state.catResAppItems.map(({ id, title, link, icon, video }, i) => {
+                      this.state.catAppItems.map(({ id, title, link, icon, video }, i) => {
                         return (
                           // *** Have to include also links not only video ***
-                          <AppSearchRes key={i} pos={i}
+                          <AppCatRes key={i} pos={i}
                             title={title} link={link} icon={icon} video={video}
                             appVideo={this.resAppVideo} />
                         )
                       })
                     }
                   </div>
-                  {/* <form id="searchForm" onKeyDown={this.handleKeyDown}> */}
-                  {/* <div className="form-group">
-                      <input type="text" className="form-control contenitore pt-2" ref={(input) => { this.searchInput = input; }} onChange={e => temp = e.target.value} placeholder={"Search movie..."} />
-                    </div>
-                    <Conferma alShow={this.state.alShow} handleClose={this.hideAlert}>
-                      <div className="row text-center pt-2">
-                        <div className="col">
-                          <div className="row">
-                            <section className="col pt-2 contenitore solidgreen latowhite d-flex justify-content-center align-items-center ">
-                              <div>
-                                <p className="norfont">Search results:</p>
-                              </div>
-                            </section>
-                          </div>
-                        </div>
-                      </div>
-                    </Conferma>
-                    <Errore alErrShow={this.state.alErrShow} handleClose={this.hideAlert}>
-                      <div className="row text-center pt-2">
-                        <div className="col">
-                          <div className="row">
-                            <section className="col pt-2 contenitore brick latowhite d-flex justify-content-center align-items-center ">
-                              <div>
-                                <p className="norfont">Error! Enter at least one character.</p>
-                              </div>
-                            </section>
-                          </div>
-                        </div>
-                      </div>
-                    </Errore> */}
-                  {/* RESAPPS */}
-                  {/* <div className="textcenter"> */}
-                  {/* {
-                        this.state.appItems.map(({ id, title, link, icon, video }, i) => {
-                          return (
-                            <App showAppsBtn={this.state.appsBtnShow} key={i} pos={i}
-                              title={title} link={link} icon={icon} video={video}
-                              appEditDel={this.appEditDel} appAddItem={this.appAddItem} appVideo={this.appVideo} />
-                          )
-                        })
-                      } */}
-                  {/* {
-                        this.state.resAppItems.map(({ id, title, link, icon, video }, i) => {
-                          return (
-                            // *** Have to include also links not only video ***
-                            <AppSearchRes key={i} pos={i}
-                              title={title} link={link} icon={icon} video={video}
-                              appVideo={this.resAppVideo} />
-                          )
-                        })
-                      }
-                    </div>
-                  </form> */}
-
                 </div>
               </div>
             </CatDialog>
@@ -4099,7 +4080,7 @@ class Main extends React.Component {
               {
                 this.state.catItems.map(({ id, title, icon }, i) => {
                   return (
-                    <Cat showAppsBtn={this.state.appsBtnShow} key={i}
+                    <Cat showAppsBtn={this.state.appsBtnShow} key={i} pos={i}
                       title={title} icon={icon} catEditDel={this.catEditDel}
                       catAddItem={this.catAddItem} catCont={this.catCont} />
                   )
@@ -4279,7 +4260,7 @@ class Cat extends React.Component {
           </div>
         </div>
       )
-    } 
+    }
     // else if (this.props.title === "Add Item") {
     //   catBtn = (
     //     <div className="appcontainer">
@@ -4295,7 +4276,7 @@ class Cat extends React.Component {
     //     </div>
     //   )
     // }
-     else {
+    else {
       catBtn = (
         <div className="appcontainer">
           <a title={this.props.title} onClick={() => this.props.catCont("catCont", this.props.pos)}>
@@ -4371,6 +4352,38 @@ class Credit extends React.Component {
     return (
       <>
         {creditBtn}
+      </>
+    );
+  }
+}
+
+class AppCatRes extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    const linkOrVideo = this.props.video
+      ?
+      (<a title={this.props.title} onClick={() => this.props.appVideo("AppVideo", this.props.pos)}>
+        <img className="apps" title={this.props.title} alt={this.props.title} src={this.props.icon} />
+      </a>)
+      :
+      (< a title={this.props.title} href={this.props.link} target="_blank" >
+        <img className="apps" title={this.props.title} alt={this.props.title} src={this.props.icon} />
+      </a>);
+
+    let appBtn = ""
+
+    appBtn = (
+      <div className="appcontainer">
+        {linkOrVideo}
+        <h4><p className="lato"><b>{this.props.title}</b></p></h4>
+      </div>
+    )
+    return (
+      <>
+        {appBtn}
       </>
     );
   }
@@ -4459,6 +4472,81 @@ class Dropdown extends React.Component {
             }}>
             Credits
           </button>
+        </div>
+      </div>
+    );
+  }
+}
+
+class DropdownCat extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  state = {
+    isOpen: false
+  };
+  
+  toggleOpen = () => this.setState({ isOpen: !this.state.isOpen });
+
+  render() {
+    const menuClass = `dropdown-menu${this.state.isOpen ? " show d-flex flex-column justify-content-center align-items-center" : " disNone"}`;
+    return (
+      <div className="dropdown" onClick={this.toggleOpen}>
+
+        <button
+          className="button indaco m-1 dropdown-toggle"
+          type="button"
+          id="dropdownMenuButton"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+        >
+          {this.props.catTitle}
+        </button>
+
+        <div className={menuClass + " menuBG"} aria-labelledby="dropdownMenuButton">
+
+          <button className="col menuItem green m-1"
+            onClick={() => {
+              // window.location = "./searching.php";
+              this.props.setCat('root');
+            }}>
+            Root
+          </button>
+
+          {
+            this.props.catItems.map(({ id, title, icon }, i) => {
+              return (
+                <button className="col menuItem green m-1"
+                  onClick={() => {
+                    // window.location = "./searching.php";
+                    this.props.setCat({ title });
+                  }}>
+                  {title}
+                </button>
+                // <Cat showAppsBtn={this.state.appsBtnShow} key={i} pos={i}
+                //   title={title} icon={icon} catEditDel={this.catEditDel}
+                //   catAddItem={this.catAddItem} catCont={this.catCont} />
+              )
+            })
+          }
+
+          {/* <button className="col menuItem green m-1"
+            onClick={() => {
+              // window.location = "./searching.php";
+              this.props.search();
+            }}>
+            Search
+          </button>
+
+          <button className="col menuItem blue m-1"
+            onClick={() => {
+              // window.location = "./credits.html";
+              this.props.exCrsShow();
+            }}>
+            Credits
+          </button> */}
+
         </div>
       </div>
     );
