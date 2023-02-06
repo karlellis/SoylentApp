@@ -691,6 +691,7 @@ class Main extends React.Component {
       disFieldC: false,
       disFieldC2: false,
       disFieldC3: false,
+      catTitle: "root",
       backStyle: {
         backgroundImage: "",
         backgroundColor: "",
@@ -710,6 +711,7 @@ class Main extends React.Component {
     this.resAppVideo = this.resAppVideo.bind(this);
     this.exCrsShow = this.exCrsShow.bind(this);
     this.search = this.search.bind(this);
+    this.setCat = this.setCat.bind(this);
     this.showMainButtons = this.showMainButtons.bind(this);
     this.headLogoEdit = this.headLogoEdit.bind(this);
     this.showModal = this.showModal.bind(this);
@@ -1956,13 +1958,13 @@ class Main extends React.Component {
     this.showModal("exCrs");
   }
 
+  setCat(catName) {
+    temp5 = catName;
+  }
+
   search() {
     this.showModal("search");
     this.searchInput.focus();
-  }
-
-  setCat(catName) {
-    temp5 = catName;
   }
 
   stopVideos = () => {
@@ -1995,6 +1997,10 @@ class Main extends React.Component {
     );
     let buttons = "";
     // let foot = "";
+
+    let catMenuButtons = (
+      <DropdownCat items={this.state.catItems} setCat={this.setCat}></DropdownCat>
+    )
 
     let head = (
       <div className="row text-center mt-2 mb-2">
@@ -3469,7 +3475,7 @@ class Main extends React.Component {
                               <label>Category</label>
                             </div>
                             <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <DropdownCat catTitle={temp5} catItems={this.state.catItems} setCat={this.setCat}></DropdownCat>
+                              {catMenuButtons}
                             </div>
                           </div>
                         </div>
@@ -4484,9 +4490,14 @@ class DropdownCat extends React.Component {
   }
 
   state = {
-    isOpen: false
+    isOpen: false,
+    selCat: "root"
   };
-  
+
+  changeText(selected) {
+    this.setState({ selCat: selected });
+  }
+
   toggleOpen = () => this.setState({ isOpen: !this.state.isOpen });
 
   render() {
@@ -4501,52 +4512,36 @@ class DropdownCat extends React.Component {
           data-toggle="dropdown"
           aria-haspopup="true"
         >
-          {this.props.catTitle}
+          {this.state.selCat}
         </button>
-
+        {/* <label>{this.state.selCat}</label> */}
         <div className={menuClass + " menuBG"} aria-labelledby="dropdownMenuButton">
 
-          <button className="col menuItem green m-1"
-            onClick={() => {
+          <button className="col menuItem green m-1">
+            {/* onClick={() => {
               // window.location = "./searching.php";
-              this.props.setCat('root');
-            }}>
+              // this.changeText("root")
+              // selCat = "root";
+              // this.props.setCat("root");
+            }}> */}
             Root
           </button>
 
           {
-            this.props.catItems.map(({ id, title, icon }, i) => {
+            this.props.items.map(({ id, title, icon }, i) => {
               return (
-                <button className="col menuItem green m-1"
-                  onClick={() => {
+                <button className="col menuItem green m-1">
+                  {/* onClick={() => {
                     // window.location = "./searching.php";
-                    this.props.setCat({ title });
-                  }}>
+                    // this.changeText({ title })
+                    // selCat = { title };
+                    // this.props.setCat({ title });
+                  }}> */}
                   {title}
                 </button>
-                // <Cat showAppsBtn={this.state.appsBtnShow} key={i} pos={i}
-                //   title={title} icon={icon} catEditDel={this.catEditDel}
-                //   catAddItem={this.catAddItem} catCont={this.catCont} />
               )
             })
           }
-
-          {/* <button className="col menuItem green m-1"
-            onClick={() => {
-              // window.location = "./searching.php";
-              this.props.search();
-            }}>
-            Search
-          </button>
-
-          <button className="col menuItem blue m-1"
-            onClick={() => {
-              // window.location = "./credits.html";
-              this.props.exCrsShow();
-            }}>
-            Credits
-          </button> */}
-
         </div>
       </div>
     );
