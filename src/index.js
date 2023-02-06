@@ -16,7 +16,7 @@ var temp = "";
 var temp2 = "";
 var temp3 = "";
 var temp4 = "";
-var temp5 = "root";
+var temp5 = "Root";
 var tempColor = "#0077c8";
 var tempTextColor = "#0077c8";
 var tempColW = "";
@@ -42,7 +42,7 @@ var appNewItem = {
   "link": "",
   "icon": "",
   "video": false,
-  "cat": "root"
+  "cat": "Root"
 };
 var catNewItem = {
   "title": "",
@@ -691,7 +691,7 @@ class Main extends React.Component {
       disFieldC: false,
       disFieldC2: false,
       disFieldC3: false,
-      catTitle: "root",
+      catTitle: "Root",
       backStyle: {
         backgroundImage: "",
         backgroundColor: "",
@@ -870,7 +870,7 @@ class Main extends React.Component {
           temp2 = "";
           temp3 = "";
           temp4 = "";
-          temp5 = "root";
+          temp5 = "Root";
           appNewItem = {
             "title": "",
             "link": "",
@@ -912,7 +912,7 @@ class Main extends React.Component {
           temp2 = "";
           temp3 = "";
           temp4 = "";
-          temp5 = "root";
+          temp5 = "Root";
           appNewItem = {
             "title": "",
             "link": "",
@@ -1149,7 +1149,7 @@ class Main extends React.Component {
             "link": "",
             "icon": "",
             "video": false,
-            "cat": "root"
+            "cat": "Root"
           };
         }
       }
@@ -1884,7 +1884,7 @@ class Main extends React.Component {
     array = [...this.state.catItems];
     arrayLength = (array.length);
     temp4 = false;
-    temp5 = "root";
+    temp5 = "Root";
     document.getElementById('clearcatpos').value = "";
     document.getElementById('clearcattitle').value = "";
     this.showModal("catAdd");
@@ -1897,7 +1897,7 @@ class Main extends React.Component {
     arrayLength = (array.length - 1);
     tempAppVideo = false;
     temp4 = false;
-    temp5 = "root";
+    temp5 = "Root";
     document.getElementById('clearapppos').value = "";
     document.getElementById('clearapptitle').value = "";
     document.getElementById('clearapplink').value = "";
@@ -1958,8 +1958,10 @@ class Main extends React.Component {
     this.showModal("exCrs");
   }
 
-  setCat(catName) {
+  setCat(catName, e) {
+    e.preventDefault();
     temp5 = catName;
+    console.log("CatName: ", catName);
   }
 
   search() {
@@ -1999,7 +2001,7 @@ class Main extends React.Component {
     // let foot = "";
 
     let catMenuButtons = (
-      <DropdownCat items={this.state.catItems} setCat={this.setCat}></DropdownCat>
+      <DropdownCat items={this.state.catItems} catName={temp5} setCat={this.setCat} />
     )
 
     let head = (
@@ -4491,7 +4493,7 @@ class DropdownCat extends React.Component {
 
   state = {
     isOpen: false,
-    selCat: "root"
+    selCat: this.props.catName
   };
 
   changeText(selected) {
@@ -4517,26 +4519,26 @@ class DropdownCat extends React.Component {
         {/* <label>{this.state.selCat}</label> */}
         <div className={menuClass + " menuBG"} aria-labelledby="dropdownMenuButton">
 
-          <button className="col menuItem green m-1">
-            {/* onClick={() => {
+          <button className="col menuItem green m-1"
+            onClick={(e) => {
               // window.location = "./searching.php";
-              // this.changeText("root")
-              // selCat = "root";
-              // this.props.setCat("root");
-            }}> */}
+              this.changeText("Root")
+              // selCat = "Root";
+              this.props.setCat("Root", e);
+            }}>
             Root
           </button>
 
           {
             this.props.items.map(({ id, title, icon }, i) => {
               return (
-                <button className="col menuItem green m-1">
-                  {/* onClick={() => {
+                <button className="col menuItem green m-1"
+                  onClick={(e) => {
                     // window.location = "./searching.php";
-                    // this.changeText({ title })
+                    this.changeText(title)
                     // selCat = { title };
-                    // this.props.setCat({ title });
-                  }}> */}
+                    this.props.setCat(title, e);
+                  }}>
                   {title}
                 </button>
               )
