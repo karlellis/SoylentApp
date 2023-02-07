@@ -653,6 +653,7 @@ class Main extends React.Component {
       mainBtn: false,
       appsBtnShow: "null",
       appItems: [],
+      rootAppItems: [],
       catItems: [],
       resAppItems: [],
       catAppItems: [],
@@ -709,6 +710,7 @@ class Main extends React.Component {
     this.appVideo = this.appVideo.bind(this);
     this.catCont = this.catCont.bind(this);
     this.resAppVideo = this.resAppVideo.bind(this);
+    this.catAppVideo = this.catAppVideo.bind(this);
     this.exCrsShow = this.exCrsShow.bind(this);
     this.search = this.search.bind(this);
     this.setCat = this.setCat.bind(this);
@@ -728,6 +730,7 @@ class Main extends React.Component {
     fetch('./config/data.json').then(response => {
       response.json().then(settings => {
         spData = settings;
+        // console.log("Apps: ", settings.appItems);
         this.setState({
           infoShow: spData.infoShow,
           creditShow: spData.creditShow,
@@ -773,6 +776,9 @@ class Main extends React.Component {
             }
           });
         }
+        // console.log("Apps: ", this.state.appItems);
+        this.appRootSearch("Root", spData.appItems);
+        // console.log("Root Apps: ", this.state.rootAppItems);
         // console.log("Check password: ", comparePassword("admin", password));
         // console.log("Hashed first password: ", hashPassword(password));
       })
@@ -780,17 +786,20 @@ class Main extends React.Component {
     // document.title = spData.headTitle;
     // document.querySelector('meta[name="description"]').setAttribute("content", spData.footTitle);
   }
-
+  
   componentDidUpdate() {
     this.userInput.focus();
     this.userChangeInput.focus();
     this.searchInput.focus();
+    // console.log("Apps: ", this.state.appItems);
+    // this.appRootSearch("Root");
   }
 
   saveFile(file, url, key) {
     fetchUpConfig(file, url, key)
       .then(res => {
         console.log("Config Saved!");
+        this.appRootSearch("Root", spData.appItems);
         // console.log("Save Conf. result=", res);
       });;
   }
@@ -835,12 +844,14 @@ class Main extends React.Component {
             array[temp].link = temp3;
           }
           array[temp].video = temp4;
+          array[temp].cat = temp5;
           this.setState({ appItems: array });
           spData.appItems = array;
           temp = "";
           temp2 = "";
           temp3 = "";
           temp4 = "";
+          temp5 = "Root";
           this.setState({ upShow: false });
           this.setState({ alShow: true });
           this.setState({ alErrShow: false });
@@ -864,6 +875,7 @@ class Main extends React.Component {
           // console.log("Insert pos=", (inPos));
           this.setState({ appItems: arrayAdd });
           spData.appItems = arrayAdd;
+          this.appRootSearch("Root", spData.appItems);
           arrayAdd = [];
           arrayLength = arrayLength + 1;
           temp = "";
@@ -1129,6 +1141,41 @@ class Main extends React.Component {
     } else {
       this.setState({ alErrShow: true });
       this.setState({ alShow: false });
+    }
+  }
+
+  appRootSearch = (cat, items) => {
+    if (items.length > 0) {
+      console.log("AppRootSearch...");
+      let count = 0;
+      for (let i = 0; i < items.length; i++) {
+        if (items[i].cat.toLowerCase().includes(cat.toLowerCase())) {
+          appNewItem.icon = items[i].icon;
+          appNewItem.title = items[i].title;
+          appNewItem.link = items[i].link;
+          appNewItem.video = items[i].video;
+          arrayAdd = this.addAfter(arrayAdd, count, appNewItem);
+          count = count++;
+          appNewItem = {
+            "title": "",
+            "link": "",
+            "icon": "",
+            "video": false,
+            "cat": "Root"
+          };
+        }
+      }
+      count = 0;
+      // console.log("Insert pos=", (inPos));
+      this.setState({ rootAppItems: arrayAdd });
+      arrayAdd = [];
+      appNewItem = {
+        "title": "",
+        "link": "",
+        "icon": "",
+        "video": false,
+        "cat": ""
+      };
     }
   }
 
@@ -1790,12 +1837,16 @@ class Main extends React.Component {
         appsBtnShow: id
       })
       this.setState(previousState => ({
+        rootAppItems: [...previousState.rootAppItems, spData.appAdd],
         appItems: [...previousState.appItems, spData.appAdd]
       }));
     } else {
       this.setState({
         appsBtnShow: false
       })
+      var rootArray = [...this.state.rootAppItems];
+      rootArray.pop();
+      this.setState({ rootAppItems: rootArray });
       var array = [...this.state.appItems];
       array.pop();
       this.setState({ appItems: array });
@@ -1946,6 +1997,17 @@ class Main extends React.Component {
   resAppVideo(id, pos) {
     temp3 = pos;
     array = [...this.state.resAppItems];
+    tempAppTitle = array[pos].title;
+    // console.log(id, " for ", pos);
+    this.setState({
+      videoLink: array[pos].link
+    })
+    this.showModal("appVideo");
+  }
+
+  catAppVideo(id, pos) {
+    temp3 = pos;
+    array = [...this.state.catAppItems];
     tempAppTitle = array[pos].title;
     // console.log(id, " for ", pos);
     this.setState({
@@ -3329,6 +3391,24 @@ class Main extends React.Component {
                       </div>
                     </div>
 
+                    <div className="form-group">
+                      <div className="row mb-1 m-auto">
+                        <div className="col">
+                          <div className="row border">
+                            <div className="col pt-1 pb-1 padlr latomenu d-flex flex-column justify-content-center align-items-center">
+                              <label>Category</label>
+                            </div>
+                            <div className="col d-flex flex-column justify-content-center align-items-center">
+                              {catMenuButtons}
+                            </div>
+                          </div>
+                        </div>
+                        <div className="col-1"></div>
+                        <div className="col">
+                        </div>
+                      </div>
+                    </div>
+
                     <Conferma alShow={this.state.alShow} handleClose={this.hideAlert}>
                       <div className="row text-center pt-2">
                         <div className="col">
@@ -4057,7 +4137,7 @@ class Main extends React.Component {
                           // *** Have to include also links not only video ***
                           <AppCatRes key={i} pos={i}
                             title={title} link={link} icon={icon} video={video}
-                            appVideo={this.resAppVideo} />
+                            appVideo={this.catAppVideo} />
                         )
                       })
                     }
@@ -4096,7 +4176,7 @@ class Main extends React.Component {
               }
               {/* APPS */}
               {
-                this.state.appItems.map(({ id, title, link, icon, video }, i) => {
+                this.state.rootAppItems.map(({ id, title, link, icon, video }, i) => {
                   return (
                     <App showAppsBtn={this.state.appsBtnShow} key={i} pos={i}
                       title={title} link={link} icon={icon} video={video}
