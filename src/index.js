@@ -1838,7 +1838,7 @@ class Main extends React.Component {
       })
       this.setState(previousState => ({
         rootAppItems: [...previousState.rootAppItems, spData.appAdd],
-        appItems: [...previousState.appItems, spData.appAdd]
+        // appItems: [...previousState.appItems, spData.appAdd]
       }));
     } else {
       this.setState({
@@ -1847,9 +1847,9 @@ class Main extends React.Component {
       var rootArray = [...this.state.rootAppItems];
       rootArray.pop();
       this.setState({ rootAppItems: rootArray });
-      var array = [...this.state.appItems];
-      array.pop();
-      this.setState({ appItems: array });
+      // var array = [...this.state.appItems];
+      // array.pop();
+      // this.setState({ appItems: array });
     }
   }
 
@@ -4135,9 +4135,9 @@ class Main extends React.Component {
                       this.state.catAppItems.map(({ id, title, link, icon, video }, i) => {
                         return (
                           // *** Have to include also links not only video ***
-                          <AppCatRes key={i} pos={i}
+                          <AppCatRes showAppsBtn={this.state.appsBtnShow} key={i} pos={i}
                             title={title} link={link} icon={icon} video={video}
-                            appVideo={this.catAppVideo} />
+                            appVideo={this.catAppVideo} appEditDel={this.appEditDel} />
                         )
                       })
                     }
@@ -4208,7 +4208,7 @@ class SettingsGear extends React.Component {
       this.props.handleShowButtons(true);
     }
     return (
-      <img className="gear mt-2 mb-2" /* title="Settings mode" alt="Settings Mode" */ src="./img/gears.svg" onClick={() => gearClick()} />
+      <img className="gear mt-2 mb-2" /* title="Settings mode" */ alt="Settings Mode" src="./img/gears.svg" onClick={() => gearClick()} />
       // <div className="gear mt-2 mb-2" title="Settings mode" alt="Settings Mode" onClick={() => gearClick()}>
       //   <GearIcon></GearIcon>
       // </div>
@@ -4463,12 +4463,39 @@ class AppCatRes extends React.Component {
 
     let appBtn = ""
 
-    appBtn = (
-      <div className="appcontainer">
-        {linkOrVideo}
-        <h4><p className="lato"><b>{this.props.title}</b></p></h4>
-      </div>
-    )
+    if (this.props.showAppsBtn === "ShowAppBtn") {
+      appBtn = (
+        <div className="appcontainer">
+          {linkOrVideo}
+          <h4><p className="lato"><b>{this.props.title}</b></p></h4>
+          <div className="row btncontainer">
+            <button className="col appbutton solidgreen m-1" onClick={() => this.props.appEditDel("AppEdit", this.props.pos)}>
+              Edit
+            </button>
+            <button className="col-1 appbutton black m-1 pad01">
+              {this.props.pos + 1}
+            </button>
+            <button className="col appbutton solidbrick m-1" onClick={() => this.props.appEditDel("AppDel", this.props.pos)}>
+              Remove
+            </button>
+          </div>
+        </div>
+      )
+    } else {
+      appBtn = (
+        <div className="appcontainer">
+          {linkOrVideo}
+          <h4><p className="lato"><b>{this.props.title}</b></p></h4>
+        </div>
+      )
+    }
+
+    // appBtn = (
+    //   <div className="appcontainer">
+    //     {linkOrVideo}
+    //     <h4><p className="lato"><b>{this.props.title}</b></p></h4>
+    //   </div>
+    // )
     return (
       <>
         {appBtn}
@@ -4538,13 +4565,13 @@ class Dropdown extends React.Component {
         <button
           className="button indaco m-1 dropdown-toggle"
           type="button"
-          id="dropdownMenuButton"
+          // id="dropdownMenuButton"
           data-toggle="dropdown"
           aria-haspopup="true"
         >
           Menu
         </button>
-        <div className={menuClass + " menuBG"} aria-labelledby="dropdownMenuButton">
+        <div className={menuClass + " menuBG"} /* aria-labelledby="dropdownMenuButton" */>
 
           <button className="col menuItem green m-1"
             onClick={() => {
@@ -4590,14 +4617,14 @@ class DropdownCat extends React.Component {
         <button
           className="button indaco m-1 dropdown-toggle"
           type="button"
-          id="dropdownMenuButton"
+          // id="dropdownMenuButton"
           data-toggle="dropdown"
           aria-haspopup="true"
         >
           {this.state.selCat}
         </button>
         {/* <label>{this.state.selCat}</label> */}
-        <div className={menuClass + " menuBG"} aria-labelledby="dropdownMenuButton">
+        <div className={menuClass + " menuBG"} /* aria-labelledby="dropdownMenuButton" */>
 
           <button className="col menuItem green m-1"
             onClick={(e) => {
