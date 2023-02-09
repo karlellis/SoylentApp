@@ -786,7 +786,7 @@ class Main extends React.Component {
     // document.title = spData.headTitle;
     // document.querySelector('meta[name="description"]').setAttribute("content", spData.footTitle);
   }
-  
+
   componentDidUpdate() {
     this.userInput.focus();
     this.userChangeInput.focus();
@@ -1836,17 +1836,17 @@ class Main extends React.Component {
       this.setState({
         appsBtnShow: id
       })
-      this.setState(previousState => ({
-        rootAppItems: [...previousState.rootAppItems, spData.appAdd],
-        // appItems: [...previousState.appItems, spData.appAdd]
-      }));
+      // this.setState(previousState => ({
+      //   rootAppItems: [...previousState.rootAppItems, spData.appAdd],
+      //   appItems: [...previousState.appItems, spData.appAdd]
+      // }));
     } else {
       this.setState({
         appsBtnShow: false
       })
-      var rootArray = [...this.state.rootAppItems];
-      rootArray.pop();
-      this.setState({ rootAppItems: rootArray });
+      // var rootArray = [...this.state.rootAppItems];
+      // rootArray.pop();
+      // this.setState({ rootAppItems: rootArray });
       // var array = [...this.state.appItems];
       // array.pop();
       // this.setState({ appItems: array });
@@ -1922,7 +1922,7 @@ class Main extends React.Component {
     // console.log("Info Edit Clicked:", id);
   }
 
-  appOrCatItem(id, pos) {
+  appOrCatItem() {
     this.showModal("appOrCatAdd");
   }
 
@@ -1945,7 +1945,7 @@ class Main extends React.Component {
   appAddItem(id, pos) {
     this.hideModal();
     array = [...this.state.appItems];
-    arrayLength = (array.length - 1);
+    // arrayLength = (array.length - 1);
     tempAppVideo = false;
     temp4 = false;
     temp5 = "Root";
@@ -2053,15 +2053,14 @@ class Main extends React.Component {
     const { disFieldC: disFieldC } = this.state;
     const { disFieldC2: disFieldC2 } = this.state;
     const { disFieldC3: disFieldC3 } = this.state;
-    // let head = "";
+    let buttons = "";
+
     let menuButtons = (
       <>
         <Dropdown search={this.search} exCrsShow={this.exCrsShow} />
       </>
     );
-    let buttons = "";
-    // let foot = "";
-
+    
     let catMenuButtons = (
       <DropdownCat items={this.state.catItems} catName={temp5} setCat={this.setCat} />
     )
@@ -4141,6 +4140,7 @@ class Main extends React.Component {
                         )
                       })
                     }
+                    <AppAdd showAppsBtn={this.state.appsBtnShow} /* title={title} link={link} icon={icon} */ addItem={this.appOrCatItem} />
                   </div>
                 </div>
               </div>
@@ -4184,6 +4184,7 @@ class Main extends React.Component {
                   )
                 })
               }
+              <AppAdd showAppsBtn={this.state.appsBtnShow} /* title={title} link={link} icon={icon} */ addItem={this.appOrCatItem} />
               {/* FOOTER */}
               {foot}
             </div>
@@ -4261,13 +4262,10 @@ class App extends React.Component {
       </a>);
 
     let appBtn = ""
-    if (this.props.showAppsBtn === "ShowAppBtn" && this.props.title !== "Add Item") {
+    if (this.props.showAppsBtn === "ShowAppBtn" /* && this.props.title !== "Add Item" */) {
       appBtn = (
         <div className="appcontainer">
           {linkOrVideo}
-          {/* <a title={this.props.title} onClick={() => this.props.appVideo("AppVideo", this.props.pos)}>
-            <img className="apps" title={this.props.title} alt={this.props.title} src={this.props.icon} />
-          </a> */}
           <h4><p className="lato"><b>{this.props.title}</b></p></h4>
           <div className="row btncontainer">
             <button className="col appbutton solidgreen m-1" onClick={() => this.props.appEditDel("AppEdit", this.props.pos)}>
@@ -4282,16 +4280,100 @@ class App extends React.Component {
           </div>
         </div>
       )
-    } else if (this.props.title === "Add Item") {
+    } 
+    // else if (this.props.title === "Add Item") {
+    //   appBtn = (
+    //     <div className="appcontainer">
+    //       < a title={this.props.title} target="_blank" onClick={() => this.props.addItem("AddItem", this.props.pos)} >
+    //         <img className="apps" title={this.props.title} alt={this.props.title} src={this.props.icon} />
+    //       </a>
+    //       <h4><p className="lato"><b>{this.props.title}</b></p></h4>
+    //       <div className="row btncontainer">
+    //         <button className="col addbutton solidgreen m-1" onClick={() => this.props.addItem("AddItem", this.props.pos)}>
+    //           Add Item
+    //         </button>
+    //       </div>
+    //     </div>
+    //   )} 
+      else {
       appBtn = (
         <div className="appcontainer">
-          < a title={this.props.title} target="_blank" onClick={() => this.props.addItem("AddItem", this.props.pos)} >
-            <img className="apps" title={this.props.title} alt={this.props.title} src={this.props.icon} />
+          {linkOrVideo}
+          <h4><p className="lato"><b>{this.props.title}</b></p></h4>
+        </div>
+      )
+    }
+    return (
+      <>
+        {appBtn}
+      </>
+    );
+  }
+}
+
+class AppAdd extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+  render() {
+    let appBtn = ""
+    if (this.props.showAppsBtn === "ShowAppBtn") {
+      appBtn = (
+        <div className="appcontainer">
+          < a title="Add Item" /* target="_blank" */ onClick={() => this.props.addItem()} >
+            <img className="apps" title="Add Item" alt="Add Item" src="./appicons/ac_add.svg" />
           </a>
+          <h4><p className="lato"><b>Add Item</b></p></h4>
+          <div className="row btncontainer">
+            <button className="col addbutton solidgreen m-1" onClick={() => this.props.addItem()}>
+              Add Item
+            </button>
+          </div>
+        </div>
+      )
+    } else {
+      appBtn = "";
+    }
+    return (
+      <>
+        {appBtn}
+      </>
+    );
+  }
+}
+
+class AppCatRes extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    const linkOrVideo = this.props.video
+      ?
+      (<a title={this.props.title} onClick={() => this.props.appVideo("AppVideo", this.props.pos)}>
+        <img className="apps" title={this.props.title} alt={this.props.title} src={this.props.icon} />
+      </a>)
+      :
+      (< a title={this.props.title} href={this.props.link} target="_blank" >
+        <img className="apps" title={this.props.title} alt={this.props.title} src={this.props.icon} />
+      </a>);
+
+    let appBtn = ""
+
+    if (this.props.showAppsBtn === "ShowAppBtn") {
+      appBtn = (
+        <div className="appcontainer">
+          {linkOrVideo}
           <h4><p className="lato"><b>{this.props.title}</b></p></h4>
           <div className="row btncontainer">
-            <button className="col addbutton solidgreen m-1" onClick={() => this.props.addItem("AddItem", this.props.pos)}>
-              Add Item
+            <button className="col appbutton solidgreen m-1" onClick={() => this.props.appEditDel("AppEdit", this.props.pos)}>
+              Edit
+            </button>
+            <button className="col-1 appbutton black m-1 pad01">
+              {this.props.pos + 1}
+            </button>
+            <button className="col appbutton solidbrick m-1" onClick={() => this.props.appEditDel("AppDel", this.props.pos)}>
+              Remove
             </button>
           </div>
         </div>
@@ -4300,14 +4382,59 @@ class App extends React.Component {
       appBtn = (
         <div className="appcontainer">
           {linkOrVideo}
-          {/* < a title={this.props.title} onClick={() => this.props.appVideo("AppVideo", this.props.pos)}> */}
-          {/* < a title={this.props.title} href={this.props.link} target="_blank" > */}
-          {/* <img className="apps" title={this.props.title} alt={this.props.title} src={this.props.icon} />
-          </a> */}
           <h4><p className="lato"><b>{this.props.title}</b></p></h4>
         </div>
       )
     }
+
+    // appBtn = (
+    //   <div className="appcontainer">
+    //     {linkOrVideo}
+    //     <h4><p className="lato"><b>{this.props.title}</b></p></h4>
+    //   </div>
+    // )
+    return (
+      <>
+        {appBtn}
+      </>
+    );
+  }
+}
+
+class AppSearchRes extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    const linkOrVideo = this.props.video
+      ?
+      (<a title={this.props.title} onClick={() => this.props.appVideo("AppVideo", this.props.pos)}>
+        <img className="apps" title={this.props.title} alt={this.props.title} src={this.props.icon} />
+      </a>)
+      :
+      (< a title={this.props.title} href={this.props.link} target="_blank" >
+        <img className="apps" title={this.props.title} alt={this.props.title} src={this.props.icon} />
+      </a>);
+
+    let appBtn = ""
+
+    appBtn = (
+      <div className="appcontainer">
+        {linkOrVideo}
+        <h4><p className="lato"><b>{this.props.title}</b></p></h4>
+      </div>
+    )
+
+    // appBtn = (
+    //   <div className="appcontainer">
+    //     < a title={this.props.title} onClick={() => this.props.appVideo("AppVideo", this.props.pos)}>
+    //       <img className="apps" title={this.props.title} alt={this.props.title} src={this.props.icon} />
+    //     </a>
+    //     <h4><p className="lato"><b>{this.props.title}</b></p></h4>
+    //   </div>
+    // )
+
     return (
       <>
         {appBtn}
@@ -4445,106 +4572,7 @@ class Credit extends React.Component {
   }
 }
 
-class AppCatRes extends React.Component {
-  constructor(props) {
-    super(props);
-  }
 
-  render() {
-    const linkOrVideo = this.props.video
-      ?
-      (<a title={this.props.title} onClick={() => this.props.appVideo("AppVideo", this.props.pos)}>
-        <img className="apps" title={this.props.title} alt={this.props.title} src={this.props.icon} />
-      </a>)
-      :
-      (< a title={this.props.title} href={this.props.link} target="_blank" >
-        <img className="apps" title={this.props.title} alt={this.props.title} src={this.props.icon} />
-      </a>);
-
-    let appBtn = ""
-
-    if (this.props.showAppsBtn === "ShowAppBtn") {
-      appBtn = (
-        <div className="appcontainer">
-          {linkOrVideo}
-          <h4><p className="lato"><b>{this.props.title}</b></p></h4>
-          <div className="row btncontainer">
-            <button className="col appbutton solidgreen m-1" onClick={() => this.props.appEditDel("AppEdit", this.props.pos)}>
-              Edit
-            </button>
-            <button className="col-1 appbutton black m-1 pad01">
-              {this.props.pos + 1}
-            </button>
-            <button className="col appbutton solidbrick m-1" onClick={() => this.props.appEditDel("AppDel", this.props.pos)}>
-              Remove
-            </button>
-          </div>
-        </div>
-      )
-    } else {
-      appBtn = (
-        <div className="appcontainer">
-          {linkOrVideo}
-          <h4><p className="lato"><b>{this.props.title}</b></p></h4>
-        </div>
-      )
-    }
-
-    // appBtn = (
-    //   <div className="appcontainer">
-    //     {linkOrVideo}
-    //     <h4><p className="lato"><b>{this.props.title}</b></p></h4>
-    //   </div>
-    // )
-    return (
-      <>
-        {appBtn}
-      </>
-    );
-  }
-}
-
-class AppSearchRes extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    const linkOrVideo = this.props.video
-      ?
-      (<a title={this.props.title} onClick={() => this.props.appVideo("AppVideo", this.props.pos)}>
-        <img className="apps" title={this.props.title} alt={this.props.title} src={this.props.icon} />
-      </a>)
-      :
-      (< a title={this.props.title} href={this.props.link} target="_blank" >
-        <img className="apps" title={this.props.title} alt={this.props.title} src={this.props.icon} />
-      </a>);
-
-    let appBtn = ""
-
-    appBtn = (
-      <div className="appcontainer">
-        {linkOrVideo}
-        <h4><p className="lato"><b>{this.props.title}</b></p></h4>
-      </div>
-    )
-
-    // appBtn = (
-    //   <div className="appcontainer">
-    //     < a title={this.props.title} onClick={() => this.props.appVideo("AppVideo", this.props.pos)}>
-    //       <img className="apps" title={this.props.title} alt={this.props.title} src={this.props.icon} />
-    //     </a>
-    //     <h4><p className="lato"><b>{this.props.title}</b></p></h4>
-    //   </div>
-    // )
-
-    return (
-      <>
-        {appBtn}
-      </>
-    );
-  }
-}
 
 class Dropdown extends React.Component {
   constructor(props) {
