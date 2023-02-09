@@ -859,11 +859,11 @@ class Main extends React.Component {
           // this.setState({
           //   activityChanged: false
           // });
-          spData.appItems.pop();
+          // spData.appItems.pop();
           this.saveFile(spData, "./api/img-upload.php", "config");
-          this.setState(previousState => ({
-            appItems: [...previousState.appItems, spData.appAdd]
-          }));
+          // this.setState(previousState => ({
+          //   appItems: [...previousState.appItems, spData.appAdd]
+          // }));
         } else if (url === "icon" && op === "add") {
           appNewItem.icon = "./appicons/" + nome;
           appNewItem.title = temp2;
@@ -875,7 +875,7 @@ class Main extends React.Component {
           // console.log("Insert pos=", (inPos));
           this.setState({ appItems: arrayAdd });
           spData.appItems = arrayAdd;
-          this.appRootSearch("Root", spData.appItems);
+          // this.appRootSearch("Root", spData.appItems);
           arrayAdd = [];
           arrayLength = arrayLength + 1;
           temp = "";
@@ -898,11 +898,11 @@ class Main extends React.Component {
           //   activityChanged: false
           // });
 
-          spData.appItems.pop();
+          // spData.appItems.pop();
           this.saveFile(spData, "./api/img-upload.php", "config");
-          this.setState(previousState => ({
-            appItems: [...previousState.appItems, spData.appAdd]
-          }));
+          // this.setState(previousState => ({
+          //   appItems: [...previousState.appItems, spData.appAdd]
+          // }));
         } else if (url === "icon" && op === "addlast") {
           appNewItem.icon = "./appicons/" + nome;
           appNewItem.title = temp2;
@@ -915,9 +915,9 @@ class Main extends React.Component {
           arrayAdd = this.addAfter(array, inPos, appNewItem);
           this.setState({ appItems: arrayAdd });
           spData.appItems = arrayAdd;
-          console.log("Array: ", array);
-          console.log("ArrayAdd: ", arrayAdd);
-          console.log("CatItems: ", spData.appItems);
+          // console.log("Array: ", array);
+          // console.log("ArrayAdd: ", arrayAdd);
+          // console.log("CatItems: ", spData.appItems);
           arrayAdd = [];
           arrayLength = arrayLength + 1;
           temp = "";
@@ -939,11 +939,11 @@ class Main extends React.Component {
           // this.setState({
           //   activityChanged: false
           // });
-          spData.appItems.pop();
+          // spData.appItems.pop();
           this.saveFile(spData, "./api/img-upload.php", "config");
-          this.setState(previousState => ({
-            appItems: [...previousState.appItems, spData.appAdd]
-          }));
+          // this.setState(previousState => ({
+          //   appItems: [...previousState.appItems, spData.appAdd]
+          // }));
         } else if (url === "cat" && op === "edit") {
           if (fileImg !== null) {
             // console.log("Icon edit!");
@@ -962,11 +962,11 @@ class Main extends React.Component {
           // this.setState({
           //   activityChanged: false
           // });
-          spData.catItems.pop();
+          // spData.catItems.pop();
           this.saveFile(spData, "./api/img-upload.php", "config");
-          this.setState(previousState => ({
-            catItems: [...previousState.catItems, spData.appAdd]
-          }));
+          // this.setState(previousState => ({
+          //   catItems: [...previousState.catItems, spData.appAdd]
+          // }));
         } else if (url === "cat" && op === "add") {
           catNewItem.icon = "./appicons/" + nome;
           catNewItem.title = temp2;
@@ -990,11 +990,11 @@ class Main extends React.Component {
           //   activityChanged: false
           // });
 
-          spData.catItems.pop();
+          // spData.catItems.pop();
           this.saveFile(spData, "./api/img-upload.php", "config");
-          this.setState(previousState => ({
-            catItems: [...previousState.catItems, spData.appAdd]
-          }));
+          // this.setState(previousState => ({
+          //   catItems: [...previousState.catItems, spData.appAdd]
+          // }));
         } else if (url === "cat" && op === "addlast") {
           console.log("CatAddLast...");
           catNewItem.icon = "./appicons/" + nome;
@@ -1146,7 +1146,7 @@ class Main extends React.Component {
 
   appRootSearch = (cat, items) => {
     if (items.length > 0) {
-      console.log("AppRootSearch...");
+      console.log("AppRootSearch...", items.length);
       let count = 0;
       for (let i = 0; i < items.length; i++) {
         if (items[i].cat.toLowerCase().includes(cat.toLowerCase())) {
@@ -1154,7 +1154,9 @@ class Main extends React.Component {
           appNewItem.title = items[i].title;
           appNewItem.link = items[i].link;
           appNewItem.video = items[i].video;
+          console.log("App ", count, " ", items[i].title);
           arrayAdd = this.addAfter(arrayAdd, count, appNewItem);
+          // console.log("ArrayAdd: ", arrayAdd);
           count = count++;
           appNewItem = {
             "title": "",
@@ -1880,9 +1882,9 @@ class Main extends React.Component {
         this.setState({
           appsBtnShow: false
         })
-        array.pop();
-        this.setState({ appItems: array });
-        spData.appItems = array;
+        // array.pop();
+        // this.setState({ appItems: array });
+        // spData.appItems = array;
       }
       spData.appItems = array;
       window.location.reload();
@@ -2060,7 +2062,7 @@ class Main extends React.Component {
         <Dropdown search={this.search} exCrsShow={this.exCrsShow} />
       </>
     );
-    
+
     let catMenuButtons = (
       <DropdownCat items={this.state.catItems} catName={temp5} setCat={this.setCat} />
     )
@@ -4280,7 +4282,7 @@ class App extends React.Component {
           </div>
         </div>
       )
-    } 
+    }
     // else if (this.props.title === "Add Item") {
     //   appBtn = (
     //     <div className="appcontainer">
@@ -4295,7 +4297,7 @@ class App extends React.Component {
     //       </div>
     //     </div>
     //   )} 
-      else {
+    else {
       appBtn = (
         <div className="appcontainer">
           {linkOrVideo}
