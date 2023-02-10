@@ -36,6 +36,10 @@ td {
 	font-size: 16px;
 }
 
+.ontop {
+	z-index: 99;
+}
+
 .button {
 	/* background-color: #4CAF50;  Green */
 	border: none;

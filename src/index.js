@@ -354,7 +354,7 @@ const CatDialog = ({ handleClose, catDiaShow, children, activityChanged }) => {
       <section className="modal-main-dark">
         {children}
         <div className="modal-footer">
-          <button type="button" disabled={(activityChanged) ? true : false} className="btn btn-secondary" data-dismiss="modal" onClick={handleClose}>Close</button>
+          <button type="button" /* disabled={(activityChanged) ? true : false} */ className="btn btn-secondary" data-dismiss="modal" onClick={handleClose}>Close</button>
         </div>
       </section>
     </div>
@@ -410,7 +410,7 @@ const AppDelDialog = ({ handleSave, handleClose, appDelDiaShow, children, activi
 const AppAddDialog = ({ handleSave, handleClose, appAddDiaShow, children, activityChanged }) => {
   const showHideClassName = appAddDiaShow ? "modal display-block" : "modal display-none";
   return (
-    <div className={showHideClassName}>
+    <div className={showHideClassName + " ontop"}>
       <section className="modal-main">
         {children}
         <div className="modal-footer">
@@ -719,6 +719,7 @@ class Main extends React.Component {
     this.showModal = this.showModal.bind(this);
     this.hideModal = this.hideModal.bind(this);
     this.hideSearch = this.hideSearch.bind(this);
+    this.hideAppOp = this.hideAppOp.bind(this);
     this.loginSession = this.loginSession.bind(this);
     this.loginEditSession = this.loginEditSession.bind(this);
     this.saveTitle = this.saveTitle.bind(this);
@@ -1115,7 +1116,7 @@ class Main extends React.Component {
           appNewItem.link = this.state.appItems[i].link;
           appNewItem.video = this.state.appItems[i].video;
           arrayAdd = this.addAfter(arrayAdd, count, appNewItem);
-          count = count++;
+          count++;
           appNewItem = {
             "title": "",
             "link": "",
@@ -1149,15 +1150,17 @@ class Main extends React.Component {
       console.log("AppRootSearch...", items.length);
       let count = 0;
       for (let i = 0; i < items.length; i++) {
+        console.log("Analyzing App Pos: ", i, " - Title: ", items[i].title);
         if (items[i].cat.toLowerCase().includes(cat.toLowerCase())) {
+          console.log("App Pos: ", i, " - Title: ", items[i].title, " is in Cat: ", cat, " CatPos: ", count );
           appNewItem.icon = items[i].icon;
           appNewItem.title = items[i].title;
           appNewItem.link = items[i].link;
           appNewItem.video = items[i].video;
-          console.log("App ", count, " ", items[i].title);
+          console.log("App Pos: ", count, " - Title: ", items[i].title);
           arrayAdd = this.addAfter(arrayAdd, count, appNewItem);
           // console.log("ArrayAdd: ", arrayAdd);
-          count = count++;
+          count++;
           appNewItem = {
             "title": "",
             "link": "",
@@ -1783,6 +1786,16 @@ class Main extends React.Component {
     temp = "";
   }
 
+  hideAppOp() {
+    this.setState({ appAddDiaShow: false });
+    document.getElementById('appAddForm').reset();
+    this.setState({ appEditDiaShow: false });
+    this.setState({ appDelDiaShow: false });
+    document.getElementById('appEditForm').reset();
+    this.setState({ alShow: false });
+    this.setState({ alErrShow: false });
+  }
+
   hideModal(id) {
     this.setState({ titleDiaShow: false });
     this.setState({ menuDiaShow: false });
@@ -1792,9 +1805,9 @@ class Main extends React.Component {
     this.setState({ logoDiaShow: false });
     this.setState({ infoDiaShow: false });
     this.setState({ creditDiaShow: false });
-    this.setState({ appEditDiaShow: false });
-    this.setState({ appDelDiaShow: false });
-    this.setState({ appAddDiaShow: false });
+    // this.setState({ appEditDiaShow: false });
+    // this.setState({ appDelDiaShow: false });
+    // this.setState({ appAddDiaShow: false });
     this.setState({ catEditDiaShow: false });
     this.setState({ catDelDiaShow: false });
     this.setState({ catAddDiaShow: false });
@@ -1813,8 +1826,8 @@ class Main extends React.Component {
     document.getElementById('menuForm').reset();
     document.getElementById('infoForm').reset();
     document.getElementById('creditForm').reset();
-    document.getElementById('appEditForm').reset();
-    document.getElementById('appAddForm').reset();
+    // document.getElementById('appEditForm').reset();
+    // document.getElementById('appAddForm').reset();
     document.getElementById('catEditForm').reset();
     document.getElementById('catAddForm').reset();
     document.getElementById('backEditForm').reset();
@@ -1947,7 +1960,7 @@ class Main extends React.Component {
   appAddItem(id, pos) {
     this.hideModal();
     array = [...this.state.appItems];
-    // arrayLength = (array.length - 1);
+    arrayLength = (array.length);
     tempAppVideo = false;
     temp4 = false;
     temp5 = "Root";
@@ -3312,7 +3325,29 @@ class Main extends React.Component {
                 </div>
               </div>
             </BackEditDialog>
-            <AppEditDialog appEditDiaShow={this.state.appEditDiaShow} activityChanged={this.state.activityChanged} handleClose={this.hideModal} handleSave={this.applyAppEdit}>
+            <CatDialog catDiaShow={this.state.catDiaShow} activityChanged={this.state.activityChanged} handleClose={this.hideModal}>
+              <div className="modal-content">
+                <div className="modal-header-dark">
+                  <h5 className="modal-title-dark" >Category: {tempCatTitle}</h5>
+                </div>
+                <div className="modal-body-dark">
+                  <div className="textcenter">
+                    {
+                      this.state.catAppItems.map(({ id, title, link, icon, video }, i) => {
+                        return (
+                          // *** Have to include also links not only video ***
+                          <AppCatRes showAppsBtn={this.state.appsBtnShow} key={i} pos={i}
+                            title={title} link={link} icon={icon} video={video}
+                            appVideo={this.catAppVideo} appEditDel={this.appEditDel} />
+                        )
+                      })
+                    }
+                    <AppAdd showAppsBtn={this.state.appsBtnShow} /* title={title} link={link} icon={icon} */ addItem={this.appOrCatItem} />
+                  </div>
+                </div>
+              </div>
+            </CatDialog>
+            <AppEditDialog appEditDiaShow={this.state.appEditDiaShow} activityChanged={this.state.activityChanged} handleClose={this.hideAppOp} handleSave={this.applyAppEdit}>
               <div className="modal-content">
                 <div className="modal-header">
                   <h5 className="modal-title" >Edit Web Application</h5>
@@ -3453,7 +3488,7 @@ class Main extends React.Component {
                 </div>
               </div>
             </AppEditDialog>
-            <AppAddDialog appAddDiaShow={this.state.appAddDiaShow} activityChanged={this.state.activityChanged} handleClose={this.hideModal} handleSave={this.applyAppAdd}>
+            <AppAddDialog appAddDiaShow={this.state.appAddDiaShow} activityChanged={this.state.activityChanged} handleClose={this.hideAppOp} handleSave={this.applyAppAdd}>
               <div className="modal-content">
                 <div className="modal-header">
                   <h5 className="modal-title" >Add Web Application</h5>
@@ -3611,7 +3646,7 @@ class Main extends React.Component {
                 </div>
               </div>
             </AppAddDialog>
-            <AppDelDialog appDelDiaShow={this.state.appDelDiaShow} activityChanged={this.state.activityChanged} handleClose={this.hideModal} handleSave={this.applyAppDel}>
+            <AppDelDialog appDelDiaShow={this.state.appDelDiaShow} activityChanged={this.state.activityChanged} handleClose={this.hideAppOp} handleSave={this.applyAppDel}>
               <div className="modal-content">
                 <div className="modal-header">
                   <h5 className="modal-title" >Permanently delete the application?</h5>
@@ -4124,30 +4159,6 @@ class Main extends React.Component {
                 </div>
               </div>
             </SearchDialog>
-
-            <CatDialog catDiaShow={this.state.catDiaShow} activityChanged={this.state.activityChanged} handleClose={this.hideModal}>
-              <div className="modal-content">
-                <div className="modal-header-dark">
-                  <h5 className="modal-title-dark" >Category: {tempCatTitle}</h5>
-                </div>
-                <div className="modal-body-dark">
-                  <div className="textcenter">
-                    {
-                      this.state.catAppItems.map(({ id, title, link, icon, video }, i) => {
-                        return (
-                          // *** Have to include also links not only video ***
-                          <AppCatRes showAppsBtn={this.state.appsBtnShow} key={i} pos={i}
-                            title={title} link={link} icon={icon} video={video}
-                            appVideo={this.catAppVideo} appEditDel={this.appEditDel} />
-                        )
-                      })
-                    }
-                    <AppAdd showAppsBtn={this.state.appsBtnShow} /* title={title} link={link} icon={icon} */ addItem={this.appOrCatItem} />
-                  </div>
-                </div>
-              </div>
-            </CatDialog>
-
             <AppVideoDialog appVideoDiaShow={this.state.appVideoDiaShow} activityChanged={this.state.activityChanged} handleClose={this.hideModal} handleSave={this.applyAppEdit}>
               <div className="modal-content">
                 <div className="modal-header-dark">
