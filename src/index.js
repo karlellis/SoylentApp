@@ -694,7 +694,7 @@ class Main extends React.Component {
       disFieldC: false,
       disFieldC2: false,
       disFieldC3: false,
-      catTitle: "Root",
+      catSel: "Root",
       backStyle: {
         backgroundImage: "",
         backgroundColor: "",
@@ -1972,7 +1972,7 @@ class Main extends React.Component {
     array = [...this.state.catItems];
     arrayLength = (array.length);
     temp4 = false;
-    temp5 = "Root";
+    // temp5 = "Root";
     document.getElementById('clearcatpos').value = "";
     document.getElementById('clearcattitle').value = "";
     this.showModal("catAdd");
@@ -2004,6 +2004,10 @@ class Main extends React.Component {
         tempAppVideo = array[i].video;
         temp4 = array[i].video;
         temp5 = array[i].cat;
+        this.setState({
+          catSel: temp5
+        })
+        // console.log(" Category: ", );
         tempIcon = array[i].icon;
       }
     }
@@ -2092,6 +2096,10 @@ class Main extends React.Component {
   setCat(catName, e) {
     e.preventDefault();
     temp5 = catName;
+    this.setState({
+      catSel: catName
+    })
+    
     console.log("CatName: ", catName);
   }
 
@@ -2131,7 +2139,7 @@ class Main extends React.Component {
     );
 
     let catMenuButtons = (
-      <DropdownCat items={this.state.catItems} catName={temp5} setCat={this.setCat} />
+      <DropdownCat items={this.state.catItems} catName={this.state.catSel} setCat={this.setCat} />
     )
 
     let head = (
@@ -4694,18 +4702,19 @@ class DropdownCat extends React.Component {
   }
 
   state = {
-    isOpen: false,
-    selCat: this.props.catName
+    isOpen: false
+    // selCat: this.props.catName
   };
-
+  
   changeText(selected) {
     this.setState({ selCat: selected });
   }
 
   toggleOpen = () => this.setState({ isOpen: !this.state.isOpen });
-
+  
   render() {
     const menuClass = `dropdown-menu${this.state.isOpen ? " show d-flex flex-column justify-content-center align-items-center" : " disNone"}`;
+
     return (
       <div className="dropdown" onClick={this.toggleOpen}>
 
@@ -4716,7 +4725,7 @@ class DropdownCat extends React.Component {
           data-toggle="dropdown"
           aria-haspopup="true"
         >
-          {this.state.selCat}
+          {this.props.catName}
         </button>
         {/* <label>{this.state.selCat}</label> */}
         <div className={menuClass + " menuBG"} /* aria-labelledby="dropdownMenuButton" */>
