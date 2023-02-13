@@ -17,6 +17,7 @@ var temp2 = "";
 var temp3 = "";
 var temp4 = "";
 var temp5 = "Root";
+var tempID = 0;
 var tempColor = "#0077c8";
 var tempTextColor = "#0077c8";
 var tempColW = "";
@@ -42,7 +43,8 @@ var appNewItem = {
   "link": "",
   "icon": "",
   "video": false,
-  "cat": "Root"
+  "cat": "Root",
+  "id": 0
 };
 var catNewItem = {
   "title": "",
@@ -871,25 +873,31 @@ class Main extends React.Component {
           appNewItem.link = temp3;
           appNewItem.video = temp4;
           appNewItem.cat = temp5;
+          appNewItem.id = inPos;
           tempIcon = "";
           arrayAdd = this.addAfter(array, inPos, appNewItem);
+          for (let i = (inPos + 1); i < arrayAdd.length; i++) {
+            (arrayAdd[i].id)++;
+          }
           // console.log("Insert pos=", (inPos));
           this.setState({ appItems: arrayAdd });
           spData.appItems = arrayAdd;
           // this.appRootSearch("Root", spData.appItems);
           arrayAdd = [];
-          arrayLength = arrayLength + 1;
+          arrayLength++;
           temp = "";
           temp2 = "";
           temp3 = "";
           temp4 = "";
           temp5 = "Root";
+          tempID = 0;
           appNewItem = {
             "title": "",
             "link": "",
             "icon": "",
             "video": false,
-            "cat": ""
+            "cat": "",
+            "id": 0
           };
           this.setState({ upShow: false });
           this.setState({ alShow: true });
@@ -910,6 +918,7 @@ class Main extends React.Component {
           appNewItem.link = temp3;
           appNewItem.video = temp4;
           appNewItem.cat = temp5;
+          appNewItem.id = arrayLength;
           inPos = arrayLength;
           console.log("Pos: ", inPos);
           tempIcon = "";
@@ -926,12 +935,14 @@ class Main extends React.Component {
           temp3 = "";
           temp4 = "";
           temp5 = "Root";
+          tempID = 0;
           appNewItem = {
             "title": "",
             "link": "",
             "icon": "",
             "video": false,
-            "cat": ""
+            "cat": "",
+            "id": 0
           };
           this.setState({ upShow: false });
           this.setState({ alShow: true });
@@ -1115,6 +1126,7 @@ class Main extends React.Component {
           appNewItem.title = this.state.appItems[i].title;
           appNewItem.link = this.state.appItems[i].link;
           appNewItem.video = this.state.appItems[i].video;
+          appNewItem.id = this.state.appItems[i].id;
           arrayAdd = this.addAfter(arrayAdd, count, appNewItem);
           count++;
           appNewItem = {
@@ -1122,7 +1134,8 @@ class Main extends React.Component {
             "link": "",
             "icon": "",
             "video": false,
-            "cat": ""
+            "cat": "",
+            "id": 0
           };
         }
       }
@@ -1135,7 +1148,8 @@ class Main extends React.Component {
         "link": "",
         "icon": "",
         "video": false,
-        "cat": ""
+        "cat": "",
+        "id": 0
       };
       this.setState({ alShow: true });
       this.setState({ alErrShow: false });
@@ -1152,11 +1166,12 @@ class Main extends React.Component {
       for (let i = 0; i < items.length; i++) {
         console.log("Analyzing App Pos: ", i, " - Title: ", items[i].title);
         if (items[i].cat.toLowerCase().includes(cat.toLowerCase())) {
-          console.log("App Pos: ", i, " - Title: ", items[i].title, " is in Cat: ", cat, " CatPos: ", count );
+          console.log("App Pos: ", i, " - Title: ", items[i].title, " is in Cat: ", cat, " CatPos: ", count);
           appNewItem.icon = items[i].icon;
           appNewItem.title = items[i].title;
           appNewItem.link = items[i].link;
           appNewItem.video = items[i].video;
+          appNewItem.id = items[i].id;
           console.log("App Pos: ", count, " - Title: ", items[i].title);
           arrayAdd = this.addAfter(arrayAdd, count, appNewItem);
           // console.log("ArrayAdd: ", arrayAdd);
@@ -1166,7 +1181,8 @@ class Main extends React.Component {
             "link": "",
             "icon": "",
             "video": false,
-            "cat": "Root"
+            "cat": "Root",
+            "id": 0
           };
         }
       }
@@ -1194,6 +1210,7 @@ class Main extends React.Component {
           appNewItem.title = this.state.appItems[i].title;
           appNewItem.link = this.state.appItems[i].link;
           appNewItem.video = this.state.appItems[i].video;
+          appNewItem.id = this.state.appItems[i].id;
           arrayAdd = this.addAfter(arrayAdd, count, appNewItem);
           count = count++;
           appNewItem = {
@@ -1201,7 +1218,8 @@ class Main extends React.Component {
             "link": "",
             "icon": "",
             "video": false,
-            "cat": "Root"
+            "cat": "Root",
+            "id": 0
           };
         }
       }
@@ -1214,7 +1232,8 @@ class Main extends React.Component {
         "link": "",
         "icon": "",
         "video": false,
-        "cat": ""
+        "cat": "",
+        "id": 0
       };
       // this.setState({ alShow: true });
       // this.setState({ alErrShow: false });
@@ -1794,6 +1813,9 @@ class Main extends React.Component {
     document.getElementById('appEditForm').reset();
     this.setState({ alShow: false });
     this.setState({ alErrShow: false });
+    this.setState({
+      activityChanged: false
+    });
   }
 
   hideModal(id) {
@@ -1971,32 +1993,48 @@ class Main extends React.Component {
     // console.log("APPAdding IT!");
   }
 
-  appEditDel(id, pos) {
-    temp = pos;
-    console.log(id, " for ", pos);
+  appEditDel(name, id) {
+    temp = id;
+    console.log(name, " for ", id);
     array = [...this.state.appItems];
-    tempAppTitle = array[pos].title;
-    tempAppLink = array[pos].link;
-    tempAppVideo = array[pos].video;
-    temp4 = array[pos].video;
-    temp5 = array[pos].cat;
-    tempIcon = array[pos].icon;
+    for (let i = 0; i < array.length; i++) {
+      if (array[i].id === id) {
+        tempAppTitle = array[i].title;
+        tempAppLink = array[i].link;
+        tempAppVideo = array[i].video;
+        temp4 = array[i].video;
+        temp5 = array[i].cat;
+        tempIcon = array[i].icon;
+      }
+    }
+    // tempAppTitle = array[id].title;
+    // tempAppLink = array[id].link;
+    // tempAppVideo = array[id].video;
+    // temp4 = array[id].video;
+    // temp5 = array[id].cat;
+    // tempIcon = array[id].icon;
+
     // console.log(id, " for ", pos);
-    if (id === "AppEdit") {
+    if (name === "AppEdit") {
       this.showModal("appEdit");
     } else {
       this.showModal("appDel");
     }
   }
 
-  appVideo(id, pos) {
-    temp3 = pos;
+  appVideo(name, id) {
+    temp3 = id;
     array = [...this.state.appItems];
-    tempAppTitle = array[pos].title;
+    for (let i = 0; i < array.length; i++) {
+      if (array[i].id === id) {
+        tempAppTitle = array[i].title;
+        this.setState({
+          videoLink: array[i].link
+        })
+      }
+    }
+    // tempAppTitle = array[pos].title;
     // console.log(id, " for ", pos);
-    this.setState({
-      videoLink: array[pos].link
-    })
     this.showModal("appVideo");
   }
 
@@ -2009,25 +2047,41 @@ class Main extends React.Component {
     this.showModal("cat");
   }
 
-  resAppVideo(id, pos) {
-    temp3 = pos;
+  resAppVideo(name, id) {
+    temp3 = id;
     array = [...this.state.resAppItems];
-    tempAppTitle = array[pos].title;
+    for (let i = 0; i < array.length; i++) {
+      if (array[i].id === id) {
+        tempAppTitle = array[i].title;
+        this.setState({
+          videoLink: array[i].link
+        })
+      }
+    }
+    // tempAppTitle = array[pos].title;
     // console.log(id, " for ", pos);
-    this.setState({
-      videoLink: array[pos].link
-    })
+    // this.setState({
+    //   videoLink: array[pos].link
+    // })
     this.showModal("appVideo");
   }
 
-  catAppVideo(id, pos) {
-    temp3 = pos;
+  catAppVideo(name, id) {
+    temp3 = id;
     array = [...this.state.catAppItems];
-    tempAppTitle = array[pos].title;
+    for (let i = 0; i < array.length; i++) {
+      if (array[i].id === id) {
+        tempAppTitle = array[i].title;
+        this.setState({
+          videoLink: array[i].link
+        })
+      }
+    }
+    // tempAppTitle = array[pos].title;
     // console.log(id, " for ", pos);
-    this.setState({
-      videoLink: array[pos].link
-    })
+    // this.setState({
+    //   videoLink: array[pos].link
+    // })
     this.showModal("appVideo");
   }
 
@@ -3336,7 +3390,7 @@ class Main extends React.Component {
                       this.state.catAppItems.map(({ id, title, link, icon, video }, i) => {
                         return (
                           // *** Have to include also links not only video ***
-                          <AppCatRes showAppsBtn={this.state.appsBtnShow} key={i} pos={i}
+                          <AppCatRes showAppsBtn={this.state.appsBtnShow} key={i} pos={i} id={id}
                             title={title} link={link} icon={icon} video={video}
                             appVideo={this.catAppVideo} appEditDel={this.appEditDel} />
                         )
@@ -4191,7 +4245,7 @@ class Main extends React.Component {
               {
                 this.state.rootAppItems.map(({ id, title, link, icon, video }, i) => {
                   return (
-                    <App showAppsBtn={this.state.appsBtnShow} key={i} pos={i}
+                    <App showAppsBtn={this.state.appsBtnShow} key={i} pos={i} id={id}
                       title={title} link={link} icon={icon} video={video}
                       appEditDel={this.appEditDel} addItem={this.appOrCatItem} appVideo={this.appVideo} />
                   )
@@ -4266,7 +4320,7 @@ class App extends React.Component {
 
     const linkOrVideo = this.props.video
       ?
-      (<a title={this.props.title} onClick={() => this.props.appVideo("AppVideo", this.props.pos)}>
+      (<a title={this.props.title} onClick={() => this.props.appVideo("AppVideo", this.props.id)}>
         <img className="apps" title={this.props.title} alt={this.props.title} src={this.props.icon} />
       </a>)
       :
@@ -4281,13 +4335,13 @@ class App extends React.Component {
           {linkOrVideo}
           <h4><p className="lato"><b>{this.props.title}</b></p></h4>
           <div className="row btncontainer">
-            <button className="col appbutton solidgreen m-1" onClick={() => this.props.appEditDel("AppEdit", this.props.pos)}>
+            <button className="col appbutton solidgreen m-1" onClick={() => this.props.appEditDel("AppEdit", this.props.id)}>
               Edit
             </button>
             <button className="col-1 appbutton black m-1 pad01">
-              {this.props.pos + 1}
+              {this.props.pos + 1} {this.props.id}
             </button>
-            <button className="col appbutton solidbrick m-1" onClick={() => this.props.appEditDel("AppDel", this.props.pos)}>
+            <button className="col appbutton solidbrick m-1" onClick={() => this.props.appEditDel("AppDel", this.props.id)}>
               Remove
             </button>
           </div>
@@ -4363,7 +4417,7 @@ class AppCatRes extends React.Component {
   render() {
     const linkOrVideo = this.props.video
       ?
-      (<a title={this.props.title} onClick={() => this.props.appVideo("AppVideo", this.props.pos)}>
+      (<a title={this.props.title} onClick={() => this.props.appVideo("AppVideo", this.props.id)}>
         <img className="apps" title={this.props.title} alt={this.props.title} src={this.props.icon} />
       </a>)
       :
@@ -4379,13 +4433,13 @@ class AppCatRes extends React.Component {
           {linkOrVideo}
           <h4><p className="lato"><b>{this.props.title}</b></p></h4>
           <div className="row btncontainer">
-            <button className="col appbutton solidgreen m-1" onClick={() => this.props.appEditDel("AppEdit", this.props.pos)}>
+            <button className="col appbutton solidgreen m-1" onClick={() => this.props.appEditDel("AppEdit", this.props.id)}>
               Edit
             </button>
             <button className="col-1 appbutton black m-1 pad01">
               {this.props.pos + 1}
             </button>
-            <button className="col appbutton solidbrick m-1" onClick={() => this.props.appEditDel("AppDel", this.props.pos)}>
+            <button className="col appbutton solidbrick m-1" onClick={() => this.props.appEditDel("AppDel", this.props.id)}>
               Remove
             </button>
           </div>
