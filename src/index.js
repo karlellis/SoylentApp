@@ -412,7 +412,7 @@ const AppDelDialog = ({ handleSave, handleClose, appDelDiaShow, children, activi
 const AppAddDialog = ({ handleSave, handleClose, appAddDiaShow, children, activityChanged }) => {
   const showHideClassName = appAddDiaShow ? "modal display-block" : "modal display-none";
   return (
-    <div className={showHideClassName + " ontop"}>
+    <div className={showHideClassName /* + " ontop" */}>
       <section className="modal-main">
         {children}
         <div className="modal-footer">
@@ -722,6 +722,7 @@ class Main extends React.Component {
     this.hideModal = this.hideModal.bind(this);
     this.hideSearch = this.hideSearch.bind(this);
     this.hideAppOp = this.hideAppOp.bind(this);
+    this.hideAppOrCat = this.hideAppOrCat.bind(this);
     this.loginSession = this.loginSession.bind(this);
     this.loginEditSession = this.loginEditSession.bind(this);
     this.saveTitle = this.saveTitle.bind(this);
@@ -1818,6 +1819,13 @@ class Main extends React.Component {
     });
   }
 
+  hideAppOrCat() {
+    this.setState({ aocDiaShow: false });
+    this.setState({
+      activityChanged: false
+    });
+  }
+
   hideModal(id) {
     this.setState({ titleDiaShow: false });
     this.setState({ menuDiaShow: false });
@@ -1835,7 +1843,7 @@ class Main extends React.Component {
     this.setState({ catAddDiaShow: false });
     this.setState({ catDiaShow: false });
     this.setState({ appVideoDiaShow: false });
-    this.setState({ aocDiaShow: false });
+    // this.setState({ aocDiaShow: false });
     this.setState({ exCrsDiaShow: false });
     this.setState({ backEditDiaShow: false });
     this.setState({ clockDiaShow: false });
@@ -1968,7 +1976,8 @@ class Main extends React.Component {
   }
 
   catAddItem() {
-    this.hideModal();
+    this.hideAppOrCat();
+    // this.hideModal();
     array = [...this.state.catItems];
     arrayLength = (array.length);
     temp4 = false;
@@ -1980,7 +1989,8 @@ class Main extends React.Component {
   }
 
   appAddItem(id, pos) {
-    this.hideModal();
+    this.hideAppOrCat();
+    // this.hideModal();
     array = [...this.state.appItems];
     arrayLength = (array.length);
     tempAppVideo = false;
