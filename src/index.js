@@ -806,6 +806,7 @@ class Main extends React.Component {
         console.log("Config Saved!");
         // this.appCatSearch("Root", spData.appItems);
         this.appCatSearch(tempCatTitle, spData.appItems);
+        this.appCatSearch("Root", spData.appItems);
         // console.log("Save Conf. result=", res);
         console.log("TempCat= ", tempCatTitle);
       });;
@@ -2118,6 +2119,14 @@ class Main extends React.Component {
         this.setState({ clockDiaShow: false });
         document.getElementById('clockForm').reset();
         break;
+      case "search":
+        this.setState({ searchDiaShow: false });
+        document.getElementById('searchForm').reset();
+        this.setState({ resAppItems: [] });
+        this.setState({ alShow: false });
+        this.setState({ alErrShow: false });
+        temp = "";
+        break;
     }
     // this.setState({ titleDiaShow: false });
     // this.setState({ menuDiaShow: false });
@@ -2291,6 +2300,7 @@ class Main extends React.Component {
     tempAppVideo = false;
     temp4 = false;
     temp5 = "Root";
+    tempCatTitle = "Root";
     document.getElementById('clearapppos').value = "";
     document.getElementById('clearapptitle').value = "";
     document.getElementById('clearapplink').value = "";
@@ -2312,6 +2322,7 @@ class Main extends React.Component {
         this.setState({
           catSel: temp5
         })
+        tempCatTitle = temp5;
         // console.log(" Category: ", );
         tempIcon = array[i].icon;
       }
