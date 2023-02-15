@@ -695,6 +695,7 @@ class Main extends React.Component {
       disFieldC2: false,
       disFieldC3: false,
       catSel: "Root",
+      selectedCat: "Root",
       backStyle: {
         backgroundImage: "",
         backgroundColor: "",
@@ -720,9 +721,9 @@ class Main extends React.Component {
     this.headLogoEdit = this.headLogoEdit.bind(this);
     this.showModal = this.showModal.bind(this);
     this.hideModal = this.hideModal.bind(this);
-    this.hideSearch = this.hideSearch.bind(this);
-    this.hideAppOp = this.hideAppOp.bind(this);
-    this.hideAppOrCat = this.hideAppOrCat.bind(this);
+    // this.hideSearch = this.hideSearch.bind(this);
+    // this.hideAppOp = this.hideAppOp.bind(this);
+    // this.hideAppOrCat = this.hideAppOrCat.bind(this);
     this.loginSession = this.loginSession.bind(this);
     this.loginEditSession = this.loginEditSession.bind(this);
     this.saveTitle = this.saveTitle.bind(this);
@@ -781,7 +782,7 @@ class Main extends React.Component {
           });
         }
         // console.log("Apps: ", this.state.appItems);
-        this.appRootSearch("Root", spData.appItems);
+        this.appCatSearch("Root", spData.appItems);
         // console.log("Root Apps: ", this.state.rootAppItems);
         // console.log("Check password: ", comparePassword("admin", password));
         // console.log("Hashed first password: ", hashPassword(password));
@@ -803,8 +804,10 @@ class Main extends React.Component {
     fetchUpConfig(file, url, key)
       .then(res => {
         console.log("Config Saved!");
-        this.appRootSearch("Root", spData.appItems);
+        // this.appCatSearch("Root", spData.appItems);
+        this.appCatSearch(tempCatTitle, spData.appItems);
         // console.log("Save Conf. result=", res);
+        console.log("TempCat= ", tempCatTitle);
       });;
   }
 
@@ -1160,9 +1163,9 @@ class Main extends React.Component {
     }
   }
 
-  appRootSearch = (cat, items) => {
+  appCatSearch = (cat, items) => {
     if (items.length > 0) {
-      console.log("AppRootSearch...", items.length);
+      console.log("AppCatSearch...", items.length);
       let count = 0;
       for (let i = 0; i < items.length; i++) {
         console.log("Analyzing App Pos: ", i, " - Title: ", items[i].title);
@@ -1189,7 +1192,11 @@ class Main extends React.Component {
       }
       count = 0;
       // console.log("Insert pos=", (inPos));
-      this.setState({ rootAppItems: arrayAdd });
+      if (cat === "Root") {
+        this.setState({ rootAppItems: arrayAdd });
+      } else {
+        this.setState({ catAppItems: arrayAdd });
+      }
       arrayAdd = [];
       appNewItem = {
         "title": "",
@@ -1201,49 +1208,49 @@ class Main extends React.Component {
     }
   }
 
-  appCatSearch = () => {
-    if (this.state.appItems.length > 0) {
-      console.log("AppCatSearch: ", tempCatTitle);
-      let count = 0;
-      for (let i = 0; i < this.state.appItems.length; i++) {
-        if (this.state.appItems[i].cat.toLowerCase().includes(tempCatTitle.toLowerCase())) {
-          appNewItem.icon = this.state.appItems[i].icon;
-          appNewItem.title = this.state.appItems[i].title;
-          appNewItem.link = this.state.appItems[i].link;
-          appNewItem.video = this.state.appItems[i].video;
-          appNewItem.id = this.state.appItems[i].id;
-          arrayAdd = this.addAfter(arrayAdd, count, appNewItem);
-          count = count++;
-          appNewItem = {
-            "title": "",
-            "link": "",
-            "icon": "",
-            "video": false,
-            "cat": "Root",
-            "id": 0
-          };
-        }
-      }
-      count = 0;
-      // console.log("Insert pos=", (inPos));
-      this.setState({ catAppItems: arrayAdd });
-      arrayAdd = [];
-      appNewItem = {
-        "title": "",
-        "link": "",
-        "icon": "",
-        "video": false,
-        "cat": "",
-        "id": 0
-      };
-      // this.setState({ alShow: true });
-      // this.setState({ alErrShow: false });
-    }
-    // else {
-    //   this.setState({ alErrShow: true });
-    //   this.setState({ alShow: false });
-    // }
-  }
+  // appCatSearch = () => {
+  //   if (this.state.appItems.length > 0) {
+  //     console.log("AppCatSearch: ", tempCatTitle);
+  //     let count = 0;
+  //     for (let i = 0; i < this.state.appItems.length; i++) {
+  //       if (this.state.appItems[i].cat.toLowerCase().includes(tempCatTitle.toLowerCase())) {
+  //         appNewItem.icon = this.state.appItems[i].icon;
+  //         appNewItem.title = this.state.appItems[i].title;
+  //         appNewItem.link = this.state.appItems[i].link;
+  //         appNewItem.video = this.state.appItems[i].video;
+  //         appNewItem.id = this.state.appItems[i].id;
+  //         arrayAdd = this.addAfter(arrayAdd, count, appNewItem);
+  //         count++;
+  //         appNewItem = {
+  //           "title": "",
+  //           "link": "",
+  //           "icon": "",
+  //           "video": false,
+  //           "cat": "Root",
+  //           "id": 0
+  //         };
+  //       }
+  //     }
+  //     count = 0;
+  //     // console.log("Insert pos=", (inPos));
+  //     this.setState({ catAppItems: arrayAdd });
+  //     arrayAdd = [];
+  //     appNewItem = {
+  //       "title": "",
+  //       "link": "",
+  //       "icon": "",
+  //       "video": false,
+  //       "cat": "",
+  //       "id": 0
+  //     };
+  //     // this.setState({ alShow: true });
+  //     // this.setState({ alErrShow: false });
+  //   }
+  //   // else {
+  //   //   this.setState({ alErrShow: true });
+  //   //   this.setState({ alShow: false });
+  //   // }
+  // }
 
   saveClock = () => {
     // console.log(tempColor);
@@ -1560,7 +1567,7 @@ class Main extends React.Component {
               temp = "";
               temp2 = "";
               this.showMainButtons();
-              this.hideModal();
+              this.hideModal("login");
             } else {
               // if (!user) {
               // console.log("WRONG User: " + temp);
@@ -1611,257 +1618,546 @@ class Main extends React.Component {
   }
 
   showModal(id) {
-    if (id === "title") {
-      temp = spData.headTitle;
-      tempColW = spData.headColW;
-      switch (spData.headColW) {
-        case "col":
-          radiobtn = document.getElementById("headColAuto");
-          radiobtn.checked = true;
-          break;
-        case "col-1":
-          radiobtn = document.getElementById("headCol1");
-          radiobtn.checked = true;
-          break;
-        case "col-2":
-          radiobtn = document.getElementById("headCol2");
-          radiobtn.checked = true;
-          break;
-        case "col-3":
-          radiobtn = document.getElementById("headCol3");
-          radiobtn.checked = true;
-          break;
-        case "col-4":
-          radiobtn = document.getElementById("headCol4");
-          radiobtn.checked = true;
-          break;
-        case "col-5":
-          radiobtn = document.getElementById("headCol5");
-          radiobtn.checked = true;
-      }
-      tempColor = this.rgbToHex(spData.headColor);
-      tempTextColor = this.rgbToHex(spData.headTextColor);
-      // console.log("Titolo Colore showModal:", this.rgbToHex(spData.headColor));
-      this.setState({ titleDiaShow: true });
-    } else if (id === "login") {
-      this.setState({ loginDiaShow: true });
-    } else if (id === "loginEdit") {
-      this.setState({ loginEditDiaShow: true });
-    } else if (id === "menu") {
-      tempColor = this.rgbToHex(spData.menuColor);
-      this.setState({ menuDiaShow: true });
-    } else if (id === "logo") {
-      tempColW = spData.logoColW;
-      switch (spData.logoColW) {
-        case "col":
-          radiobtn = document.getElementById("logoColAuto");
-          radiobtn.checked = true;
-          break;
-        case "col-1":
-          radiobtn = document.getElementById("logoCol1");
-          radiobtn.checked = true;
-          break;
-        case "col-2":
-          radiobtn = document.getElementById("logoCol2");
-          radiobtn.checked = true;
-          break;
-        case "col-3":
-          radiobtn = document.getElementById("logoCol3");
-          radiobtn.checked = true;
-          break;
-        case "col-4":
-          radiobtn = document.getElementById("logoCol4");
-          radiobtn.checked = true;
-          break;
-        case "col-5":
-          radiobtn = document.getElementById("logoCol5");
-          radiobtn.checked = true;
-      }
-      tempColor = this.rgbToHex(spData.logoColor);
-      this.setState({ logoDiaShow: true });
-    } else if (id === "info") {
-      tempColW = spData.footInfoColW;
-      switch (spData.footInfoColW) {
-        case "col":
-          radiobtn = document.getElementById("infoColAuto");
-          radiobtn.checked = true;
-          break;
-        case "col-1":
-          radiobtn = document.getElementById("infoCol1");
-          radiobtn.checked = true;
-          break;
-        case "col-2":
-          radiobtn = document.getElementById("infoCol2");
-          radiobtn.checked = true;
-          break;
-        case "col-3":
-          radiobtn = document.getElementById("infoCol3");
-          radiobtn.checked = true;
-          break;
-        case "col-4":
-          radiobtn = document.getElementById("infoCol4");
-          radiobtn.checked = true;
-          break;
-        case "col-5":
-          radiobtn = document.getElementById("infoCol5");
-          radiobtn.checked = true;
-      }
-      tempColor = this.rgbToHex(spData.footInfoColor);
-      tempTextColor = this.rgbToHex(spData.footInfoTextColor);
-      this.setState({ infoDiaShow: true });
-    } else if (id === "credit") {
-      tempColW = spData.footCreditColW;
-      switch (spData.footCreditColW) {
-        case "col":
-          radiobtn = document.getElementById("creditColAuto");
-          radiobtn.checked = true;
-          break;
-        case "col-1":
-          radiobtn = document.getElementById("creditCol1");
-          radiobtn.checked = true;
-          break;
-        case "col-2":
-          radiobtn = document.getElementById("creditCol2");
-          radiobtn.checked = true;
-          break;
-        case "col-3":
-          radiobtn = document.getElementById("creditCol3");
-          radiobtn.checked = true;
-          break;
-        case "col-4":
-          radiobtn = document.getElementById("creditCol4");
-          radiobtn.checked = true;
-          break;
-        case "col-5":
-          radiobtn = document.getElementById("creditCol5");
-          radiobtn.checked = true;
-      }
-      tempColor = this.rgbToHex(spData.footCreditColor);
-      tempTextColor = this.rgbToHex(spData.footCreditTextColor);
-      this.setState({ creditDiaShow: true });
-    } else if (id === "appEdit") {
-      this.setState({ appEditDiaShow: true });
-    } else if (id === "appDel") {
-      this.setState({ appDelDiaShow: true });
-    } else if (id === "appAdd") {
-      this.setState({ appAddDiaShow: true });
-    } else if (id === "catEdit") {
-      this.setState({ catEditDiaShow: true });
-    } else if (id === "catDel") {
-      this.setState({ catDelDiaShow: true });
-    } else if (id === "catAdd") {
-      this.setState({ catAddDiaShow: true });
-    } else if (id === "cat") {
-      this.setState({ catDiaShow: true });
-    } else if (id === "appOrCatAdd") {
-      this.setState({ aocDiaShow: true });
-    } else if (id === "appVideo") {
-      this.setState({ appVideoDiaShow: true });
-    } else if (id === "exCrs") {
-      this.setState({ exCrsDiaShow: true });
-    } else if (id === "search") {
-      this.setState({ searchDiaShow: true });
-    } else if (id === "back") {
-      tempColor = this.rgbToHex(spData.backgroundColor);
-      this.setState({ backEditDiaShow: true });
-    } else if (id === "clock") {
-      tempColW = spData.clockColW;
-      switch (spData.clockColW) {
-        case "col":
-          radiobtn = document.getElementById("clockColAuto");
-          radiobtn.checked = true;
-          break;
-        case "col-1":
-          radiobtn = document.getElementById("clockCol1");
-          radiobtn.checked = true;
-          break;
-        case "col-2":
-          radiobtn = document.getElementById("clockCol2");
-          radiobtn.checked = true;
-          break;
-        case "col-3":
-          radiobtn = document.getElementById("clockCol3");
-          radiobtn.checked = true;
-          break;
-        case "col-4":
-          radiobtn = document.getElementById("clockCol4");
-          radiobtn.checked = true;
-          break;
-        case "col-5":
-          radiobtn = document.getElementById("clockCol5");
-          radiobtn.checked = true;
-      }
-      tempColor = this.rgbToHex(spData.clockColor);
-      tempTextColor = this.rgbToHex(spData.clockTextColor);
-      this.setState({ clockDiaShow: true });
+    switch (id) {
+      case "title":
+        temp = spData.headTitle;
+        tempColW = spData.headColW;
+        switch (spData.headColW) {
+          case "col":
+            radiobtn = document.getElementById("headColAuto");
+            radiobtn.checked = true;
+            break;
+          case "col-1":
+            radiobtn = document.getElementById("headCol1");
+            radiobtn.checked = true;
+            break;
+          case "col-2":
+            radiobtn = document.getElementById("headCol2");
+            radiobtn.checked = true;
+            break;
+          case "col-3":
+            radiobtn = document.getElementById("headCol3");
+            radiobtn.checked = true;
+            break;
+          case "col-4":
+            radiobtn = document.getElementById("headCol4");
+            radiobtn.checked = true;
+            break;
+          case "col-5":
+            radiobtn = document.getElementById("headCol5");
+            radiobtn.checked = true;
+        }
+        tempColor = this.rgbToHex(spData.headColor);
+        tempTextColor = this.rgbToHex(spData.headTextColor);
+        // console.log("Titolo Colore showModal:", this.rgbToHex(spData.headColor));
+        this.setState({ titleDiaShow: true });
+        break;
+      case "login":
+        this.setState({ loginDiaShow: true });
+        break;
+      case "loginEdit":
+        this.setState({ loginEditDiaShow: true });
+        break;
+      case "menu":
+        tempColor = this.rgbToHex(spData.menuColor);
+        this.setState({ menuDiaShow: true });
+        break;
+      case "logo":
+        tempColW = spData.logoColW;
+        switch (spData.logoColW) {
+          case "col":
+            radiobtn = document.getElementById("logoColAuto");
+            radiobtn.checked = true;
+            break;
+          case "col-1":
+            radiobtn = document.getElementById("logoCol1");
+            radiobtn.checked = true;
+            break;
+          case "col-2":
+            radiobtn = document.getElementById("logoCol2");
+            radiobtn.checked = true;
+            break;
+          case "col-3":
+            radiobtn = document.getElementById("logoCol3");
+            radiobtn.checked = true;
+            break;
+          case "col-4":
+            radiobtn = document.getElementById("logoCol4");
+            radiobtn.checked = true;
+            break;
+          case "col-5":
+            radiobtn = document.getElementById("logoCol5");
+            radiobtn.checked = true;
+        }
+        tempColor = this.rgbToHex(spData.logoColor);
+        this.setState({ logoDiaShow: true });
+        break;
+      case "info":
+        tempColW = spData.footInfoColW;
+        switch (spData.footInfoColW) {
+          case "col":
+            radiobtn = document.getElementById("infoColAuto");
+            radiobtn.checked = true;
+            break;
+          case "col-1":
+            radiobtn = document.getElementById("infoCol1");
+            radiobtn.checked = true;
+            break;
+          case "col-2":
+            radiobtn = document.getElementById("infoCol2");
+            radiobtn.checked = true;
+            break;
+          case "col-3":
+            radiobtn = document.getElementById("infoCol3");
+            radiobtn.checked = true;
+            break;
+          case "col-4":
+            radiobtn = document.getElementById("infoCol4");
+            radiobtn.checked = true;
+            break;
+          case "col-5":
+            radiobtn = document.getElementById("infoCol5");
+            radiobtn.checked = true;
+        }
+        tempColor = this.rgbToHex(spData.footInfoColor);
+        tempTextColor = this.rgbToHex(spData.footInfoTextColor);
+        this.setState({ infoDiaShow: true });
+        break;
+      case "credit":
+        tempColW = spData.footCreditColW;
+        switch (spData.footCreditColW) {
+          case "col":
+            radiobtn = document.getElementById("creditColAuto");
+            radiobtn.checked = true;
+            break;
+          case "col-1":
+            radiobtn = document.getElementById("creditCol1");
+            radiobtn.checked = true;
+            break;
+          case "col-2":
+            radiobtn = document.getElementById("creditCol2");
+            radiobtn.checked = true;
+            break;
+          case "col-3":
+            radiobtn = document.getElementById("creditCol3");
+            radiobtn.checked = true;
+            break;
+          case "col-4":
+            radiobtn = document.getElementById("creditCol4");
+            radiobtn.checked = true;
+            break;
+          case "col-5":
+            radiobtn = document.getElementById("creditCol5");
+            radiobtn.checked = true;
+        }
+        tempColor = this.rgbToHex(spData.footCreditColor);
+        tempTextColor = this.rgbToHex(spData.footCreditTextColor);
+        this.setState({ creditDiaShow: true });
+        break;
+      case "appEdit":
+        this.setState({ appEditDiaShow: true });
+        break;
+      case "appDel":
+        this.setState({ appDelDiaShow: true });
+        break;
+      case "appAdd":
+        this.setState({ appAddDiaShow: true });
+        break;
+      case "catEdit":
+        this.setState({ catEditDiaShow: true });
+        break;
+      case "catDel":
+        this.setState({ catDelDiaShow: true });
+        break;
+      case "catAdd":
+        this.setState({ catAddDiaShow: true });
+        break;
+      case "cat":
+        this.setState({ catDiaShow: true });
+        // this.setState ({
+        //   selectedCat: tempCatTitle
+        // });
+        // this.appCatSearch(element.title, spData.appItems);
+        break;
+      case "appOrCatAdd":
+        this.setState({ aocDiaShow: true });
+        break;
+      case "appVideo":
+        this.setState({ appVideoDiaShow: true });
+        break;
+      case "exCrs":
+        this.setState({ exCrsDiaShow: true });
+        break;
+      case "search":
+        this.setState({ searchDiaShow: true });
+        break;
+      case "back":
+        tempColor = this.rgbToHex(spData.backgroundColor);
+        this.setState({ backEditDiaShow: true });
+        break;
+      case "clock":
+        tempColW = spData.clockColW;
+        switch (spData.clockColW) {
+          case "col":
+            radiobtn = document.getElementById("clockColAuto");
+            radiobtn.checked = true;
+            break;
+          case "col-1":
+            radiobtn = document.getElementById("clockCol1");
+            radiobtn.checked = true;
+            break;
+          case "col-2":
+            radiobtn = document.getElementById("clockCol2");
+            radiobtn.checked = true;
+            break;
+          case "col-3":
+            radiobtn = document.getElementById("clockCol3");
+            radiobtn.checked = true;
+            break;
+          case "col-4":
+            radiobtn = document.getElementById("clockCol4");
+            radiobtn.checked = true;
+            break;
+          case "col-5":
+            radiobtn = document.getElementById("clockCol5");
+            radiobtn.checked = true;
+        }
+        tempColor = this.rgbToHex(spData.clockColor);
+        tempTextColor = this.rgbToHex(spData.clockTextColor);
+        this.setState({ clockDiaShow: true });
+        break;
     }
-  };
 
-  hideSearch() {
-    this.setState({ searchDiaShow: false });
-    document.getElementById('searchForm').reset();
-    this.setState({ resAppItems: [] });
-    this.setState({ alShow: false });
-    this.setState({ alErrShow: false });
-    temp = "";
-  }
+    //   if (id === "title") {
+    //     temp = spData.headTitle;
+    //     tempColW = spData.headColW;
+    //     switch (spData.headColW) {
+    //       case "col":
+    //         radiobtn = document.getElementById("headColAuto");
+    //         radiobtn.checked = true;
+    //         break;
+    //       case "col-1":
+    //         radiobtn = document.getElementById("headCol1");
+    //         radiobtn.checked = true;
+    //         break;
+    //       case "col-2":
+    //         radiobtn = document.getElementById("headCol2");
+    //         radiobtn.checked = true;
+    //         break;
+    //       case "col-3":
+    //         radiobtn = document.getElementById("headCol3");
+    //         radiobtn.checked = true;
+    //         break;
+    //       case "col-4":
+    //         radiobtn = document.getElementById("headCol4");
+    //         radiobtn.checked = true;
+    //         break;
+    //       case "col-5":
+    //         radiobtn = document.getElementById("headCol5");
+    //         radiobtn.checked = true;
+    //     }
+    //     tempColor = this.rgbToHex(spData.headColor);
+    //     tempTextColor = this.rgbToHex(spData.headTextColor);
+    //     // console.log("Titolo Colore showModal:", this.rgbToHex(spData.headColor));
+    //     this.setState({ titleDiaShow: true });
 
-  hideAppOp() {
-    this.setState({ appAddDiaShow: false });
-    document.getElementById('appAddForm').reset();
-    this.setState({ appEditDiaShow: false });
-    this.setState({ appDelDiaShow: false });
-    document.getElementById('appEditForm').reset();
-    this.setState({ alShow: false });
-    this.setState({ alErrShow: false });
-    this.setState({
-      activityChanged: false
-    });
-  }
+    //   } else if (id === "login") {
+    //     this.setState({ loginDiaShow: true });
+    //   } else if (id === "loginEdit") {
+    //     this.setState({ loginEditDiaShow: true });
+    //   } else if (id === "menu") {
+    //     tempColor = this.rgbToHex(spData.menuColor);
+    //     this.setState({ menuDiaShow: true });
+    //   } else if (id === "logo") {
+    //     tempColW = spData.logoColW;
+    //     switch (spData.logoColW) {
+    //       case "col":
+    //         radiobtn = document.getElementById("logoColAuto");
+    //         radiobtn.checked = true;
+    //         break;
+    //       case "col-1":
+    //         radiobtn = document.getElementById("logoCol1");
+    //         radiobtn.checked = true;
+    //         break;
+    //       case "col-2":
+    //         radiobtn = document.getElementById("logoCol2");
+    //         radiobtn.checked = true;
+    //         break;
+    //       case "col-3":
+    //         radiobtn = document.getElementById("logoCol3");
+    //         radiobtn.checked = true;
+    //         break;
+    //       case "col-4":
+    //         radiobtn = document.getElementById("logoCol4");
+    //         radiobtn.checked = true;
+    //         break;
+    //       case "col-5":
+    //         radiobtn = document.getElementById("logoCol5");
+    //         radiobtn.checked = true;
+    //     }
+    //     tempColor = this.rgbToHex(spData.logoColor);
+    //     this.setState({ logoDiaShow: true });
+    //   } else if (id === "info") {
+    //     tempColW = spData.footInfoColW;
+    //     switch (spData.footInfoColW) {
+    //       case "col":
+    //         radiobtn = document.getElementById("infoColAuto");
+    //         radiobtn.checked = true;
+    //         break;
+    //       case "col-1":
+    //         radiobtn = document.getElementById("infoCol1");
+    //         radiobtn.checked = true;
+    //         break;
+    //       case "col-2":
+    //         radiobtn = document.getElementById("infoCol2");
+    //         radiobtn.checked = true;
+    //         break;
+    //       case "col-3":
+    //         radiobtn = document.getElementById("infoCol3");
+    //         radiobtn.checked = true;
+    //         break;
+    //       case "col-4":
+    //         radiobtn = document.getElementById("infoCol4");
+    //         radiobtn.checked = true;
+    //         break;
+    //       case "col-5":
+    //         radiobtn = document.getElementById("infoCol5");
+    //         radiobtn.checked = true;
+    //     }
+    //     tempColor = this.rgbToHex(spData.footInfoColor);
+    //     tempTextColor = this.rgbToHex(spData.footInfoTextColor);
+    //     this.setState({ infoDiaShow: true });
+    //   } else if (id === "credit") {
+    //     tempColW = spData.footCreditColW;
+    //     switch (spData.footCreditColW) {
+    //       case "col":
+    //         radiobtn = document.getElementById("creditColAuto");
+    //         radiobtn.checked = true;
+    //         break;
+    //       case "col-1":
+    //         radiobtn = document.getElementById("creditCol1");
+    //         radiobtn.checked = true;
+    //         break;
+    //       case "col-2":
+    //         radiobtn = document.getElementById("creditCol2");
+    //         radiobtn.checked = true;
+    //         break;
+    //       case "col-3":
+    //         radiobtn = document.getElementById("creditCol3");
+    //         radiobtn.checked = true;
+    //         break;
+    //       case "col-4":
+    //         radiobtn = document.getElementById("creditCol4");
+    //         radiobtn.checked = true;
+    //         break;
+    //       case "col-5":
+    //         radiobtn = document.getElementById("creditCol5");
+    //         radiobtn.checked = true;
+    //     }
+    //     tempColor = this.rgbToHex(spData.footCreditColor);
+    //     tempTextColor = this.rgbToHex(spData.footCreditTextColor);
+    //     this.setState({ creditDiaShow: true });
+    //   } else if (id === "appEdit") {
+    //     this.setState({ appEditDiaShow: true });
+    //   } else if (id === "appDel") {
+    //     this.setState({ appDelDiaShow: true });
+    //   } else if (id === "appAdd") {
+    //     this.setState({ appAddDiaShow: true });
+    //   } else if (id === "catEdit") {
+    //     this.setState({ catEditDiaShow: true });
+    //   } else if (id === "catDel") {
+    //     this.setState({ catDelDiaShow: true });
+    //   } else if (id === "catAdd") {
+    //     this.setState({ catAddDiaShow: true });
+    //   } else if (id === "cat") {
+    //     this.setState({ catDiaShow: true });
+    //   } else if (id === "appOrCatAdd") {
+    //     this.setState({ aocDiaShow: true });
+    //   } else if (id === "appVideo") {
+    //     this.setState({ appVideoDiaShow: true });
+    //   } else if (id === "exCrs") {
+    //     this.setState({ exCrsDiaShow: true });
+    //   } else if (id === "search") {
+    //     this.setState({ searchDiaShow: true });
+    //   } else if (id === "back") {
+    //     tempColor = this.rgbToHex(spData.backgroundColor);
+    //     this.setState({ backEditDiaShow: true });
+    //   } else if (id === "clock") {
+    //     tempColW = spData.clockColW;
+    //     switch (spData.clockColW) {
+    //       case "col":
+    //         radiobtn = document.getElementById("clockColAuto");
+    //         radiobtn.checked = true;
+    //         break;
+    //       case "col-1":
+    //         radiobtn = document.getElementById("clockCol1");
+    //         radiobtn.checked = true;
+    //         break;
+    //       case "col-2":
+    //         radiobtn = document.getElementById("clockCol2");
+    //         radiobtn.checked = true;
+    //         break;
+    //       case "col-3":
+    //         radiobtn = document.getElementById("clockCol3");
+    //         radiobtn.checked = true;
+    //         break;
+    //       case "col-4":
+    //         radiobtn = document.getElementById("clockCol4");
+    //         radiobtn.checked = true;
+    //         break;
+    //       case "col-5":
+    //         radiobtn = document.getElementById("clockCol5");
+    //         radiobtn.checked = true;
+    //     }
+    //     tempColor = this.rgbToHex(spData.clockColor);
+    //     tempTextColor = this.rgbToHex(spData.clockTextColor);
+    //     this.setState({ clockDiaShow: true });
+    //   }
+    // };
 
-  hideAppOrCat() {
-    this.setState({ aocDiaShow: false });
-    this.setState({
-      activityChanged: false
-    });
+    // hideSearch() {
+    //   this.setState({ searchDiaShow: false });
+    //   document.getElementById('searchForm').reset();
+    //   this.setState({ resAppItems: [] });
+    //   this.setState({ alShow: false });
+    //   this.setState({ alErrShow: false });
+    //   temp = "";
+    // }
+
+    // hideAppOp() {
+    //   this.setState({ appAddDiaShow: false });
+    //   document.getElementById('appAddForm').reset();
+    //   this.setState({ appEditDiaShow: false });
+    //   this.setState({ appDelDiaShow: false });
+    //   document.getElementById('appEditForm').reset();
+    //   this.setState({ alShow: false });
+    //   this.setState({ alErrShow: false });
+    //   this.setState({
+    //     activityChanged: false
+    //   });
+    // }
+
+    // hideAppOrCat() {
+    //   this.setState({ aocDiaShow: false });
+    //   this.setState({
+    //     activityChanged: false
+    //   });
   }
 
   hideModal(id) {
-    this.setState({ titleDiaShow: false });
-    this.setState({ menuDiaShow: false });
-    this.setState({ alShow: false });
-    this.setState({ loginDiaShow: false });
-    this.setState({ loginEditDiaShow: false });
-    this.setState({ logoDiaShow: false });
-    this.setState({ infoDiaShow: false });
-    this.setState({ creditDiaShow: false });
+    switch (id) {
+      case "title":
+        this.setState({ titleDiaShow: false });
+        document.getElementById('titleForm').reset();
+        break;
+      case "menu":
+        this.setState({ menuDiaShow: false });
+        document.getElementById('menuForm').reset();
+        break;
+      case "login":
+        this.setState({ loginDiaShow: false });
+        document.getElementById('loginForm').reset();
+        break;
+      case "loginedit":
+        this.setState({ loginEditDiaShow: false });
+        document.getElementById('loginEditForm').reset();
+        break;
+      case "logo":
+        this.setState({ logoDiaShow: false });
+        document.getElementById('logoForm').reset();
+        break;
+      case "info":
+        this.setState({ infoDiaShow: false });
+        document.getElementById('infoForm').reset();
+        break;
+      case "credit":
+        this.setState({ creditDiaShow: false });
+        document.getElementById('creditForm').reset();
+        break;
+      case "appedit":
+        this.setState({ appEditDiaShow: false });
+        document.getElementById('appEditForm').reset();
+        break;
+      case "appdel":
+        this.setState({ appDelDiaShow: false });
+        break;
+      case "appadd":
+        this.setState({ appAddDiaShow: false });
+        document.getElementById('appAddForm').reset();
+        break;
+      case "catedit":
+        this.setState({ catEditDiaShow: false });
+        document.getElementById('catEditForm').reset();
+        break;
+      case "catdel":
+        this.setState({ catDelDiaShow: false });
+        break;
+      case "catadd":
+        this.setState({ catAddDiaShow: false });
+        document.getElementById('catAddForm').reset();
+        break;
+      case "cat":
+        this.setState({ catDiaShow: false });
+        tempAppTitle = "Root";
+        break;
+      case "video":
+        this.setState({ appVideoDiaShow: false });
+        this.stopVideos();
+        break;
+      case "apporcat":
+        this.setState({ aocDiaShow: false });
+        break;
+      case "excrs":
+        this.setState({ exCrsDiaShow: false });
+        break;
+      case "back":
+        this.setState({ backEditDiaShow: false });
+        document.getElementById('backEditForm').reset();
+        break;
+      case "clock":
+        this.setState({ clockDiaShow: false });
+        document.getElementById('clockForm').reset();
+        break;
+    }
+    // this.setState({ titleDiaShow: false });
+    // this.setState({ menuDiaShow: false });
+    // this.setState({ alShow: false });
+    // this.setState({ loginDiaShow: false });
+    // this.setState({ loginEditDiaShow: false });
+    // this.setState({ logoDiaShow: false });
+    // this.setState({ infoDiaShow: false });
+    // this.setState({ creditDiaShow: false });
     // this.setState({ appEditDiaShow: false });
     // this.setState({ appDelDiaShow: false });
     // this.setState({ appAddDiaShow: false });
-    this.setState({ catEditDiaShow: false });
-    this.setState({ catDelDiaShow: false });
-    this.setState({ catAddDiaShow: false });
-    this.setState({ catDiaShow: false });
-    this.setState({ appVideoDiaShow: false });
+    // this.setState({ catEditDiaShow: false });
+    // this.setState({ catDelDiaShow: false });
+    // this.setState({ catAddDiaShow: false });
+    // this.setState({ catDiaShow: false });
+    // if (id === "video") {
+    //   this.setState({ appVideoDiaShow: false });
+    //   this.stopVideos();
+    // }
+
     // this.setState({ aocDiaShow: false });
-    this.setState({ exCrsDiaShow: false });
-    this.setState({ backEditDiaShow: false });
-    this.setState({ clockDiaShow: false });
+    // this.setState({ exCrsDiaShow: false });
+    // this.setState({ backEditDiaShow: false });
+    // this.setState({ clockDiaShow: false });
     this.setState({ alShow: false });
     this.setState({ alErrShow: false });
-    document.getElementById('loginForm').reset();
-    document.getElementById('loginEditForm').reset();
-    document.getElementById('titleForm').reset();
-    document.getElementById('logoForm').reset();
-    document.getElementById('menuForm').reset();
-    document.getElementById('infoForm').reset();
-    document.getElementById('creditForm').reset();
+    // document.getElementById('loginForm').reset();
+    // document.getElementById('loginEditForm').reset();
+    // document.getElementById('titleForm').reset();
+    // document.getElementById('logoForm').reset();
+    // document.getElementById('menuForm').reset();
+    // document.getElementById('infoForm').reset();
+    // document.getElementById('creditForm').reset();
     // document.getElementById('appEditForm').reset();
     // document.getElementById('appAddForm').reset();
-    document.getElementById('catEditForm').reset();
-    document.getElementById('catAddForm').reset();
-    document.getElementById('backEditForm').reset();
-    document.getElementById('clockForm').reset();
+    // document.getElementById('catEditForm').reset();
+    // document.getElementById('catAddForm').reset();
+    // document.getElementById('backEditForm').reset();
+    // document.getElementById('clockForm').reset();
     tempColor = "";
     tempTextColor = "";
     tempColW = "";
@@ -1869,7 +2165,6 @@ class Main extends React.Component {
     this.setState({
       activityChanged: false
     });
-    this.stopVideos();
   };
 
   hideAlert = () => {
@@ -1976,8 +2271,8 @@ class Main extends React.Component {
   }
 
   catAddItem() {
-    this.hideAppOrCat();
-    // this.hideModal();
+    // this.hideAppOrCat();
+    this.hideModal("apporcat");
     array = [...this.state.catItems];
     arrayLength = (array.length);
     temp4 = false;
@@ -1989,8 +2284,8 @@ class Main extends React.Component {
   }
 
   appAddItem(id, pos) {
-    this.hideAppOrCat();
-    // this.hideModal();
+    // this.hideAppOrCat();
+    this.hideModal("apporcat");
     array = [...this.state.appItems];
     arrayLength = (array.length);
     tempAppVideo = false;
@@ -2057,7 +2352,7 @@ class Main extends React.Component {
     // console.log("Cat Array: ", array);
     tempCatTitle = array[pos].title;
     // console.log("TempCatTitle: ", tempCatTitle);
-    this.appCatSearch(tempCatTitle);
+    this.appCatSearch(array[pos].title, this.state.appItems);
     this.showModal("cat");
   }
 
@@ -2109,7 +2404,7 @@ class Main extends React.Component {
     this.setState({
       catSel: catName
     })
-    
+
     console.log("CatName: ", catName);
   }
 
@@ -2273,7 +2568,7 @@ class Main extends React.Component {
         <noscript>You need to enable JavaScript to run this app.</noscript>
         <div class="contenitore">
           <section>
-            <LoginDialog loginDiaShow={this.state.loginDiaShow} handleClose={this.hideModal} handleLogin={this.loginCheck}>
+            <LoginDialog loginDiaShow={this.state.loginDiaShow} handleClose={() => this.hideModal("login")} handleLogin={this.loginCheck}>
               <div className="modal-content">
                 <div className="modal-header">
                   <h5 className="modal-title" >Login</h5>
@@ -2329,7 +2624,7 @@ class Main extends React.Component {
                 </div>
               </div>
             </LoginDialog>
-            <LoginEditDialog loginEditDiaShow={this.state.loginEditDiaShow} handleClose={this.hideModal} handleEditLogin={this.loginEditCheck}>
+            <LoginEditDialog loginEditDiaShow={this.state.loginEditDiaShow} handleClose={() => this.hideModal("loginedit")} handleEditLogin={this.loginEditCheck}>
               <div className="modal-content">
                 <div className="modal-header">
                   <h5 className="modal-title" >Edit Login</h5>
@@ -2398,7 +2693,7 @@ class Main extends React.Component {
                 </div>
               </div>
             </LoginEditDialog>
-            <MenuDialog menuDiaShow={this.state.menuDiaShow} handleClose={this.hideModal} handleSave={this.saveMenu}>
+            <MenuDialog menuDiaShow={this.state.menuDiaShow} handleClose={() => this.hideModal("menu")} handleSave={this.saveMenu}>
               <div className="modal-content">
                 <div className="modal-header">
                   <h5 className="modal-title" >Menu wallpaper change</h5>
@@ -2483,7 +2778,7 @@ class Main extends React.Component {
                 </div>
               </div>
             </MenuDialog>
-            <TitleDialog titleDiaShow={this.state.titleDiaShow} handleClose={this.hideModal} handleSave={this.saveTitle}>
+            <TitleDialog titleDiaShow={this.state.titleDiaShow} handleClose={() => this.hideModal("title")} handleSave={this.saveTitle}>
               <div className="modal-content">
                 <div className="modal-header">
                   <h5 className="modal-title" >Change site name</h5>
@@ -2623,7 +2918,7 @@ class Main extends React.Component {
                 </div>
               </div>
             </TitleDialog>
-            <ClockDialog clockDiaShow={this.state.clockDiaShow} handleClose={this.hideModal} handleSave={this.saveClock}>
+            <ClockDialog clockDiaShow={this.state.clockDiaShow} handleClose={() => this.hideModal("clock")} handleSave={this.saveClock}>
               <div className="modal-content">
                 <div className="modal-header">
                   <h5 className="modal-title" >Clock wallpaper change</h5>
@@ -2750,7 +3045,7 @@ class Main extends React.Component {
                 </div>
               </div>
             </ClockDialog>
-            <LogoDialog logoDiaShow={this.state.logoDiaShow} activityChanged={this.state.activityChanged} handleClose={this.hideModal} handleUpload={this.saveLogo}>
+            <LogoDialog logoDiaShow={this.state.logoDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("logo")} handleUpload={this.saveLogo}>
               <div className="modal-content">
                 <div className="modal-header">
                   <h5 className="modal-title" >Change logo</h5>
@@ -2881,7 +3176,7 @@ class Main extends React.Component {
                 </div>
               </div>
             </LogoDialog>
-            <InfoDialog infoDiaShow={this.state.infoDiaShow} handleClose={this.hideModal} handleSave={this.saveInfo}>
+            <InfoDialog infoDiaShow={this.state.infoDiaShow} handleClose={() => this.hideModal("info")} handleSave={this.saveInfo}>
               <div className="modal-content">
                 <div className="modal-header">
                   <h5 className="modal-title" >Edit site info</h5>
@@ -3093,7 +3388,7 @@ class Main extends React.Component {
                 </div>
               </div>
             </InfoDialog>
-            <CreditDialog creditDiaShow={this.state.creditDiaShow} handleClose={this.hideModal} handleSave={this.saveCredit}>
+            <CreditDialog creditDiaShow={this.state.creditDiaShow} handleClose={() => this.hideModal("credit")} handleSave={this.saveCredit}>
               <div className="modal-content">
                 <div className="modal-header">
                   <h5 className="modal-title" >Edit site credits</h5>
@@ -3306,7 +3601,7 @@ class Main extends React.Component {
                 </div>
               </div>
             </CreditDialog>
-            <BackEditDialog backEditDiaShow={this.state.backEditDiaShow} activityChanged={this.state.activityChanged} handleClose={this.hideModal} handleSave={this.saveBack}>
+            <BackEditDialog backEditDiaShow={this.state.backEditDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("back")} handleSave={this.saveBack}>
               <div className="modal-content">
                 <div className="modal-header">
                   <h5 className="modal-title" >Edit Page Background</h5>
@@ -3397,7 +3692,7 @@ class Main extends React.Component {
                 </div>
               </div>
             </BackEditDialog>
-            <CatDialog catDiaShow={this.state.catDiaShow} activityChanged={this.state.activityChanged} handleClose={this.hideModal}>
+            <CatDialog catDiaShow={this.state.catDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("cat")}>
               <div className="modal-content">
                 <div className="modal-header-dark">
                   <h5 className="modal-title-dark" >Category: {tempCatTitle}</h5>
@@ -3419,7 +3714,7 @@ class Main extends React.Component {
                 </div>
               </div>
             </CatDialog>
-            <AppEditDialog appEditDiaShow={this.state.appEditDiaShow} activityChanged={this.state.activityChanged} handleClose={this.hideAppOp} handleSave={this.applyAppEdit}>
+            <AppEditDialog appEditDiaShow={this.state.appEditDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("appedit")} handleSave={this.applyAppEdit}>
               <div className="modal-content">
                 <div className="modal-header">
                   <h5 className="modal-title" >Edit Web Application</h5>
@@ -3560,7 +3855,7 @@ class Main extends React.Component {
                 </div>
               </div>
             </AppEditDialog>
-            <AppAddDialog appAddDiaShow={this.state.appAddDiaShow} activityChanged={this.state.activityChanged} handleClose={this.hideAppOp} handleSave={this.applyAppAdd}>
+            <AppAddDialog appAddDiaShow={this.state.appAddDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("appadd")} handleSave={this.applyAppAdd}>
               <div className="modal-content">
                 <div className="modal-header">
                   <h5 className="modal-title" >Add Web Application</h5>
@@ -3718,7 +4013,7 @@ class Main extends React.Component {
                 </div>
               </div>
             </AppAddDialog>
-            <AppDelDialog appDelDiaShow={this.state.appDelDiaShow} activityChanged={this.state.activityChanged} handleClose={this.hideAppOp} handleSave={this.applyAppDel}>
+            <AppDelDialog appDelDiaShow={this.state.appDelDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("appdel")} handleSave={this.applyAppDel}>
               <div className="modal-content">
                 <div className="modal-header">
                   <h5 className="modal-title" >Permanently delete the application?</h5>
@@ -3740,7 +4035,7 @@ class Main extends React.Component {
                 </div>
               </div>
             </AppDelDialog>
-            <CatEditDialog catEditDiaShow={this.state.catEditDiaShow} activityChanged={this.state.activityChanged} handleClose={this.hideModal} handleSave={this.applyCatEdit}>
+            <CatEditDialog catEditDiaShow={this.state.catEditDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("catedit")} handleSave={this.applyCatEdit}>
               <div className="modal-content">
                 <div className="modal-header">
                   <h5 className="modal-title" >Edit Category</h5>
@@ -3821,7 +4116,7 @@ class Main extends React.Component {
                 </div>
               </div>
             </CatEditDialog>
-            <CatAddDialog catAddDiaShow={this.state.catAddDiaShow} activityChanged={this.state.activityChanged} handleClose={this.hideModal} handleSave={this.applyCatAdd}>
+            <CatAddDialog catAddDiaShow={this.state.catAddDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("catadd")} handleSave={this.applyCatAdd}>
               <div className="modal-content">
                 <div className="modal-header">
                   <h5 className="modal-title" >Add Category</h5>
@@ -3919,7 +4214,7 @@ class Main extends React.Component {
                 </div>
               </div>
             </CatAddDialog>
-            <CatDelDialog catDelDiaShow={this.state.catDelDiaShow} activityChanged={this.state.activityChanged} handleClose={this.hideModal} handleSave={this.applyCatDel}>
+            <CatDelDialog catDelDiaShow={this.state.catDelDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("catdel")} handleSave={this.applyCatDel}>
               <div className="modal-content">
                 <div className="modal-header">
                   <h5 className="modal-title" >Permanently delete this category?</h5>
@@ -3963,7 +4258,7 @@ class Main extends React.Component {
                 </div> */}
               </div>
             </AppOrCatDialog>
-            <ExCrsDialog exCrsDiaShow={this.state.exCrsDiaShow} activityChanged={this.state.activityChanged} handleClose={this.hideModal} handleSave={this.applyAppEdit}>
+            <ExCrsDialog exCrsDiaShow={this.state.exCrsDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("excrs")} handleSave={this.applyAppEdit}>
               <div className="modal-content">
                 <div className="modal-header-dark">
                   <h5 className="modal-title-dark" >Soylent Credits</h5>
@@ -4168,7 +4463,7 @@ class Main extends React.Component {
                 </div>
               </div>
             </ExCrsDialog>
-            <SearchDialog searchDiaShow={this.state.searchDiaShow} activityChanged={this.state.activityChanged} handleClose={this.hideSearch} handleSave={this.appSearch} handleReset={this.appSearchReset}>
+            <SearchDialog searchDiaShow={this.state.searchDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("search")} handleSave={this.appSearch} handleReset={this.appSearchReset}>
               <div className="modal-content">
                 <div className="modal-header-dark">
                   <h5 className="modal-title-dark" >Soylent Search</h5>
@@ -4231,7 +4526,7 @@ class Main extends React.Component {
                 </div>
               </div>
             </SearchDialog>
-            <AppVideoDialog appVideoDiaShow={this.state.appVideoDiaShow} activityChanged={this.state.activityChanged} handleClose={this.hideModal} handleSave={this.applyAppEdit}>
+            <AppVideoDialog appVideoDiaShow={this.state.appVideoDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("video")} handleSave={this.applyAppEdit}>
               <div className="modal-content">
                 <div className="modal-header-dark">
                   <h5 className="modal-title-dark" >"{tempAppTitle}"</h5>
@@ -4715,13 +5010,13 @@ class DropdownCat extends React.Component {
     isOpen: false
     // selCat: this.props.catName
   };
-  
+
   changeText(selected) {
     this.setState({ selCat: selected });
   }
 
   toggleOpen = () => this.setState({ isOpen: !this.state.isOpen });
-  
+
   render() {
     const menuClass = `dropdown-menu${this.state.isOpen ? " show d-flex flex-column justify-content-center align-items-center" : " disNone"}`;
 
