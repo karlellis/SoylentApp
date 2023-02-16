@@ -431,7 +431,7 @@ const CatEditDialog = ({ handleSave, handleClose, catEditDiaShow, children, acti
       <section className="modal-main">
         {children}
         <div className="modal-footer">
-          <button type="button" disabled={(activityChanged) ? true : false} className="btn btn-primary" onClick={handleSave}>Remove</button>
+          <button type="button" disabled={(activityChanged) ? true : false} className="btn btn-primary" onClick={handleSave}>Edit</button>
           <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={handleClose}>Close</button>
         </div>
       </section>
@@ -878,13 +878,19 @@ class Main extends React.Component {
           appNewItem.link = temp3;
           appNewItem.video = temp4;
           appNewItem.cat = temp5;
-          appNewItem.id = inPos;
+          let index = 0;
+          // console.log("Insert pos=", (inPos));
+          if (tempCatTitle !== "Root") {
+            index = this.state.catAppItems[inPos].id;
+          } else {
+            index = this.state.rootAppItems[inPos].id;
+          }
+          appNewItem.id = index;
           tempIcon = "";
-          arrayAdd = this.addAfter(array, inPos, appNewItem);
-          for (let i = (inPos + 1); i < arrayAdd.length; i++) {
+          arrayAdd = this.addAfter(array, index, appNewItem);
+          for (let i = (index + 1); i < arrayAdd.length; i++) {
             (arrayAdd[i].id)++;
           }
-          // console.log("Insert pos=", (inPos));
           this.setState({ appItems: arrayAdd });
           spData.appItems = arrayAdd;
           // this.appRootSearch("Root", spData.appItems);
@@ -969,6 +975,11 @@ class Main extends React.Component {
           if (temp2 !== "") {
             array[temp].title = temp2;
           }
+          this.state.appItems.forEach(element => {
+            if (element.cat === tempCatTitle) {
+              element.cat = temp2;
+            }
+          })
           this.setState({ catItems: array });
           spData.catItems = array;
           temp2 = "";
@@ -1385,14 +1396,17 @@ class Main extends React.Component {
   applyAppDel = () => {
     var array = [...this.state.appItems];
     var index = temp;
-    // console.log("Index: ", temp);
+    console.log("AppDel ID: ", temp);
     if (index !== -1) {
       fetchDelPHP(tempIcon, "./api/img-upload.php", "icon");
       tempIcon = "";
       array.splice(index, 1);
+      for (let i = (index); i < array.length; i++) {
+        (array[i].id)--;
+      }
       var noAddArray = [...array];
       this.setState({ appItems: array });
-      noAddArray.pop();
+      // noAddArray.pop();
       spData.appItems = noAddArray;
     }
     temp = "";
@@ -1460,9 +1474,14 @@ class Main extends React.Component {
       array.splice(index, 1);
       var noAddArray = [...array];
       this.setState({ catItems: array });
-      noAddArray.pop();
+      // noAddArray.pop();
       spData.catItems = noAddArray;
     }
+    this.state.appItems.forEach(element => {
+      if (element.cat === tempCatTitle) {
+        element.cat = "Root";
+      }
+    })
     temp = "";
     temp2 = "";
     temp3 = "";
@@ -2099,7 +2118,12 @@ class Main extends React.Component {
         break;
       case "cat":
         this.setState({ catDiaShow: false });
-        tempAppTitle = "Root";
+        tempCatTitle = "Root";
+        temp5 = tempCatTitle;
+        this.setState({
+          catSel: tempCatTitle
+        })
+        console.log("Current Cat: ", this.state.catSel);
         break;
       case "video":
         this.setState({ appVideoDiaShow: false });
@@ -2126,7 +2150,6 @@ class Main extends React.Component {
         this.setState({ alShow: false });
         this.setState({ alErrShow: false });
         temp = "";
-        break;
     }
     // this.setState({ titleDiaShow: false });
     // this.setState({ menuDiaShow: false });
@@ -2275,8 +2298,19 @@ class Main extends React.Component {
     this.showModal("appOrCatAdd");
   }
 
-  catEditDel() {
-
+  catEditDel(op, pos) {
+    temp = pos;
+    console.log(op, " for ", pos);
+    array = [...this.state.catItems];
+    tempCatTitle = array[pos].title;
+    tempIcon = array[pos].icon;
+    console.log("Cat name: ", tempCatTitle);
+    tempIcon = array[pos].icon;
+    if (op === "CatEdit") {
+      this.showModal("catEdit");
+    } else {
+      this.showModal("catDel");
+    }
   }
 
   catAddItem() {
@@ -2299,8 +2333,11 @@ class Main extends React.Component {
     arrayLength = (array.length);
     tempAppVideo = false;
     temp4 = false;
-    temp5 = "Root";
-    tempCatTitle = "Root";
+    // temp5 = "Root";
+    this.setState({
+      catSel: temp5
+    })
+    tempCatTitle = temp5;
     document.getElementById('clearapppos').value = "";
     document.getElementById('clearapptitle').value = "";
     document.getElementById('clearapplink').value = "";
@@ -2308,13 +2345,14 @@ class Main extends React.Component {
     // console.log("APPAdding IT!");
   }
 
-  appEditDel(name, id) {
+  appEditDel(op, id) {
     temp = id;
-    console.log(name, " for ", id);
+    console.log(op, " for ", id);
     array = [...this.state.appItems];
     for (let i = 0; i < array.length; i++) {
       if (array[i].id === id) {
         tempAppTitle = array[i].title;
+        console.log("App name: ", tempAppTitle);
         tempAppLink = array[i].link;
         tempAppVideo = array[i].video;
         temp4 = array[i].video;
@@ -2335,7 +2373,7 @@ class Main extends React.Component {
     // tempIcon = array[id].icon;
 
     // console.log(id, " for ", pos);
-    if (name === "AppEdit") {
+    if (op === "AppEdit") {
       this.showModal("appEdit");
     } else {
       this.showModal("appDel");
@@ -2362,7 +2400,8 @@ class Main extends React.Component {
     array = [...this.state.catItems];
     // console.log("Cat Array: ", array);
     tempCatTitle = array[pos].title;
-    // console.log("TempCatTitle: ", tempCatTitle);
+    temp5 = tempCatTitle;
+    console.log("Current Cat In: ", tempCatTitle);
     this.appCatSearch(array[pos].title, this.state.appItems);
     this.showModal("cat");
   }
@@ -3894,7 +3933,7 @@ class Main extends React.Component {
                               <label>Pos</label>
                             </div>
                             <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="text" title="Leave blank for last" id="clearapppos" className="form-control border-0"
+                              <input type="text" placeholder="Leave blank for last..." id="clearapppos" className="form-control border-0"
                                 onChange={e => {
                                   temp = e.target.value;
                                   // console.log("POS Changed!");
@@ -4027,7 +4066,7 @@ class Main extends React.Component {
             <AppDelDialog appDelDiaShow={this.state.appDelDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("appdel")} handleSave={this.applyAppDel}>
               <div className="modal-content">
                 <div className="modal-header">
-                  <h5 className="modal-title" >Permanently delete the application?</h5>
+                  <h5 className="modal-title" >Permanently delete {tempAppTitle} application?</h5>
                 </div>
                 <div className="modal-body">
                   <Conferma alShow={this.state.alShow} handleClose={this.hideAlert}>
@@ -4077,7 +4116,7 @@ class Main extends React.Component {
                               <label>Title</label>
                             </div>
                             <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="text" className="form-control border-0" defaultValue={tempAppTitle} onChange={e => temp2 = e.target.value} /*placeholder={tempAppTitle}*/ />
+                              <input type="text" className="form-control border-0" defaultValue={tempCatTitle} onChange={e => temp2 = e.target.value} /*placeholder={tempAppTitle}*/ />
                             </div>
                           </div>
                         </div>
@@ -4155,7 +4194,7 @@ class Main extends React.Component {
                               <label>Pos</label>
                             </div>
                             <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="text" title="Leave blank for last" id="clearcatpos" className="form-control border-0"
+                              <input type="text" placeholder="Leave blank for last..." id="clearcatpos" className="form-control border-0"
                                 onChange={e => {
                                   temp = e.target.value;
                                   // console.log("POS Changed!");
@@ -4228,7 +4267,7 @@ class Main extends React.Component {
             <CatDelDialog catDelDiaShow={this.state.catDelDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("catdel")} handleSave={this.applyCatDel}>
               <div className="modal-content">
                 <div className="modal-header">
-                  <h5 className="modal-title" >Permanently delete this category?</h5>
+                  <h5 className="modal-title" >Permanently delete {tempCatTitle} category?</h5>
                 </div>
                 <div className="modal-body">
                   <Conferma alShow={this.state.alShow} handleClose={this.hideAlert}>
@@ -4761,7 +4800,7 @@ class AppCatRes extends React.Component {
               Edit
             </button>
             <button className="col-1 appbutton black m-1 pad01">
-              {this.props.pos + 1}
+              {this.props.pos + 1} {this.props.id}
             </button>
             <button className="col appbutton solidbrick m-1" onClick={() => this.props.appEditDel("AppDel", this.props.id)}>
               Remove
