@@ -781,6 +781,20 @@ class Main extends React.Component {
             }
           });
         }
+        document.getElementById('loginForm').reset();
+        document.getElementById('loginEditForm').reset();
+        document.getElementById('titleForm').reset();
+        document.getElementById('logoForm').reset();
+        document.getElementById('menuForm').reset();
+        document.getElementById('infoForm').reset();
+        document.getElementById('creditForm').reset();
+        document.getElementById('appEditForm').reset();
+        document.getElementById('appAddForm').reset();
+        document.getElementById('catEditForm').reset();
+        document.getElementById('catAddForm').reset();
+        document.getElementById('backEditForm').reset();
+        document.getElementById('clockForm').reset();
+        document.getElementById('searchForm').reset();
         // console.log("Apps: ", this.state.appItems);
         this.appCatSearch("Root", spData.appItems);
         // console.log("Root Apps: ", this.state.rootAppItems);
@@ -2033,36 +2047,36 @@ class Main extends React.Component {
     //     tempTextColor = this.rgbToHex(spData.clockTextColor);
     //     this.setState({ clockDiaShow: true });
     //   }
-    // };
+  };
 
-    // hideSearch() {
-    //   this.setState({ searchDiaShow: false });
-    //   document.getElementById('searchForm').reset();
-    //   this.setState({ resAppItems: [] });
-    //   this.setState({ alShow: false });
-    //   this.setState({ alErrShow: false });
-    //   temp = "";
-    // }
+  // hideSearch() {
+  //   this.setState({ searchDiaShow: false });
+  //   document.getElementById('searchForm').reset();
+  //   this.setState({ resAppItems: [] });
+  //   this.setState({ alShow: false });
+  //   this.setState({ alErrShow: false });
+  //   temp = "";
+  // }
 
-    // hideAppOp() {
-    //   this.setState({ appAddDiaShow: false });
-    //   document.getElementById('appAddForm').reset();
-    //   this.setState({ appEditDiaShow: false });
-    //   this.setState({ appDelDiaShow: false });
-    //   document.getElementById('appEditForm').reset();
-    //   this.setState({ alShow: false });
-    //   this.setState({ alErrShow: false });
-    //   this.setState({
-    //     activityChanged: false
-    //   });
-    // }
+  // hideAppOp() {
+  //   this.setState({ appAddDiaShow: false });
+  //   document.getElementById('appAddForm').reset();
+  //   this.setState({ appEditDiaShow: false });
+  //   this.setState({ appDelDiaShow: false });
+  //   document.getElementById('appEditForm').reset();
+  //   this.setState({ alShow: false });
+  //   this.setState({ alErrShow: false });
+  //   this.setState({
+  //     activityChanged: false
+  //   });
+  // }
 
-    // hideAppOrCat() {
-    //   this.setState({ aocDiaShow: false });
-    //   this.setState({
-    //     activityChanged: false
-    //   });
-  }
+  // hideAppOrCat() {
+  //   this.setState({ aocDiaShow: false });
+  //   this.setState({
+  //     activityChanged: false
+  //   });
+  // }
 
   hideModal(id) {
     switch (id) {
@@ -2151,6 +2165,8 @@ class Main extends React.Component {
         this.setState({ alErrShow: false });
         temp = "";
     }
+
+    // console.log("HideModal!!!")
     // this.setState({ titleDiaShow: false });
     // this.setState({ menuDiaShow: false });
     // this.setState({ alShow: false });
@@ -2175,8 +2191,9 @@ class Main extends React.Component {
     // this.setState({ exCrsDiaShow: false });
     // this.setState({ backEditDiaShow: false });
     // this.setState({ clockDiaShow: false });
-    this.setState({ alShow: false });
-    this.setState({ alErrShow: false });
+    // this.setState({ alShow: false });
+    // this.setState({ alErrShow: false });
+
     // document.getElementById('loginForm').reset();
     // document.getElementById('loginEditForm').reset();
     // document.getElementById('titleForm').reset();
@@ -2190,6 +2207,8 @@ class Main extends React.Component {
     // document.getElementById('catAddForm').reset();
     // document.getElementById('backEditForm').reset();
     // document.getElementById('clockForm').reset();
+    // document.getElementById('searchForm').reset();
+
     tempColor = "";
     tempTextColor = "";
     tempColW = "";
