@@ -781,6 +781,7 @@ class Main extends React.Component {
             }
           });
         }
+        // Reset form states to current settings
         document.getElementById('loginForm').reset();
         document.getElementById('loginEditForm').reset();
         document.getElementById('titleForm').reset();
@@ -2191,8 +2192,8 @@ class Main extends React.Component {
     // this.setState({ exCrsDiaShow: false });
     // this.setState({ backEditDiaShow: false });
     // this.setState({ clockDiaShow: false });
-    // this.setState({ alShow: false });
-    // this.setState({ alErrShow: false });
+    this.setState({ alShow: false });
+    this.setState({ alErrShow: false });
 
     // document.getElementById('loginForm').reset();
     // document.getElementById('loginEditForm').reset();
