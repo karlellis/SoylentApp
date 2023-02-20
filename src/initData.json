@@ -32,6 +32,7 @@
   "footCreditTextColor": "rgba(255, 255, 255, 1)",
   "footCreditColW": "col",
   "backgroundColor": "rgba(255, 238, 204, 0.7)",
+  "catColor": "rgba(255, 238, 204, 0.7)",
   "headShow": false,
   "footShow": false,
   "infoShow": true,
@@ -41,7 +42,9 @@
   "GearIcon": "./img/gear.svg",
   "LogoIcon": "",
   "backgroundImage": "",
+  "catImage": "",
   "noBackImage": false,
+  "noCatImage": false,
   "appItems": [],
   "catItems": [],
   "appAdd": [

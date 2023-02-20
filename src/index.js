@@ -9,6 +9,7 @@ const bcrypt = require("bcryptjs")
 // var title = "Page Title";
 // var description = "Page descriptiion"
 var fileImg = null;
+var fileCatImg = null;
 var credentials = require("./initSec.json");
 var tempUser = "";
 var tempPsw = "";
@@ -19,6 +20,7 @@ var temp4 = "";
 var temp5 = "Root";
 var tempID = 0;
 var tempColor = "#0077c8";
+var tempCatColor = "#0077c8";
 var tempTextColor = "#0077c8";
 var tempColW = "";
 var radiobtn = "";
@@ -32,6 +34,7 @@ var tempExCrsLink = "";
 var tempExCrsDescr = "";
 var tempAppCat = "";
 var tempIcon = "";
+var tempCatIcon = "";
 var arrayLength = 0;
 var login = false;
 var array = [];
@@ -254,7 +257,7 @@ const AppOrCatDialog = ({ handleApp, handleCat, aocDiaShow, children }) => {
         {children}
         <div className="modal-footer">
           <button type="button" className="btn btn-primary" data-dismiss="modal" onClick={handleApp}>App</button>
-          <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={handleCat}>Category</button>
+          <button type="button" className="btn btn-success" data-dismiss="modal" onClick={handleCat}>Category</button>
         </div>
       </section>
     </div>
@@ -341,7 +344,7 @@ const ExCrsDialog = ({ handleClose, exCrsDiaShow, children, activityChanged }) =
     <div className={showHideClassName}>
       <section className="modal-main-dark">
         {children}
-        <div className="modal-footer">
+        <div className="modal-footer-dark">
           <button type="button" disabled={(activityChanged) ? true : false} className="btn btn-secondary" data-dismiss="modal" onClick={handleClose}>Close</button>
         </div>
       </section>
@@ -355,7 +358,7 @@ const CatDialog = ({ handleClose, catDiaShow, children, activityChanged }) => {
     <div className={showHideClassName}>
       <section className="modal-main-dark">
         {children}
-        <div className="modal-footer">
+        <div className="modal-footer-dark">
           <button type="button" /* disabled={(activityChanged) ? true : false} */ className="btn btn-secondary" data-dismiss="modal" onClick={handleClose}>Close</button>
         </div>
       </section>
@@ -369,7 +372,7 @@ const SearchDialog = ({ handleClose, handleSave, handleReset, searchDiaShow, chi
     <div className={showHideClassName}>
       <section className="modal-main-dark">
         {children}
-        <div className="modal-footer">
+        <div className="modal-footer darkBG">
           <button type="button" disabled={(activityChanged) ? true : false} className="btn btn-primary" onClick={handleSave}>Search</button>
           <button type="button" disabled={(activityChanged) ? true : false} className="btn btn-primary" onClick={handleReset}>Reset</button>
           <button type="button" disabled={(activityChanged) ? true : false} className="btn btn-secondary" data-dismiss="modal" onClick={handleClose}>Close</button>
@@ -458,7 +461,7 @@ const CatAddDialog = ({ handleSave, handleClose, catAddDiaShow, children, activi
   const showHideClassName = catAddDiaShow ? "modal display-block" : "modal display-none";
   return (
     <div className={showHideClassName}>
-      <section className="modal-main-dark">
+      <section className="modal-main">
         {children}
         <div className="modal-footer">
           <button type="button" disabled={(activityChanged) ? true : false} className="btn btn-primary" onClick={handleSave}>Add</button>
@@ -688,6 +691,7 @@ class Main extends React.Component {
       upShow: false,
       activityChanged: false,
       disFieldB: false,
+      disFieldBC: false,
       disField: false,
       disField2: false,
       disField3: false,
@@ -697,6 +701,14 @@ class Main extends React.Component {
       catSel: "Root",
       selectedCat: "Root",
       backStyle: {
+        backgroundImage: "",
+        backgroundColor: "",
+        backgroundPosition: 'center',
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat',
+        backgroundAttachment: "fixed"
+      },
+      catStyle: {
         backgroundImage: "",
         backgroundColor: "",
         backgroundPosition: 'center',
@@ -756,7 +768,13 @@ class Main extends React.Component {
           disFieldC3: spData.noFootCreditiSubtitle2
         });
         document.title = spData.headTitle;
-        document.querySelector('meta[name="description"]').setAttribute("content", spData.footTitle);
+        if (spData.footTitle !== "") {
+          document.querySelector('meta[name="description"]').setAttribute("content", spData.footTitle);
+        } else if (spData.footSubtitle !== "") {
+          document.querySelector('meta[name="description"]').setAttribute("content", spData.footSubtitle);
+        } else {
+          document.querySelector('meta[name="description"]').setAttribute("content", spData.footSubtitle2);
+        }
         // console.log("NobackImage:", spData.noBackImage);
         if (spData.noBackImage === true) {
           this.setState({
@@ -781,6 +799,31 @@ class Main extends React.Component {
             }
           });
         }
+
+        if (spData.noCatImage === true) {
+          this.setState({
+            catStyle: {
+              backgroundImage: "none",
+              backgroundColor: spData.catColor,
+              backgroundPosition: 'center',
+              backgroundSize: 'cover',
+              backgroundRepeat: 'no-repeat',
+              backgroundAttachment: "fixed"
+            }
+          });
+        } else {
+          this.setState({
+            catStyle: {
+              backgroundImage: "url(" + spData.catImage + ")",
+              backgroundColor: spData.catColor,
+              backgroundPosition: 'center',
+              backgroundSize: 'cover',
+              backgroundRepeat: 'no-repeat',
+              backgroundAttachment: "fixed"
+            }
+          });
+        }
+
         // Reset form states to current settings
         document.getElementById('loginForm').reset();
         document.getElementById('loginEditForm').reset();
@@ -836,7 +879,16 @@ class Main extends React.Component {
         });
 
     }
+    if (fileCatImg !== null) {
+      fetchDelPHP(tempCatIcon, "./api/img-upload.php", url)
+        .then(res => {
+          // console.log("Seems deleted!");
+          // console.log("Delete result=", res);
+        });
+
+    }
     tempIcon = "";
+    tempCatIcon = "";
     this.setState({ alErrShow: false });
     this.setState({ upShow: true });
     this.setState({ alShow: false });
@@ -915,7 +967,10 @@ class Main extends React.Component {
           temp2 = "";
           temp3 = "";
           temp4 = "";
-          temp5 = "Root";
+          // this.setState({
+          //   catSel: tempCatTitle
+          // });
+          temp5 = tempCatTitle;
           tempID = 0;
           appNewItem = {
             "title": "",
@@ -960,7 +1015,10 @@ class Main extends React.Component {
           temp2 = "";
           temp3 = "";
           temp4 = "";
-          temp5 = "Root";
+          // this.setState({
+          //   catSel: tempCatTitle
+          // });
+          temp5 = tempCatTitle;
           tempID = 0;
           appNewItem = {
             "title": "",
@@ -1078,6 +1136,26 @@ class Main extends React.Component {
             backStyle: {
               backgroundImage: "url(" + spData.backgroundImage + ")",
               backgroundColor: spData.backgroundColor,
+              backgroundPosition: 'center',
+              backgroundSize: 'cover',
+              backgroundRepeat: 'no-repeat',
+              backgroundAttachment: "fixed"
+            }
+          });
+          this.setState({ upShow: false });
+          this.setState({ alShow: true });
+          this.setState({ alErrShow: false });
+          // console.log("File correctly Uploaded!");
+          // this.setState({
+          //   activityChanged: false
+          // });
+        } else if (url === "backcat" && op === "edit") {
+          spData.catImage = "./img/" + nome;
+          spData.catColor = this.hexToRgb(tempCatColor) + ", 0.7)";
+          this.setState({
+            catStyle: {
+              backgroundImage: "url(" + spData.catImage + ")",
+              backgroundColor: spData.catColor,
               backgroundPosition: 'center',
               backgroundSize: 'cover',
               backgroundRepeat: 'no-repeat',
@@ -1546,6 +1624,43 @@ class Main extends React.Component {
       this.setState({ alErrShow: false });
       this.saveFile(spData, "./api/img-upload.php", "config");
     }
+
+    if (fileCatImg !== null) {
+      tempCatIcon = spData.catImage;
+      this.saveImgFile(fileCatImg, "backcat", "edit");
+    } else {
+      spData.catColor = this.hexToRgb(tempCatColor) + ", 0.7)";
+      this.setState({
+        activityChanged: true
+      })
+      if (spData.noCatImage === true) {
+        this.setState({
+          catStyle: {
+            backgroundImage: "none",
+            backgroundColor: spData.catColor,
+            backgroundPosition: 'center',
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat',
+            backgroundAttachment: "fixed"
+          }
+        });
+      } else {
+        this.setState({
+          catStyle: {
+            backgroundImage: "url(" + spData.catImage + ")",
+            backgroundColor: spData.catColor,
+            backgroundPosition: 'center',
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat',
+            backgroundAttachment: "fixed"
+          }
+        });
+      }
+      this.setState({ upShow: false });
+      this.setState({ alShow: true });
+      this.setState({ alErrShow: false });
+      this.saveFile(spData, "./api/img-upload.php", "config");
+    }
   }
 
   saveLogo = () => {
@@ -1828,6 +1943,7 @@ class Main extends React.Component {
         break;
       case "back":
         tempColor = this.rgbToHex(spData.backgroundColor);
+        tempCatColor = this.rgbToHex(spData.catColor);
         this.setState({ backEditDiaShow: true });
         break;
       case "clock":
@@ -2118,6 +2234,7 @@ class Main extends React.Component {
         break;
       case "appadd":
         this.setState({ appAddDiaShow: false });
+        temp5 = tempCatTitle;
         document.getElementById('appAddForm').reset();
         break;
       case "catedit":
@@ -2353,6 +2470,7 @@ class Main extends React.Component {
     arrayLength = (array.length);
     tempAppVideo = false;
     temp4 = false;
+    console.log("AppAdd Temp5: ", temp5);
     // temp5 = "Root";
     this.setState({
       catSel: temp5
@@ -2499,6 +2617,7 @@ class Main extends React.Component {
   render() {
     const { mainBtn: mainBtn } = this.state;
     const { disFieldB: disFieldB } = this.state;
+    const { disFieldBC: disFieldBC } = this.state;
     const { disField: disField } = this.state;
     const { disField2: disField2 } = this.state;
     const { disField3: disField3 } = this.state;
@@ -3683,6 +3802,9 @@ class Main extends React.Component {
                       <div className="row text-center mb-1 m-auto">
                         <div className="col">
                           <div className="row border">
+                            <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
+                              <label>Main</label>
+                            </div>
                             <div className="col d-flex flex-column justify-content-center align-items-center">
                               <input type="file" disabled={disFieldB} id="files" className="form-control boxs border-0" name="icon" onChange={e => fileImg = e.target.files[0]} />
                             </div>
@@ -3712,14 +3834,70 @@ class Main extends React.Component {
                     </div>
 
                     <div className="form-group">
+                      <div className="row text-center mb-1 m-auto">
+                        <div className="col">
+                          <div className="row border">
+                            <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
+                              <label>Categories</label>
+                            </div>
+                            <div className="col d-flex flex-column justify-content-center align-items-center">
+                              <input type="file" disabled={disFieldBC} id="catfiles" className="form-control boxs border-0" name="icon" onChange={e => fileCatImg = e.target.files[0]} />
+                            </div>
+
+                            <div className="col-2 border d-flex flex-column justify-content-center align-items-center">
+                              <label class="switch">
+                                <input type="checkbox" className="form-control" defaultChecked={spData.noCatImage} onClick={e => {
+                                  if (this.state.disFieldBC === false) {
+                                    this.setState({
+                                      disFieldBC: true
+                                    });
+                                    spData.noCatImage = true;
+                                  } else {
+                                    this.setState({
+                                      disFieldBC: false
+                                    });
+                                    spData.noCatImage = false;
+                                  }
+                                }} />
+                                <span class="slider round" title="No image"></span>
+                              </label>
+                            </div>
+
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="form-group">
                       <div className="row mb-1 m-auto">
                         <div className="col">
                           <div className="row border">
                             <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
-                              <label>Back color</label>
+                              <label>Main back color</label>
                             </div>
                             <div className="col d-flex flex-column justify-content-center align-items-center">
                               <input type="color" className="form-control border-0 p-0" defaultValue={this.rgbToHex(spData.backgroundColor)} onChange={e => tempColor = e.target.value} />
+                            </div>
+                          </div>
+                        </div>
+                        <div className="col-1"></div>
+                        <div className="col">
+                          <div className="row">
+
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="form-group">
+                      <div className="row mb-1 m-auto">
+                        <div className="col">
+                          <div className="row border">
+                            <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
+                              <label>Cat back color</label>
+                            </div>
+                            <div className="col d-flex flex-column justify-content-center align-items-center">
+                              <input type="color" className="form-control border-0 p-0" defaultValue={this.rgbToHex(spData.catColor)} onChange={e => tempCatColor = e.target.value} />
                             </div>
                           </div>
                         </div>
@@ -3763,7 +3941,7 @@ class Main extends React.Component {
               </div>
             </BackEditDialog>
             <CatDialog catDiaShow={this.state.catDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("cat")}>
-              <div className="modal-content">
+              <div style={this.state.catStyle} className="modal-content">
                 <div className="modal-header-dark">
                   <h5 className="modal-title-dark" >Category: {tempCatTitle}</h5>
                 </div>
@@ -4331,9 +4509,9 @@ class Main extends React.Component {
             <ExCrsDialog exCrsDiaShow={this.state.exCrsDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("excrs")} handleSave={this.applyAppEdit}>
               <div className="modal-content">
                 <div className="modal-header-dark">
-                  <h5 className="modal-title-dark" >Soylent Credits</h5>
+                  <h5 className="modal-title-dark" >Credits</h5>
                 </div>
-                <div className="modal-body-dark text-center">
+                <div className="modal-body-dark darkBG text-center">
                   {/* ---------------------- CREDIT ------------------------------- */}
                   <div className="row">
                     <button className="col extcredits green m-1"
@@ -4536,9 +4714,9 @@ class Main extends React.Component {
             <SearchDialog searchDiaShow={this.state.searchDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("search")} handleSave={this.appSearch} handleReset={this.appSearchReset}>
               <div className="modal-content">
                 <div className="modal-header-dark">
-                  <h5 className="modal-title-dark" >Soylent Search</h5>
+                  <h5 className="modal-title-dark" >Search</h5>
                 </div>
-                <div className="modal-body-dark">
+                <div className="modal-body-dark darkBG">
                   <form id="searchForm" onKeyDown={this.handleKeyDown}>
                     <div className="form-group">
                       <input type="text" className="form-control contenitore pt-2" ref={(input) => { this.searchInput = input; }} onChange={e => temp = e.target.value} placeholder={"Search movie..."} />
@@ -5022,8 +5200,6 @@ class Credit extends React.Component {
   }
 }
 
-
-
 class Dropdown extends React.Component {
   constructor(props) {
     super(props);
@@ -5088,7 +5264,7 @@ class DropdownCat extends React.Component {
   toggleOpen = () => this.setState({ isOpen: !this.state.isOpen });
 
   render() {
-    const menuClass = `dropdown-menu${this.state.isOpen ? " show d-flex flex-column justify-content-center align-items-center" : " disNone"}`;
+    const menuClass = `dropdown-menu${this.state.isOpen ? " show d-flex flex-column justify-content-start align-items-center" : " disNone"}`;
 
     return (
       <div className="dropdown" onClick={this.toggleOpen}>
