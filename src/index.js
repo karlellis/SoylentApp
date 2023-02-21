@@ -18,6 +18,9 @@ var temp2 = "";
 var temp3 = "";
 var temp4 = "";
 var temp5 = "Root";
+var disable1 = false;
+var disable2 = false;
+var disable3 = false;
 var tempID = 0;
 var tempColor = "#0077c8";
 var tempCatColor = "#0077c8";
@@ -328,9 +331,9 @@ const AppVideoDialog = ({ handleClose, appVideoDiaShow, children, activityChange
   const showHideClassName = appVideoDiaShow ? "modal display-block" : "modal display-none";
   return (
     <div className={showHideClassName}>
-      <section className="modal-main-dark">
+      <section className="modal-main darkBG">
         {children}
-        <div className="modal-footer">
+        <div className="modal-footer-dark">
           <button type="button" disabled={(activityChanged) ? true : false} className="btn btn-secondary" data-dismiss="modal" onClick={handleClose}>Close</button>
         </div>
       </section>
@@ -903,9 +906,9 @@ class Main extends React.Component {
           this.setState({ alShow: true });
           this.setState({ alErrShow: false });
           // console.log("File correctly Uploaded!");
-          // this.setState({
-          //   activityChanged: false
-          // });
+          this.setState({
+            activityChanged: false
+          });
           this.saveFile(spData, "./api/img-upload.php", "config");
         } else if (url === "icon" && op === "edit") {
           if (fileImg !== null) {
@@ -1146,9 +1149,9 @@ class Main extends React.Component {
           this.setState({ alShow: true });
           this.setState({ alErrShow: false });
           // console.log("File correctly Uploaded!");
-          // this.setState({
-          //   activityChanged: false
-          // });
+          this.setState({
+            activityChanged: false
+          });
         } else if (url === "backcat" && op === "edit") {
           spData.catImage = "./img/" + nome;
           spData.catColor = this.hexToRgb(tempCatColor) + ", 0.7)";
@@ -1166,9 +1169,9 @@ class Main extends React.Component {
           this.setState({ alShow: true });
           this.setState({ alErrShow: false });
           // console.log("File correctly Uploaded!");
-          // this.setState({
-          //   activityChanged: false
-          // });
+          this.setState({
+            activityChanged: false
+          });
         }
         this.saveFile(spData, "./api/img-upload.php", "config");
         fileImg = null;
@@ -1420,19 +1423,22 @@ class Main extends React.Component {
     if (temp !== "") {
       spData.footCreditiTitle = temp;
     }
-    if (spData.noFootCreditiTitle === true) {
+    if (disable1 === true) {
+      spData.noFootCreditiTitle = true;
       spData.footCreditiTitle = "";
     }
     if (temp2 !== "") {
       spData.footCreditiSubtitle = temp2;
     }
-    if (spData.noFootCreditiSubtitle === true) {
+    if (disable2 === true) {
+      spData.noFootCreditiSubtitle = true;
       spData.footCreditiSubtitle = "";
     }
     if (temp3 !== "") {
       spData.footCreditiSubtitle2 = temp3;
     }
-    if (spData.noFootCreditiSubtitle2 === true) {
+    if (disable3 === true) {
+      spData.noFootCreditiSubtitle2 = true;
       spData.footCreditiSubtitle2 = "";
     }
     spData.footCreditColor = this.hexToRgb(tempColor) + ", 0.7)";
@@ -1445,6 +1451,9 @@ class Main extends React.Component {
     temp = "";
     temp2 = "";
     temp3 = "";
+    disable1 = false;
+    disable2= false;
+    disable3 = false;
     this.setState({ alShow: true });
     this.saveFile(spData, "./api/img-upload.php", "config");
   }
@@ -2195,7 +2204,7 @@ class Main extends React.Component {
   //   });
   // }
 
-  hideModal(id) {
+  hideModal(id, e) {
     switch (id) {
       case "title":
         this.setState({ titleDiaShow: false });
@@ -2222,6 +2231,16 @@ class Main extends React.Component {
         document.getElementById('infoForm').reset();
         break;
       case "credit":
+        this.setState({
+          disFieldC: spData.noFootCreditiTitle
+        });
+        this.setState({
+          disFieldC2: spData.noFootCreditiSubtitle
+        });
+        this.setState({
+          disFieldC3: spData.noFootCreditiSubtitle2
+        });
+
         this.setState({ creditDiaShow: false });
         document.getElementById('creditForm').reset();
         break;
@@ -2814,7 +2833,7 @@ class Main extends React.Component {
               </div>
             </LoginDialog>
             <LoginEditDialog loginEditDiaShow={this.state.loginEditDiaShow} handleClose={() => this.hideModal("loginedit")} handleEditLogin={this.loginEditCheck}>
-              <div className="modal-content">
+              <div className="modal-content noborder">
                 <div className="modal-header">
                   <h5 className="modal-title" >Edit Login</h5>
                 </div>
@@ -2883,7 +2902,7 @@ class Main extends React.Component {
               </div>
             </LoginEditDialog>
             <MenuDialog menuDiaShow={this.state.menuDiaShow} handleClose={() => this.hideModal("menu")} handleSave={this.saveMenu}>
-              <div className="modal-content">
+              <div className="modal-content noborder">
                 <div className="modal-header">
                   <h5 className="modal-title" >Menu wallpaper change</h5>
                 </div>
@@ -2968,7 +2987,7 @@ class Main extends React.Component {
               </div>
             </MenuDialog>
             <TitleDialog titleDiaShow={this.state.titleDiaShow} handleClose={() => this.hideModal("title")} handleSave={this.saveTitle}>
-              <div className="modal-content">
+              <div className="modal-content noborder">
                 <div className="modal-header">
                   <h5 className="modal-title" >Change site name</h5>
                 </div>
@@ -3108,7 +3127,7 @@ class Main extends React.Component {
               </div>
             </TitleDialog>
             <ClockDialog clockDiaShow={this.state.clockDiaShow} handleClose={() => this.hideModal("clock")} handleSave={this.saveClock}>
-              <div className="modal-content">
+              <div className="modal-content noborder">
                 <div className="modal-header">
                   <h5 className="modal-title" >Clock wallpaper change</h5>
                 </div>
@@ -3235,7 +3254,7 @@ class Main extends React.Component {
               </div>
             </ClockDialog>
             <LogoDialog logoDiaShow={this.state.logoDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("logo")} handleUpload={this.saveLogo}>
-              <div className="modal-content">
+              <div className="modal-content noborder">
                 <div className="modal-header">
                   <h5 className="modal-title" >Change logo</h5>
                 </div>
@@ -3366,7 +3385,7 @@ class Main extends React.Component {
               </div>
             </LogoDialog>
             <InfoDialog infoDiaShow={this.state.infoDiaShow} handleClose={() => this.hideModal("info")} handleSave={this.saveInfo}>
-              <div className="modal-content">
+              <div className="modal-content noborder">
                 <div className="modal-header">
                   <h5 className="modal-title" >Edit site info</h5>
                 </div>
@@ -3578,7 +3597,7 @@ class Main extends React.Component {
               </div>
             </InfoDialog>
             <CreditDialog creditDiaShow={this.state.creditDiaShow} handleClose={() => this.hideModal("credit")} handleSave={this.saveCredit}>
-              <div className="modal-content">
+              <div className="modal-content noborder">
                 <div className="modal-header">
                   <h5 className="modal-title" >Edit site credits</h5>
                 </div>
@@ -3599,16 +3618,18 @@ class Main extends React.Component {
                             <div className="col-2 border d-flex flex-column justify-content-center align-items-center">
                               <label class="switch">
                                 <input type="checkbox" className="form-control" defaultChecked={spData.noFootCreditiTitle} onClick={e => {
-                                  if (this.state.disFieldC === false) {
+                                  if (spData.noFootCreditiTitle === false) {
                                     this.setState({
                                       disFieldC: true
                                     });
-                                    spData.noFootCreditiTitle = true;
+                                    disable1 = true;
+                                    // spData.noFootCreditiTitle = true;
                                   } else {
                                     this.setState({
                                       disFieldC: false
                                     });
-                                    spData.noFootCreditiTitle = false;
+                                    disable1 = false;
+                                    // spData.noFootCreditiTitle = false;
                                   }
                                 }} />
                                 <span class="slider round" title="Hide"></span>
@@ -3637,12 +3658,14 @@ class Main extends React.Component {
                                     this.setState({
                                       disFieldC2: true
                                     });
-                                    spData.noFootCreditiSubtitle = true;
+                                    disable2 = true;
+                                    // spData.noFootCreditiSubtitle = true;
                                   } else {
                                     this.setState({
                                       disFieldC2: false
                                     });
-                                    spData.noFootCreditiSubtitle = false;
+                                    disable2 = false;
+                                    // spData.noFootCreditiSubtitle = false;
                                   }
                                 }} />
                                 <span class="slider round" title="Hide"></span>
@@ -3671,12 +3694,14 @@ class Main extends React.Component {
                                     this.setState({
                                       disFieldC3: true
                                     });
-                                    spData.noFootCreditiSubtitle2 = true;
+                                    disable3 = true;
+                                    // spData.noFootCreditiSubtitle2 = true;
                                   } else {
                                     this.setState({
                                       disFieldC3: false
                                     });
-                                    spData.noFootCreditiSubtitle2 = false;
+                                    disable3 = false;
+                                    // spData.noFootCreditiSubtitle2 = false;
                                   }
                                 }} />
                                 <span class="slider round" title="Hide"></span>
@@ -3756,6 +3781,7 @@ class Main extends React.Component {
                             </div>
                             <div className="col d-flex flex-column justify-content-center align-items-center">
                               <label class="switch">
+                                
                                 <input type="checkbox" className="form-control" defaultChecked={!spData.creditShow} onClick={e => {
                                   if (spData.creditShow === false) {
                                     blockHide = true;
@@ -3791,7 +3817,7 @@ class Main extends React.Component {
               </div>
             </CreditDialog>
             <BackEditDialog backEditDiaShow={this.state.backEditDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("back")} handleSave={this.saveBack}>
-              <div className="modal-content">
+              <div className="modal-content noborder">
                 <div className="modal-header">
                   <h5 className="modal-title" >Edit Page Background</h5>
                 </div>
@@ -3802,7 +3828,7 @@ class Main extends React.Component {
                       <div className="row text-center mb-1 m-auto">
                         <div className="col">
                           <div className="row border">
-                            <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
+                            <div className="col borderight pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
                               <label>Main</label>
                             </div>
                             <div className="col d-flex flex-column justify-content-center align-items-center">
@@ -3837,8 +3863,8 @@ class Main extends React.Component {
                       <div className="row text-center mb-1 m-auto">
                         <div className="col">
                           <div className="row border">
-                            <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
-                              <label>Categories</label>
+                            <div className="col borderight pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
+                              <label>Cats.</label>
                             </div>
                             <div className="col d-flex flex-column justify-content-center align-items-center">
                               <input type="file" disabled={disFieldBC} id="catfiles" className="form-control boxs border-0" name="icon" onChange={e => fileCatImg = e.target.files[0]} />
@@ -3941,11 +3967,11 @@ class Main extends React.Component {
               </div>
             </BackEditDialog>
             <CatDialog catDiaShow={this.state.catDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("cat")}>
-              <div style={this.state.catStyle} className="modal-content">
-                <div className="modal-header-dark">
-                  <h5 className="modal-title-dark" >Category: {tempCatTitle}</h5>
+              <div className="modal-content darkBG">
+                <div className="modal-header">
+                  <h5 className="modal-title latowhite" >Category: {tempCatTitle}</h5>
                 </div>
-                <div className="modal-body-dark">
+                <div style={this.state.catStyle} className="modal-body-dark">
                   <div className="textcenter">
                     {
                       this.state.catAppItems.map(({ id, title, link, icon, video }, i) => {
@@ -3963,7 +3989,7 @@ class Main extends React.Component {
               </div>
             </CatDialog>
             <AppEditDialog appEditDiaShow={this.state.appEditDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("appedit")} handleSave={this.applyAppEdit}>
-              <div className="modal-content">
+              <div className="modal-content noborder">
                 <div className="modal-header">
                   <h5 className="modal-title" >Edit Web Application</h5>
                 </div>
@@ -4104,7 +4130,7 @@ class Main extends React.Component {
               </div>
             </AppEditDialog>
             <AppAddDialog appAddDiaShow={this.state.appAddDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("appadd")} handleSave={this.applyAppAdd}>
-              <div className="modal-content">
+              <div className="modal-content noborder">
                 <div className="modal-header">
                   <h5 className="modal-title" >Add Web Application</h5>
                 </div>
@@ -4262,7 +4288,7 @@ class Main extends React.Component {
               </div>
             </AppAddDialog>
             <AppDelDialog appDelDiaShow={this.state.appDelDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("appdel")} handleSave={this.applyAppDel}>
-              <div className="modal-content">
+              <div className="modal-content noborder">
                 <div className="modal-header">
                   <h5 className="modal-title" >Permanently delete {tempAppTitle} application?</h5>
                 </div>
@@ -4284,7 +4310,7 @@ class Main extends React.Component {
               </div>
             </AppDelDialog>
             <CatEditDialog catEditDiaShow={this.state.catEditDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("catedit")} handleSave={this.applyCatEdit}>
-              <div className="modal-content">
+              <div className="modal-content noborder">
                 <div className="modal-header">
                   <h5 className="modal-title" >Edit Category</h5>
                 </div>
@@ -4365,7 +4391,7 @@ class Main extends React.Component {
               </div>
             </CatEditDialog>
             <CatAddDialog catAddDiaShow={this.state.catAddDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("catadd")} handleSave={this.applyCatAdd}>
-              <div className="modal-content">
+              <div className="modal-content noborder">
                 <div className="modal-header">
                   <h5 className="modal-title" >Add Category</h5>
                 </div>
@@ -4463,7 +4489,7 @@ class Main extends React.Component {
               </div>
             </CatAddDialog>
             <CatDelDialog catDelDiaShow={this.state.catDelDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("catdel")} handleSave={this.applyCatDel}>
-              <div className="modal-content">
+              <div className="modal-content noborder">
                 <div className="modal-header">
                   <h5 className="modal-title" >Permanently delete {tempCatTitle} category?</h5>
                 </div>
@@ -4485,7 +4511,7 @@ class Main extends React.Component {
               </div>
             </CatDelDialog>
             <AppOrCatDialog aocDiaShow={this.state.aocDiaShow} activityChanged={this.state.activityChanged} handleApp={this.appAddItem} handleCat={this.catAddItem}>
-              <div className="modal-content">
+              <div className="modal-content noborder">
                 <div className="modal-header">
                   <h5 className="modal-title" >Add App or Category?</h5>
                 </div>
@@ -4507,7 +4533,7 @@ class Main extends React.Component {
               </div>
             </AppOrCatDialog>
             <ExCrsDialog exCrsDiaShow={this.state.exCrsDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("excrs")} handleSave={this.applyAppEdit}>
-              <div className="modal-content">
+              <div className="modal-content noborder">
                 <div className="modal-header-dark">
                   <h5 className="modal-title-dark" >Credits</h5>
                 </div>
@@ -4712,7 +4738,7 @@ class Main extends React.Component {
               </div>
             </ExCrsDialog>
             <SearchDialog searchDiaShow={this.state.searchDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("search")} handleSave={this.appSearch} handleReset={this.appSearchReset}>
-              <div className="modal-content">
+              <div className="modal-content noborder">
                 <div className="modal-header-dark">
                   <h5 className="modal-title-dark" >Search</h5>
                 </div>
@@ -4775,11 +4801,11 @@ class Main extends React.Component {
               </div>
             </SearchDialog>
             <AppVideoDialog appVideoDiaShow={this.state.appVideoDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("video")} handleSave={this.applyAppEdit}>
-              <div className="modal-content">
+              <div className="modal-content darkBG">
                 <div className="modal-header-dark">
                   <h5 className="modal-title-dark" >"{tempAppTitle}"</h5>
                 </div>
-                <div className="modal-body-dark">
+                <div className="modal-body align-items-center darkBG">
                   <center>
                     <iframe width="100%" height="350" src={this.state.videoLink} frameborder="0" allowfullscreen="true"></iframe>
                   </center>

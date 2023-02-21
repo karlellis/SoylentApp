@@ -325,6 +325,10 @@ input:checked+.slider:before {
 	text-align: center; */
 }
 
+.borderight {
+	border-right: .2em solid #fff;
+}
+
 .lato {
 	color: gainsboro !important;
 	background-color: rgba(47, 79, 79, 0.7) !important;
@@ -439,15 +443,52 @@ label{
 	background: rgba(0, 0, 0, 0.6);
 }
 
+.modal-content {
+	border: none !important;
+	border-radius: 0 !important;
+}
+
+.modal-header {
+	border: none !important;
+	border-radius: 0 !important;
+}
+
+.modal-title {
+	border: none !important;
+	border-radius: 0 !important;
+}
+
+.modal-body {
+	border: none !important;
+	border-radius: 0 !important;
+}
+
+.modal-body-dark {
+	border: none !important;
+	border-radius: 0 !important;
+}
+
+.modal-footer {
+	border: none !important;
+	border-radius: 0 !important;
+}
+
+
+
 .modal-main {
 	position: fixed;
 	background: white;
-	border-radius: 5px;
+	/* border-radius: 5px; */
 	width: 80%;
 	height: auto;
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
+}
+
+.noborder {
+	border: none !important;
+	border-radius: 0 !important;
 }
 
 .modal-body-dark {
@@ -486,15 +527,15 @@ label{
     align-items: center;
     justify-content: flex-end;
     padding: .75rem;
-    border-top: 1px solid #dee2e6;
+    /* border-top: 1px solid #dee2e6;
     border-bottom-right-radius: calc(.3rem - 1px);
-    border-bottom-left-radius: calc(.3rem - 1px)
+    border-bottom-left-radius: calc(.3rem - 1px) */
 }
 
 .modal-main-dark {
 	position: fixed;
 	/* background: rgb(40, 39, 39); */
-	border-radius: 5px;
+	/* border-radius: 5px; */
 	width: 80%;
 	height: auto;
 	top: 50%;
