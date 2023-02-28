@@ -2036,7 +2036,7 @@ class Main extends React.Component {
     //         radiobtn.checked = true;
     //         break;
     //       case "col-1":
-    //         radiobtn = document.getElementById("logoCol1");
+    //       addItem  radiobtn = document.getElementById("logoCol1");
     //         radiobtn.checked = true;
     //         break;
     //       case "col-2":
@@ -2451,7 +2451,11 @@ class Main extends React.Component {
   }
 
   appOrCatItem() {
-    this.showModal("appOrCatAdd");
+    if (temp5 !== "Root") {
+      this.appAddItem();
+    } else {
+      this.showModal("appOrCatAdd");
+    }
   }
 
   catEditDel(op, pos) {
