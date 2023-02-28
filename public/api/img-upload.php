@@ -48,9 +48,10 @@ if ($_FILES['logo']) {
             "message" => "Error uploading the logo file!"
         );
     } else {
-        $random_name = rand(1000, 1000000) . "-" . $logo_name;
+        $no_sp_name = preg_replace('/\s+/', '-', $logo_name);
+        $random_name = rand(1000, 1000000) . "-" . $no_sp_name;
         $upload_name = $upload_dir . $random_name;
-        $upload_name = preg_replace('/\s+/', '-', $upload_name);
+        // $upload_name = preg_replace('/\s+/', '-', $upload_name);
 
         if (move_uploaded_file($logo_tmp_name, $upload_name)) {
             $response = array(
@@ -80,9 +81,10 @@ if ($_FILES['logo']) {
             "message" => "Error uploading the Back file!"
         );
     } else {
-        $random_name = rand(1000, 1000000) . "-" . $back_name;
+        $no_sp_name = preg_replace('/\s+/', '-', $back_name);
+        $random_name = rand(1000, 1000000) . "-" . $no_sp_name;
         $upload_name = $upload_dir . $random_name;
-        $upload_name = preg_replace('/\s+/', '-', $upload_name);
+        // $upload_name = preg_replace('/\s+/', '-', $upload_name);
 
         if (move_uploaded_file($back_tmp_name, $upload_name)) {
             $response = array(
@@ -112,9 +114,10 @@ if ($_FILES['logo']) {
             "message" => "Error uploading the Cat Icon file!"
         );
     } else {
-        $random_name = rand(1000, 1000000) . "-" . $icon_name;
+        $no_sp_name = preg_replace('/\s+/', '-', $icon_name);
+        $random_name = rand(1000, 1000000) . "-" . $no_sp_name;
         $upload_name = $upload_dir . $random_name;
-        $upload_name = preg_replace('/\s+/', '-', $upload_name);
+        // $upload_name = preg_replace('/\s+/', '-', $upload_name);
 
         if (move_uploaded_file($icon_tmp_name, $upload_name)) {
             $response = array(
@@ -144,9 +147,10 @@ if ($_FILES['logo']) {
             "message" => "Error uploading the Back Cat file!"
         );
     } else {
-        $random_name = rand(1000, 1000000) . "-" . $back_name;
+        $no_sp_name = preg_replace('/\s+/', '-', $back_name);
+        $random_name = rand(1000, 1000000) . "-" . $no_sp_name;
         $upload_name = $upload_dir . $random_name;
-        $upload_name = preg_replace('/\s+/', '-', $upload_name);
+        // $upload_name = preg_replace('/\s+/', '-', $upload_name);
 
         if (move_uploaded_file($back_tmp_name, $upload_name)) {
             $response = array(
@@ -176,9 +180,10 @@ if ($_FILES['logo']) {
             "message" => "Error uploading the Icon file!"
         );
     } else {
-        $random_name = rand(1000, 1000000) . "-" . $icon_name;
+        $no_sp_name = preg_replace('/\s+/', '-', $icon_name);
+        $random_name = rand(1000, 1000000) . "-" . $no_sp_name;
         $upload_name = $upload_dir . $random_name;
-        $upload_name = preg_replace('/\s+/', '-', $upload_name);
+        // $upload_name = preg_replace('/\s+/', '-', $upload_name);
 
         if (move_uploaded_file($icon_tmp_name, $upload_name)) {
             $response = array(
