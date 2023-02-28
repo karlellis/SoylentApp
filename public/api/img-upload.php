@@ -314,6 +314,34 @@ if ($_FILES['logo']) {
             );
         }
     }
+} else if ($_POST['backcat']) {
+    $del_name = $_POST["backcat"];
+    $error = null;
+    if (is_array($_POST) && !empty($_POST["backcat"]["error"])) {
+        $error = $_POST["backcat"]["error"];
+    }
+
+    if ($error > 0) {
+        $response = array(
+            "status" => "error",
+            "error" => true,
+            "message" => "Error deleting the Back Cat file!"
+        );
+    } else {
+        if (unlink("." . $del_name)) {
+            $response = array(
+                "status" => "success",
+                "error" => false,
+                "message" => "BackCatDeleteOk",
+            );
+        } else {
+            $response = array(
+                "status" => "error",
+                "error" => true,
+                "message" => "BackCatDeleteError"
+            );
+        }
+    }
 } else if ($_POST['cat']) {
     $del_name = $_POST["cat"];
     $error = null;
