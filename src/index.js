@@ -763,6 +763,7 @@ class Main extends React.Component {
           appItems: spData.appItems,
           catItems: spData.catItems,
           disFieldB: spData.noBackImage,
+          disFieldBC: spData.noCatImage,
           disField: spData.noFootTitle,
           disField2: spData.noFootSubtitle,
           disField3: spData.noFootSubtitle2,
@@ -3868,7 +3869,7 @@ class Main extends React.Component {
                         <div className="col">
                           <div className="row border">
                             <div className="col borderight pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
-                              <label>Cats.</label>
+                              <label>Cats</label>
                             </div>
                             <div className="col d-flex flex-column justify-content-center align-items-center">
                               <input type="file" disabled={disFieldBC} id="catfiles" className="form-control boxs border-0" name="icon" onChange={e => fileCatImg = e.target.files[0]} />
@@ -4930,7 +4931,7 @@ class App extends React.Component {
               Edit
             </button>
             <button className="col-1 appbutton black m-1 pad01">
-              {this.props.pos + 1} {this.props.id}
+              {this.props.pos + 1} {/* {this.props.id} */}
             </button>
             <button className="col appbutton solidbrick m-1" onClick={() => this.props.appEditDel("AppDel", this.props.id)}>
               Remove
