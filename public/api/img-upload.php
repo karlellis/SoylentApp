@@ -21,7 +21,8 @@ $default2 = [
     'icon' => '',
     'config' => '',
     'credentials' => '',
-    'cat' => ''
+    'cat' => '',
+    'backcat' => ''
 ];
 
 $default3 = [

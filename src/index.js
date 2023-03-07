@@ -930,7 +930,8 @@ class Main extends React.Component {
           temp2 = "";
           temp3 = "";
           temp4 = "";
-          temp5 = "Root";
+          temp5 = tempCatTitle;
+          // temp5 = "Root";
           this.setState({ upShow: false });
           this.setState({ alShow: true });
           this.setState({ alErrShow: false });
@@ -1073,6 +1074,7 @@ class Main extends React.Component {
           //   catItems: [...previousState.catItems, spData.appAdd]
           // }));
         } else if (url === "cat" && op === "add") {
+          console.log("CatAdd in Pos: ", inPos);
           catNewItem.icon = "./appicons/" + nome;
           catNewItem.title = temp2;
           tempIcon = "";
@@ -1081,8 +1083,9 @@ class Main extends React.Component {
           this.setState({ catItems: arrayAdd });
           spData.catItems = arrayAdd;
           arrayAdd = [];
-          arrayLength = arrayLength + 1;
+          // arrayLength = arrayLength + 1;
           temp2 = "";
+          temp = "";
           catNewItem = {
             "title": "",
             "icon": ""
@@ -1111,9 +1114,9 @@ class Main extends React.Component {
           arrayAdd = this.addAfter(array, inPos, catNewItem);
           this.setState({ catItems: arrayAdd });
           spData.catItems = arrayAdd;
-          console.log("Array: ", array);
-          console.log("ArrayAdd: ", arrayAdd);
-          console.log("CatItems: ", spData.catItems);
+          // console.log("Array: ", array);
+          // console.log("ArrayAdd: ", arrayAdd);
+          // console.log("CatItems: ", spData.catItems);
           arrayAdd = [];
           // arrayLength = arrayLength + 1;
           temp2 = "";
@@ -5029,7 +5032,7 @@ class AppCatRes extends React.Component {
               Edit
             </button>
             <button className="col-1 appbutton black m-1 pad01">
-              {this.props.pos + 1} {this.props.id}
+              {this.props.pos + 1} {/* {this.props.id} */}
             </button>
             <button className="col appbutton solidbrick m-1" onClick={() => this.props.appEditDel("AppDel", this.props.id)}>
               Remove
