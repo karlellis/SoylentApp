@@ -1465,7 +1465,18 @@ class Main extends React.Component {
   applyAppEdit = () => {
     array = [...this.state.appItems];
     if (fileImg !== null || temp2 !== "" || temp3 !== "" || temp4 !== "") {
-      this.saveImgFile(fileImg, "icon", "edit");
+      if (temp !== "") {
+        inPos = parseInt(temp) - 1;
+        console.log("Edit InPos: ", inPos);
+        if (inPos < arrayLength) {
+          this.saveImgFile(fileImg, "icon", "edit");
+        } else {
+          this.setState({ alShow: false });
+          this.setState({ alErrShow: true });
+        }
+      } else {
+        this.saveImgFile(fileImg, "icon", "edit");
+      }
     } else {
       console.log("fileImg - temp2 - temp3 are Null!!!");
       this.setState({ alShow: false });
@@ -4024,6 +4035,26 @@ class Main extends React.Component {
                         <div className="col">
                           <div className="row border">
                             <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
+                              <label>Pos</label>
+                            </div>
+                            <div className="col d-flex flex-column justify-content-center align-items-center">
+                              <input type="text" placeholder="Switch pos with pos..." id="clearapppos" className="form-control border-0"
+                                onChange={e => {
+                                  temp = e.target.value;
+                                  // console.log("POS Changed!");
+                                }
+                                } />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="form-group">
+                      <div className="row text-center mb-1 m-auto">
+                        <div className="col">
+                          <div className="row border">
+                            <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
                               <label>Title</label>
                             </div>
                             <div className="col d-flex flex-column justify-content-center align-items-center">
@@ -4334,6 +4365,26 @@ class Main extends React.Component {
                             </div> */}
                             <div className="col d-flex flex-column justify-content-center align-items-center">
                               <input type="file" className="form-control boxs border-0" name="icon" onChange={e => fileImg = e.target.files[0]} />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="form-group">
+                      <div className="row text-center mb-1 m-auto">
+                        <div className="col">
+                          <div className="row border">
+                            <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
+                              <label>Pos</label>
+                            </div>
+                            <div className="col d-flex flex-column justify-content-center align-items-center">
+                              <input type="text" placeholder="Switch pos with pos..." id="clearapppos" className="form-control border-0"
+                                onChange={e => {
+                                  temp = e.target.value;
+                                  // console.log("POS Changed!");
+                                }
+                                } />
                             </div>
                           </div>
                         </div>
