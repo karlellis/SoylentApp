@@ -23,6 +23,7 @@ var disable2 = false;
 var disable3 = false;
 var tempID = 0;
 var tempColor = "#0077c8";
+var tempOpacity = 0.7;
 var tempCatColor = "#0077c8";
 var tempTextColor = "#0077c8";
 var tempColW = "";
@@ -1456,7 +1457,7 @@ class Main extends React.Component {
     temp2 = "";
     temp3 = "";
     disable1 = false;
-    disable2= false;
+    disable2 = false;
     disable3 = false;
     this.setState({ alShow: true });
     this.saveFile(spData, "./api/img-upload.php", "config");
@@ -2515,6 +2516,7 @@ class Main extends React.Component {
     })
     tempCatTitle = temp5;
     document.getElementById('clearapppos').value = "";
+    document.getElementById('clearappswitchpos').value = "";
     document.getElementById('clearapptitle').value = "";
     document.getElementById('clearapplink').value = "";
     this.showModal("appAdd");
@@ -2937,6 +2939,26 @@ class Main extends React.Component {
                             </div>
                             <div className="col d-flex flex-column justify-content-center align-items-center">
                               <input type="color" className="form-control border-0 p-0" defaultValue={this.rgbToHex(spData.menuColor)} onChange={e => tempColor = e.target.value} />
+                            </div>
+                          </div>
+                        </div>
+                        <div className="col-1"></div>
+                        <div className="col">
+                          <div className="row">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="form-group">
+                      <div className="row mb-1 m-auto">
+                        <div className="col">
+                          <div className="row border">
+                            <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
+                              <label>Opacity</label>
+                            </div>
+                            <div className="col d-flex flex-column justify-content-center align-items-center">
+                              <input type="range" class="form-range border-0 p-0" min="0" max="1" step="0.1" defaultValue={spData.menuOpacity} id="menuOpRange" onChange={e => tempOpacity = e.target.value} ></input>
                             </div>
                           </div>
                         </div>
@@ -3800,7 +3822,7 @@ class Main extends React.Component {
                             </div>
                             <div className="col d-flex flex-column justify-content-center align-items-center">
                               <label class="switch">
-                                
+
                                 <input type="checkbox" className="form-control" defaultChecked={!spData.creditShow} onClick={e => {
                                   if (spData.creditShow === false) {
                                     blockHide = true;
@@ -4038,7 +4060,7 @@ class Main extends React.Component {
                               <label>Pos</label>
                             </div>
                             <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="text" placeholder="Switch pos with pos..." id="clearapppos" className="form-control border-0"
+                              <input type="text" placeholder="Switch pos with pos..." id="clearappswitchpos" className="form-control border-0"
                                 onChange={e => {
                                   temp = e.target.value;
                                   // console.log("POS Changed!");
@@ -4370,7 +4392,7 @@ class Main extends React.Component {
                         </div>
                       </div>
                     </div>
-                    
+
                     <div className="form-group">
                       <div className="row text-center mb-1 m-auto">
                         <div className="col">
@@ -4379,7 +4401,7 @@ class Main extends React.Component {
                               <label>Pos</label>
                             </div>
                             <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="text" placeholder="Switch pos with pos..." id="clearapppos" className="form-control border-0"
+                              <input type="text" placeholder="Switch pos with pos..." id="clearcatswitchpos" className="form-control border-0"
                                 onChange={e => {
                                   temp = e.target.value;
                                   // console.log("POS Changed!");
