@@ -13,6 +13,8 @@ var fileCatImg = null;
 var credentials = require("./initSec.json");
 var tempUser = "";
 var tempPsw = "";
+var cgPos = "";
+var currPos = "";
 var temp = "";
 var temp2 = "";
 var temp3 = "";
@@ -925,13 +927,89 @@ class Main extends React.Component {
           }
           array[temp].video = temp4;
           array[temp].cat = temp5;
-          this.setState({ appItems: array });
-          spData.appItems = array;
+          if (inPos !== "") {
+            let index = 0;
+            if (tempCatTitle !== "Root") {
+              index = this.state.catAppItems[inPos].id;
+            } else {
+              index = this.state.rootAppItems[inPos].id;
+            }
+            console.log("Index: ", index);
+            console.log("temp: ", temp);
+            appNewItem.icon = array[temp].icon;
+            appNewItem.title = array[temp].title;
+            appNewItem.link = array[temp].link;
+            appNewItem.video = array[temp].video;
+            appNewItem.cat = array[temp].cat;
+            appNewItem.id = index;
+
+            // tempIcon = "";
+
+            // array = this.addAfter(array, index, appNewItem);
+            // for (let i = (index + 1); i < array.length; i++) {
+            //   (array[i].id)++;
+            // }
+
+            if (index > temp) {
+              if (index - temp === 1) {
+                // move index item in temp,kp
+              }
+
+              array = this.addAfter(array, index + 1, appNewItem);
+              for (let i = (index + 1); i < array.length; i++) {
+                (array[i].id)++;
+              }
+
+              tempIcon = "";
+              array.splice(temp, 1);
+              for (let i = (temp); i < array.length; i++) {
+                (array[i].id)--;
+              }
+              var noAddArray = [...array];
+              this.setState({ appItems: array });
+              // noAddArray.pop();
+              spData.appItems = noAddArray;
+            } else {
+
+              array = this.addAfter(array, index, appNewItem);
+              for (let i = (index + 1); i < array.length; i++) {
+                (array[i].id)++;
+              }
+
+              // fetchDelPHP(tempIcon, "./api/img-upload.php", "icon");
+              tempIcon = "";
+              array.splice(temp + 1, 1);
+              for (let i = (temp + 1); i < array.length; i++) {
+                (array[i].id)--;
+              }
+              var noAddArray = [...array];
+              this.setState({ appItems: array });
+              // noAddArray.pop();
+              spData.appItems = noAddArray;
+            }
+            // arrayLength++;
+
+          }
+          // this.setState({ appItems: array });
+          // spData.appItems = array;
+
+          inPos = "";
+          cgPos = "";
+          currPos = "";
           temp = "";
           temp2 = "";
           temp3 = "";
           temp4 = "";
           temp5 = tempCatTitle;
+          tempID = 0;
+          appNewItem = {
+            "title": "",
+            "link": "",
+            "icon": "",
+            "video": false,
+            "cat": "",
+            "id": 0
+          };
           // temp5 = "Root";
           this.setState({ upShow: false });
           this.setState({ alShow: true });
@@ -1278,18 +1356,18 @@ class Main extends React.Component {
 
   appCatSearch = (cat, items) => {
     if (items.length > 0) {
-      console.log("AppCatSearch...", items.length);
+      // console.log("AppCatSearch...", items.length);
       let count = 0;
       for (let i = 0; i < items.length; i++) {
-        console.log("Analyzing App Pos: ", i, " - Title: ", items[i].title);
+        // console.log("Analyzing App Pos: ", i, " - Title: ", items[i].title);
         if (items[i].cat.toLowerCase().includes(cat.toLowerCase())) {
-          console.log("App Pos: ", i, " - Title: ", items[i].title, " is in Cat: ", cat, " CatPos: ", count);
+          // console.log("App Pos: ", i, " - Title: ", items[i].title, " is in Cat: ", cat, " CatPos: ", count);
           appNewItem.icon = items[i].icon;
           appNewItem.title = items[i].title;
           appNewItem.link = items[i].link;
           appNewItem.video = items[i].video;
           appNewItem.id = items[i].id;
-          console.log("App Pos: ", count, " - Title: ", items[i].title);
+          // console.log("App Pos: ", count, " - Title: ", items[i].title);
           arrayAdd = this.addAfter(arrayAdd, count, appNewItem);
           // console.log("ArrayAdd: ", arrayAdd);
           count++;
@@ -1465,11 +1543,16 @@ class Main extends React.Component {
 
   applyAppEdit = () => {
     array = [...this.state.appItems];
-    if (fileImg !== null || temp2 !== "" || temp3 !== "" || temp4 !== "") {
-      if (temp !== "") {
-        inPos = parseInt(temp) - 1;
-        console.log("Edit InPos: ", inPos);
-        if (inPos < arrayLength) {
+    console.log("FileImg: ", fileImg);
+    console.log("cgPos: ", cgPos);
+    console.log("Temp2: ", temp2);
+    console.log("Temp3: ", temp3);
+    console.log("Temp4: ", temp4);
+    if (fileImg !== null || temp2 !== "" || temp3 !== "" || temp4 !== tempAppVideo || cgPos !== "") {
+      if (cgPos !== "") {
+        inPos = parseInt(cgPos) - 1;
+        console.log("Edit cgPos: ", cgPos, " currPos: ", currPos);
+        if (inPos < arrayLength && inPos >= 0 && inPos + 1 !== currPos) {
           this.saveImgFile(fileImg, "icon", "edit");
         } else {
           this.setState({ alShow: false });
@@ -2523,10 +2606,12 @@ class Main extends React.Component {
     // console.log("APPAdding IT!");
   }
 
-  appEditDel(op, id) {
+  appEditDel(op, id, pos) {
     temp = id;
+    currPos = pos;
     console.log(op, " for ", id);
     array = [...this.state.appItems];
+    arrayLength = (array.length);
     for (let i = 0; i < array.length; i++) {
       if (array[i].id === id) {
         tempAppTitle = array[i].title;
@@ -4060,9 +4145,9 @@ class Main extends React.Component {
                               <label>Pos</label>
                             </div>
                             <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="text" placeholder="Switch pos with pos..." id="clearappswitchpos" className="form-control border-0"
+                              <input type="text" placeholder="Change position..." id="clearappswitchpos" className="form-control border-0"
                                 onChange={e => {
-                                  temp = e.target.value;
+                                  cgPos = e.target.value;
                                   // console.log("POS Changed!");
                                 }
                                 } />
@@ -4401,7 +4486,7 @@ class Main extends React.Component {
                               <label>Pos</label>
                             </div>
                             <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="text" placeholder="Switch pos with pos..." id="clearcatswitchpos" className="form-control border-0"
+                              <input type="text" placeholder="Change position..." id="clearcatswitchpos" className="form-control border-0"
                                 onChange={e => {
                                   temp = e.target.value;
                                   // console.log("POS Changed!");
@@ -5101,7 +5186,7 @@ class AppCatRes extends React.Component {
           {linkOrVideo}
           <h4><p className="lato"><b>{this.props.title}</b></p></h4>
           <div className="row btncontainer">
-            <button className="col appbutton solidgreen m-1" onClick={() => this.props.appEditDel("AppEdit", this.props.id)}>
+            <button className="col appbutton solidgreen m-1" onClick={() => this.props.appEditDel("AppEdit", this.props.id, this.props.pos + 1)}>
               Edit
             </button>
             <button className="col-1 appbutton black m-1 pad01">
