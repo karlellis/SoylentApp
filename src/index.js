@@ -942,19 +942,7 @@ class Main extends React.Component {
             appNewItem.video = array[temp].video;
             appNewItem.cat = array[temp].cat;
             appNewItem.id = index;
-
-            // tempIcon = "";
-
-            // array = this.addAfter(array, index, appNewItem);
-            // for (let i = (index + 1); i < array.length; i++) {
-            //   (array[i].id)++;
-            // }
-
             if (index > temp) {
-              if (index - temp === 1) {
-                // move index item in temp,kp
-              }
-
               array = this.addAfter(array, index + 1, appNewItem);
               for (let i = (index + 1); i < array.length; i++) {
                 (array[i].id)++;
@@ -967,16 +955,12 @@ class Main extends React.Component {
               }
               var noAddArray = [...array];
               this.setState({ appItems: array });
-              // noAddArray.pop();
               spData.appItems = noAddArray;
             } else {
-
               array = this.addAfter(array, index, appNewItem);
               for (let i = (index + 1); i < array.length; i++) {
                 (array[i].id)++;
               }
-
-              // fetchDelPHP(tempIcon, "./api/img-upload.php", "icon");
               tempIcon = "";
               array.splice(temp + 1, 1);
               for (let i = (temp + 1); i < array.length; i++) {
@@ -984,15 +968,9 @@ class Main extends React.Component {
               }
               var noAddArray = [...array];
               this.setState({ appItems: array });
-              // noAddArray.pop();
               spData.appItems = noAddArray;
             }
-            // arrayLength++;
-
           }
-          // this.setState({ appItems: array });
-          // spData.appItems = array;
-
           inPos = "";
           cgPos = "";
           currPos = "";
@@ -1010,19 +988,11 @@ class Main extends React.Component {
             "cat": "",
             "id": 0
           };
-          // temp5 = "Root";
           this.setState({ upShow: false });
           this.setState({ alShow: true });
           this.setState({ alErrShow: false });
           // console.log("Edit Icon correctly Uploaded!");
-          // this.setState({
-          //   activityChanged: false
-          // });
-          // spData.appItems.pop();
           this.saveFile(spData, "./api/img-upload.php", "config");
-          // this.setState(previousState => ({
-          //   appItems: [...previousState.appItems, spData.appAdd]
-          // }));
         } else if (url === "icon" && op === "add") {
           appNewItem.icon = "./appicons/" + nome;
           appNewItem.title = temp2;
@@ -1126,7 +1096,7 @@ class Main extends React.Component {
           // }));
         } else if (url === "cat" && op === "edit") {
           if (fileImg !== null) {
-            // console.log("Icon edit!");
+            // console.log("Cat edit!");
             array[temp].icon = "./appicons/" + nome;
           }
           if (temp2 !== "") {
@@ -1137,21 +1107,97 @@ class Main extends React.Component {
               element.cat = temp2;
             }
           })
-          this.setState({ catItems: array });
-          spData.catItems = array;
+          if (temp !== "") {
+            // let index = 0;
+            // if (tempCatTitle !== "Root") {
+            //   index = this.state.catAppItems[inPos].id;
+            // } else {
+            //   index = this.state.rootAppItems[inPos].id;
+            // }
+            // console.log("Index: ", index);
+            console.log("temp: ", temp);
+            catNewItem.icon = array[temp].icon;
+            catNewItem.title = array[temp].title;
+            
+            // appNewItem.icon = array[temp].icon;
+            // appNewItem.title = array[temp].title;
+            // appNewItem.link = array[temp].link;
+            // appNewItem.video = array[temp].video;
+            // appNewItem.cat = array[temp].cat;
+            // appNewItem.id = index;
+            if (inPos > currPos) {
+              arrayAdd = this.addAfter(array, inPos, catNewItem);
+              // array = this.addAfter(array, index + 1, appNewItem);
+              // for (let i = (index + 1); i < array.length; i++) {
+              //   (array[i].id)++;
+              // }
+
+              tempIcon = "";
+              arrayAdd.splice(currPos, 1);
+              // for (let i = (temp); i < array.length; i++) {
+              //   (array[i].id)--;
+              // }
+
+              this.setState({ catItems: arrayAdd });
+              spData.catItems = arrayAdd;
+          
+
+              // var noAddArray = [...array];
+              // this.setState({ appItems: array });
+              // spData.appItems = noAddArray;
+            } else {
+              arrayAdd = this.addAfter(array, inPos, catNewItem);
+              // array = this.addAfter(array, index + 1, appNewItem);
+              // for (let i = (index + 1); i < array.length; i++) {
+              //   (array[i].id)++;
+              // }
+
+              tempIcon = "";
+              arrayAdd.splice(currPos + 1, 1);
+              // for (let i = (temp); i < array.length; i++) {
+              //   (array[i].id)--;
+              // }
+
+              this.setState({ catItems: arrayAdd });
+              spData.catItems = arrayAdd;
+          
+
+              // var noAddArray = [...array];
+              // this.setState({ appItems: array });
+              // spData.appItems = noAddArray;
+
+              // array = this.addAfter(array, index, appNewItem);
+              // for (let i = (index + 1); i < array.length; i++) {
+              //   (array[i].id)++;
+              // }
+
+              // tempIcon = "";
+              // array.splice(temp + 1, 1);
+              // for (let i = (temp + 1); i < array.length; i++) {
+              //   (array[i].id)--;
+              // }
+              // var noAddArray = [...array];
+              // this.setState({ appItems: array });
+              // spData.appItems = noAddArray;
+            }
+          }
+          arrayAdd = [];
+          // arrayLength = arrayLength + 1;
           temp2 = "";
+          temp = "";
+          catNewItem = {
+            "title": "",
+            "icon": ""
+          };
+          
+          // this.setState({ catItems: array });
+          // spData.catItems = array;
+          // temp2 = "";
           this.setState({ upShow: false });
           this.setState({ alShow: true });
           this.setState({ alErrShow: false });
-          // console.log("Edit Icon correctly Uploaded!");
-          // this.setState({
-          //   activityChanged: false
-          // });
-          // spData.catItems.pop();
+          // console.log("Edit Cat correctly Uploaded!");
           this.saveFile(spData, "./api/img-upload.php", "config");
-          // this.setState(previousState => ({
-          //   catItems: [...previousState.catItems, spData.appAdd]
-          // }));
         } else if (url === "cat" && op === "add") {
           console.log("CatAdd in Pos: ", inPos);
           catNewItem.icon = "./appicons/" + nome;
@@ -1630,10 +1676,11 @@ class Main extends React.Component {
 
   applyCatEdit = () => {
     array = [...this.state.catItems];
-    if (fileImg !== null || temp2 !== "") {
+    inPos = parseInt(temp) - 1;
+    if (fileImg !== null || temp2 !== "" || temp !== "") {
       this.saveImgFile(fileImg, "cat", "edit");
     } else {
-      console.log("fileImg - temp2 are Null!!!");
+      console.log("fileImg - temp2 - temp are Null!!!");
       this.setState({ alShow: false });
       this.setState({ alErrShow: true });
     }
@@ -2558,7 +2605,8 @@ class Main extends React.Component {
   }
 
   catEditDel(op, pos) {
-    temp = pos;
+    // temp = pos;
+    currPos = pos;
     console.log(op, " for ", pos);
     array = [...this.state.catItems];
     tempCatTitle = array[pos].title;
