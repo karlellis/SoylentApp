@@ -5,14 +5,10 @@ import "./index.css";
 // import "./bootstrap/js/bootstrap.bundle.min.js"
 // import { ReactComponent as GearIcon } from "./srcimg/gear.svg";
 const bcrypt = require("bcryptjs")
-
-// var title = "Page Title";
-// var description = "Page descriptiion"
 var fileImg = null;
 var fileCatImg = null;
-var credentials = require("./initSec.json");
-var tempUser = "";
-var tempPsw = "";
+// var tempUser = "";
+// var tempPsw = "";
 var cgPos = "";
 var currPos = "";
 var temp = "";
@@ -30,7 +26,6 @@ var tempCatColor = "#0077c8";
 var tempTextColor = "#0077c8";
 var tempColW = "";
 var radiobtn = "";
-// var tempOpacity = "";
 var tempAppTitle = "";
 var tempAppLink = "";
 var tempAppVideo = false;
@@ -59,15 +54,13 @@ var catNewItem = {
   "title": "",
   "icon": ""
 };
-
 var exCrsNewItem = {
   "title": "",
   "link": "",
   "descr": ""
 };
 var nome = "";
-
-// initData not really necessary...
+var credentials = require("./initSec.json");
 var spData = require("./initData.json");
 
 // const sleep = (milliseconds) => {
@@ -117,7 +110,6 @@ const EditInfo = ({ editInfoShow, children, hidden }) => {
 const Crediti = ({ creditShow, children, infoShow, mainBtn }) => {
   const showHideClassName = creditShow ? "d-block" : "d-none";
   const justifyCenterEnd = mainBtn ? "justify-content-end" : "justify-content-center";
-  // const colMd3 = infoShow ? "col-md-3" : "col";
   return (
     <section id="FootCrediti" style={{ backgroundColor: spData.footCreditColor, color: spData.footCreditTextColor }} className={showHideClassName + " " + justifyCenterEnd + " " + spData.footCreditColW + " latoplain d-flex flex-column align-items-center"}>
       {children}
@@ -575,7 +567,7 @@ const LogoDialog = ({ handleUpload, handleClose, logoDiaShow, children, activity
       <section className="modal-main">
         {children}
         <div className="modal-footer">
-          <button type="button" disabled={(activityChanged) ? true : false} className="btn btn-primary" onClick={handleUpload}>Apply</button>
+          <button type="button" disabled={(activityChanged) ? true : false} className="btn btn-primary" onClick={handleUpload}>Apply & Close</button>
           <button type="button" /* disabled={(activityChanged) ? true : false} */ className="btn btn-secondary" data-dismiss="modal" onClick={handleClose}>Close</button>
         </div>
       </section>
@@ -739,9 +731,6 @@ class Main extends React.Component {
     this.headLogoEdit = this.headLogoEdit.bind(this);
     this.showModal = this.showModal.bind(this);
     this.hideModal = this.hideModal.bind(this);
-    // this.hideSearch = this.hideSearch.bind(this);
-    // this.hideAppOp = this.hideAppOp.bind(this);
-    // this.hideAppOrCat = this.hideAppOrCat.bind(this);
     this.loginSession = this.loginSession.bind(this);
     this.loginEditSession = this.loginEditSession.bind(this);
     this.saveTitle = this.saveTitle.bind(this);
@@ -914,6 +903,7 @@ class Main extends React.Component {
             activityChanged: false
           });
           this.saveFile(spData, "./api/img-upload.php", "config");
+          this.hideModal("logo");
         } else if (url === "icon" && op === "edit") {
           if (fileImg !== null) {
             // console.log("Icon edit!");
@@ -1014,16 +1004,13 @@ class Main extends React.Component {
           }
           this.setState({ appItems: arrayAdd });
           spData.appItems = arrayAdd;
-          // this.appRootSearch("Root", spData.appItems);
           arrayAdd = [];
           arrayLength++;
+          inPos = "";
           temp = "";
           temp2 = "";
           temp3 = "";
           temp4 = "";
-          // this.setState({
-          //   catSel: tempCatTitle
-          // });
           temp5 = tempCatTitle;
           tempID = 0;
           appNewItem = {
@@ -1038,15 +1025,7 @@ class Main extends React.Component {
           this.setState({ alShow: true });
           this.setState({ alErrShow: false });
           // console.log("Add Icon correctly Uploaded!");
-          // this.setState({
-          //   activityChanged: false
-          // });
-
-          // spData.appItems.pop();
           this.saveFile(spData, "./api/img-upload.php", "config");
-          // this.setState(previousState => ({
-          //   appItems: [...previousState.appItems, spData.appAdd]
-          // }));
         } else if (url === "icon" && op === "addlast") {
           appNewItem.icon = "./appicons/" + nome;
           appNewItem.title = temp2;
@@ -1065,6 +1044,7 @@ class Main extends React.Component {
           // console.log("CatItems: ", spData.appItems);
           arrayAdd = [];
           arrayLength = arrayLength + 1;
+          inPos = "";
           temp = "";
           temp2 = "";
           temp3 = "";
@@ -1149,7 +1129,6 @@ class Main extends React.Component {
           this.setState({ catItems: arrayAdd });
           spData.catItems = arrayAdd;
           arrayAdd = [];
-          // arrayLength = arrayLength + 1;
           temp2 = "";
           temp = "";
           catNewItem = {
@@ -1160,15 +1139,7 @@ class Main extends React.Component {
           this.setState({ alShow: true });
           this.setState({ alErrShow: false });
           // console.log("Add Icon correctly Uploaded!");
-          // this.setState({
-          //   activityChanged: false
-          // });
-
-          // spData.catItems.pop();
           this.saveFile(spData, "./api/img-upload.php", "config");
-          // this.setState(previousState => ({
-          //   catItems: [...previousState.catItems, spData.appAdd]
-          // }));
         } else if (url === "cat" && op === "addlast") {
           console.log("CatAddLast...");
           catNewItem.icon = "./appicons/" + nome;
@@ -1184,7 +1155,6 @@ class Main extends React.Component {
           // console.log("ArrayAdd: ", arrayAdd);
           // console.log("CatItems: ", spData.catItems);
           arrayAdd = [];
-          // arrayLength = arrayLength + 1;
           temp2 = "";
           catNewItem = {
             "title": "",
@@ -1194,14 +1164,7 @@ class Main extends React.Component {
           this.setState({ alShow: true });
           this.setState({ alErrShow: false });
           // console.log("Add Last Icon correctly Uploaded!");
-          // this.setState({
-          //   activityChanged: false
-          // });
-          // spData.catItems.pop();
           this.saveFile(spData, "./api/img-upload.php", "config");
-          // this.setState(previousState => ({
-          //   appItems: [...previousState.appItems, spData.appAdd]
-          // }));
         } else if (url === "back" && op === "edit") {
           spData.backgroundImage = "./img/" + nome;
           spData.backgroundColor = this.hexToRgb(tempColor) + ", 0.7)";
@@ -1271,10 +1234,6 @@ class Main extends React.Component {
     if (temp !== "") {
       spData.headTitle = temp;
     }
-    // else {
-    //   this.setState({ alErrShow: true });
-    //   this.setState({ alShow: false });
-    // }
     // console.log("Titolo: " + spData.headTitle);
     spData.headColor = this.hexToRgb(tempColor) + ", 0.95)";
     spData.headTextColor = this.hexToRgb(tempTextColor) + ", 1)";
@@ -1386,50 +1345,6 @@ class Main extends React.Component {
     }
   }
 
-  // appCatSearch = () => {
-  //   if (this.state.appItems.length > 0) {
-  //     console.log("AppCatSearch: ", tempCatTitle);
-  //     let count = 0;
-  //     for (let i = 0; i < this.state.appItems.length; i++) {
-  //       if (this.state.appItems[i].cat.toLowerCase().includes(tempCatTitle.toLowerCase())) {
-  //         appNewItem.icon = this.state.appItems[i].icon;
-  //         appNewItem.title = this.state.appItems[i].title;
-  //         appNewItem.link = this.state.appItems[i].link;
-  //         appNewItem.video = this.state.appItems[i].video;
-  //         appNewItem.id = this.state.appItems[i].id;
-  //         arrayAdd = this.addAfter(arrayAdd, count, appNewItem);
-  //         count++;
-  //         appNewItem = {
-  //           "title": "",
-  //           "link": "",
-  //           "icon": "",
-  //           "video": false,
-  //           "cat": "Root",
-  //           "id": 0
-  //         };
-  //       }
-  //     }
-  //     count = 0;
-  //     // console.log("Insert pos=", (inPos));
-  //     this.setState({ catAppItems: arrayAdd });
-  //     arrayAdd = [];
-  //     appNewItem = {
-  //       "title": "",
-  //       "link": "",
-  //       "icon": "",
-  //       "video": false,
-  //       "cat": "",
-  //       "id": 0
-  //     };
-  //     // this.setState({ alShow: true });
-  //     // this.setState({ alErrShow: false });
-  //   }
-  //   // else {
-  //   //   this.setState({ alErrShow: true });
-  //   //   this.setState({ alShow: false });
-  //   // }
-  // }
-
   saveClock = () => {
     // console.log(tempColor);
     spData.clockColor = this.hexToRgb(tempColor) + ", 0.7)";
@@ -1530,11 +1445,11 @@ class Main extends React.Component {
 
   applyAppEdit = () => {
     array = [...this.state.appItems];
-    console.log("FileImg: ", fileImg);
-    console.log("cgPos: ", cgPos);
-    console.log("Temp2: ", temp2);
-    console.log("Temp3: ", temp3);
-    console.log("Temp4: ", temp4);
+    // console.log("FileImg: ", fileImg);
+    // console.log("cgPos: ", cgPos);
+    // console.log("Temp2: ", temp2);
+    // console.log("Temp3: ", temp3);
+    // console.log("Temp4: ", temp4);
     if (fileImg !== null || temp2 !== "" || temp3 !== "" || temp4 !== tempAppVideo || cgPos !== "") {
       if (cgPos !== "") {
         inPos = parseInt(cgPos) - 1;
@@ -1594,7 +1509,6 @@ class Main extends React.Component {
       }
       var noAddArray = [...array];
       this.setState({ appItems: array });
-      // noAddArray.pop();
       spData.appItems = noAddArray;
     }
     temp = "";
@@ -1616,15 +1530,18 @@ class Main extends React.Component {
   }
 
   applyCatEdit = () => {
-    // array = [...this.state.catItems];
-    inPos = parseInt(temp) - 1;
-    console.log("InPos: ", inPos);
     if (fileImg !== null || temp2 !== "" || temp !== "") {
-      if (inPos < arrayLength && inPos >= 0 && inPos !== currPos) {
-        this.saveImgFile(fileImg, "cat", "edit");
+      if (temp !== "") {
+        inPos = parseInt(temp) - 1;
+        console.log("InPos: ", inPos);
+        if (inPos < arrayLength && inPos >= 0 && inPos !== currPos) {
+          this.saveImgFile(fileImg, "cat", "edit");
+        } else {
+          this.setState({ alShow: false });
+          this.setState({ alErrShow: true });
+        }
       } else {
-        this.setState({ alShow: false });
-        this.setState({ alErrShow: true });
+        this.saveImgFile(fileImg, "cat", "edit");
       }
     } else {
       console.log("fileImg - temp2 - temp are \"\"");
@@ -1669,7 +1586,6 @@ class Main extends React.Component {
       array.splice(index, 1);
       var noAddArray = [...array];
       this.setState({ catItems: array });
-      // noAddArray.pop();
       spData.catItems = noAddArray;
     }
     this.state.appItems.forEach(element => {
@@ -1786,6 +1702,7 @@ class Main extends React.Component {
       this.setState({ alShow: true });
       this.setState({ alErrShow: false });
       this.saveFile(spData, "./api/img-upload.php", "config");
+      this.hideModal("logo");
     }
   }
 
@@ -1800,8 +1717,8 @@ class Main extends React.Component {
   }
 
   loginEditSession(id) {
-    tempUser = "";
-    tempPsw = "";
+    // tempUser = "";
+    // tempPsw = "";
     this.showModal("loginEdit");
   }
 
@@ -1850,10 +1767,7 @@ class Main extends React.Component {
           credentials.password = result[1];
           // console.log("Psw: " + temp2)
           // console.log("PswHash: " + spData.password)
-
           this.saveFile(credentials, "./api/img-upload.php", "credentials");
-          // this.saveFile(spData, "./api/img-upload.php", "config");
-
           temp = "";
           temp2 = "";
           this.setState({ alShow: true });
@@ -2026,10 +1940,6 @@ class Main extends React.Component {
         break;
       case "cat":
         this.setState({ catDiaShow: true });
-        // this.setState ({
-        //   selectedCat: tempCatTitle
-        // });
-        // this.appCatSearch(element.title, spData.appItems);
         break;
       case "appOrCatAdd":
         this.setState({ aocDiaShow: true });
@@ -2080,222 +1990,7 @@ class Main extends React.Component {
         this.setState({ clockDiaShow: true });
         break;
     }
-
-    //   if (id === "title") {
-    //     temp = spData.headTitle;
-    //     tempColW = spData.headColW;
-    //     switch (spData.headColW) {
-    //       case "col":
-    //         radiobtn = document.getElementById("headColAuto");
-    //         radiobtn.checked = true;
-    //         break;
-    //       case "col-1":
-    //         radiobtn = document.getElementById("headCol1");
-    //         radiobtn.checked = true;
-    //         break;
-    //       case "col-2":
-    //         radiobtn = document.getElementById("headCol2");
-    //         radiobtn.checked = true;
-    //         break;
-    //       case "col-3":
-    //         radiobtn = document.getElementById("headCol3");
-    //         radiobtn.checked = true;
-    //         break;
-    //       case "col-4":
-    //         radiobtn = document.getElementById("headCol4");
-    //         radiobtn.checked = true;
-    //         break;
-    //       case "col-5":
-    //         radiobtn = document.getElementById("headCol5");
-    //         radiobtn.checked = true;
-    //     }
-    //     tempColor = this.rgbToHex(spData.headColor);
-    //     tempTextColor = this.rgbToHex(spData.headTextColor);
-    //     // console.log("Titolo Colore showModal:", this.rgbToHex(spData.headColor));
-    //     this.setState({ titleDiaShow: true });
-
-    //   } else if (id === "login") {
-    //     this.setState({ loginDiaShow: true });
-    //   } else if (id === "loginEdit") {
-    //     this.setState({ loginEditDiaShow: true });
-    //   } else if (id === "menu") {
-    //     tempColor = this.rgbToHex(spData.menuColor);
-    //     this.setState({ menuDiaShow: true });
-    //   } else if (id === "logo") {
-    //     tempColW = spData.logoColW;
-    //     switch (spData.logoColW) {
-    //       case "col":
-    //         radiobtn = document.getElementById("logoColAuto");
-    //         radiobtn.checked = true;
-    //         break;
-    //       case "col-1":
-    //       addItem  radiobtn = document.getElementById("logoCol1");
-    //         radiobtn.checked = true;
-    //         break;
-    //       case "col-2":
-    //         radiobtn = document.getElementById("logoCol2");
-    //         radiobtn.checked = true;
-    //         break;
-    //       case "col-3":
-    //         radiobtn = document.getElementById("logoCol3");
-    //         radiobtn.checked = true;
-    //         break;
-    //       case "col-4":
-    //         radiobtn = document.getElementById("logoCol4");
-    //         radiobtn.checked = true;
-    //         break;
-    //       case "col-5":
-    //         radiobtn = document.getElementById("logoCol5");
-    //         radiobtn.checked = true;
-    //     }
-    //     tempColor = this.rgbToHex(spData.logoColor);
-    //     this.setState({ logoDiaShow: true });
-    //   } else if (id === "info") {
-    //     tempColW = spData.footInfoColW;
-    //     switch (spData.footInfoColW) {
-    //       case "col":
-    //         radiobtn = document.getElementById("infoColAuto");
-    //         radiobtn.checked = true;
-    //         break;
-    //       case "col-1":
-    //         radiobtn = document.getElementById("infoCol1");
-    //         radiobtn.checked = true;
-    //         break;
-    //       case "col-2":
-    //         radiobtn = document.getElementById("infoCol2");
-    //         radiobtn.checked = true;
-    //         break;
-    //       case "col-3":
-    //         radiobtn = document.getElementById("infoCol3");
-    //         radiobtn.checked = true;
-    //         break;
-    //       case "col-4":
-    //         radiobtn = document.getElementById("infoCol4");
-    //         radiobtn.checked = true;
-    //         break;
-    //       case "col-5":
-    //         radiobtn = document.getElementById("infoCol5");
-    //         radiobtn.checked = true;
-    //     }
-    //     tempColor = this.rgbToHex(spData.footInfoColor);
-    //     tempTextColor = this.rgbToHex(spData.footInfoTextColor);
-    //     this.setState({ infoDiaShow: true });
-    //   } else if (id === "credit") {
-    //     tempColW = spData.footCreditColW;
-    //     switch (spData.footCreditColW) {
-    //       case "col":
-    //         radiobtn = document.getElementById("creditColAuto");
-    //         radiobtn.checked = true;
-    //         break;
-    //       case "col-1":
-    //         radiobtn = document.getElementById("creditCol1");
-    //         radiobtn.checked = true;
-    //         break;
-    //       case "col-2":
-    //         radiobtn = document.getElementById("creditCol2");
-    //         radiobtn.checked = true;
-    //         break;
-    //       case "col-3":
-    //         radiobtn = document.getElementById("creditCol3");
-    //         radiobtn.checked = true;
-    //         break;
-    //       case "col-4":
-    //         radiobtn = document.getElementById("creditCol4");
-    //         radiobtn.checked = true;
-    //         break;
-    //       case "col-5":
-    //         radiobtn = document.getElementById("creditCol5");
-    //         radiobtn.checked = true;
-    //     }
-    //     tempColor = this.rgbToHex(spData.footCreditColor);
-    //     tempTextColor = this.rgbToHex(spData.footCreditTextColor);
-    //     this.setState({ creditDiaShow: true });
-    //   } else if (id === "appEdit") {
-    //     this.setState({ appEditDiaShow: true });
-    //   } else if (id === "appDel") {
-    //     this.setState({ appDelDiaShow: true });
-    //   } else if (id === "appAdd") {
-    //     this.setState({ appAddDiaShow: true });
-    //   } else if (id === "catEdit") {
-    //     this.setState({ catEditDiaShow: true });
-    //   } else if (id === "catDel") {
-    //     this.setState({ catDelDiaShow: true });
-    //   } else if (id === "catAdd") {
-    //     this.setState({ catAddDiaShow: true });
-    //   } else if (id === "cat") {
-    //     this.setState({ catDiaShow: true });
-    //   } else if (id === "appOrCatAdd") {
-    //     this.setState({ aocDiaShow: true });
-    //   } else if (id === "appVideo") {
-    //     this.setState({ appVideoDiaShow: true });
-    //   } else if (id === "exCrs") {
-    //     this.setState({ exCrsDiaShow: true });
-    //   } else if (id === "search") {
-    //     this.setState({ searchDiaShow: true });
-    //   } else if (id === "back") {
-    //     tempColor = this.rgbToHex(spData.backgroundColor);
-    //     this.setState({ backEditDiaShow: true });
-    //   } else if (id === "clock") {
-    //     tempColW = spData.clockColW;
-    //     switch (spData.clockColW) {
-    //       case "col":
-    //         radiobtn = document.getElementById("clockColAuto");
-    //         radiobtn.checked = true;
-    //         break;
-    //       case "col-1":
-    //         radiobtn = document.getElementById("clockCol1");
-    //         radiobtn.checked = true;
-    //         break;
-    //       case "col-2":
-    //         radiobtn = document.getElementById("clockCol2");
-    //         radiobtn.checked = true;
-    //         break;
-    //       case "col-3":
-    //         radiobtn = document.getElementById("clockCol3");
-    //         radiobtn.checked = true;
-    //         break;
-    //       case "col-4":
-    //         radiobtn = document.getElementById("clockCol4");
-    //         radiobtn.checked = true;
-    //         break;
-    //       case "col-5":
-    //         radiobtn = document.getElementById("clockCol5");
-    //         radiobtn.checked = true;
-    //     }
-    //     tempColor = this.rgbToHex(spData.clockColor);
-    //     tempTextColor = this.rgbToHex(spData.clockTextColor);
-    //     this.setState({ clockDiaShow: true });
-    //   }
   };
-
-  // hideSearch() {
-  //   this.setState({ searchDiaShow: false });
-  //   document.getElementById('searchForm').reset();
-  //   this.setState({ resAppItems: [] });
-  //   this.setState({ alShow: false });
-  //   this.setState({ alErrShow: false });
-  //   temp = "";
-  // }
-
-  // hideAppOp() {
-  //   this.setState({ appAddDiaShow: false });
-  //   document.getElementById('appAddForm').reset();
-  //   this.setState({ appEditDiaShow: false });
-  //   this.setState({ appDelDiaShow: false });
-  //   document.getElementById('appEditForm').reset();
-  //   this.setState({ alShow: false });
-  //   this.setState({ alErrShow: false });
-  //   this.setState({
-  //     activityChanged: false
-  //   });
-  // }
-
-  // hideAppOrCat() {
-  //   this.setState({ aocDiaShow: false });
-  //   this.setState({
-  //     activityChanged: false
-  //   });
-  // }
 
   hideModal(id, e) {
     switch (id) {
@@ -2367,6 +2062,7 @@ class Main extends React.Component {
         this.setState({
           catSel: tempCatTitle
         })
+        this.setState({ catAppItems: [] });
         console.log("Current Cat: ", this.state.catSel);
         break;
       case "video":
@@ -2395,50 +2091,8 @@ class Main extends React.Component {
         this.setState({ alErrShow: false });
         temp = "";
     }
-
-    // console.log("HideModal!!!")
-    // this.setState({ titleDiaShow: false });
-    // this.setState({ menuDiaShow: false });
-    // this.setState({ alShow: false });
-    // this.setState({ loginDiaShow: false });
-    // this.setState({ loginEditDiaShow: false });
-    // this.setState({ logoDiaShow: false });
-    // this.setState({ infoDiaShow: false });
-    // this.setState({ creditDiaShow: false });
-    // this.setState({ appEditDiaShow: false });
-    // this.setState({ appDelDiaShow: false });
-    // this.setState({ appAddDiaShow: false });
-    // this.setState({ catEditDiaShow: false });
-    // this.setState({ catDelDiaShow: false });
-    // this.setState({ catAddDiaShow: false });
-    // this.setState({ catDiaShow: false });
-    // if (id === "video") {
-    //   this.setState({ appVideoDiaShow: false });
-    //   this.stopVideos();
-    // }
-
-    // this.setState({ aocDiaShow: false });
-    // this.setState({ exCrsDiaShow: false });
-    // this.setState({ backEditDiaShow: false });
-    // this.setState({ clockDiaShow: false });
     this.setState({ alShow: false });
     this.setState({ alErrShow: false });
-
-    // document.getElementById('loginForm').reset();
-    // document.getElementById('loginEditForm').reset();
-    // document.getElementById('titleForm').reset();
-    // document.getElementById('logoForm').reset();
-    // document.getElementById('menuForm').reset();
-    // document.getElementById('infoForm').reset();
-    // document.getElementById('creditForm').reset();
-    // document.getElementById('appEditForm').reset();
-    // document.getElementById('appAddForm').reset();
-    // document.getElementById('catEditForm').reset();
-    // document.getElementById('catAddForm').reset();
-    // document.getElementById('backEditForm').reset();
-    // document.getElementById('clockForm').reset();
-    // document.getElementById('searchForm').reset();
-
     tempColor = "";
     tempTextColor = "";
     tempColW = "";
@@ -2457,20 +2111,10 @@ class Main extends React.Component {
       this.setState({
         appsBtnShow: id
       })
-      // this.setState(previousState => ({
-      //   rootAppItems: [...previousState.rootAppItems, spData.appAdd],
-      //   appItems: [...previousState.appItems, spData.appAdd]
-      // }));
     } else {
       this.setState({
         appsBtnShow: false
       })
-      // var rootArray = [...this.state.rootAppItems];
-      // rootArray.pop();
-      // this.setState({ rootAppItems: rootArray });
-      // var array = [...this.state.appItems];
-      // array.pop();
-      // this.setState({ appItems: array });
     }
   }
 
@@ -2501,9 +2145,6 @@ class Main extends React.Component {
         this.setState({
           appsBtnShow: false
         })
-        // array.pop();
-        // this.setState({ appItems: array });
-        // spData.appItems = array;
       }
       spData.appItems = array;
       window.location.reload();
@@ -2552,7 +2193,6 @@ class Main extends React.Component {
   }
 
   catEditDel(op, pos) {
-    // temp = pos;
     currPos = pos;
     console.log(op, " for ", pos);
     array = [...this.state.catItems];
@@ -2560,7 +2200,6 @@ class Main extends React.Component {
     tempCatTitle = array[pos].title;
     tempIcon = array[pos].icon;
     console.log("Cat name: ", tempCatTitle);
-    // tempIcon = array[pos].icon;
     document.getElementById('clearcatswitchpos').value = "";
     if (op === "CatEdit") {
       this.showModal("catEdit");
@@ -2570,12 +2209,10 @@ class Main extends React.Component {
   }
 
   catAddItem() {
-    // this.hideAppOrCat();
     this.hideModal("apporcat");
     array = [...this.state.catItems];
     arrayLength = (array.length);
     temp4 = false;
-    // temp5 = "Root";
     document.getElementById('clearcatpos').value = "";
     document.getElementById('clearcattitle').value = "";
     this.showModal("catAdd");
@@ -2583,14 +2220,12 @@ class Main extends React.Component {
   }
 
   appAddItem(id, pos) {
-    // this.hideAppOrCat();
     this.hideModal("apporcat");
     array = [...this.state.appItems];
     arrayLength = (array.length);
     tempAppVideo = false;
     temp4 = false;
     console.log("AppAdd Temp5: ", temp5);
-    // temp5 = "Root";
     this.setState({
       catSel: temp5
     })
@@ -2625,13 +2260,6 @@ class Main extends React.Component {
         tempIcon = array[i].icon;
       }
     }
-    // tempAppTitle = array[id].title;
-    // tempAppLink = array[id].link;
-    // tempAppVideo = array[id].video;
-    // temp4 = array[id].video;
-    // temp5 = array[id].cat;
-    // tempIcon = array[id].icon;
-
     // console.log(id, " for ", pos);
     document.getElementById('clearappswitchpos').value = "";
     if (op === "AppEdit") {
@@ -2652,7 +2280,6 @@ class Main extends React.Component {
         })
       }
     }
-    // tempAppTitle = array[pos].title;
     // console.log(id, " for ", pos);
     this.showModal("appVideo");
   }
@@ -2678,11 +2305,7 @@ class Main extends React.Component {
         })
       }
     }
-    // tempAppTitle = array[pos].title;
     // console.log(id, " for ", pos);
-    // this.setState({
-    //   videoLink: array[pos].link
-    // })
     this.showModal("appVideo");
   }
 
@@ -2697,11 +2320,7 @@ class Main extends React.Component {
         })
       }
     }
-    // tempAppTitle = array[pos].title;
     // console.log(id, " for ", pos);
-    // this.setState({
-    //   videoLink: array[pos].link
-    // })
     this.showModal("appVideo");
   }
 
@@ -2715,7 +2334,6 @@ class Main extends React.Component {
     this.setState({
       catSel: catName
     })
-
     console.log("CatName: ", catName);
   }
 
@@ -2776,11 +2394,6 @@ class Main extends React.Component {
               {/* TITOLO */}
               <div>
                 <p className="medfont">{spData.headTitle}</p>
-                {/* <p className="smallfont lato button" title={spData.headSubtitle}>
-                  <a href={spData.headSubtitleLink}>
-                    {spData.headSubtitle}
-                  </a>
-                </p> */}
               </div>
               <EditTitolo editTitleShow={this.state.mainBtn} hidden={spData.titleShow}>
                 <button className="col flexbutton solidgreen m-1" onClick={() => this.headTitleEdit("TitleEdit")}>
@@ -3747,13 +3360,11 @@ class Main extends React.Component {
                                       disFieldC: true
                                     });
                                     disable1 = true;
-                                    // spData.noFootCreditiTitle = true;
                                   } else {
                                     this.setState({
                                       disFieldC: false
                                     });
                                     disable1 = false;
-                                    // spData.noFootCreditiTitle = false;
                                   }
                                 }} />
                                 <span class="slider round" title="Hide"></span>
@@ -3783,13 +3394,11 @@ class Main extends React.Component {
                                       disFieldC2: true
                                     });
                                     disable2 = true;
-                                    // spData.noFootCreditiSubtitle = true;
                                   } else {
                                     this.setState({
                                       disFieldC2: false
                                     });
                                     disable2 = false;
-                                    // spData.noFootCreditiSubtitle = false;
                                   }
                                 }} />
                                 <span class="slider round" title="Hide"></span>
@@ -3819,13 +3428,11 @@ class Main extends React.Component {
                                       disFieldC3: true
                                     });
                                     disable3 = true;
-                                    // spData.noFootCreditiSubtitle2 = true;
                                   } else {
                                     this.setState({
                                       disFieldC3: false
                                     });
                                     disable3 = false;
-                                    // spData.noFootCreditiSubtitle2 = false;
                                   }
                                 }} />
                                 <span class="slider round" title="Hide"></span>
@@ -4093,14 +3700,13 @@ class Main extends React.Component {
             <CatDialog catDiaShow={this.state.catDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("cat")}>
               <div className="modal-content darkBG">
                 <div className="modal-header">
-                  <h5 className="modal-title latowhite" >Category: {tempCatTitle}</h5>
+                  <h5 className="modal-title latowhite" >{tempCatTitle}</h5>
                 </div>
                 <div style={this.state.catStyle} className="modal-body-dark">
                   <div className="textcenter">
                     {
                       this.state.catAppItems.map(({ id, title, link, icon, video }, i) => {
                         return (
-                          // *** Have to include also links not only video ***
                           <AppCatRes showAppsBtn={this.state.appsBtnShow} key={i} pos={i} id={id}
                             title={title} link={link} icon={icon} video={video}
                             appVideo={this.catAppVideo} appEditDel={this.appEditDel} />
@@ -4124,9 +3730,6 @@ class Main extends React.Component {
                       <div className="row text-center mb-1 m-auto">
                         <div className="col">
                           <div className="row border">
-                            {/* <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
-                              <label>Image</label>
-                            </div> */}
                             <div className="col d-flex flex-column justify-content-center align-items-center">
                               <input type="file" className="form-control boxs border-0" name="icon" onChange={e => fileImg = e.target.files[0]} />
                             </div>
@@ -4146,7 +3749,6 @@ class Main extends React.Component {
                               <input type="text" placeholder="Change position..." id="clearappswitchpos" className="form-control border-0"
                                 onChange={e => {
                                   cgPos = e.target.value;
-                                  // console.log("POS Changed!");
                                 }
                                 } />
                             </div>
@@ -4304,7 +3906,6 @@ class Main extends React.Component {
                               <input type="text" placeholder="Leave blank for last..." id="clearapppos" className="form-control border-0"
                                 onChange={e => {
                                   temp = e.target.value;
-                                  // console.log("POS Changed!");
                                 }
                                 } />
                             </div>
@@ -4465,9 +4066,6 @@ class Main extends React.Component {
                       <div className="row text-center mb-1 m-auto">
                         <div className="col">
                           <div className="row border">
-                            {/* <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
-                              <label>Image</label>
-                            </div> */}
                             <div className="col d-flex flex-column justify-content-center align-items-center">
                               <input type="file" className="form-control boxs border-0" name="icon" onChange={e => fileImg = e.target.files[0]} />
                             </div>
@@ -4487,7 +4085,6 @@ class Main extends React.Component {
                               <input type="text" placeholder="Change position..." id="clearcatswitchpos" className="form-control border-0"
                                 onChange={e => {
                                   temp = e.target.value;
-                                  // console.log("POS Changed!");
                                 }
                                 } />
                             </div>
@@ -4585,7 +4182,6 @@ class Main extends React.Component {
                               <input type="text" placeholder="Leave blank for last..." id="clearcatpos" className="form-control border-0"
                                 onChange={e => {
                                   temp = e.target.value;
-                                  // console.log("POS Changed!");
                                 }
                                 } />
                             </div>
@@ -4679,21 +4275,6 @@ class Main extends React.Component {
                 <div className="modal-header">
                   <h5 className="modal-title" >Add App or Category?</h5>
                 </div>
-                {/* <div className="modal-body">
-                  <Conferma alShow={this.state.alShow} handleClose={this.hideAlert}>
-                    <div className="row text-center pt-2">
-                      <div className="col">
-                        <div className="row">
-                          <section className="col pt-2 contenitore solidgreen latowhite d-flex justify-content-center align-items-center ">
-                            <div>
-                              <p className="norfont">Category removed!</p>
-                            </div>
-                          </section>
-                        </div>
-                      </div>
-                    </div>
-                  </Conferma>
-                </div> */}
               </div>
             </AppOrCatDialog>
             <ExCrsDialog exCrsDiaShow={this.state.exCrsDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("excrs")} handleSave={this.applyAppEdit}>
@@ -4939,19 +4520,9 @@ class Main extends React.Component {
                     </Errore>
                     {/* RESAPPS */}
                     <div className="textcenter">
-                      {/* {
-                        this.state.appItems.map(({ id, title, link, icon, video }, i) => {
-                          return (
-                            <App showAppsBtn={this.state.appsBtnShow} key={i} pos={i}
-                              title={title} link={link} icon={icon} video={video}
-                              appEditDel={this.appEditDel} appAddItem={this.appAddItem} appVideo={this.appVideo} />
-                          )
-                        })
-                      } */}
                       {
                         this.state.resAppItems.map(({ id, title, link, icon, video }, i) => {
                           return (
-                            // *** Have to include also links not only video ***
                             <AppSearchRes key={i} pos={i}
                               title={title} link={link} icon={icon} video={video}
                               appVideo={this.resAppVideo} />
@@ -4960,7 +4531,6 @@ class Main extends React.Component {
                       }
                     </div>
                   </form>
-
                 </div>
               </div>
             </SearchDialog>
@@ -5027,10 +4597,7 @@ class SettingsGear extends React.Component {
       this.props.handleShowButtons(true);
     }
     return (
-      <img className="gear mt-2 mb-2" /* title="Settings mode" */ alt="Settings Mode" src="./img/gears.svg" onClick={() => gearClick()} />
-      // <div className="gear mt-2 mb-2" title="Settings mode" alt="Settings Mode" onClick={() => gearClick()}>
-      //   <GearIcon></GearIcon>
-      // </div>
+      <img className="gear mt-2 mb-2" alt="Settings Mode" src="./img/gears.svg" onClick={() => gearClick()} />
     );
   }
 }
@@ -5080,7 +4647,7 @@ class App extends React.Component {
       </a>);
 
     let appBtn = ""
-    if (this.props.showAppsBtn === "ShowAppBtn" /* && this.props.title !== "Add Item" */) {
+    if (this.props.showAppsBtn === "ShowAppBtn") {
       appBtn = (
         <div className="appcontainer">
           {linkOrVideo}
@@ -5098,22 +4665,7 @@ class App extends React.Component {
           </div>
         </div>
       )
-    }
-    // else if (this.props.title === "Add Item") {
-    //   appBtn = (
-    //     <div className="appcontainer">
-    //       < a title={this.props.title} target="_blank" onClick={() => this.props.addItem("AddItem", this.props.pos)} >
-    //         <img className="apps" title={this.props.title} alt={this.props.title} src={this.props.icon} />
-    //       </a>
-    //       <h4><p className="lato"><b>{this.props.title}</b></p></h4>
-    //       <div className="row btncontainer">
-    //         <button className="col addbutton solidgreen m-1" onClick={() => this.props.addItem("AddItem", this.props.pos)}>
-    //           Add Item
-    //         </button>
-    //       </div>
-    //     </div>
-    //   )} 
-    else {
+    } else {
       appBtn = (
         <div className="appcontainer">
           {linkOrVideo}
@@ -5138,7 +4690,7 @@ class AppAdd extends React.Component {
     if (this.props.showAppsBtn === "ShowAppBtn") {
       appBtn = (
         <div className="appcontainer">
-          < a title="Add Item" /* target="_blank" */ onClick={() => this.props.addItem()} >
+          < a title="Add Item" onClick={() => this.props.addItem()} >
             <img className="apps" title="Add Item" alt="Add Item" src="./appicons/ac_add.svg" />
           </a>
           <h4><p className="lato"><b>Add Item</b></p></h4>
@@ -5204,13 +4756,6 @@ class AppCatRes extends React.Component {
         </div>
       )
     }
-
-    // appBtn = (
-    //   <div className="appcontainer">
-    //     {linkOrVideo}
-    //     <h4><p className="lato"><b>{this.props.title}</b></p></h4>
-    //   </div>
-    // )
     return (
       <>
         {appBtn}
@@ -5243,16 +4788,6 @@ class AppSearchRes extends React.Component {
         <h4><p className="lato"><b>{this.props.title}</b></p></h4>
       </div>
     )
-
-    // appBtn = (
-    //   <div className="appcontainer">
-    //     < a title={this.props.title} onClick={() => this.props.appVideo("AppVideo", this.props.pos)}>
-    //       <img className="apps" title={this.props.title} alt={this.props.title} src={this.props.icon} />
-    //     </a>
-    //     <h4><p className="lato"><b>{this.props.title}</b></p></h4>
-    //   </div>
-    // )
-
     return (
       <>
         {appBtn}
@@ -5275,10 +4810,6 @@ class Cat extends React.Component {
           <a title={this.props.title} onClick={() => this.props.catCont("catCont", this.props.pos)}>
             <img className="apps" title={this.props.title} alt={this.props.title} src={this.props.icon} />
           </a>
-          {/* {linkOrVideo} */}
-          {/* <a title={this.props.title} onClick={() => this.props.appVideo("AppVideo", this.props.pos)}>
-            <img className="apps" title={this.props.title} alt={this.props.title} src={this.props.icon} />
-          </a> */}
           <h4><p className="lato"><b>{this.props.title}</b></p></h4>
           <div className="row btncontainer">
             <button className="col appbutton solidgreen m-1" onClick={() => this.props.catEditDel("CatEdit", this.props.pos)}>
@@ -5293,33 +4824,12 @@ class Cat extends React.Component {
           </div>
         </div>
       )
-    }
-    // else if (this.props.title === "Add Item") {
-    //   catBtn = (
-    //     <div className="appcontainer">
-    //       < a title={this.props.title} target="_blank" onClick={() => this.props.addItem("AddItem", this.props.pos)} >
-    //         <img className="apps" title={this.props.title} alt={this.props.title} src={this.props.icon} />
-    //       </a>
-    //       <h4><p className="lato"><b>{this.props.title}</b></p></h4>
-    //       <div className="row btncontainer">
-    //         <button className="col addbutton solidgreen m-1" onClick={() => this.props.addItem("AddItem", this.props.pos)}>
-    //           Add Item
-    //         </button>
-    //       </div>
-    //     </div>
-    //   )
-    // }
-    else {
+    } else {
       catBtn = (
         <div className="appcontainer">
           <a title={this.props.title} onClick={() => this.props.catCont("catCont", this.props.pos)}>
             <img className="apps" title={this.props.title} alt={this.props.title} src={this.props.icon} />
           </a>
-          {/* {linkOrVideo} */}
-          {/* < a title={this.props.title} onClick={() => this.props.appVideo("AppVideo", this.props.pos)}> */}
-          {/* < a title={this.props.title} href={this.props.link} target="_blank" > */}
-          {/* <img className="apps" title={this.props.title} alt={this.props.title} src={this.props.icon} />
-          </a> */}
           <h4><p className="lato"><b>{this.props.title}</b></p></h4>
         </div>
       )
@@ -5444,7 +4954,6 @@ class DropdownCat extends React.Component {
 
   state = {
     isOpen: false
-    // selCat: this.props.catName
   };
 
   changeText(selected) {
@@ -5468,14 +4977,11 @@ class DropdownCat extends React.Component {
         >
           {this.props.catName}
         </button>
-        {/* <label>{this.state.selCat}</label> */}
         <div className={menuClass + " menuBG"} /* aria-labelledby="dropdownMenuButton" */>
-
           <button className="col menuItem green m-1"
             onClick={(e) => {
               // window.location = "./searching.php";
               this.changeText("Root")
-              // selCat = "Root";
               this.props.setCat("Root", e);
             }}>
             Root
@@ -5488,7 +4994,6 @@ class DropdownCat extends React.Component {
                   onClick={(e) => {
                     // window.location = "./searching.php";
                     this.changeText(title)
-                    // selCat = { title };
                     this.props.setCat(title, e);
                   }}>
                   {title}
