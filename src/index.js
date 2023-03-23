@@ -1362,7 +1362,8 @@ class Main extends React.Component {
   saveMenu = () => {
     // console.log(tempColor);
     spData.menuColor = this.hexToRgb(tempColor) + ", " + tempOpacity + ")";
-    spData.menuOpacity = tempOpacity;
+    spData.menuOpacity = parseFloat(tempOpacity.replace(/,/g, "."))/* .toFixed(1) */;
+    // spData.menuOpacity = parseInt(tempOpacity);
     if (blockHide !== "none") {
       spData.menuShow = blockHide;
     }
