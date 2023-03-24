@@ -9,9 +9,9 @@
 	--background-image: url(./srcimg/background.jpg);
 } */
 
-body {
+/* body {
 	background-color: black;
-}
+} */
 
 a,
 a:hover {
@@ -614,6 +614,10 @@ label{
 
 .darkBG {
 	background: rgb(40, 39, 39);
+}
+
+.noBG {
+	background: transparent I !important;
 }
 
 .disNone {

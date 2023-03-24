@@ -22,6 +22,7 @@ var disable3 = false;
 var tempID = 0;
 var tempColor = "#0077c8";
 var tempOpacity = 0.7;
+var tempOpacity1 = 0.7;
 var tempCatColor = "#0077c8";
 var tempTextColor = "#0077c8";
 var tempColW = "";
@@ -1167,7 +1168,7 @@ class Main extends React.Component {
           this.saveFile(spData, "./api/img-upload.php", "config");
         } else if (url === "back" && op === "edit") {
           spData.backgroundImage = "./img/" + nome;
-          spData.backgroundColor = this.hexToRgb(tempColor) + ", 0.7)";
+          spData.backgroundColor = this.hexToRgb(tempColor) + ", 1)";
           this.setState({
             backStyle: {
               backgroundImage: "url(" + spData.backgroundImage + ")",
@@ -1176,6 +1177,7 @@ class Main extends React.Component {
               backgroundSize: 'cover',
               backgroundRepeat: 'no-repeat',
               backgroundAttachment: "fixed"
+              // opacity: spData.backgroundOpacity
             }
           });
           this.setState({ upShow: false });
@@ -1187,7 +1189,7 @@ class Main extends React.Component {
           });
         } else if (url === "backcat" && op === "edit") {
           spData.catImage = "./img/" + nome;
-          spData.catColor = this.hexToRgb(tempCatColor) + ", 0.7)";
+          spData.catColor = this.hexToRgb(tempCatColor) + ", 1)";
           this.setState({
             catStyle: {
               backgroundImage: "url(" + spData.catImage + ")",
@@ -1196,6 +1198,7 @@ class Main extends React.Component {
               backgroundSize: 'cover',
               backgroundRepeat: 'no-repeat',
               backgroundAttachment: "fixed"
+              // opacity: spData.catOpacity
             }
           });
           this.setState({ upShow: false });
@@ -1235,7 +1238,9 @@ class Main extends React.Component {
       spData.headTitle = temp;
     }
     // console.log("Titolo: " + spData.headTitle);
-    spData.headColor = this.hexToRgb(tempColor) + ", 0.95)";
+    spData.headColor = this.hexToRgb(tempColor) + ", " + tempOpacity + ")";
+    spData.headOpacity = parseFloat(tempOpacity.replace(/,/g, "."))/* .toFixed(1) */;
+    // spData.headColor = this.hexToRgb(tempColor) + ", 0.95)";
     spData.headTextColor = this.hexToRgb(tempTextColor) + ", 1)";
     spData.headColW = tempColW;
     // console.log("Colore: " + spData.headColor);
@@ -1347,7 +1352,9 @@ class Main extends React.Component {
 
   saveClock = () => {
     // console.log(tempColor);
-    spData.clockColor = this.hexToRgb(tempColor) + ", 0.7)";
+    spData.clockColor = this.hexToRgb(tempColor) + ", " + tempOpacity + ")";
+    spData.clockOpacity = parseFloat(tempOpacity.replace(/,/g, "."))/* .toFixed(1) */;
+    // spData.clockColor = this.hexToRgb(tempColor) + ", 0.7)";
     spData.clockTextColor = this.hexToRgb(tempTextColor) + ", 1)";
     spData.clockColW = tempColW;
     if (blockHide !== "none") {
@@ -1392,7 +1399,9 @@ class Main extends React.Component {
     if (spData.noFootSubtitle2 === true) {
       spData.footSubtitle2 = "";
     }
-    spData.footInfoColor = this.hexToRgb(tempColor) + ", 0.7)";
+    spData.footInfoColor = this.hexToRgb(tempColor) + ", " + tempOpacity + ")";
+    spData.footInfoOpacity = parseFloat(tempOpacity.replace(/,/g, "."))/* .toFixed(1) */;
+    // spData.footInfoColor = this.hexToRgb(tempColor) + ", 0.7)";
     spData.footInfoTextColor = this.hexToRgb(tempTextColor) + ", 1)";
     spData.footInfoColW = tempColW;
     if (blockHide !== "none") {
@@ -1428,7 +1437,9 @@ class Main extends React.Component {
       spData.noFootCreditiSubtitle2 = true;
       spData.footCreditiSubtitle2 = "";
     }
-    spData.footCreditColor = this.hexToRgb(tempColor) + ", 0.7)";
+    spData.footCreditColor = this.hexToRgb(tempColor) + ", " + tempOpacity + ")";
+    spData.footCreditOpacity = parseFloat(tempOpacity.replace(/,/g, "."))/* .toFixed(1) */;
+    // spData.footCreditColor = this.hexToRgb(tempColor) + ", 0.7)";
     spData.footCreditTextColor = this.hexToRgb(tempTextColor) + ", 1)";
     spData.footCreditColW = tempColW;
     if (blockHide !== "none") {
@@ -1612,7 +1623,9 @@ class Main extends React.Component {
       tempIcon = spData.backgroundImage;
       this.saveImgFile(fileImg, "back", "edit");
     } else {
-      spData.backgroundColor = this.hexToRgb(tempColor) + ", 0.7)";
+      spData.backgroundColor = this.hexToRgb(tempColor) + ", " + tempOpacity + ")";
+      spData.backgroundOpacity = parseFloat(tempOpacity.replace(/,/g, "."))/* .toFixed(1) */;
+      // spData.backgroundColor = this.hexToRgb(tempColor) + ", 1)";
       this.setState({
         activityChanged: true
       })
@@ -1625,6 +1638,7 @@ class Main extends React.Component {
             backgroundSize: 'cover',
             backgroundRepeat: 'no-repeat',
             backgroundAttachment: "fixed"
+            // opacity: spData.backgroundOpacity
           }
         });
       } else {
@@ -1636,6 +1650,7 @@ class Main extends React.Component {
             backgroundSize: 'cover',
             backgroundRepeat: 'no-repeat',
             backgroundAttachment: "fixed"
+            // opacity: spData.backgroundOpacity
           }
         });
       }
@@ -1649,7 +1664,9 @@ class Main extends React.Component {
       tempCatIcon = spData.catImage;
       this.saveImgFile(fileCatImg, "backcat", "edit");
     } else {
-      spData.catColor = this.hexToRgb(tempCatColor) + ", 0.7)";
+      spData.catColor = this.hexToRgb(tempCatColor) + ", " + tempOpacity1 + ")";
+      spData.catOpacity = parseFloat(tempOpacity1.replace(/,/g, "."))/* .toFixed(1) */;
+      // spData.catColor = this.hexToRgb(tempCatColor) + ", 1)";
       this.setState({
         activityChanged: true
       })
@@ -1662,6 +1679,7 @@ class Main extends React.Component {
             backgroundSize: 'cover',
             backgroundRepeat: 'no-repeat',
             backgroundAttachment: "fixed"
+            // opacity: spData.catOpacity
           }
         });
       } else {
@@ -1673,6 +1691,7 @@ class Main extends React.Component {
             backgroundSize: 'cover',
             backgroundRepeat: 'no-repeat',
             backgroundAttachment: "fixed"
+            // opacity: spData.catOpacity
           }
         });
       }
@@ -1687,14 +1706,18 @@ class Main extends React.Component {
     if (fileImg !== null) {
       tempIcon = spData.LogoIcon;
       this.saveImgFile(fileImg, "logo", "edit");
-      spData.logoColor = this.hexToRgb(tempColor) + ", 0.7)";
+      spData.logoColor = this.hexToRgb(tempColor) + ", " + tempOpacity + ")";
+      spData.logoOpacity = parseFloat(tempOpacity.replace(/,/g, "."))/* .toFixed(1) */;
+      // spData.logoColor = this.hexToRgb(tempColor) + ", 0.7)";
       spData.logoColW = tempColW;
       if (blockHide !== "none") {
         spData.logoShow = blockHide;
       }
       blockHide = "none";
     } else {
-      spData.logoColor = this.hexToRgb(tempColor) + ", 0.7)";
+      spData.logoColor = this.hexToRgb(tempColor) + ", " + tempOpacity + ")";
+      spData.logoOpacity = parseFloat(tempOpacity.replace(/,/g, "."))/* .toFixed(1) */;
+      // spData.logoColor = this.hexToRgb(tempColor) + ", 0.7)";
       spData.logoColW = tempColW;
       if (blockHide !== "none") {
         spData.logoShow = blockHide;
@@ -1816,6 +1839,7 @@ class Main extends React.Component {
             radiobtn.checked = true;
         }
         tempColor = this.rgbToHex(spData.headColor);
+        tempOpacity = spData.headOpacity.toString();
         tempTextColor = this.rgbToHex(spData.headTextColor);
         // console.log("Titolo Colore showModal:", this.rgbToHex(spData.headColor));
         this.setState({ titleDiaShow: true });
@@ -1828,6 +1852,7 @@ class Main extends React.Component {
         break;
       case "menu":
         tempColor = this.rgbToHex(spData.menuColor);
+        tempOpacity = spData.menuOpacity.toString();
         this.setState({ menuDiaShow: true });
         break;
       case "logo":
@@ -1858,6 +1883,7 @@ class Main extends React.Component {
             radiobtn.checked = true;
         }
         tempColor = this.rgbToHex(spData.logoColor);
+        tempOpacity = spData.logoOpacity.toString();
         this.setState({ logoDiaShow: true });
         break;
       case "info":
@@ -1888,6 +1914,7 @@ class Main extends React.Component {
             radiobtn.checked = true;
         }
         tempColor = this.rgbToHex(spData.footInfoColor);
+        tempOpacity = spData.footInfoOpacity.toString();
         tempTextColor = this.rgbToHex(spData.footInfoTextColor);
         this.setState({ infoDiaShow: true });
         break;
@@ -1919,6 +1946,7 @@ class Main extends React.Component {
             radiobtn.checked = true;
         }
         tempColor = this.rgbToHex(spData.footCreditColor);
+        tempOpacity = spData.footCreditOpacity.toString();
         tempTextColor = this.rgbToHex(spData.footCreditTextColor);
         this.setState({ creditDiaShow: true });
         break;
@@ -1957,7 +1985,9 @@ class Main extends React.Component {
         break;
       case "back":
         tempColor = this.rgbToHex(spData.backgroundColor);
+        tempOpacity = spData.backgroundOpacity.toString();
         tempCatColor = this.rgbToHex(spData.catColor);
+        tempOpacity1 = spData.catOpacity.toString();
         this.setState({ backEditDiaShow: true });
         break;
       case "clock":
@@ -1988,6 +2018,7 @@ class Main extends React.Component {
             radiobtn.checked = true;
         }
         tempColor = this.rgbToHex(spData.clockColor);
+        tempOpacity = spData.clockOpacity.toString();
         tempTextColor = this.rgbToHex(spData.clockTextColor);
         this.setState({ clockDiaShow: true });
         break;
@@ -2640,11 +2671,6 @@ class Main extends React.Component {
                             </div>
                           </div>
                         </div>
-                        <div className="col-1"></div>
-                        <div className="col">
-                          <div className="row">
-                          </div>
-                        </div>
                       </div>
                     </div>
 
@@ -2658,11 +2684,6 @@ class Main extends React.Component {
                             <div className="col d-flex flex-column justify-content-center align-items-center">
                               <input type="range" class="form-range border-0 p-0" min="0" max="1" step="0.1" defaultValue={spData.menuOpacity} id="menuOpRange" onChange={e => tempOpacity = e.target.value} ></input>
                             </div>
-                          </div>
-                        </div>
-                        <div className="col-1"></div>
-                        <div className="col">
-                          <div className="row">
                           </div>
                         </div>
                       </div>
@@ -2812,6 +2833,21 @@ class Main extends React.Component {
                       <div className="row mb-1 m-auto">
                         <div className="col">
                           <div className="row border">
+                            <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
+                              <label>Opacity</label>
+                            </div>
+                            <div className="col d-flex flex-column justify-content-center align-items-center">
+                              <input type="range" class="form-range border-0 p-0" min="0" max="1" step="0.1" defaultValue={spData.headOpacity} id="titleOpRange" onChange={e => tempOpacity = e.target.value} ></input>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="form-group">
+                      <div className="row mb-1 m-auto">
+                        <div className="col">
+                          <div className="row border">
                             <div className="col col pt-1 pb-1 padlr latomenu d-flex flex-column justify-content-center align-items-center">
                               <label>Hide</label>
                             </div>
@@ -2929,6 +2965,21 @@ class Main extends React.Component {
                             </div>
                             <div className="col d-flex flex-column justify-content-center align-items-center">
                               <input type="color" className="form-control border-0 p-0" defaultValue={this.rgbToHex(spData.clockTextColor)} onChange={e => tempTextColor = e.target.value} />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="form-group">
+                      <div className="row mb-1 m-auto">
+                        <div className="col">
+                          <div className="row border">
+                            <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
+                              <label>Opacity</label>
+                            </div>
+                            <div className="col d-flex flex-column justify-content-center align-items-center">
+                              <input type="range" class="form-range border-0 p-0" min="0" max="1" step="0.1" defaultValue={spData.clockOpacity} id="clockOpRange" onChange={e => tempOpacity = e.target.value} ></input>
                             </div>
                           </div>
                         </div>
@@ -3058,11 +3109,31 @@ class Main extends React.Component {
                             </div>
                           </div>
                         </div>
-                        <div className="col-1"></div>
+                        {/* <div className="col-1"></div>
                         <div className="col">
                           <div className="row">
                           </div>
+                        </div> */}
+                      </div>
+                    </div>
+
+                    <div className="form-group">
+                      <div className="row mb-1 m-auto">
+                        <div className="col">
+                          <div className="row border">
+                            <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
+                              <label>Opacity</label>
+                            </div>
+                            <div className="col d-flex flex-column justify-content-center align-items-center">
+                              <input type="range" class="form-range border-0 p-0" min="0" max="1" step="0.1" defaultValue={spData.logoOpacity} id="logoOpRange" onChange={e => tempOpacity = e.target.value} ></input>
+                            </div>
+                          </div>
                         </div>
+                        {/* <div className="col-1"></div>
+                        <div className="col">
+                          <div className="row">
+                          </div>
+                        </div> */}
                       </div>
                     </div>
 
@@ -3295,6 +3366,26 @@ class Main extends React.Component {
                       <div className="row mb-1 m-auto">
                         <div className="col">
                           <div className="row border">
+                            <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
+                              <label>Opacity</label>
+                            </div>
+                            <div className="col d-flex flex-column justify-content-center align-items-center">
+                              <input type="range" class="form-range border-0 p-0" min="0" max="1" step="0.1" defaultValue={spData.footInfoOpacity} id="infoOpRange" onChange={e => tempOpacity = e.target.value} ></input>
+                            </div>
+                          </div>
+                        </div>
+                        {/* <div className="col-1"></div>
+                        <div className="col">
+                          <div className="row">
+                          </div>
+                        </div> */}
+                      </div>
+                    </div>
+
+                    <div className="form-group">
+                      <div className="row mb-1 m-auto">
+                        <div className="col">
+                          <div className="row border">
                             <div className="col pt-1 pb-1 padlr latomenu d-flex flex-column justify-content-center align-items-center">
                               <label>Hide</label>
                             </div>
@@ -3509,6 +3600,26 @@ class Main extends React.Component {
                       <div className="row mb-1 m-auto">
                         <div className="col">
                           <div className="row border">
+                            <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
+                              <label>Opacity</label>
+                            </div>
+                            <div className="col d-flex flex-column justify-content-center align-items-center">
+                              <input type="range" class="form-range border-0 p-0" min="0" max="1" step="0.1" defaultValue={spData.footCreditOpacity} id="creditOpRange" onChange={e => tempOpacity = e.target.value} ></input>
+                            </div>
+                          </div>
+                        </div>
+                        {/* <div className="col-1"></div>
+                        <div className="col">
+                          <div className="row">
+                          </div>
+                        </div> */}
+                      </div>
+                    </div>
+
+                    <div className="form-group">
+                      <div className="row mb-1 m-auto">
+                        <div className="col">
+                          <div className="row border">
                             <div className="col pt-1 pb-1 padlr latomenu d-flex flex-column justify-content-center align-items-center">
                               <label>Hide</label>
                             </div>
@@ -3639,12 +3750,37 @@ class Main extends React.Component {
                             </div>
                           </div>
                         </div>
-                        <div className="col-1"></div>
+                        {/* <div className="col-1"></div>
                         <div className="col">
-                          <div className="row">
+                          <div className="row border">
+                            <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
+                              <label>Opacity</label>
+                            </div>
+                            <div className="col d-flex flex-column justify-content-center align-items-center">
+                              <input type="range" class="form-range border-0 p-0" min="0" max="1" step="0.1" defaultValue={spData.backgroundOpacity} id="backOpRange" onChange={e => tempOpacity = e.target.value} ></input>
+                            </div>
+                          </div>
+                        </div> */}
+                      </div>
+                    </div>
 
+                    <div className="form-group">
+                      <div className="row mb-1 m-auto">
+                        <div className="col">
+                          <div className="row border">
+                            <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
+                              <label>Opacity</label>
+                            </div>
+                            <div className="col d-flex flex-column justify-content-center align-items-center">
+                              <input type="range" class="form-range border-0 p-0" min="0" max="1" step="0.1" defaultValue={spData.backgroundOpacity} id="backOpRange" onChange={e => tempOpacity = e.target.value} ></input>
+                            </div>
                           </div>
                         </div>
+                        {/* <div className="col-1"></div>
+                        <div className="col">
+                          <div className="row">
+                          </div>
+                        </div> */}
                       </div>
                     </div>
 
@@ -3660,12 +3796,37 @@ class Main extends React.Component {
                             </div>
                           </div>
                         </div>
-                        <div className="col-1"></div>
+                        {/* <div className="col-1"></div>
                         <div className="col">
-                          <div className="row">
+                          <div className="row border">
+                            <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
+                              <label>Opacity</label>
+                            </div>
+                            <div className="col d-flex flex-column justify-content-center align-items-center">
+                              <input type="range" class="form-range border-0 p-0" min="0" max="1" step="0.1" defaultValue={spData.catOpacity} id="catOpRange" onChange={e => tempOpacity1 = e.target.value} ></input>
+                            </div>
+                          </div>
+                        </div> */}
+                      </div>
+                    </div>
 
+                    <div className="form-group">
+                      <div className="row mb-1 m-auto">
+                        <div className="col">
+                          <div className="row border">
+                            <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
+                              <label>Opacity</label>
+                            </div>
+                            <div className="col d-flex flex-column justify-content-center align-items-center">
+                              <input type="range" class="form-range border-0 p-0" min="0" max="1" step="0.1" defaultValue={spData.catOpacity} id="catOpRange" onChange={e => tempOpacity1 = e.target.value} ></input>
+                            </div>
                           </div>
                         </div>
+                        {/* <div className="col-1"></div>
+                        <div className="col">
+                          <div className="row">
+                          </div>
+                        </div> */}
                       </div>
                     </div>
 
@@ -3700,8 +3861,8 @@ class Main extends React.Component {
               </div>
             </BackEditDialog>
             <CatDialog catDiaShow={this.state.catDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("cat")}>
-              <div className="modal-content darkBG">
-                <div className="modal-header">
+              <div className="modal-content noBG">
+                <div className="modal-header darkBG">
                   <h5 className="modal-title latowhite" >{tempCatTitle}</h5>
                 </div>
                 <div style={this.state.catStyle} className="modal-body-dark">
