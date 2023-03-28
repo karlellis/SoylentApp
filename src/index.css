@@ -446,6 +446,7 @@ label{
 .modal-content {
 	border: none !important;
 	border-radius: 0 !important;
+	background-color: transparent !important;
 }
 
 .modal-header {
@@ -617,7 +618,7 @@ label{
 }
 
 .noBG {
-	background: transparent I !important;
+	background: transparent !important;
 }
 
 .disNone {

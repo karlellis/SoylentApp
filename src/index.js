@@ -812,7 +812,8 @@ class Main extends React.Component {
         } else {
           this.setState({
             catStyle: {
-              backgroundImage: "url(" + spData.catImage + ")",
+              backgroundImage: "linear-gradient(rgba(255,255,255," + (1 - spData.catOpacity).toString() + "), rgba(255,255,255," + (1 - spData.catOpacity).toString() + ")), url(" + spData.catImage + ")",
+              // backgroundImage: "url(" + spData.catImage + ")",
               backgroundColor: spData.catColor,
               backgroundPosition: 'center',
               backgroundSize: 'cover',
@@ -1194,7 +1195,8 @@ class Main extends React.Component {
           spData.catColor = this.hexToRgb(tempCatColor) + ", 1)";
           this.setState({
             catStyle: {
-              backgroundImage: "url(" + spData.catImage + ")",
+              backgroundImage: "linear-gradient(rgba(255,255,255," + (1 - spData.catOpacity).toString() + "), rgba(255,255,255," + (1 - spData.catOpacity).toString() + ")), url(" + spData.catImage + ")",
+              // backgroundImage: "url(" + spData.catImage + ")",
               backgroundColor: spData.catColor,
               backgroundPosition: 'center',
               backgroundSize: 'cover',
@@ -1688,7 +1690,8 @@ class Main extends React.Component {
       } else {
         this.setState({
           catStyle: {
-            backgroundImage: "url(" + spData.catImage + ")",
+            backgroundImage: "linear-gradient(rgba(255,255,255," + (1 - spData.catOpacity).toString() + "), rgba(255,255,255," + (1 - spData.catOpacity).toString() + ")), url(" + spData.catImage + ")",
+            // backgroundImage: "url(" + spData.catImage + ")",
             backgroundColor: spData.catColor,
             backgroundPosition: 'center',
             backgroundSize: 'cover',
