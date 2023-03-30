@@ -1276,6 +1276,7 @@ class Main extends React.Component {
           appNewItem.title = this.state.appItems[i].title;
           appNewItem.link = this.state.appItems[i].link;
           appNewItem.video = this.state.appItems[i].video;
+          appNewItem.cat = this.state.appItems[i].cat;
           appNewItem.id = this.state.appItems[i].id;
           arrayAdd = this.addAfter(arrayAdd, count, appNewItem);
           count++;
@@ -1321,6 +1322,7 @@ class Main extends React.Component {
           appNewItem.title = items[i].title;
           appNewItem.link = items[i].link;
           appNewItem.video = items[i].video;
+          appNewItem.cat = items[i].cat;
           appNewItem.id = items[i].id;
           // console.log("App Pos: ", count, " - Title: ", items[i].title);
           arrayAdd = this.addAfter(arrayAdd, count, appNewItem);
@@ -1349,6 +1351,7 @@ class Main extends React.Component {
         "link": "",
         "icon": "",
         "video": false,
+        "cat": "Root",
         "cat": ""
       };
     }
@@ -4693,7 +4696,7 @@ class Main extends React.Component {
                         {
                           this.state.resAppItems.map(({ id, title, link, icon, video }, i) => {
                             return (
-                              <AppSearchRes key={i} pos={i}
+                              <AppSearchRes key={i} pos={i} id={id}
                                 title={title} link={link} icon={icon} video={video}
                                 appVideo={this.resAppVideo} />
                             )
@@ -4943,7 +4946,7 @@ class AppSearchRes extends React.Component {
   render() {
     const linkOrVideo = this.props.video
       ?
-      (<a title={this.props.title} onClick={() => this.props.appVideo("AppVideo", this.props.pos)}>
+      (<a title={this.props.title} onClick={() => this.props.appVideo("AppVideo", this.props.id)}>
         <img className="apps" title={this.props.title} alt={this.props.title} src={this.props.icon} />
       </a>)
       :
