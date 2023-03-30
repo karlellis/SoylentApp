@@ -1927,27 +1927,27 @@ class Main extends React.Component {
       case "credit":
         tempColW = spData.footCreditColW;
         switch (spData.footCreditColW) {
-          case "col":
+          case "col-md":
             radiobtn = document.getElementById("creditColAuto");
             radiobtn.checked = true;
             break;
-          case "col-1":
+          case "col-md-1":
             radiobtn = document.getElementById("creditCol1");
             radiobtn.checked = true;
             break;
-          case "col-2":
+          case "col-md-2":
             radiobtn = document.getElementById("creditCol2");
             radiobtn.checked = true;
             break;
-          case "col-3":
+          case "col-md-3":
             radiobtn = document.getElementById("creditCol3");
             radiobtn.checked = true;
             break;
-          case "col-4":
+          case "col-md-4":
             radiobtn = document.getElementById("creditCol4");
             radiobtn.checked = true;
             break;
-          case "col-5":
+          case "col-md-5":
             radiobtn = document.getElementById("creditCol5");
             radiobtn.checked = true;
         }
@@ -1999,27 +1999,27 @@ class Main extends React.Component {
       case "clock":
         tempColW = spData.clockColW;
         switch (spData.clockColW) {
-          case "col":
+          case "col-md":
             radiobtn = document.getElementById("clockColAuto");
             radiobtn.checked = true;
             break;
-          case "col-1":
+          case "col-md-1":
             radiobtn = document.getElementById("clockCol1");
             radiobtn.checked = true;
             break;
-          case "col-2":
+          case "col-md-2":
             radiobtn = document.getElementById("clockCol2");
             radiobtn.checked = true;
             break;
-          case "col-3":
+          case "col-md-3":
             radiobtn = document.getElementById("clockCol3");
             radiobtn.checked = true;
             break;
-          case "col-4":
+          case "col-md-4":
             radiobtn = document.getElementById("clockCol4");
             radiobtn.checked = true;
             break;
-          case "col-5":
+          case "col-md-5":
             radiobtn = document.getElementById("clockCol5");
             radiobtn.checked = true;
         }
@@ -2927,22 +2927,22 @@ class Main extends React.Component {
                                 <div className="row m-auto">
 
                                   <div className="col radio">
-                                    <label class="radio-inline"> <input type="radio" name="blockWidth" id="clockColAuto" value="col" onChange={e => tempColW = e.target.value} /> Auto </label>
+                                    <label class="radio-inline"> <input type="radio" name="blockWidth" id="clockColAuto" value="col-md" onChange={e => tempColW = e.target.value} /> Auto </label>
                                   </div>
                                   <div className="col radio">
-                                    <label class="radio-inline"> <input type="radio" name="blockWidth" id="clockCol1" value="col-1" onChange={e => tempColW = e.target.value} /> 1 </label>
+                                    <label class="radio-inline"> <input type="radio" name="blockWidth" id="clockCol1" value="col-md-1" onChange={e => tempColW = e.target.value} /> 1 </label>
                                   </div>
                                   <div className="col radio">
-                                    <label class="radio-inline"> <input type="radio" name="blockWidth" id="clockCol2" value="col-2" onChange={e => tempColW = e.target.value} /> 2 </label>
+                                    <label class="radio-inline"> <input type="radio" name="blockWidth" id="clockCol2" value="col-md-2" onChange={e => tempColW = e.target.value} /> 2 </label>
                                   </div>
                                   <div className="col radio">
-                                    <label class="radio-inline"> <input type="radio" name="blockWidth" id="clockCol3" value="col-3" onChange={e => tempColW = e.target.value} /> 3 </label>
+                                    <label class="radio-inline"> <input type="radio" name="blockWidth" id="clockCol3" value="col-md-3" onChange={e => tempColW = e.target.value} /> 3 </label>
                                   </div>
                                   <div className="col radio">
-                                    <label class="radio-inline"> <input type="radio" name="blockWidth" id="clockCol4" value="col-4" onChange={e => tempColW = e.target.value} /> 4 </label>
+                                    <label class="radio-inline"> <input type="radio" name="blockWidth" id="clockCol4" value="col-md-4" onChange={e => tempColW = e.target.value} /> 4 </label>
                                   </div>
                                   <div className="col radio">
-                                    <label class="radio-inline"> <input type="radio" name="blockWidth" id="clockCol5" value="col-5" onChange={e => tempColW = e.target.value} /> 5 </label>
+                                    <label class="radio-inline"> <input type="radio" name="blockWidth" id="clockCol5" value="col-md-5" onChange={e => tempColW = e.target.value} /> 5 </label>
                                   </div>
 
                                 </div>
@@ -3553,22 +3553,22 @@ class Main extends React.Component {
                               <div className="col pt-1 pb-1">
                                 <div className="row m-auto">
                                   <div className="col radio">
-                                    <label class="radio-inline"> <input type="radio" name="blockWidth" id="creditColAuto" value="col" onChange={e => tempColW = e.target.value} /> Auto </label>
+                                    <label class="radio-inline"> <input type="radio" name="blockWidth" id="creditColAuto" value="col-md" onChange={e => tempColW = e.target.value} /> Auto </label>
                                   </div>
                                   <div className="col radio">
-                                    <label class="radio-inline"> <input type="radio" name="blockWidth" id="creditCol1" value="col-1" onChange={e => tempColW = e.target.value} /> 1 </label>
+                                    <label class="radio-inline"> <input type="radio" name="blockWidth" id="creditCol1" value="col-md-1" onChange={e => tempColW = e.target.value} /> 1 </label>
                                   </div>
                                   <div className="col radio">
-                                    <label class="radio-inline"> <input type="radio" name="blockWidth" id="creditCol2" value="col-2" onChange={e => tempColW = e.target.value} /> 2 </label>
+                                    <label class="radio-inline"> <input type="radio" name="blockWidth" id="creditCol2" value="col-md-2" onChange={e => tempColW = e.target.value} /> 2 </label>
                                   </div>
                                   <div className="col radio">
-                                    <label class="radio-inline"> <input type="radio" name="blockWidth" id="creditCol3" value="col-3" onChange={e => tempColW = e.target.value} /> 3 </label>
+                                    <label class="radio-inline"> <input type="radio" name="blockWidth" id="creditCol3" value="col-md-3" onChange={e => tempColW = e.target.value} /> 3 </label>
                                   </div>
                                   <div className="col radio">
-                                    <label class="radio-inline"> <input type="radio" name="blockWidth" id="creditCol4" value="col-4" onChange={e => tempColW = e.target.value} /> 4 </label>
+                                    <label class="radio-inline"> <input type="radio" name="blockWidth" id="creditCol4" value="col-md-4" onChange={e => tempColW = e.target.value} /> 4 </label>
                                   </div>
                                   <div className="col radio">
-                                    <label class="radio-inline"> <input type="radio" name="blockWidth" id="creditCol5" value="col-5" onChange={e => tempColW = e.target.value} /> 5 </label>
+                                    <label class="radio-inline"> <input type="radio" name="blockWidth" id="creditCol5" value="col-md-5" onChange={e => tempColW = e.target.value} /> 5 </label>
                                   </div>
                                 </div>
                               </div>

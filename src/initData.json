@@ -36,7 +36,7 @@
   "footCreditColor": "rgba(0, 177, 64, 0.95)",
   "footCreditOpacity": 0.95,
   "footCreditTextColor": "rgba(255, 255, 255, 1)",
-  "footCreditColW": "col",
+  "footCreditColW": "col-md",
   "backgroundColor": "rgba(255, 238, 204, 1)",
   "backgroundOpacity": 1,
   "catColor": "rgba(255, 238, 204, 1)",
