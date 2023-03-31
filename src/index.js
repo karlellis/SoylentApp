@@ -1470,7 +1470,7 @@ class Main extends React.Component {
     // console.log("Temp2: ", temp2);
     // console.log("Temp3: ", temp3);
     // console.log("Temp4: ", temp4);
-    if (fileImg !== null || temp2 !== "" || temp3 !== "" || temp4 !== tempAppVideo || cgPos !== "") {
+    if (fileImg !== null || temp2 !== "" || temp3 !== "" || temp4 !== tempAppVideo || temp5 !== tempCatTitle || cgPos !== "") {
       if (cgPos !== "") {
         inPos = parseInt(cgPos) - 1;
         console.log("Edit cgPos: ", cgPos, " currPos: ", currPos);
