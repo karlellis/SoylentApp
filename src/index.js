@@ -41,7 +41,7 @@ var arrayLength = 0;
 var login = false;
 var array = [];
 var arrayAdd = [];
-var inPos = 0;
+var inPos = "";
 var blockHide = "none";
 var appNewItem = {
   "title": "",
@@ -927,8 +927,8 @@ class Main extends React.Component {
             } else {
               index = this.state.rootAppItems[inPos].id;
             }
-            console.log("Index: ", index);
-            console.log("temp: ", temp);
+            // console.log("Index: ", index);
+            // console.log("temp: ", temp);
             appNewItem.icon = array[temp].icon;
             appNewItem.title = array[temp].title;
             appNewItem.link = array[temp].link;
@@ -1473,7 +1473,7 @@ class Main extends React.Component {
     if (fileImg !== null || temp2 !== "" || temp3 !== "" || temp4 !== tempAppVideo || temp5 !== tempCatTitle || cgPos !== "") {
       if (cgPos !== "") {
         inPos = parseInt(cgPos) - 1;
-        console.log("Edit cgPos: ", cgPos, " currPos: ", currPos);
+        // console.log("Edit cgPos: ", cgPos, " currPos: ", currPos);
         if (inPos < arrayLength && inPos >= 0 && inPos + 1 !== currPos) {
           this.saveImgFile(fileImg, "icon", "edit");
         } else {
@@ -1481,10 +1481,11 @@ class Main extends React.Component {
           this.setState({ alErrShow: true });
         }
       } else {
+        // console.log("cgPos === \"\"");
         this.saveImgFile(fileImg, "icon", "edit");
       }
     } else {
-      console.log("fileImg - temp2 - temp3 are Null!!!");
+      // console.log("fileImg - temp2 - temp3 are Null!!!");
       this.setState({ alShow: false });
       this.setState({ alErrShow: true });
     }
