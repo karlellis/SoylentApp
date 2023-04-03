@@ -28,6 +28,7 @@ var tempTextColor = "#0077c8";
 var tempColW = "";
 var radiobtn = "";
 var tempAppTitle = "";
+var tempAppDescr = "";
 var tempAppLink = "";
 var tempAppVideo = false;
 var tempCatTitle = "";
@@ -47,6 +48,7 @@ var appNewItem = {
   "title": "",
   "link": "",
   "icon": "",
+  "descr": "",
   "video": false,
   "cat": "Root",
   "id": 0
@@ -54,6 +56,11 @@ var appNewItem = {
 var catNewItem = {
   "title": "",
   "icon": ""
+};
+var appDescr = {
+  "title": "",
+  "icon": "",
+  "descr": ""
 };
 var exCrsNewItem = {
   "title": "",
@@ -358,6 +365,21 @@ const CatDialog = ({ handleClose, catDiaShow, children, activityChanged }) => {
       <section className="modal-main-dark">
         {children}
         <div className="modal-footer-dark">
+          <button type="button" /* disabled={(activityChanged) ? true : false} */ className="btn btn-secondary" data-dismiss="modal" onClick={handleClose}>Close</button>
+        </div>
+      </section>
+    </div>
+  );
+};
+
+const AppDescrDialog = ({ handleSave, handleClose, appDescrDiaShow, children, activityChanged }) => {
+  const showHideClassName = appDescrDiaShow ? "modal display-block" : "modal display-none";
+  return (
+    <div className={showHideClassName}>
+      <section className="modal-main-dark">
+        {children}
+        <div className="modal-footer-dark">
+          <button type="button" /* disabled={(activityChanged) ? true : false} */ className="btn btn-primary" onClick={handleSave}>Show</button>
           <button type="button" /* disabled={(activityChanged) ? true : false} */ className="btn btn-secondary" data-dismiss="modal" onClick={handleClose}>Close</button>
         </div>
       </section>
@@ -682,6 +704,7 @@ class Main extends React.Component {
       catAddDiaShow: false,
       searchDiaShow: false,
       catDiaShow: false,
+      appDescrDiaShow: false,
       creditsDiaShow: false,
       aocDiaShow: false,
       videoLink: tempAppLink,
@@ -977,6 +1000,7 @@ class Main extends React.Component {
             "title": "",
             "link": "",
             "icon": "",
+            "descr": "",
             "video": false,
             "cat": "",
             "id": 0
@@ -1020,6 +1044,7 @@ class Main extends React.Component {
             "title": "",
             "link": "",
             "icon": "",
+            "descr": "",
             "video": false,
             "cat": "",
             "id": 0
@@ -1061,6 +1086,7 @@ class Main extends React.Component {
             "title": "",
             "link": "",
             "icon": "",
+            "descr": "",
             "video": false,
             "cat": "",
             "id": 0
@@ -1284,6 +1310,7 @@ class Main extends React.Component {
             "title": "",
             "link": "",
             "icon": "",
+            "descr": "",
             "video": false,
             "cat": "",
             "id": 0
@@ -1298,6 +1325,7 @@ class Main extends React.Component {
         "title": "",
         "link": "",
         "icon": "",
+        "descr": "",
         "video": false,
         "cat": "",
         "id": 0
@@ -1332,6 +1360,7 @@ class Main extends React.Component {
             "title": "",
             "link": "",
             "icon": "",
+            "descr": "",
             "video": false,
             "cat": "Root",
             "id": 0
@@ -1350,6 +1379,7 @@ class Main extends React.Component {
         "title": "",
         "link": "",
         "icon": "",
+        "descr": "",
         "video": false,
         "cat": "Root",
         "cat": ""
@@ -2011,6 +2041,9 @@ class Main extends React.Component {
       case "appVideo":
         this.setState({ appVideoDiaShow: true });
         break;
+      case "appDescr":
+        this.setState({ appDescrDiaShow: true });
+        break;
       case "exCrs":
         this.setState({ exCrsDiaShow: true });
         break;
@@ -2135,6 +2168,9 @@ class Main extends React.Component {
       case "video":
         this.setState({ appVideoDiaShow: false });
         this.stopVideos();
+        break;
+      case "appdescr":
+        this.setState({ appDescrDiaShow: false });
         break;
       case "apporcat":
         this.setState({ aocDiaShow: false });
@@ -2560,1233 +2596,1233 @@ class Main extends React.Component {
         <noscript>You need to enable JavaScript to run this app.</noscript>
         <div class="whiteback">
           <div style={this.state.backStyle}>
-          <div class="contenitore">
-            <section>
-              <LoginDialog loginDiaShow={this.state.loginDiaShow} handleClose={() => this.hideModal("login")} handleLogin={this.loginCheck}>
-                <div className="modal-content">
-                  <div className="modal-header">
-                    <h5 className="modal-title" >Login</h5>
+            <div class="contenitore">
+              <section>
+                <LoginDialog loginDiaShow={this.state.loginDiaShow} handleClose={() => this.hideModal("login")} handleLogin={this.loginCheck}>
+                  <div className="modal-content">
+                    <div className="modal-header">
+                      <h5 className="modal-title" >Login</h5>
+                    </div>
+                    <div className="modal-body">
+                      <form id="loginForm">
+
+                        <div className="form-group">
+                          <div className="row text-center mb-1 m-auto">
+                            <div className="col">
+                              <div className="row border">
+                                <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
+                                  <label>User</label>
+                                </div>
+                                <div className="col d-flex flex-column justify-content-center align-items-center">
+                                  <input type="text" className="form-control border-0"
+                                    ref={(input) => { this.userInput = input; }} onChange={e => temp = e.target.value} />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="form-group">
+                          <div className="row text-center mb-1 m-auto">
+                            <div className="col">
+                              <div className="row border">
+                                <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
+                                  <label>Psw</label>
+                                </div>
+                                <div className="col d-flex flex-column justify-content-center align-items-center">
+                                  <input type="password" autocomplete="on" className="form-control border-0" onChange={e => temp2 = e.target.value} />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <Conferma alShow={this.state.alShow} handleClose={this.hideAlert}>
+                          <div className="row text-center pt-2">
+                            <div className="col">
+                              <div className="row">
+                                <section className="col pt-2 contenitore brick latowhite d-flex justify-content-center align-items-center ">
+                                  <div>
+                                    <p className="norfont">Wrong user name or password!</p>
+                                  </div>
+                                </section>
+                              </div>
+                            </div>
+                          </div>
+                        </Conferma>
+                      </form>
+                    </div>
                   </div>
-                  <div className="modal-body">
-                    <form id="loginForm">
+                </LoginDialog>
+                <LoginEditDialog loginEditDiaShow={this.state.loginEditDiaShow} handleClose={() => this.hideModal("loginedit")} handleEditLogin={this.loginEditCheck}>
+                  <div className="modal-content noborder">
+                    <div className="modal-header">
+                      <h5 className="modal-title" >Edit Login</h5>
+                    </div>
+                    <div className="modal-body">
+                      <form id="loginEditForm" autocomplete="off">
 
-                      <div className="form-group">
-                        <div className="row text-center mb-1 m-auto">
-                          <div className="col">
-                            <div className="row border">
-                              <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
-                                <label>User</label>
-                              </div>
-                              <div className="col d-flex flex-column justify-content-center align-items-center">
-                                <input type="text" className="form-control border-0"
-                                  ref={(input) => { this.userInput = input; }} onChange={e => temp = e.target.value} />
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="form-group">
-                        <div className="row text-center mb-1 m-auto">
-                          <div className="col">
-                            <div className="row border">
-                              <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
-                                <label>Psw</label>
-                              </div>
-                              <div className="col d-flex flex-column justify-content-center align-items-center">
-                                <input type="password" autocomplete="on" className="form-control border-0" onChange={e => temp2 = e.target.value} />
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <Conferma alShow={this.state.alShow} handleClose={this.hideAlert}>
-                        <div className="row text-center pt-2">
-                          <div className="col">
-                            <div className="row">
-                              <section className="col pt-2 contenitore brick latowhite d-flex justify-content-center align-items-center ">
-                                <div>
-                                  <p className="norfont">Wrong user name or password!</p>
+                        <div className="form-group">
+                          <div className="row text-center mb-1 m-auto">
+                            <div className="col">
+                              <div className="row border">
+                                <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
+                                  <label>User</label>
                                 </div>
-                              </section>
+                                <div className="col d-flex flex-column justify-content-center align-items-center">
+                                  <input type="text" className="form-control border-0"
+                                    ref={(input) => { this.userChangeInput = input; }} onChange={e => temp = e.target.value} autocomplete="off" />
+                                </div>
+                              </div>
                             </div>
                           </div>
                         </div>
-                      </Conferma>
-                    </form>
+
+                        <div className="form-group">
+                          <div className="row text-center mb-1 m-auto">
+                            <div className="col">
+                              <div className="row border">
+                                <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
+                                  <label>Psw</label>
+                                </div>
+                                <div className="col d-flex flex-column justify-content-center align-items-center">
+                                  <input type="password" autocomplete="new-password" className="form-control border-0" onChange={e => temp2 = e.target.value} />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <Conferma alShow={this.state.alShow} handleClose={this.hideAlert}>
+                          <div className="row text-center pt-2">
+                            <div className="col">
+                              <div className="row">
+                                <section className="col pt-2 contenitore solidgreen latowhite d-flex justify-content-center align-items-center ">
+                                  <div>
+                                    <p className="norfont">Username and password changed successfully!</p>
+                                  </div>
+                                </section>
+                              </div>
+                            </div>
+                          </div>
+                        </Conferma>
+                        <Errore alErrShow={this.state.alErrShow} handleClose={this.hideAlert}>
+                          <div className="row text-center pt-2">
+                            <div className="col">
+                              <div className="row">
+                                <section className="col pt-2 contenitore brick latowhite d-flex justify-content-center align-items-center ">
+                                  <div>
+                                    <p className="norfont">Error! Fill in at least one field.</p>
+                                  </div>
+                                </section>
+                              </div>
+                            </div>
+                          </div>
+                        </Errore>
+                      </form>
+                    </div>
                   </div>
-                </div>
-              </LoginDialog>
-              <LoginEditDialog loginEditDiaShow={this.state.loginEditDiaShow} handleClose={() => this.hideModal("loginedit")} handleEditLogin={this.loginEditCheck}>
-                <div className="modal-content noborder">
-                  <div className="modal-header">
-                    <h5 className="modal-title" >Edit Login</h5>
+                </LoginEditDialog>
+                <MenuDialog menuDiaShow={this.state.menuDiaShow} handleClose={() => this.hideModal("menu")} handleSave={this.saveMenu}>
+                  <div className="modal-content noborder">
+                    <div className="modal-header">
+                      <h5 className="modal-title" >Menu wallpaper change</h5>
+                    </div>
+                    <div className="modal-body">
+                      <form id="menuForm">
+
+                        <div className="form-group">
+                          <div className="row mb-1 m-auto">
+                            <div className="col">
+                              <div className="row border">
+                                <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
+                                  <label>Back color</label>
+                                </div>
+                                <div className="col d-flex flex-column justify-content-center align-items-center">
+                                  <input type="color" className="form-control border-0 p-0" defaultValue={this.rgbToHex(spData.menuColor)} onChange={e => tempColor = e.target.value} />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="form-group">
+                          <div className="row mb-1 m-auto">
+                            <div className="col">
+                              <div className="row border">
+                                <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
+                                  <label>Opacity</label>
+                                </div>
+                                <div className="col d-flex flex-column justify-content-center align-items-center">
+                                  <input type="range" class="form-range border-0 p-0" min="0" max="1" step="0.1" defaultValue={spData.menuOpacity} id="menuOpRange" onChange={e => tempOpacity = e.target.value} ></input>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="form-group">
+                          <div className="row mb-1 m-auto">
+                            <div className="col">
+                              <div className="row border">
+                                <div className="col col pt-1 pb-1 padlr latomenu d-flex flex-column justify-content-center align-items-center">
+                                  <label>Hide</label>
+                                </div>
+                                <div className="col d-flex flex-column justify-content-center align-items-center">
+                                  <label class="switch">
+                                    <input type="checkbox" className="form-control" defaultChecked={!spData.menuShow} onClick={e => {
+                                      if (spData.menuShow === false) {
+                                        blockHide = true;
+                                      } else {
+                                        blockHide = false;
+                                      }
+                                    }} />
+                                    <span class="slider round" title="Hide"></span>
+                                  </label>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="col-1"></div>
+                            <div className="col">
+                            </div>
+                          </div>
+                        </div>
+
+                        <Conferma alShow={this.state.alShow} handleClose={this.hideAlert}>
+                          <div className="row text-center pt-2">
+                            <div className="col">
+                              <div className="row">
+                                <section className="col pt-2 contenitore solidgreen latowhite d-flex justify-content-center align-items-center ">
+                                  <div>
+                                    <p className="norfont">Changes made!</p>
+                                  </div>
+                                </section>
+                              </div>
+                            </div>
+                          </div>
+                        </Conferma>
+                        <Errore alErrShow={this.state.alErrShow} handleClose={this.hideAlert}>
+                          <div className="row text-center pt-2">
+                            <div className="col">
+                              <div className="row">
+                                <section className="col pt-2 contenitore brick latowhite d-flex justify-content-center align-items-center ">
+                                  <div>
+                                    <p className="norfont">Error! Enter at least one character.</p>
+                                  </div>
+                                </section>
+                              </div>
+                            </div>
+                          </div>
+                        </Errore>
+                      </form>
+                    </div>
                   </div>
-                  <div className="modal-body">
-                    <form id="loginEditForm" autocomplete="off">
+                </MenuDialog>
+                <TitleDialog titleDiaShow={this.state.titleDiaShow} handleClose={() => this.hideModal("title")} handleSave={this.saveTitle}>
+                  <div className="modal-content noborder">
+                    <div className="modal-header">
+                      <h5 className="modal-title" >Change site name</h5>
+                    </div>
+                    <div className="modal-body">
+                      <form id="titleForm" onKeyDown={this.handleKeyDown}>
 
-                      <div className="form-group">
-                        <div className="row text-center mb-1 m-auto">
-                          <div className="col">
-                            <div className="row border">
-                              <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
-                                <label>User</label>
-                              </div>
-                              <div className="col d-flex flex-column justify-content-center align-items-center">
-                                <input type="text" className="form-control border-0"
-                                  ref={(input) => { this.userChangeInput = input; }} onChange={e => temp = e.target.value} autocomplete="off" />
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="form-group">
-                        <div className="row text-center mb-1 m-auto">
-                          <div className="col">
-                            <div className="row border">
-                              <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
-                                <label>Psw</label>
-                              </div>
-                              <div className="col d-flex flex-column justify-content-center align-items-center">
-                                <input type="password" autocomplete="new-password" className="form-control border-0" onChange={e => temp2 = e.target.value} />
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <Conferma alShow={this.state.alShow} handleClose={this.hideAlert}>
-                        <div className="row text-center pt-2">
-                          <div className="col">
-                            <div className="row">
-                              <section className="col pt-2 contenitore solidgreen latowhite d-flex justify-content-center align-items-center ">
-                                <div>
-                                  <p className="norfont">Username and password changed successfully!</p>
+                        <div className="form-group">
+                          <div className="row text-center mb-1 m-auto">
+                            <div className="col">
+                              <div className="row border">
+                                <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
+                                  <label>Name</label>
                                 </div>
-                              </section>
-                            </div>
-                          </div>
-                        </div>
-                      </Conferma>
-                      <Errore alErrShow={this.state.alErrShow} handleClose={this.hideAlert}>
-                        <div className="row text-center pt-2">
-                          <div className="col">
-                            <div className="row">
-                              <section className="col pt-2 contenitore brick latowhite d-flex justify-content-center align-items-center ">
-                                <div>
-                                  <p className="norfont">Error! Fill in at least one field.</p>
+                                <div className="col d-flex flex-column justify-content-center align-items-center">
+                                  <input type="text" className="form-control border-0" defaultValue={spData.headTitle} onChange={e => temp = e.target.value} />
                                 </div>
-                              </section>
+                              </div>
                             </div>
                           </div>
                         </div>
-                      </Errore>
-                    </form>
+
+                        <div class="form-group" >
+                          <div className="row text-center mb-1 m-auto">
+                            <div className="col">
+                              <div className="row border">
+                                <div className="col-2 col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
+                                  <label>Width</label>
+                                </div>
+                                <div className="col pt-1 pb-1">
+                                  <div className="row m-auto">
+                                    <div className="col radio">
+                                      <label class="radio-inline"> <input type="radio" name="blockWidth" id="headColAuto" value="col" onChange={e => tempColW = e.target.value} /> Auto </label>
+                                    </div>
+                                    <div className="col radio">
+                                      <label class="radio-inline"> <input type="radio" name="blockWidth" id="headCol1" value="col-1" onChange={e => tempColW = e.target.value} /> 1 </label>
+                                    </div>
+                                    <div className="col radio">
+                                      <label class="radio-inline"> <input type="radio" name="blockWidth" id="headCol2" value="col-2" onChange={e => tempColW = e.target.value} /> 2 </label>
+                                    </div>
+                                    <div className="col radio">
+                                      <label class="radio-inline"> <input type="radio" name="blockWidth" id="headCol3" value="col-3" onChange={e => tempColW = e.target.value} /> 3 </label>
+                                    </div>
+                                    <div className="col radio">
+                                      <label class="radio-inline"> <input type="radio" name="blockWidth" id="headCol4" value="col-4" onChange={e => tempColW = e.target.value} /> 4 </label>
+                                    </div>
+                                    <div className="col radio">
+                                      <label class="radio-inline"> <input type="radio" name="blockWidth" id="headCol5" value="col-5" onChange={e => tempColW = e.target.value} /> 5 </label>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="form-group">
+                          <div className="row mb-1 m-auto">
+                            <div className="col">
+                              <div className="row border">
+                                <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
+                                  <label>Back color</label>
+                                </div>
+                                <div className="col d-flex flex-column justify-content-center align-items-center">
+                                  <input type="color" className="form-control border-0 p-0" defaultValue={this.rgbToHex(spData.headColor)} onChange={e => tempColor = e.target.value} />
+                                </div>
+                              </div>
+                            </div>
+                            <div className="col-1"></div>
+                            <div className="col">
+                              <div className="row border">
+                                <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
+                                  <label>Text color</label>
+                                </div>
+                                <div className="col d-flex flex-column justify-content-center align-items-center">
+                                  <input type="color" className="form-control border-0 p-0" defaultValue={this.rgbToHex(spData.headTextColor)} onChange={e => tempTextColor = e.target.value} />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="form-group">
+                          <div className="row mb-1 m-auto">
+                            <div className="col">
+                              <div className="row border">
+                                <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
+                                  <label>Opacity</label>
+                                </div>
+                                <div className="col d-flex flex-column justify-content-center align-items-center">
+                                  <input type="range" class="form-range border-0 p-0" min="0" max="1" step="0.1" defaultValue={spData.headOpacity} id="titleOpRange" onChange={e => tempOpacity = e.target.value} ></input>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="form-group">
+                          <div className="row mb-1 m-auto">
+                            <div className="col">
+                              <div className="row border">
+                                <div className="col col pt-1 pb-1 padlr latomenu d-flex flex-column justify-content-center align-items-center">
+                                  <label>Hide</label>
+                                </div>
+                                <div className="col d-flex flex-column justify-content-center align-items-center">
+                                  <label class="switch">
+                                    <input type="checkbox" className="form-control" defaultChecked={!spData.titleShow} onClick={e => {
+                                      if (spData.titleShow === false) {
+                                        blockHide = true;
+                                      } else {
+                                        blockHide = false;
+                                      }
+                                    }} />
+                                    <span class="slider round" title="Hide"></span>
+                                  </label>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="col-1"></div>
+                            <div className="col">
+                            </div>
+                          </div>
+                        </div>
+
+                        <Conferma alShow={this.state.alShow} handleClose={this.hideAlert}>
+                          <div className="row text-center pt-2">
+                            <div className="col">
+                              <div className="row">
+                                <section className="col pt-2 contenitore solidgreen latowhite d-flex justify-content-center align-items-center ">
+                                  <div>
+                                    <p className="norfont">Changes made!</p>
+                                  </div>
+                                </section>
+                              </div>
+                            </div>
+                          </div>
+                        </Conferma>
+                        <Errore alErrShow={this.state.alErrShow} handleClose={this.hideAlert}>
+                          <div className="row text-center pt-2">
+                            <div className="col">
+                              <div className="row">
+                                <section className="col pt-2 contenitore brick latowhite d-flex justify-content-center align-items-center ">
+                                  <div>
+                                    <p className="norfont">Error! Enter at least one character.</p>
+                                  </div>
+                                </section>
+                              </div>
+                            </div>
+                          </div>
+                        </Errore>
+                      </form>
+                    </div>
                   </div>
-                </div>
-              </LoginEditDialog>
-              <MenuDialog menuDiaShow={this.state.menuDiaShow} handleClose={() => this.hideModal("menu")} handleSave={this.saveMenu}>
-                <div className="modal-content noborder">
-                  <div className="modal-header">
-                    <h5 className="modal-title" >Menu wallpaper change</h5>
+                </TitleDialog>
+                <ClockDialog clockDiaShow={this.state.clockDiaShow} handleClose={() => this.hideModal("clock")} handleSave={this.saveClock}>
+                  <div className="modal-content noborder">
+                    <div className="modal-header">
+                      <h5 className="modal-title" >Clock wallpaper change</h5>
+                    </div>
+                    <div className="modal-body">
+                      <form id="clockForm">
+
+                        <div class="form-group" >
+                          <div className="row text-center mb-1 m-auto">
+                            <div className="col">
+                              <div className="row border">
+                                <div className="col-2 col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
+                                  <label>Width</label>
+                                </div>
+                                <div className="col pt-1 pb-1">
+                                  <div className="row m-auto">
+
+                                    <div className="col radio">
+                                      <label class="radio-inline"> <input type="radio" name="blockWidth" id="clockColAuto" value="col-md" onChange={e => tempColW = e.target.value} /> Auto </label>
+                                    </div>
+                                    <div className="col radio">
+                                      <label class="radio-inline"> <input type="radio" name="blockWidth" id="clockCol1" value="col-md-1" onChange={e => tempColW = e.target.value} /> 1 </label>
+                                    </div>
+                                    <div className="col radio">
+                                      <label class="radio-inline"> <input type="radio" name="blockWidth" id="clockCol2" value="col-md-2" onChange={e => tempColW = e.target.value} /> 2 </label>
+                                    </div>
+                                    <div className="col radio">
+                                      <label class="radio-inline"> <input type="radio" name="blockWidth" id="clockCol3" value="col-md-3" onChange={e => tempColW = e.target.value} /> 3 </label>
+                                    </div>
+                                    <div className="col radio">
+                                      <label class="radio-inline"> <input type="radio" name="blockWidth" id="clockCol4" value="col-md-4" onChange={e => tempColW = e.target.value} /> 4 </label>
+                                    </div>
+                                    <div className="col radio">
+                                      <label class="radio-inline"> <input type="radio" name="blockWidth" id="clockCol5" value="col-md-5" onChange={e => tempColW = e.target.value} /> 5 </label>
+                                    </div>
+
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="form-group">
+                          <div className="row mb-1 m-auto">
+                            <div className="col">
+                              <div className="row border">
+                                <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
+                                  <label>Back color</label>
+                                </div>
+                                <div className="col d-flex flex-column justify-content-center align-items-center">
+                                  <input type="color" className="form-control border-0 p-0" defaultValue={this.rgbToHex(spData.clockColor)} onChange={e => tempColor = e.target.value} />
+                                </div>
+                              </div>
+                            </div>
+                            <div className="col-1"></div>
+                            <div className="col">
+                              <div className="row border">
+                                <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
+                                  <label>Text color</label>
+                                </div>
+                                <div className="col d-flex flex-column justify-content-center align-items-center">
+                                  <input type="color" className="form-control border-0 p-0" defaultValue={this.rgbToHex(spData.clockTextColor)} onChange={e => tempTextColor = e.target.value} />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="form-group">
+                          <div className="row mb-1 m-auto">
+                            <div className="col">
+                              <div className="row border">
+                                <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
+                                  <label>Opacity</label>
+                                </div>
+                                <div className="col d-flex flex-column justify-content-center align-items-center">
+                                  <input type="range" class="form-range border-0 p-0" min="0" max="1" step="0.1" defaultValue={spData.clockOpacity} id="clockOpRange" onChange={e => tempOpacity = e.target.value} ></input>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="form-group">
+                          <div className="row mb-1 m-auto">
+                            <div className="col">
+                              <div className="row border">
+                                <div className="col col pt-1 pb-1 padlr latomenu d-flex flex-column justify-content-center align-items-center">
+                                  <label>Hide</label>
+                                </div>
+                                <div className="col d-flex flex-column justify-content-center align-items-center">
+                                  <label class="switch">
+                                    <input type="checkbox" className="form-control" defaultChecked={!spData.clockShow} onClick={e => {
+                                      if (spData.clockShow === false) {
+                                        blockHide = true;
+                                      } else {
+                                        blockHide = false;
+                                      }
+                                    }} />
+                                    <span class="slider round"></span>
+                                  </label>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="col-1"></div>
+                            <div className="col">
+                            </div>
+                          </div>
+                        </div>
+
+                        <Conferma alShow={this.state.alShow} handleClose={this.hideAlert}>
+                          <div className="row text-center pt-2">
+                            <div className="col">
+                              <div className="row">
+                                <section className="col pt-2 contenitore solidgreen latowhite d-flex justify-content-center align-items-center ">
+                                  <div>
+                                    <p className="norfont">Changes made!</p>
+                                  </div>
+                                </section>
+                              </div>
+                            </div>
+                          </div>
+                        </Conferma>
+                        <Errore alErrShow={this.state.alErrShow} handleClose={this.hideAlert}>
+                          <div className="row text-center pt-2">
+                            <div className="col">
+                              <div className="row">
+                                <section className="col pt-2 contenitore brick latowhite d-flex justify-content-center align-items-center ">
+                                  <div>
+                                    <p className="norfont">Error! Enter at least one character.</p>
+                                  </div>
+                                </section>
+                              </div>
+                            </div>
+                          </div>
+                        </Errore>
+                      </form>
+                    </div>
                   </div>
-                  <div className="modal-body">
-                    <form id="menuForm">
+                </ClockDialog>
+                <LogoDialog logoDiaShow={this.state.logoDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("logo")} handleUpload={this.saveLogo}>
+                  <div className="modal-content noborder">
+                    <div className="modal-header">
+                      <h5 className="modal-title" >Change logo</h5>
+                    </div>
+                    <div className="modal-body">
+                      <form id="logoForm">
 
-                      <div className="form-group">
-                        <div className="row mb-1 m-auto">
-                          <div className="col">
-                            <div className="row border">
-                              <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
-                                <label>Back color</label>
-                              </div>
-                              <div className="col d-flex flex-column justify-content-center align-items-center">
-                                <input type="color" className="form-control border-0 p-0" defaultValue={this.rgbToHex(spData.menuColor)} onChange={e => tempColor = e.target.value} />
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="form-group">
-                        <div className="row mb-1 m-auto">
-                          <div className="col">
-                            <div className="row border">
-                              <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
-                                <label>Opacity</label>
-                              </div>
-                              <div className="col d-flex flex-column justify-content-center align-items-center">
-                                <input type="range" class="form-range border-0 p-0" min="0" max="1" step="0.1" defaultValue={spData.menuOpacity} id="menuOpRange" onChange={e => tempOpacity = e.target.value} ></input>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="form-group">
-                        <div className="row mb-1 m-auto">
-                          <div className="col">
-                            <div className="row border">
-                              <div className="col col pt-1 pb-1 padlr latomenu d-flex flex-column justify-content-center align-items-center">
-                                <label>Hide</label>
-                              </div>
-                              <div className="col d-flex flex-column justify-content-center align-items-center">
-                                <label class="switch">
-                                  <input type="checkbox" className="form-control" defaultChecked={!spData.menuShow} onClick={e => {
-                                    if (spData.menuShow === false) {
-                                      blockHide = true;
-                                    } else {
-                                      blockHide = false;
-                                    }
-                                  }} />
-                                  <span class="slider round" title="Hide"></span>
-                                </label>
-                              </div>
-                            </div>
-                          </div>
-                          <div className="col-1"></div>
-                          <div className="col">
-                          </div>
-                        </div>
-                      </div>
-
-                      <Conferma alShow={this.state.alShow} handleClose={this.hideAlert}>
-                        <div className="row text-center pt-2">
-                          <div className="col">
-                            <div className="row">
-                              <section className="col pt-2 contenitore solidgreen latowhite d-flex justify-content-center align-items-center ">
-                                <div>
-                                  <p className="norfont">Changes made!</p>
+                        <div className="form-group">
+                          <div className="row text-center mb-1 m-auto">
+                            <div className="col">
+                              <div className="row border">
+                                <div className="col d-flex flex-column justify-content-center align-items-center">
+                                  <input type="file" className="form-control boxs border-0" name="image" onChange={e => fileImg = e.target.files[0]} />
                                 </div>
-                              </section>
+                              </div>
                             </div>
                           </div>
                         </div>
-                      </Conferma>
-                      <Errore alErrShow={this.state.alErrShow} handleClose={this.hideAlert}>
-                        <div className="row text-center pt-2">
-                          <div className="col">
-                            <div className="row">
-                              <section className="col pt-2 contenitore brick latowhite d-flex justify-content-center align-items-center ">
-                                <div>
-                                  <p className="norfont">Error! Enter at least one character.</p>
+
+                        <div class="form-group" >
+                          <div className="row text-center mb-1 m-auto">
+                            <div className="col">
+                              <div className="row border">
+                                <div className="col-2 col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
+                                  <label>Width</label>
                                 </div>
-                              </section>
-                            </div>
-                          </div>
-                        </div>
-                      </Errore>
-                    </form>
-                  </div>
-                </div>
-              </MenuDialog>
-              <TitleDialog titleDiaShow={this.state.titleDiaShow} handleClose={() => this.hideModal("title")} handleSave={this.saveTitle}>
-                <div className="modal-content noborder">
-                  <div className="modal-header">
-                    <h5 className="modal-title" >Change site name</h5>
-                  </div>
-                  <div className="modal-body">
-                    <form id="titleForm" onKeyDown={this.handleKeyDown}>
-
-                      <div className="form-group">
-                        <div className="row text-center mb-1 m-auto">
-                          <div className="col">
-                            <div className="row border">
-                              <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
-                                <label>Name</label>
-                              </div>
-                              <div className="col d-flex flex-column justify-content-center align-items-center">
-                                <input type="text" className="form-control border-0" defaultValue={spData.headTitle} onChange={e => temp = e.target.value} />
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="form-group" >
-                        <div className="row text-center mb-1 m-auto">
-                          <div className="col">
-                            <div className="row border">
-                              <div className="col-2 col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
-                                <label>Width</label>
-                              </div>
-                              <div className="col pt-1 pb-1">
-                                <div className="row m-auto">
-                                  <div className="col radio">
-                                    <label class="radio-inline"> <input type="radio" name="blockWidth" id="headColAuto" value="col" onChange={e => tempColW = e.target.value} /> Auto </label>
-                                  </div>
-                                  <div className="col radio">
-                                    <label class="radio-inline"> <input type="radio" name="blockWidth" id="headCol1" value="col-1" onChange={e => tempColW = e.target.value} /> 1 </label>
-                                  </div>
-                                  <div className="col radio">
-                                    <label class="radio-inline"> <input type="radio" name="blockWidth" id="headCol2" value="col-2" onChange={e => tempColW = e.target.value} /> 2 </label>
-                                  </div>
-                                  <div className="col radio">
-                                    <label class="radio-inline"> <input type="radio" name="blockWidth" id="headCol3" value="col-3" onChange={e => tempColW = e.target.value} /> 3 </label>
-                                  </div>
-                                  <div className="col radio">
-                                    <label class="radio-inline"> <input type="radio" name="blockWidth" id="headCol4" value="col-4" onChange={e => tempColW = e.target.value} /> 4 </label>
-                                  </div>
-                                  <div className="col radio">
-                                    <label class="radio-inline"> <input type="radio" name="blockWidth" id="headCol5" value="col-5" onChange={e => tempColW = e.target.value} /> 5 </label>
+                                <div className="col pt-1 pb-1">
+                                  <div className="row m-auto">
+                                    <div className="col radio">
+                                      <label class="radio-inline"> <input type="radio" name="blockWidth" id="logoColAuto" value="col" onChange={e => tempColW = e.target.value} /> Auto </label>
+                                    </div>
+                                    <div className="col radio">
+                                      <label class="radio-inline"> <input type="radio" name="blockWidth" id="logoCol1" value="col-1" onChange={e => tempColW = e.target.value} /> 1 </label>
+                                    </div>
+                                    <div className="col radio">
+                                      <label class="radio-inline"> <input type="radio" name="blockWidth" id="logoCol2" value="col-2" onChange={e => tempColW = e.target.value} /> 2 </label>
+                                    </div>
+                                    <div className="col radio">
+                                      <label class="radio-inline"> <input type="radio" name="blockWidth" id="logoCol3" value="col-3" onChange={e => tempColW = e.target.value} /> 3 </label>
+                                    </div>
+                                    <div className="col radio">
+                                      <label class="radio-inline"> <input type="radio" name="blockWidth" id="logoCol4" value="col-4" onChange={e => tempColW = e.target.value} /> 4 </label>
+                                    </div>
+                                    <div className="col radio">
+                                      <label class="radio-inline"> <input type="radio" name="blockWidth" id="logoCol5" value="col-5" onChange={e => tempColW = e.target.value} /> 5 </label>
+                                    </div>
                                   </div>
                                 </div>
                               </div>
                             </div>
                           </div>
                         </div>
-                      </div>
 
-                      <div className="form-group">
-                        <div className="row mb-1 m-auto">
-                          <div className="col">
-                            <div className="row border">
-                              <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
-                                <label>Back color</label>
-                              </div>
-                              <div className="col d-flex flex-column justify-content-center align-items-center">
-                                <input type="color" className="form-control border-0 p-0" defaultValue={this.rgbToHex(spData.headColor)} onChange={e => tempColor = e.target.value} />
-                              </div>
-                            </div>
-                          </div>
-                          <div className="col-1"></div>
-                          <div className="col">
-                            <div className="row border">
-                              <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
-                                <label>Text color</label>
-                              </div>
-                              <div className="col d-flex flex-column justify-content-center align-items-center">
-                                <input type="color" className="form-control border-0 p-0" defaultValue={this.rgbToHex(spData.headTextColor)} onChange={e => tempTextColor = e.target.value} />
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="form-group">
-                        <div className="row mb-1 m-auto">
-                          <div className="col">
-                            <div className="row border">
-                              <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
-                                <label>Opacity</label>
-                              </div>
-                              <div className="col d-flex flex-column justify-content-center align-items-center">
-                                <input type="range" class="form-range border-0 p-0" min="0" max="1" step="0.1" defaultValue={spData.headOpacity} id="titleOpRange" onChange={e => tempOpacity = e.target.value} ></input>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="form-group">
-                        <div className="row mb-1 m-auto">
-                          <div className="col">
-                            <div className="row border">
-                              <div className="col col pt-1 pb-1 padlr latomenu d-flex flex-column justify-content-center align-items-center">
-                                <label>Hide</label>
-                              </div>
-                              <div className="col d-flex flex-column justify-content-center align-items-center">
-                                <label class="switch">
-                                  <input type="checkbox" className="form-control" defaultChecked={!spData.titleShow} onClick={e => {
-                                    if (spData.titleShow === false) {
-                                      blockHide = true;
-                                    } else {
-                                      blockHide = false;
-                                    }
-                                  }} />
-                                  <span class="slider round" title="Hide"></span>
-                                </label>
-                              </div>
-                            </div>
-                          </div>
-                          <div className="col-1"></div>
-                          <div className="col">
-                          </div>
-                        </div>
-                      </div>
-
-                      <Conferma alShow={this.state.alShow} handleClose={this.hideAlert}>
-                        <div className="row text-center pt-2">
-                          <div className="col">
-                            <div className="row">
-                              <section className="col pt-2 contenitore solidgreen latowhite d-flex justify-content-center align-items-center ">
-                                <div>
-                                  <p className="norfont">Changes made!</p>
+                        <div className="form-group">
+                          <div className="row mb-1 m-auto">
+                            <div className="col">
+                              <div className="row border">
+                                <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
+                                  <label>Back color</label>
                                 </div>
-                              </section>
-                            </div>
-                          </div>
-                        </div>
-                      </Conferma>
-                      <Errore alErrShow={this.state.alErrShow} handleClose={this.hideAlert}>
-                        <div className="row text-center pt-2">
-                          <div className="col">
-                            <div className="row">
-                              <section className="col pt-2 contenitore brick latowhite d-flex justify-content-center align-items-center ">
-                                <div>
-                                  <p className="norfont">Error! Enter at least one character.</p>
-                                </div>
-                              </section>
-                            </div>
-                          </div>
-                        </div>
-                      </Errore>
-                    </form>
-                  </div>
-                </div>
-              </TitleDialog>
-              <ClockDialog clockDiaShow={this.state.clockDiaShow} handleClose={() => this.hideModal("clock")} handleSave={this.saveClock}>
-                <div className="modal-content noborder">
-                  <div className="modal-header">
-                    <h5 className="modal-title" >Clock wallpaper change</h5>
-                  </div>
-                  <div className="modal-body">
-                    <form id="clockForm">
-
-                      <div class="form-group" >
-                        <div className="row text-center mb-1 m-auto">
-                          <div className="col">
-                            <div className="row border">
-                              <div className="col-2 col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
-                                <label>Width</label>
-                              </div>
-                              <div className="col pt-1 pb-1">
-                                <div className="row m-auto">
-
-                                  <div className="col radio">
-                                    <label class="radio-inline"> <input type="radio" name="blockWidth" id="clockColAuto" value="col-md" onChange={e => tempColW = e.target.value} /> Auto </label>
-                                  </div>
-                                  <div className="col radio">
-                                    <label class="radio-inline"> <input type="radio" name="blockWidth" id="clockCol1" value="col-md-1" onChange={e => tempColW = e.target.value} /> 1 </label>
-                                  </div>
-                                  <div className="col radio">
-                                    <label class="radio-inline"> <input type="radio" name="blockWidth" id="clockCol2" value="col-md-2" onChange={e => tempColW = e.target.value} /> 2 </label>
-                                  </div>
-                                  <div className="col radio">
-                                    <label class="radio-inline"> <input type="radio" name="blockWidth" id="clockCol3" value="col-md-3" onChange={e => tempColW = e.target.value} /> 3 </label>
-                                  </div>
-                                  <div className="col radio">
-                                    <label class="radio-inline"> <input type="radio" name="blockWidth" id="clockCol4" value="col-md-4" onChange={e => tempColW = e.target.value} /> 4 </label>
-                                  </div>
-                                  <div className="col radio">
-                                    <label class="radio-inline"> <input type="radio" name="blockWidth" id="clockCol5" value="col-md-5" onChange={e => tempColW = e.target.value} /> 5 </label>
-                                  </div>
-
+                                <div className="col d-flex flex-column justify-content-center align-items-center">
+                                  <input type="color" className="form-control border-0 p-0" defaultValue={this.rgbToHex(spData.logoColor)} onChange={e => tempColor = e.target.value} />
                                 </div>
                               </div>
                             </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="form-group">
-                        <div className="row mb-1 m-auto">
-                          <div className="col">
-                            <div className="row border">
-                              <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
-                                <label>Back color</label>
-                              </div>
-                              <div className="col d-flex flex-column justify-content-center align-items-center">
-                                <input type="color" className="form-control border-0 p-0" defaultValue={this.rgbToHex(spData.clockColor)} onChange={e => tempColor = e.target.value} />
-                              </div>
-                            </div>
-                          </div>
-                          <div className="col-1"></div>
-                          <div className="col">
-                            <div className="row border">
-                              <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
-                                <label>Text color</label>
-                              </div>
-                              <div className="col d-flex flex-column justify-content-center align-items-center">
-                                <input type="color" className="form-control border-0 p-0" defaultValue={this.rgbToHex(spData.clockTextColor)} onChange={e => tempTextColor = e.target.value} />
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="form-group">
-                        <div className="row mb-1 m-auto">
-                          <div className="col">
-                            <div className="row border">
-                              <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
-                                <label>Opacity</label>
-                              </div>
-                              <div className="col d-flex flex-column justify-content-center align-items-center">
-                                <input type="range" class="form-range border-0 p-0" min="0" max="1" step="0.1" defaultValue={spData.clockOpacity} id="clockOpRange" onChange={e => tempOpacity = e.target.value} ></input>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="form-group">
-                        <div className="row mb-1 m-auto">
-                          <div className="col">
-                            <div className="row border">
-                              <div className="col col pt-1 pb-1 padlr latomenu d-flex flex-column justify-content-center align-items-center">
-                                <label>Hide</label>
-                              </div>
-                              <div className="col d-flex flex-column justify-content-center align-items-center">
-                                <label class="switch">
-                                  <input type="checkbox" className="form-control" defaultChecked={!spData.clockShow} onClick={e => {
-                                    if (spData.clockShow === false) {
-                                      blockHide = true;
-                                    } else {
-                                      blockHide = false;
-                                    }
-                                  }} />
-                                  <span class="slider round"></span>
-                                </label>
-                              </div>
-                            </div>
-                          </div>
-                          <div className="col-1"></div>
-                          <div className="col">
-                          </div>
-                        </div>
-                      </div>
-
-                      <Conferma alShow={this.state.alShow} handleClose={this.hideAlert}>
-                        <div className="row text-center pt-2">
-                          <div className="col">
-                            <div className="row">
-                              <section className="col pt-2 contenitore solidgreen latowhite d-flex justify-content-center align-items-center ">
-                                <div>
-                                  <p className="norfont">Changes made!</p>
-                                </div>
-                              </section>
-                            </div>
-                          </div>
-                        </div>
-                      </Conferma>
-                      <Errore alErrShow={this.state.alErrShow} handleClose={this.hideAlert}>
-                        <div className="row text-center pt-2">
-                          <div className="col">
-                            <div className="row">
-                              <section className="col pt-2 contenitore brick latowhite d-flex justify-content-center align-items-center ">
-                                <div>
-                                  <p className="norfont">Error! Enter at least one character.</p>
-                                </div>
-                              </section>
-                            </div>
-                          </div>
-                        </div>
-                      </Errore>
-                    </form>
-                  </div>
-                </div>
-              </ClockDialog>
-              <LogoDialog logoDiaShow={this.state.logoDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("logo")} handleUpload={this.saveLogo}>
-                <div className="modal-content noborder">
-                  <div className="modal-header">
-                    <h5 className="modal-title" >Change logo</h5>
-                  </div>
-                  <div className="modal-body">
-                    <form id="logoForm">
-
-                      <div className="form-group">
-                        <div className="row text-center mb-1 m-auto">
-                          <div className="col">
-                            <div className="row border">
-                              <div className="col d-flex flex-column justify-content-center align-items-center">
-                                <input type="file" className="form-control boxs border-0" name="image" onChange={e => fileImg = e.target.files[0]} />
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="form-group" >
-                        <div className="row text-center mb-1 m-auto">
-                          <div className="col">
-                            <div className="row border">
-                              <div className="col-2 col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
-                                <label>Width</label>
-                              </div>
-                              <div className="col pt-1 pb-1">
-                                <div className="row m-auto">
-                                  <div className="col radio">
-                                    <label class="radio-inline"> <input type="radio" name="blockWidth" id="logoColAuto" value="col" onChange={e => tempColW = e.target.value} /> Auto </label>
-                                  </div>
-                                  <div className="col radio">
-                                    <label class="radio-inline"> <input type="radio" name="blockWidth" id="logoCol1" value="col-1" onChange={e => tempColW = e.target.value} /> 1 </label>
-                                  </div>
-                                  <div className="col radio">
-                                    <label class="radio-inline"> <input type="radio" name="blockWidth" id="logoCol2" value="col-2" onChange={e => tempColW = e.target.value} /> 2 </label>
-                                  </div>
-                                  <div className="col radio">
-                                    <label class="radio-inline"> <input type="radio" name="blockWidth" id="logoCol3" value="col-3" onChange={e => tempColW = e.target.value} /> 3 </label>
-                                  </div>
-                                  <div className="col radio">
-                                    <label class="radio-inline"> <input type="radio" name="blockWidth" id="logoCol4" value="col-4" onChange={e => tempColW = e.target.value} /> 4 </label>
-                                  </div>
-                                  <div className="col radio">
-                                    <label class="radio-inline"> <input type="radio" name="blockWidth" id="logoCol5" value="col-5" onChange={e => tempColW = e.target.value} /> 5 </label>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="form-group">
-                        <div className="row mb-1 m-auto">
-                          <div className="col">
-                            <div className="row border">
-                              <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
-                                <label>Back color</label>
-                              </div>
-                              <div className="col d-flex flex-column justify-content-center align-items-center">
-                                <input type="color" className="form-control border-0 p-0" defaultValue={this.rgbToHex(spData.logoColor)} onChange={e => tempColor = e.target.value} />
-                              </div>
-                            </div>
-                          </div>
-                          {/* <div className="col-1"></div>
+                            {/* <div className="col-1"></div>
                         <div className="col">
                           <div className="row">
                           </div>
                         </div> */}
+                          </div>
                         </div>
-                      </div>
 
-                      <div className="form-group">
-                        <div className="row mb-1 m-auto">
-                          <div className="col">
-                            <div className="row border">
-                              <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
-                                <label>Opacity</label>
-                              </div>
-                              <div className="col d-flex flex-column justify-content-center align-items-center">
-                                <input type="range" class="form-range border-0 p-0" min="0" max="1" step="0.1" defaultValue={spData.logoOpacity} id="logoOpRange" onChange={e => tempOpacity = e.target.value} ></input>
+                        <div className="form-group">
+                          <div className="row mb-1 m-auto">
+                            <div className="col">
+                              <div className="row border">
+                                <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
+                                  <label>Opacity</label>
+                                </div>
+                                <div className="col d-flex flex-column justify-content-center align-items-center">
+                                  <input type="range" class="form-range border-0 p-0" min="0" max="1" step="0.1" defaultValue={spData.logoOpacity} id="logoOpRange" onChange={e => tempOpacity = e.target.value} ></input>
+                                </div>
                               </div>
                             </div>
-                          </div>
-                          {/* <div className="col-1"></div>
+                            {/* <div className="col-1"></div>
                         <div className="col">
                           <div className="row">
                           </div>
                         </div> */}
+                          </div>
                         </div>
-                      </div>
 
-                      <div className="form-group">
-                        <div className="row mb-1 m-auto">
-                          <div className="col">
-                            <div className="row border">
-                              <div className="col col pt-1 pb-1 padlr latomenu d-flex flex-column justify-content-center align-items-center">
-                                <label>Hide</label>
-                              </div>
-                              <div className="col d-flex flex-column justify-content-center align-items-center">
-                                <label class="switch">
-                                  <input type="checkbox" className="form-control" defaultChecked={!spData.logoShow} onClick={e => {
-                                    if (spData.logoShow === false) {
-                                      blockHide = true;
-                                    } else {
-                                      blockHide = false;
-                                    }
-                                  }} />
-                                  <span class="slider round"></span>
-                                </label>
+                        <div className="form-group">
+                          <div className="row mb-1 m-auto">
+                            <div className="col">
+                              <div className="row border">
+                                <div className="col col pt-1 pb-1 padlr latomenu d-flex flex-column justify-content-center align-items-center">
+                                  <label>Hide</label>
+                                </div>
+                                <div className="col d-flex flex-column justify-content-center align-items-center">
+                                  <label class="switch">
+                                    <input type="checkbox" className="form-control" defaultChecked={!spData.logoShow} onClick={e => {
+                                      if (spData.logoShow === false) {
+                                        blockHide = true;
+                                      } else {
+                                        blockHide = false;
+                                      }
+                                    }} />
+                                    <span class="slider round"></span>
+                                  </label>
+                                </div>
                               </div>
                             </div>
-                          </div>
-                          <div className="col-1"></div>
-                          <div className="col">
+                            <div className="col-1"></div>
+                            <div className="col">
+                            </div>
                           </div>
                         </div>
-                      </div>
 
-                      <Conferma alShow={this.state.alShow} handleClose={this.hideAlert}>
-                        <div className="row text-center pt-2">
-                          <div className="col">
-                            <div className="row">
-                              <section className="col pt-2 contenitore solidgreen latowhite d-flex justify-content-center align-items-center ">
-                                <div>
-                                  <p className="norfont">Changes made!</p>
-                                </div>
-                              </section>
+                        <Conferma alShow={this.state.alShow} handleClose={this.hideAlert}>
+                          <div className="row text-center pt-2">
+                            <div className="col">
+                              <div className="row">
+                                <section className="col pt-2 contenitore solidgreen latowhite d-flex justify-content-center align-items-center ">
+                                  <div>
+                                    <p className="norfont">Changes made!</p>
+                                  </div>
+                                </section>
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      </Conferma>
-                      <Upload upShow={this.state.upShow} handleClose={this.hideAlert}>
-                        <div className="row text-center pt-2">
-                          <div className="col">
-                            <div className="row">
-                              <section className="col pt-2 contenitore solidblue latowhite d-flex justify-content-center align-items-center ">
-                                <div>
-                                  <p className="norfont">Loading data... Please wait.</p>
-                                </div>
-                              </section>
+                        </Conferma>
+                        <Upload upShow={this.state.upShow} handleClose={this.hideAlert}>
+                          <div className="row text-center pt-2">
+                            <div className="col">
+                              <div className="row">
+                                <section className="col pt-2 contenitore solidblue latowhite d-flex justify-content-center align-items-center ">
+                                  <div>
+                                    <p className="norfont">Loading data... Please wait.</p>
+                                  </div>
+                                </section>
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      </Upload>
-                    </form>
+                        </Upload>
+                      </form>
+                    </div>
                   </div>
-                </div>
-              </LogoDialog>
-              <InfoDialog infoDiaShow={this.state.infoDiaShow} handleClose={() => this.hideModal("info")} handleSave={this.saveInfo}>
-                <div className="modal-content noborder">
-                  <div className="modal-header">
-                    <h5 className="modal-title" >Edit site info</h5>
-                  </div>
-                  <div className="modal-body">
-                    <form id="infoForm">
+                </LogoDialog>
+                <InfoDialog infoDiaShow={this.state.infoDiaShow} handleClose={() => this.hideModal("info")} handleSave={this.saveInfo}>
+                  <div className="modal-content noborder">
+                    <div className="modal-header">
+                      <h5 className="modal-title" >Edit site info</h5>
+                    </div>
+                    <div className="modal-body">
+                      <form id="infoForm">
 
-                      <div className="form-group">
-                        <div className="row text-center mb-1 m-auto">
-                          <div className="col">
-                            <div className="row border">
-                              <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
-                                <label>Info</label>
-                              </div>
-                              <div className="col d-flex flex-column justify-content-center align-items-center">
-                                <input type="text" disabled={disField} className="form-control border-0" defaultValue={spData.footTitle} onChange={e => temp = e.target.value} />
-                              </div>
-                              <div className="col-2 border d-flex flex-column justify-content-center align-items-center">
-                                <label className="switch">
-                                  <input type="checkbox" className="form-control" defaultChecked={spData.noFootTitle} onClick={e => {
-                                    if (this.state.disField === false) {
-                                      this.setState({
-                                        disField: true
-                                      });
-                                      spData.noFootTitle = true;
-                                    } else {
-                                      this.setState({
-                                        disField: false
-                                      });
-                                      spData.noFootTitle = false;
-                                    }
-                                  }} />
-                                  <span class="slider round" title="Hide"></span>
-                                </label>
+                        <div className="form-group">
+                          <div className="row text-center mb-1 m-auto">
+                            <div className="col">
+                              <div className="row border">
+                                <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
+                                  <label>Info</label>
+                                </div>
+                                <div className="col d-flex flex-column justify-content-center align-items-center">
+                                  <input type="text" disabled={disField} className="form-control border-0" defaultValue={spData.footTitle} onChange={e => temp = e.target.value} />
+                                </div>
+                                <div className="col-2 border d-flex flex-column justify-content-center align-items-center">
+                                  <label className="switch">
+                                    <input type="checkbox" className="form-control" defaultChecked={spData.noFootTitle} onClick={e => {
+                                      if (this.state.disField === false) {
+                                        this.setState({
+                                          disField: true
+                                        });
+                                        spData.noFootTitle = true;
+                                      } else {
+                                        this.setState({
+                                          disField: false
+                                        });
+                                        spData.noFootTitle = false;
+                                      }
+                                    }} />
+                                    <span class="slider round" title="Hide"></span>
+                                  </label>
+                                </div>
                               </div>
                             </div>
                           </div>
                         </div>
-                      </div>
 
-                      <div className="form-group">
-                        <div className="row text-center mb-1 m-auto">
-                          <div className="col">
-                            <div className="row border">
-                              <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
-                                <label>Info #2</label>
-                              </div>
-                              <div className="col d-flex flex-column justify-content-center align-items-center">
-                                <input type="text" disabled={disField2} className="form-control border-0" defaultValue={spData.footSubtitle} onChange={e => temp2 = e.target.value} /*placeholder={spData.footSubtitle}*/ />
-                              </div>
-                              <div className="col-2 border d-flex flex-column justify-content-center align-items-center">
-                                <label class="switch">
-                                  <input type="checkbox" className="form-control" defaultChecked={spData.noFootSubtitle} onClick={e => {
-                                    if (this.state.disField2 === false) {
-                                      this.setState({
-                                        disField2: true
-                                      });
-                                      spData.noFootSubtitle = true;
-                                    } else {
-                                      this.setState({
-                                        disField2: false
-                                      });
-                                      spData.noFootSubtitle = false;
-                                    }
-                                  }} />
-                                  <span class="slider round" title="Hide"></span>
-                                </label>
+                        <div className="form-group">
+                          <div className="row text-center mb-1 m-auto">
+                            <div className="col">
+                              <div className="row border">
+                                <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
+                                  <label>Info #2</label>
+                                </div>
+                                <div className="col d-flex flex-column justify-content-center align-items-center">
+                                  <input type="text" disabled={disField2} className="form-control border-0" defaultValue={spData.footSubtitle} onChange={e => temp2 = e.target.value} /*placeholder={spData.footSubtitle}*/ />
+                                </div>
+                                <div className="col-2 border d-flex flex-column justify-content-center align-items-center">
+                                  <label class="switch">
+                                    <input type="checkbox" className="form-control" defaultChecked={spData.noFootSubtitle} onClick={e => {
+                                      if (this.state.disField2 === false) {
+                                        this.setState({
+                                          disField2: true
+                                        });
+                                        spData.noFootSubtitle = true;
+                                      } else {
+                                        this.setState({
+                                          disField2: false
+                                        });
+                                        spData.noFootSubtitle = false;
+                                      }
+                                    }} />
+                                    <span class="slider round" title="Hide"></span>
+                                  </label>
+                                </div>
                               </div>
                             </div>
                           </div>
                         </div>
-                      </div>
 
-                      <div className="form-group">
-                        <div className="row text-center mb-1 m-auto">
-                          <div className="col">
-                            <div className="row border">
-                              <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
-                                <label>Info #3</label>
-                              </div>
+                        <div className="form-group">
+                          <div className="row text-center mb-1 m-auto">
+                            <div className="col">
+                              <div className="row border">
+                                <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
+                                  <label>Info #3</label>
+                                </div>
 
-                              <div className="col d-flex flex-column justify-content-center align-items-center">
-                                <input type="text" disabled={disField3} className="form-control border-0" defaultValue={spData.footSubtitle2} onChange={e => temp3 = e.target.value} /*placeholder={spData.footSubtitle2}*/ />
-                              </div>
-                              <div className="col-2 border d-flex flex-column justify-content-center align-items-center">
-                                <label class="switch">
-                                  <input type="checkbox" className="form-control" defaultChecked={spData.noFootSubtitle2} onClick={e => {
-                                    if (this.state.disField3 === false) {
-                                      this.setState({
-                                        disField3: true
-                                      });
-                                      spData.noFootSubtitle2 = true;
-                                    } else {
-                                      this.setState({
-                                        disField3: false
-                                      });
-                                      spData.noFootSubtitle2 = false;
-                                    }
-                                  }} />
-                                  <span class="slider round" title="Hide"></span>
-                                </label>
+                                <div className="col d-flex flex-column justify-content-center align-items-center">
+                                  <input type="text" disabled={disField3} className="form-control border-0" defaultValue={spData.footSubtitle2} onChange={e => temp3 = e.target.value} /*placeholder={spData.footSubtitle2}*/ />
+                                </div>
+                                <div className="col-2 border d-flex flex-column justify-content-center align-items-center">
+                                  <label class="switch">
+                                    <input type="checkbox" className="form-control" defaultChecked={spData.noFootSubtitle2} onClick={e => {
+                                      if (this.state.disField3 === false) {
+                                        this.setState({
+                                          disField3: true
+                                        });
+                                        spData.noFootSubtitle2 = true;
+                                      } else {
+                                        this.setState({
+                                          disField3: false
+                                        });
+                                        spData.noFootSubtitle2 = false;
+                                      }
+                                    }} />
+                                    <span class="slider round" title="Hide"></span>
+                                  </label>
+                                </div>
                               </div>
                             </div>
                           </div>
                         </div>
-                      </div>
 
-                      <div class="form-group" >
-                        <div className="row text-center mb-1 m-auto">
-                          <div className="col">
-                            <div className="row border">
-                              <div className="col-2 pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
-                                <label>Width</label>
-                              </div>
-                              <div className="col pt-1 pb-1">
-                                <div className="row m-auto">
-                                  <div className="col radio">
-                                    <label class="radio-inline"> <input type="radio" name="blockWidth" id="infoColAuto" value="col" onChange={e => tempColW = e.target.value} /> Auto </label>
-                                  </div>
-                                  <div className="col radio">
-                                    <label class="radio-inline"> <input type="radio" name="blockWidth" id="infoCol1" value="col-1" onChange={e => tempColW = e.target.value} /> 1 </label>
-                                  </div>
-                                  <div className="col radio">
-                                    <label class="radio-inline"> <input type="radio" name="blockWidth" id="infoCol2" value="col-2" onChange={e => tempColW = e.target.value} /> 2 </label>
-                                  </div>
-                                  <div className="col radio">
-                                    <label class="radio-inline"> <input type="radio" name="blockWidth" id="infoCol3" value="col-3" onChange={e => tempColW = e.target.value} /> 3 </label>
-                                  </div>
-                                  <div className="col radio">
-                                    <label class="radio-inline"> <input type="radio" name="blockWidth" id="infoCol4" value="col-4" onChange={e => tempColW = e.target.value} /> 4 </label>
-                                  </div>
-                                  <div className="col radio">
-                                    <label class="radio-inline"> <input type="radio" name="blockWidth" id="infoCol5" value="col-5" onChange={e => tempColW = e.target.value} /> 5 </label>
+                        <div class="form-group" >
+                          <div className="row text-center mb-1 m-auto">
+                            <div className="col">
+                              <div className="row border">
+                                <div className="col-2 pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
+                                  <label>Width</label>
+                                </div>
+                                <div className="col pt-1 pb-1">
+                                  <div className="row m-auto">
+                                    <div className="col radio">
+                                      <label class="radio-inline"> <input type="radio" name="blockWidth" id="infoColAuto" value="col" onChange={e => tempColW = e.target.value} /> Auto </label>
+                                    </div>
+                                    <div className="col radio">
+                                      <label class="radio-inline"> <input type="radio" name="blockWidth" id="infoCol1" value="col-1" onChange={e => tempColW = e.target.value} /> 1 </label>
+                                    </div>
+                                    <div className="col radio">
+                                      <label class="radio-inline"> <input type="radio" name="blockWidth" id="infoCol2" value="col-2" onChange={e => tempColW = e.target.value} /> 2 </label>
+                                    </div>
+                                    <div className="col radio">
+                                      <label class="radio-inline"> <input type="radio" name="blockWidth" id="infoCol3" value="col-3" onChange={e => tempColW = e.target.value} /> 3 </label>
+                                    </div>
+                                    <div className="col radio">
+                                      <label class="radio-inline"> <input type="radio" name="blockWidth" id="infoCol4" value="col-4" onChange={e => tempColW = e.target.value} /> 4 </label>
+                                    </div>
+                                    <div className="col radio">
+                                      <label class="radio-inline"> <input type="radio" name="blockWidth" id="infoCol5" value="col-5" onChange={e => tempColW = e.target.value} /> 5 </label>
+                                    </div>
                                   </div>
                                 </div>
                               </div>
                             </div>
                           </div>
                         </div>
-                      </div>
 
-                      <div className="form-group">
-                        <div className="row mb-1 m-auto">
-                          <div className="col">
-                            <div className="row border">
-                              <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
-                                <label>Back color</label>
-                              </div>
-                              <div className="col d-flex flex-column justify-content-center align-items-center">
-                                <input type="color" className="form-control border-0 p-0" defaultValue={this.rgbToHex(spData.footInfoColor)} onChange={e => tempColor = e.target.value} />
+                        <div className="form-group">
+                          <div className="row mb-1 m-auto">
+                            <div className="col">
+                              <div className="row border">
+                                <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
+                                  <label>Back color</label>
+                                </div>
+                                <div className="col d-flex flex-column justify-content-center align-items-center">
+                                  <input type="color" className="form-control border-0 p-0" defaultValue={this.rgbToHex(spData.footInfoColor)} onChange={e => tempColor = e.target.value} />
+                                </div>
                               </div>
                             </div>
-                          </div>
-                          <div className="col-1"></div>
-                          <div className="col">
-                            <div className="row border">
-                              <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
-                                <label>Text color</label>
-                              </div>
-                              <div className="col d-flex flex-column justify-content-center align-items-center">
-                                <input type="color" className="form-control border-0 p-0" defaultValue={this.rgbToHex(spData.footInfoTextColor)} onChange={e => tempTextColor = e.target.value} />
+                            <div className="col-1"></div>
+                            <div className="col">
+                              <div className="row border">
+                                <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
+                                  <label>Text color</label>
+                                </div>
+                                <div className="col d-flex flex-column justify-content-center align-items-center">
+                                  <input type="color" className="form-control border-0 p-0" defaultValue={this.rgbToHex(spData.footInfoTextColor)} onChange={e => tempTextColor = e.target.value} />
+                                </div>
                               </div>
                             </div>
                           </div>
                         </div>
-                      </div>
 
-                      <div className="form-group">
-                        <div className="row mb-1 m-auto">
-                          <div className="col">
-                            <div className="row border">
-                              <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
-                                <label>Opacity</label>
-                              </div>
-                              <div className="col d-flex flex-column justify-content-center align-items-center">
-                                <input type="range" class="form-range border-0 p-0" min="0" max="1" step="0.1" defaultValue={spData.footInfoOpacity} id="infoOpRange" onChange={e => tempOpacity = e.target.value} ></input>
+                        <div className="form-group">
+                          <div className="row mb-1 m-auto">
+                            <div className="col">
+                              <div className="row border">
+                                <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
+                                  <label>Opacity</label>
+                                </div>
+                                <div className="col d-flex flex-column justify-content-center align-items-center">
+                                  <input type="range" class="form-range border-0 p-0" min="0" max="1" step="0.1" defaultValue={spData.footInfoOpacity} id="infoOpRange" onChange={e => tempOpacity = e.target.value} ></input>
+                                </div>
                               </div>
                             </div>
-                          </div>
-                          {/* <div className="col-1"></div>
+                            {/* <div className="col-1"></div>
                         <div className="col">
                           <div className="row">
                           </div>
                         </div> */}
-                        </div>
-                      </div>
-
-                      <div className="form-group">
-                        <div className="row mb-1 m-auto">
-                          <div className="col">
-                            <div className="row border">
-                              <div className="col pt-1 pb-1 padlr latomenu d-flex flex-column justify-content-center align-items-center">
-                                <label>Hide</label>
-                              </div>
-                              <div className="col d-flex flex-column justify-content-center align-items-center">
-                                <label class="switch">
-                                  <input type="checkbox" className="form-control" defaultChecked={!spData.infoShow} onClick={e => {
-                                    if (spData.infoShow === false) {
-                                      blockHide = true;
-                                    } else {
-                                      blockHide = false;
-                                    }
-                                  }} />
-                                  <span class="slider round" title="Hide"></span>
-                                </label>
-                              </div>
-                            </div>
-                          </div>
-                          <div className="col-1"></div>
-                          <div className="col">
                           </div>
                         </div>
-                      </div>
 
-                      <Conferma alShow={this.state.alShow} handleClose={this.hideAlert}>
-                        <div className="row text-center pt-2">
-                          <div className="col">
-                            <div className="row">
-                              <section className="col pt-2 contenitore solidgreen latowhite d-flex justify-content-center align-items-center ">
-                                <div>
-                                  <p className="norfont">Changes made!</p>
+                        <div className="form-group">
+                          <div className="row mb-1 m-auto">
+                            <div className="col">
+                              <div className="row border">
+                                <div className="col pt-1 pb-1 padlr latomenu d-flex flex-column justify-content-center align-items-center">
+                                  <label>Hide</label>
                                 </div>
-                              </section>
+                                <div className="col d-flex flex-column justify-content-center align-items-center">
+                                  <label class="switch">
+                                    <input type="checkbox" className="form-control" defaultChecked={!spData.infoShow} onClick={e => {
+                                      if (spData.infoShow === false) {
+                                        blockHide = true;
+                                      } else {
+                                        blockHide = false;
+                                      }
+                                    }} />
+                                    <span class="slider round" title="Hide"></span>
+                                  </label>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="col-1"></div>
+                            <div className="col">
                             </div>
                           </div>
                         </div>
-                      </Conferma>
-                    </form>
+
+                        <Conferma alShow={this.state.alShow} handleClose={this.hideAlert}>
+                          <div className="row text-center pt-2">
+                            <div className="col">
+                              <div className="row">
+                                <section className="col pt-2 contenitore solidgreen latowhite d-flex justify-content-center align-items-center ">
+                                  <div>
+                                    <p className="norfont">Changes made!</p>
+                                  </div>
+                                </section>
+                              </div>
+                            </div>
+                          </div>
+                        </Conferma>
+                      </form>
+                    </div>
                   </div>
-                </div>
-              </InfoDialog>
-              <CreditDialog creditDiaShow={this.state.creditDiaShow} handleClose={() => this.hideModal("credit")} handleSave={this.saveCredit}>
-                <div className="modal-content noborder">
-                  <div className="modal-header">
-                    <h5 className="modal-title" >Edit site credits</h5>
-                  </div>
-                  <div className="modal-body">
-                    <form id="creditForm">
+                </InfoDialog>
+                <CreditDialog creditDiaShow={this.state.creditDiaShow} handleClose={() => this.hideModal("credit")} handleSave={this.saveCredit}>
+                  <div className="modal-content noborder">
+                    <div className="modal-header">
+                      <h5 className="modal-title" >Edit site credits</h5>
+                    </div>
+                    <div className="modal-body">
+                      <form id="creditForm">
 
-                      <div className="form-group">
-                        <div className="row text-center mb-1 m-auto">
-                          <div className="col">
-                            <div className="row border">
-                              <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
-                                <label>Credit</label>
-                              </div>
+                        <div className="form-group">
+                          <div className="row text-center mb-1 m-auto">
+                            <div className="col">
+                              <div className="row border">
+                                <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
+                                  <label>Credit</label>
+                                </div>
 
-                              <div className="col d-flex flex-column justify-content-center align-items-center">
-                                <input type="text" disabled={disFieldC} className="form-control border-0" defaultValue={spData.footCreditiTitle} onChange={e => temp = e.target.value} /*placeholder={spData.footCreditiTitle}*/ />
-                              </div>
-                              <div className="col-2 border d-flex flex-column justify-content-center align-items-center">
-                                <label class="switch">
-                                  <input type="checkbox" className="form-control" defaultChecked={spData.noFootCreditiTitle} onClick={e => {
-                                    if (spData.noFootCreditiTitle === false) {
-                                      this.setState({
-                                        disFieldC: true
-                                      });
-                                      disable1 = true;
-                                    } else {
-                                      this.setState({
-                                        disFieldC: false
-                                      });
-                                      disable1 = false;
-                                    }
-                                  }} />
-                                  <span class="slider round" title="Hide"></span>
-                                </label>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="form-group">
-                        <div className="row text-center mb-1 m-auto">
-                          <div className="col">
-                            <div className="row border">
-                              <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
-                                <label>Credit #2</label>
-                              </div>
-
-                              <div className="col d-flex flex-column justify-content-center align-items-center">
-                                <input type="text" disabled={disFieldC2} className="form-control border-0" defaultValue={spData.footCreditiSubtitle} onChange={e => temp2 = e.target.value} />
-                              </div>
-                              <div className="col-2 border d-flex flex-column justify-content-center align-items-center">
-                                <label class="switch">
-                                  <input type="checkbox" className="form-control" defaultChecked={spData.noFootCreditiSubtitle} onClick={e => {
-                                    if (this.state.disFieldC2 === false) {
-                                      this.setState({
-                                        disFieldC2: true
-                                      });
-                                      disable2 = true;
-                                    } else {
-                                      this.setState({
-                                        disFieldC2: false
-                                      });
-                                      disable2 = false;
-                                    }
-                                  }} />
-                                  <span class="slider round" title="Hide"></span>
-                                </label>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="form-group">
-                        <div className="row text-center mb-1 m-auto">
-                          <div className="col">
-                            <div className="row border">
-                              <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
-                                <label>Credit #3</label>
-                              </div>
-
-                              <div className="col d-flex flex-column justify-content-center align-items-center">
-                                <input type="text" disabled={disFieldC3} className="form-control border-0" defaultValue={spData.footCreditiSubtitle2} onChange={e => temp3 = e.target.value} />
-                              </div>
-                              <div className="col-2 border d-flex flex-column justify-content-center align-items-center">
-                                <label class="switch">
-                                  <input type="checkbox" className="form-control" defaultChecked={spData.noFootCreditiSubtitle2} onClick={e => {
-                                    if (this.state.disFieldC3 === false) {
-                                      this.setState({
-                                        disFieldC3: true
-                                      });
-                                      disable3 = true;
-                                    } else {
-                                      this.setState({
-                                        disFieldC3: false
-                                      });
-                                      disable3 = false;
-                                    }
-                                  }} />
-                                  <span class="slider round" title="Hide"></span>
-                                </label>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="form-group" >
-                        <div className="row text-center mb-1 m-auto">
-                          <div className="col">
-                            <div className="row border">
-                              <div className="col-2 pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
-                                <label>Width</label>
-                              </div>
-                              <div className="col pt-1 pb-1">
-                                <div className="row m-auto">
-                                  <div className="col radio">
-                                    <label class="radio-inline"> <input type="radio" name="blockWidth" id="creditColAuto" value="col-md" onChange={e => tempColW = e.target.value} /> Auto </label>
-                                  </div>
-                                  <div className="col radio">
-                                    <label class="radio-inline"> <input type="radio" name="blockWidth" id="creditCol1" value="col-md-1" onChange={e => tempColW = e.target.value} /> 1 </label>
-                                  </div>
-                                  <div className="col radio">
-                                    <label class="radio-inline"> <input type="radio" name="blockWidth" id="creditCol2" value="col-md-2" onChange={e => tempColW = e.target.value} /> 2 </label>
-                                  </div>
-                                  <div className="col radio">
-                                    <label class="radio-inline"> <input type="radio" name="blockWidth" id="creditCol3" value="col-md-3" onChange={e => tempColW = e.target.value} /> 3 </label>
-                                  </div>
-                                  <div className="col radio">
-                                    <label class="radio-inline"> <input type="radio" name="blockWidth" id="creditCol4" value="col-md-4" onChange={e => tempColW = e.target.value} /> 4 </label>
-                                  </div>
-                                  <div className="col radio">
-                                    <label class="radio-inline"> <input type="radio" name="blockWidth" id="creditCol5" value="col-md-5" onChange={e => tempColW = e.target.value} /> 5 </label>
-                                  </div>
+                                <div className="col d-flex flex-column justify-content-center align-items-center">
+                                  <input type="text" disabled={disFieldC} className="form-control border-0" defaultValue={spData.footCreditiTitle} onChange={e => temp = e.target.value} /*placeholder={spData.footCreditiTitle}*/ />
+                                </div>
+                                <div className="col-2 border d-flex flex-column justify-content-center align-items-center">
+                                  <label class="switch">
+                                    <input type="checkbox" className="form-control" defaultChecked={spData.noFootCreditiTitle} onClick={e => {
+                                      if (spData.noFootCreditiTitle === false) {
+                                        this.setState({
+                                          disFieldC: true
+                                        });
+                                        disable1 = true;
+                                      } else {
+                                        this.setState({
+                                          disFieldC: false
+                                        });
+                                        disable1 = false;
+                                      }
+                                    }} />
+                                    <span class="slider round" title="Hide"></span>
+                                  </label>
                                 </div>
                               </div>
                             </div>
                           </div>
                         </div>
-                      </div>
 
-                      <div className="form-group">
-                        <div className="row mb-1 m-auto">
-                          <div className="col">
-                            <div className="row border">
-                              <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
-                                <label>Back color</label>
-                              </div>
-                              <div className="col d-flex flex-column justify-content-center align-items-center">
-                                <input type="color" className="form-control border-0 p-0" defaultValue={this.rgbToHex(spData.footCreditColor)} onChange={e => tempColor = e.target.value} />
-                              </div>
-                            </div>
-                          </div>
-                          <div className="col-1"></div>
-                          <div className="col">
-                            <div className="row border">
-                              <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
-                                <label>Text color</label>
-                              </div>
-                              <div className="col d-flex flex-column justify-content-center align-items-center">
-                                <input type="color" className="form-control border-0 p-0" defaultValue={this.rgbToHex(spData.footCreditTextColor)} onChange={e => tempTextColor = e.target.value} />
+                        <div className="form-group">
+                          <div className="row text-center mb-1 m-auto">
+                            <div className="col">
+                              <div className="row border">
+                                <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
+                                  <label>Credit #2</label>
+                                </div>
+
+                                <div className="col d-flex flex-column justify-content-center align-items-center">
+                                  <input type="text" disabled={disFieldC2} className="form-control border-0" defaultValue={spData.footCreditiSubtitle} onChange={e => temp2 = e.target.value} />
+                                </div>
+                                <div className="col-2 border d-flex flex-column justify-content-center align-items-center">
+                                  <label class="switch">
+                                    <input type="checkbox" className="form-control" defaultChecked={spData.noFootCreditiSubtitle} onClick={e => {
+                                      if (this.state.disFieldC2 === false) {
+                                        this.setState({
+                                          disFieldC2: true
+                                        });
+                                        disable2 = true;
+                                      } else {
+                                        this.setState({
+                                          disFieldC2: false
+                                        });
+                                        disable2 = false;
+                                      }
+                                    }} />
+                                    <span class="slider round" title="Hide"></span>
+                                  </label>
+                                </div>
                               </div>
                             </div>
                           </div>
                         </div>
-                      </div>
 
-                      <div className="form-group">
-                        <div className="row mb-1 m-auto">
-                          <div className="col">
-                            <div className="row border">
-                              <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
-                                <label>Opacity</label>
-                              </div>
-                              <div className="col d-flex flex-column justify-content-center align-items-center">
-                                <input type="range" class="form-range border-0 p-0" min="0" max="1" step="0.1" defaultValue={spData.footCreditOpacity} id="creditOpRange" onChange={e => tempOpacity = e.target.value} ></input>
+                        <div className="form-group">
+                          <div className="row text-center mb-1 m-auto">
+                            <div className="col">
+                              <div className="row border">
+                                <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
+                                  <label>Credit #3</label>
+                                </div>
+
+                                <div className="col d-flex flex-column justify-content-center align-items-center">
+                                  <input type="text" disabled={disFieldC3} className="form-control border-0" defaultValue={spData.footCreditiSubtitle2} onChange={e => temp3 = e.target.value} />
+                                </div>
+                                <div className="col-2 border d-flex flex-column justify-content-center align-items-center">
+                                  <label class="switch">
+                                    <input type="checkbox" className="form-control" defaultChecked={spData.noFootCreditiSubtitle2} onClick={e => {
+                                      if (this.state.disFieldC3 === false) {
+                                        this.setState({
+                                          disFieldC3: true
+                                        });
+                                        disable3 = true;
+                                      } else {
+                                        this.setState({
+                                          disFieldC3: false
+                                        });
+                                        disable3 = false;
+                                      }
+                                    }} />
+                                    <span class="slider round" title="Hide"></span>
+                                  </label>
+                                </div>
                               </div>
                             </div>
                           </div>
-                          {/* <div className="col-1"></div>
+                        </div>
+
+                        <div class="form-group" >
+                          <div className="row text-center mb-1 m-auto">
+                            <div className="col">
+                              <div className="row border">
+                                <div className="col-2 pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
+                                  <label>Width</label>
+                                </div>
+                                <div className="col pt-1 pb-1">
+                                  <div className="row m-auto">
+                                    <div className="col radio">
+                                      <label class="radio-inline"> <input type="radio" name="blockWidth" id="creditColAuto" value="col-md" onChange={e => tempColW = e.target.value} /> Auto </label>
+                                    </div>
+                                    <div className="col radio">
+                                      <label class="radio-inline"> <input type="radio" name="blockWidth" id="creditCol1" value="col-md-1" onChange={e => tempColW = e.target.value} /> 1 </label>
+                                    </div>
+                                    <div className="col radio">
+                                      <label class="radio-inline"> <input type="radio" name="blockWidth" id="creditCol2" value="col-md-2" onChange={e => tempColW = e.target.value} /> 2 </label>
+                                    </div>
+                                    <div className="col radio">
+                                      <label class="radio-inline"> <input type="radio" name="blockWidth" id="creditCol3" value="col-md-3" onChange={e => tempColW = e.target.value} /> 3 </label>
+                                    </div>
+                                    <div className="col radio">
+                                      <label class="radio-inline"> <input type="radio" name="blockWidth" id="creditCol4" value="col-md-4" onChange={e => tempColW = e.target.value} /> 4 </label>
+                                    </div>
+                                    <div className="col radio">
+                                      <label class="radio-inline"> <input type="radio" name="blockWidth" id="creditCol5" value="col-md-5" onChange={e => tempColW = e.target.value} /> 5 </label>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="form-group">
+                          <div className="row mb-1 m-auto">
+                            <div className="col">
+                              <div className="row border">
+                                <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
+                                  <label>Back color</label>
+                                </div>
+                                <div className="col d-flex flex-column justify-content-center align-items-center">
+                                  <input type="color" className="form-control border-0 p-0" defaultValue={this.rgbToHex(spData.footCreditColor)} onChange={e => tempColor = e.target.value} />
+                                </div>
+                              </div>
+                            </div>
+                            <div className="col-1"></div>
+                            <div className="col">
+                              <div className="row border">
+                                <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
+                                  <label>Text color</label>
+                                </div>
+                                <div className="col d-flex flex-column justify-content-center align-items-center">
+                                  <input type="color" className="form-control border-0 p-0" defaultValue={this.rgbToHex(spData.footCreditTextColor)} onChange={e => tempTextColor = e.target.value} />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="form-group">
+                          <div className="row mb-1 m-auto">
+                            <div className="col">
+                              <div className="row border">
+                                <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
+                                  <label>Opacity</label>
+                                </div>
+                                <div className="col d-flex flex-column justify-content-center align-items-center">
+                                  <input type="range" class="form-range border-0 p-0" min="0" max="1" step="0.1" defaultValue={spData.footCreditOpacity} id="creditOpRange" onChange={e => tempOpacity = e.target.value} ></input>
+                                </div>
+                              </div>
+                            </div>
+                            {/* <div className="col-1"></div>
                         <div className="col">
                           <div className="row">
                           </div>
                         </div> */}
-                        </div>
-                      </div>
-
-                      <div className="form-group">
-                        <div className="row mb-1 m-auto">
-                          <div className="col">
-                            <div className="row border">
-                              <div className="col pt-1 pb-1 padlr latomenu d-flex flex-column justify-content-center align-items-center">
-                                <label>Hide</label>
-                              </div>
-                              <div className="col d-flex flex-column justify-content-center align-items-center">
-                                <label class="switch">
-
-                                  <input type="checkbox" className="form-control" defaultChecked={!spData.creditShow} onClick={e => {
-                                    if (spData.creditShow === false) {
-                                      blockHide = true;
-                                    } else {
-                                      blockHide = false;
-                                    }
-                                  }} />
-                                  <span class="slider round" title="Hide"></span>
-                                </label>
-                              </div>
-                            </div>
-                          </div>
-                          <div className="col-1"></div>
-                          <div className="col">
                           </div>
                         </div>
-                      </div>
-                      <Conferma alShow={this.state.alShow} handleClose={this.hideAlert}>
-                        <div className="row text-center pt-2">
-                          <div className="col">
-                            <div className="row">
-                              <section className="col pt-2 contenitore solidgreen latowhite d-flex justify-content-center align-items-center ">
-                                <div>
-                                  <p className="norfont">Changes made!</p>
+
+                        <div className="form-group">
+                          <div className="row mb-1 m-auto">
+                            <div className="col">
+                              <div className="row border">
+                                <div className="col pt-1 pb-1 padlr latomenu d-flex flex-column justify-content-center align-items-center">
+                                  <label>Hide</label>
                                 </div>
-                              </section>
+                                <div className="col d-flex flex-column justify-content-center align-items-center">
+                                  <label class="switch">
+
+                                    <input type="checkbox" className="form-control" defaultChecked={!spData.creditShow} onClick={e => {
+                                      if (spData.creditShow === false) {
+                                        blockHide = true;
+                                      } else {
+                                        blockHide = false;
+                                      }
+                                    }} />
+                                    <span class="slider round" title="Hide"></span>
+                                  </label>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="col-1"></div>
+                            <div className="col">
                             </div>
                           </div>
                         </div>
-                      </Conferma>
-                    </form>
+                        <Conferma alShow={this.state.alShow} handleClose={this.hideAlert}>
+                          <div className="row text-center pt-2">
+                            <div className="col">
+                              <div className="row">
+                                <section className="col pt-2 contenitore solidgreen latowhite d-flex justify-content-center align-items-center ">
+                                  <div>
+                                    <p className="norfont">Changes made!</p>
+                                  </div>
+                                </section>
+                              </div>
+                            </div>
+                          </div>
+                        </Conferma>
+                      </form>
+                    </div>
                   </div>
-                </div>
-              </CreditDialog>
-              <BackEditDialog backEditDiaShow={this.state.backEditDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("back")} handleSave={this.saveBack}>
-                <div className="modal-content noborder">
-                  <div className="modal-header">
-                    <h5 className="modal-title" >Edit Page Background</h5>
-                  </div>
-                  <div className="modal-body">
-                    <form id="backEditForm">
+                </CreditDialog>
+                <BackEditDialog backEditDiaShow={this.state.backEditDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("back")} handleSave={this.saveBack}>
+                  <div className="modal-content noborder">
+                    <div className="modal-header">
+                      <h5 className="modal-title" >Edit Page Background</h5>
+                    </div>
+                    <div className="modal-body">
+                      <form id="backEditForm">
 
-                      <div className="form-group">
-                        <div className="row text-center mb-1 m-auto">
-                          <div className="col">
-                            <div className="row border">
-                              <div className="col borderight pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
-                                <label>Main</label>
-                              </div>
-                              <div className="col d-flex flex-column justify-content-center align-items-center">
-                                <input type="file" disabled={disFieldB} id="files" className="form-control boxs border-0" name="icon" onChange={e => fileImg = e.target.files[0]} />
-                              </div>
+                        <div className="form-group">
+                          <div className="row text-center mb-1 m-auto">
+                            <div className="col">
+                              <div className="row border">
+                                <div className="col borderight pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
+                                  <label>Main</label>
+                                </div>
+                                <div className="col d-flex flex-column justify-content-center align-items-center">
+                                  <input type="file" disabled={disFieldB} id="files" className="form-control boxs border-0" name="icon" onChange={e => fileImg = e.target.files[0]} />
+                                </div>
 
-                              <div className="col-2 border d-flex flex-column justify-content-center align-items-center">
-                                <label class="switch">
-                                  <input type="checkbox" className="form-control" defaultChecked={spData.noBackImage} onClick={e => {
-                                    if (this.state.disFieldB === false) {
-                                      this.setState({
-                                        disFieldB: true
-                                      });
-                                      spData.noBackImage = true;
-                                    } else {
-                                      this.setState({
-                                        disFieldB: false
-                                      });
-                                      spData.noBackImage = false;
-                                    }
-                                  }} />
-                                  <span class="slider round" title="No image"></span>
-                                </label>
-                              </div>
+                                <div className="col-2 border d-flex flex-column justify-content-center align-items-center">
+                                  <label class="switch">
+                                    <input type="checkbox" className="form-control" defaultChecked={spData.noBackImage} onClick={e => {
+                                      if (this.state.disFieldB === false) {
+                                        this.setState({
+                                          disFieldB: true
+                                        });
+                                        spData.noBackImage = true;
+                                      } else {
+                                        this.setState({
+                                          disFieldB: false
+                                        });
+                                        spData.noBackImage = false;
+                                      }
+                                    }} />
+                                    <span class="slider round" title="No image"></span>
+                                  </label>
+                                </div>
 
+                              </div>
                             </div>
                           </div>
                         </div>
-                      </div>
 
-                      <div className="form-group">
-                        <div className="row text-center mb-1 m-auto">
-                          <div className="col">
-                            <div className="row border">
-                              <div className="col borderight pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
-                                <label>Cats</label>
-                              </div>
-                              <div className="col d-flex flex-column justify-content-center align-items-center">
-                                <input type="file" disabled={disFieldBC} id="catfiles" className="form-control boxs border-0" name="icon" onChange={e => fileCatImg = e.target.files[0]} />
-                              </div>
+                        <div className="form-group">
+                          <div className="row text-center mb-1 m-auto">
+                            <div className="col">
+                              <div className="row border">
+                                <div className="col borderight pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
+                                  <label>Cats</label>
+                                </div>
+                                <div className="col d-flex flex-column justify-content-center align-items-center">
+                                  <input type="file" disabled={disFieldBC} id="catfiles" className="form-control boxs border-0" name="icon" onChange={e => fileCatImg = e.target.files[0]} />
+                                </div>
 
-                              <div className="col-2 border d-flex flex-column justify-content-center align-items-center">
-                                <label class="switch">
-                                  <input type="checkbox" className="form-control" defaultChecked={spData.noCatImage} onClick={e => {
-                                    if (this.state.disFieldBC === false) {
-                                      this.setState({
-                                        disFieldBC: true
-                                      });
-                                      spData.noCatImage = true;
-                                    } else {
-                                      this.setState({
-                                        disFieldBC: false
-                                      });
-                                      spData.noCatImage = false;
-                                    }
-                                  }} />
-                                  <span class="slider round" title="No image"></span>
-                                </label>
-                              </div>
+                                <div className="col-2 border d-flex flex-column justify-content-center align-items-center">
+                                  <label class="switch">
+                                    <input type="checkbox" className="form-control" defaultChecked={spData.noCatImage} onClick={e => {
+                                      if (this.state.disFieldBC === false) {
+                                        this.setState({
+                                          disFieldBC: true
+                                        });
+                                        spData.noCatImage = true;
+                                      } else {
+                                        this.setState({
+                                          disFieldBC: false
+                                        });
+                                        spData.noCatImage = false;
+                                      }
+                                    }} />
+                                    <span class="slider round" title="No image"></span>
+                                  </label>
+                                </div>
 
+                              </div>
                             </div>
                           </div>
                         </div>
-                      </div>
 
-                      <div className="form-group">
-                        <div className="row mb-1 m-auto">
-                          <div className="col">
-                            <div className="row border">
-                              <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
-                                <label>Main back color</label>
-                              </div>
-                              <div className="col d-flex flex-column justify-content-center align-items-center">
-                                <input type="color" className="form-control border-0 p-0" defaultValue={this.rgbToHex(spData.backgroundColor)} onChange={e => tempColor = e.target.value} />
+                        <div className="form-group">
+                          <div className="row mb-1 m-auto">
+                            <div className="col">
+                              <div className="row border">
+                                <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
+                                  <label>Main back color</label>
+                                </div>
+                                <div className="col d-flex flex-column justify-content-center align-items-center">
+                                  <input type="color" className="form-control border-0 p-0" defaultValue={this.rgbToHex(spData.backgroundColor)} onChange={e => tempColor = e.target.value} />
+                                </div>
                               </div>
                             </div>
-                          </div>
-                          {/* <div className="col-1"></div>
+                            {/* <div className="col-1"></div>
                         <div className="col">
                           <div className="row border">
                             <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
@@ -3797,42 +3833,42 @@ class Main extends React.Component {
                             </div>
                           </div>
                         </div> */}
+                          </div>
                         </div>
-                      </div>
 
-                      <div className="form-group">
-                        <div className="row mb-1 m-auto">
-                          <div className="col">
-                            <div className="row border">
-                              <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
-                                <label>Opacity</label>
-                              </div>
-                              <div className="col d-flex flex-column justify-content-center align-items-center">
-                                <input type="range" class="form-range border-0 p-0" min="0" max="1" step="0.1" defaultValue={spData.backgroundOpacity} id="backOpRange" onChange={e => tempOpacity = e.target.value} ></input>
+                        <div className="form-group">
+                          <div className="row mb-1 m-auto">
+                            <div className="col">
+                              <div className="row border">
+                                <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
+                                  <label>Opacity</label>
+                                </div>
+                                <div className="col d-flex flex-column justify-content-center align-items-center">
+                                  <input type="range" class="form-range border-0 p-0" min="0" max="1" step="0.1" defaultValue={spData.backgroundOpacity} id="backOpRange" onChange={e => tempOpacity = e.target.value} ></input>
+                                </div>
                               </div>
                             </div>
-                          </div>
-                          {/* <div className="col-1"></div>
+                            {/* <div className="col-1"></div>
                         <div className="col">
                           <div className="row">
                           </div>
                         </div> */}
+                          </div>
                         </div>
-                      </div>
 
-                      <div className="form-group">
-                        <div className="row mb-1 m-auto">
-                          <div className="col">
-                            <div className="row border">
-                              <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
-                                <label>Cat back color</label>
-                              </div>
-                              <div className="col d-flex flex-column justify-content-center align-items-center">
-                                <input type="color" className="form-control border-0 p-0" defaultValue={this.rgbToHex(spData.catColor)} onChange={e => tempCatColor = e.target.value} />
+                        <div className="form-group">
+                          <div className="row mb-1 m-auto">
+                            <div className="col">
+                              <div className="row border">
+                                <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
+                                  <label>Cat back color</label>
+                                </div>
+                                <div className="col d-flex flex-column justify-content-center align-items-center">
+                                  <input type="color" className="form-control border-0 p-0" defaultValue={this.rgbToHex(spData.catColor)} onChange={e => tempCatColor = e.target.value} />
+                                </div>
                               </div>
                             </div>
-                          </div>
-                          {/* <div className="col-1"></div>
+                            {/* <div className="col-1"></div>
                         <div className="col">
                           <div className="row border">
                             <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
@@ -3843,940 +3879,968 @@ class Main extends React.Component {
                             </div>
                           </div>
                         </div> */}
+                          </div>
                         </div>
-                      </div>
 
-                      <div className="form-group">
-                        <div className="row mb-1 m-auto">
-                          <div className="col">
-                            <div className="row border">
-                              <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
-                                <label>Opacity</label>
-                              </div>
-                              <div className="col d-flex flex-column justify-content-center align-items-center">
-                                <input type="range" class="form-range border-0 p-0" min="0" max="1" step="0.1" defaultValue={spData.catOpacity} id="catOpRange" onChange={e => tempOpacity1 = e.target.value} ></input>
+                        <div className="form-group">
+                          <div className="row mb-1 m-auto">
+                            <div className="col">
+                              <div className="row border">
+                                <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
+                                  <label>Opacity</label>
+                                </div>
+                                <div className="col d-flex flex-column justify-content-center align-items-center">
+                                  <input type="range" class="form-range border-0 p-0" min="0" max="1" step="0.1" defaultValue={spData.catOpacity} id="catOpRange" onChange={e => tempOpacity1 = e.target.value} ></input>
+                                </div>
                               </div>
                             </div>
-                          </div>
-                          {/* <div className="col-1"></div>
+                            {/* <div className="col-1"></div>
                         <div className="col">
                           <div className="row">
                           </div>
                         </div> */}
+                          </div>
                         </div>
-                      </div>
 
-                      <Conferma alShow={this.state.alShow} handleClose={this.hideAlert}>
-                        <div className="row text-center pt-2">
-                          <div className="col">
-                            <div className="row">
-                              <section className="col pt-2 contenitore solidgreen latowhite d-flex justify-content-center align-items-center ">
-                                <div>
-                                  <p className="norfont">Changes made!</p>
-                                </div>
-                              </section>
+                        <Conferma alShow={this.state.alShow} handleClose={this.hideAlert}>
+                          <div className="row text-center pt-2">
+                            <div className="col">
+                              <div className="row">
+                                <section className="col pt-2 contenitore solidgreen latowhite d-flex justify-content-center align-items-center ">
+                                  <div>
+                                    <p className="norfont">Changes made!</p>
+                                  </div>
+                                </section>
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      </Conferma>
-                      <Upload upShow={this.state.upShow} handleClose={this.hideAlert}>
-                        <div className="row text-center pt-2">
-                          <div className="col">
-                            <div className="row">
-                              <section className="col pt-2 contenitore solidblue latowhite d-flex justify-content-center align-items-center ">
-                                <div>
-                                  <p className="norfont">Loading data... Please wait.</p>
-                                </div>
-                              </section>
+                        </Conferma>
+                        <Upload upShow={this.state.upShow} handleClose={this.hideAlert}>
+                          <div className="row text-center pt-2">
+                            <div className="col">
+                              <div className="row">
+                                <section className="col pt-2 contenitore solidblue latowhite d-flex justify-content-center align-items-center ">
+                                  <div>
+                                    <p className="norfont">Loading data... Please wait.</p>
+                                  </div>
+                                </section>
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      </Upload>
-                    </form>
-                  </div>
-                </div>
-              </BackEditDialog>
-              <CatDialog catDiaShow={this.state.catDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("cat")}>
-                <div className="modal-content noBG">
-                  <div className="modal-header darkBG">
-                    <h5 className="modal-title latowhite" >{tempCatTitle}</h5>
-                  </div>
-                  <div style={this.state.catStyle} className="modal-body-dark">
-                    <div className="textcenter">
-                      {
-                        this.state.catAppItems.map(({ id, title, link, icon, video }, i) => {
-                          return (
-                            <AppCatRes showAppsBtn={this.state.appsBtnShow} key={i} pos={i} id={id}
-                              title={title} link={link} icon={icon} video={video}
-                              appVideo={this.catAppVideo} appEditDel={this.appEditDel} />
-                          )
-                        })
-                      }
-                      <AppAdd showAppsBtn={this.state.appsBtnShow} /* title={title} link={link} icon={icon} */ addItem={this.appOrCatItem} />
+                        </Upload>
+                      </form>
                     </div>
                   </div>
-                </div>
-              </CatDialog>
-              <AppEditDialog appEditDiaShow={this.state.appEditDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("appedit")} handleSave={this.applyAppEdit}>
-                <div className="modal-content noborder">
-                  <div className="modal-header">
-                    <h5 className="modal-title" >Edit Web Application</h5>
-                  </div>
-                  <div className="modal-body">
-                    <form id="appEditForm">
-
-                      <div className="form-group">
-                        <div className="row text-center mb-1 m-auto">
-                          <div className="col">
-                            <div className="row border">
-                              <div className="col d-flex flex-column justify-content-center align-items-center">
-                                <input type="file" className="form-control boxs border-0" name="icon" onChange={e => fileImg = e.target.files[0]} />
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="form-group">
-                        <div className="row text-center mb-1 m-auto">
-                          <div className="col">
-                            <div className="row border">
-                              <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
-                                <label>Pos</label>
-                              </div>
-                              <div className="col d-flex flex-column justify-content-center align-items-center">
-                                <input type="text" placeholder="Change position..." id="clearappswitchpos" className="form-control border-0"
-                                  onChange={e => {
-                                    cgPos = e.target.value;
-                                  }
-                                  } />
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="form-group">
-                        <div className="row text-center mb-1 m-auto">
-                          <div className="col">
-                            <div className="row border">
-                              <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
-                                <label>Title</label>
-                              </div>
-                              <div className="col d-flex flex-column justify-content-center align-items-center">
-                                <input type="text" className="form-control border-0" defaultValue={tempAppTitle} onChange={e => temp2 = e.target.value} /*placeholder={tempAppTitle}*/ />
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="form-group">
-                        <div className="row text-center mb-1 m-auto">
-                          <div className="col">
-                            <div className="row border">
-                              <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
-                                <label>Link</label>
-                              </div>
-                              <div className="col d-flex flex-column justify-content-center align-items-center">
-                                <input type="text" className="form-control border-0" defaultValue={tempAppLink} onChange={e => temp3 = e.target.value} /*placeholder={tempAppLink}*/ />
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="form-group">
-                        <div className="row mb-1 m-auto">
-                          <div className="col">
-                            <div className="row border">
-                              <div className="col pt-1 pb-1 padlr latomenu d-flex flex-column justify-content-center align-items-center">
-                                <label>Video</label>
-                              </div>
-                              <div className="col d-flex flex-column justify-content-center align-items-center">
-                                <label class="switch">
-                                  <input type="checkbox" className="form-control" defaultChecked={tempAppVideo} onClick={e => {
-                                    if (tempAppVideo === false) {
-                                      temp4 = true;
-                                    } else {
-                                      temp4 = false;
-                                    }
-                                  }} />
-                                  <span class="slider round" title="Video Player"></span>
-                                </label>
-                              </div>
-                            </div>
-                          </div>
-                          <div className="col-1"></div>
-                          <div className="col">
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="form-group">
-                        <div className="row mb-1 m-auto">
-                          <div className="col">
-                            <div className="row border">
-                              <div className="col pt-1 pb-1 padlr latomenu d-flex flex-column justify-content-center align-items-center">
-                                <label>Category</label>
-                              </div>
-                              <div className="col d-flex flex-column justify-content-center align-items-center">
-                                {catMenuButtons}
-                              </div>
-                            </div>
-                          </div>
-                          <div className="col-1"></div>
-                          <div className="col">
-                          </div>
-                        </div>
-                      </div>
-
-                      <Conferma alShow={this.state.alShow} handleClose={this.hideAlert}>
-                        <div className="row text-center pt-2">
-                          <div className="col">
-                            <div className="row">
-                              <section className="col pt-2 contenitore solidgreen latowhite d-flex justify-content-center align-items-center ">
-                                <div>
-                                  <p className="norfont">Changes made!</p>
-                                </div>
-                              </section>
-                            </div>
-                          </div>
-                        </div>
-                      </Conferma>
-                      <Upload upShow={this.state.upShow} handleClose={this.hideAlert}>
-                        <div className="row text-center pt-2">
-                          <div className="col">
-                            <div className="row">
-                              <section className="col pt-2 contenitore solidblue latowhite d-flex justify-content-center align-items-center ">
-                                <div>
-                                  <p className="norfont">Loading data... Please wait.</p>
-                                </div>
-                              </section>
-                            </div>
-                          </div>
-                        </div>
-                      </Upload>
-                      <Errore alErrShow={this.state.alErrShow} handleClose={this.hideAlert}>
-                        <div className="row text-center pt-2">
-                          <div className="col">
-                            <div className="row">
-                              <section className="col pt-2 contenitore solidblue latowhite d-flex justify-content-center align-items-center ">
-                                <div>
-                                  <p className="norfont">No changes made!</p>
-                                </div>
-                              </section>
-                            </div>
-                          </div>
-                        </div>
-                      </Errore>
-                    </form>
-                  </div>
-                </div>
-              </AppEditDialog>
-              <AppAddDialog appAddDiaShow={this.state.appAddDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("appadd")} handleSave={this.applyAppAdd}>
-                <div className="modal-content noborder">
-                  <div className="modal-header">
-                    <h5 className="modal-title" >Add Web Application</h5>
-                  </div>
-                  <div className="modal-body">
-                    <form id="appAddForm">
-
-                      <div className="form-group">
-                        <div className="row text-center mb-1 m-auto">
-                          <div className="col">
-                            <div className="row border">
-                              <div className="col d-flex flex-column justify-content-center align-items-center">
-                                <input type="file" className="form-control boxs border-0" name="icon" onChange={e => fileImg = e.target.files[0]} />
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="form-group">
-                        <div className="row text-center mb-1 m-auto">
-                          <div className="col">
-                            <div className="row border">
-                              <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
-                                <label>Pos</label>
-                              </div>
-                              <div className="col d-flex flex-column justify-content-center align-items-center">
-                                <input type="text" placeholder="Leave blank for last..." id="clearapppos" className="form-control border-0"
-                                  onChange={e => {
-                                    temp = e.target.value;
-                                  }
-                                  } />
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="form-group">
-                        <div className="row text-center mb-1 m-auto">
-                          <div className="col">
-                            <div className="row border">
-                              <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
-                                <label>Title</label>
-                              </div>
-                              <div className="col d-flex flex-column justify-content-center align-items-center">
-                                <input type="text" className="form-control border-0" id="clearapptitle" onChange={e => temp2 = e.target.value} />
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="form-group">
-                        <div className="row text-center mb-1 m-auto">
-                          <div className="col">
-                            <div className="row border">
-                              <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
-                                <label>Link</label>
-                              </div>
-                              <div className="col d-flex flex-column justify-content-center align-items-center">
-                                <input type="text" className="form-control border-0" id="clearapplink" onChange={e => temp3 = e.target.value} />
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="form-group">
-                        <div className="row mb-1 m-auto">
-                          <div className="col">
-                            <div className="row border">
-                              <div className="col pt-1 pb-1 padlr latomenu d-flex flex-column justify-content-center align-items-center">
-                                <label>Video</label>
-                              </div>
-                              <div className="col d-flex flex-column justify-content-center align-items-center">
-                                <label class="switch">
-                                  <input type="checkbox" className="form-control" defaultChecked={tempAppVideo} onClick={e => {
-                                    if (tempAppVideo === false) {
-                                      temp4 = true;
-                                    } else {
-                                      temp4 = false;
-                                    }
-                                  }} />
-                                  <span class="slider round" title="Video Player"></span>
-                                </label>
-                              </div>
-                            </div>
-                          </div>
-                          <div className="col-1"></div>
-                          <div className="col">
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="form-group">
-                        <div className="row mb-1 m-auto">
-                          <div className="col">
-                            <div className="row border">
-                              <div className="col pt-1 pb-1 padlr latomenu d-flex flex-column justify-content-center align-items-center">
-                                <label>Category</label>
-                              </div>
-                              <div className="col d-flex flex-column justify-content-center align-items-center">
-                                {catMenuButtons}
-                              </div>
-                            </div>
-                          </div>
-                          <div className="col-1"></div>
-                          <div className="col">
-                          </div>
-                        </div>
-                      </div>
-
-                      <Conferma alShow={this.state.alShow} handleClose={this.hideAlert}>
-                        <div className="row text-center pt-2">
-                          <div className="col">
-                            <div className="row">
-                              <section className="col pt-2 contenitore solidgreen latowhite d-flex justify-content-center align-items-center ">
-                                <div>
-                                  <p className="norfont">App added!</p>
-                                </div>
-                              </section>
-                            </div>
-                          </div>
-                        </div>
-                      </Conferma>
-                      <Upload upShow={this.state.upShow} handleClose={this.hideAlert}>
-                        <div className="row text-center pt-2">
-                          <div className="col">
-                            <div className="row">
-                              <section className="col pt-2 contenitore solidblue latowhite d-flex justify-content-center align-items-center ">
-                                <div>
-                                  <p className="norfont">Loading data... Please wait.</p>
-                                </div>
-                              </section>
-                            </div>
-                          </div>
-                        </div>
-                      </Upload>
-                      <Errore alErrShow={this.state.alErrShow} handleClose={this.hideAlert}>
-                        <div className="row text-center pt-2">
-                          <div className="col">
-                            <div className="row">
-                              <section className="col pt-2 contenitore brick latowhite d-flex justify-content-center align-items-center ">
-                                <div>
-                                  <p className="norfont">Error! Fill in all fields / Check position.</p>
-                                </div>
-                              </section>
-                            </div>
-                          </div>
-                        </div>
-                      </Errore>
-                    </form>
-                  </div>
-                </div>
-              </AppAddDialog>
-              <AppDelDialog appDelDiaShow={this.state.appDelDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("appdel")} handleSave={this.applyAppDel}>
-                <div className="modal-content noborder">
-                  <div className="modal-header">
-                    <h5 className="modal-title" >Permanently delete {tempAppTitle} application?</h5>
-                  </div>
-                  <div className="modal-body">
-                    <Conferma alShow={this.state.alShow} handleClose={this.hideAlert}>
-                      <div className="row text-center pt-2">
-                        <div className="col">
-                          <div className="row">
-                            <section className="col pt-2 contenitore solidgreen latowhite d-flex justify-content-center align-items-center ">
-                              <div>
-                                <p className="norfont">Application removed!</p>
-                              </div>
-                            </section>
-                          </div>
-                        </div>
-                      </div>
-                    </Conferma>
-                  </div>
-                </div>
-              </AppDelDialog>
-              <CatEditDialog catEditDiaShow={this.state.catEditDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("catedit")} handleSave={this.applyCatEdit}>
-                <div className="modal-content noborder">
-                  <div className="modal-header">
-                    <h5 className="modal-title" >Edit Category</h5>
-                  </div>
-                  <div className="modal-body">
-                    <form id="catEditForm">
-
-                      <div className="form-group">
-                        <div className="row text-center mb-1 m-auto">
-                          <div className="col">
-                            <div className="row border">
-                              <div className="col d-flex flex-column justify-content-center align-items-center">
-                                <input type="file" className="form-control boxs border-0" name="icon" onChange={e => fileImg = e.target.files[0]} />
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="form-group">
-                        <div className="row text-center mb-1 m-auto">
-                          <div className="col">
-                            <div className="row border">
-                              <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
-                                <label>Pos</label>
-                              </div>
-                              <div className="col d-flex flex-column justify-content-center align-items-center">
-                                <input type="text" placeholder="Change position..." id="clearcatswitchpos" className="form-control border-0"
-                                  onChange={e => {
-                                    temp = e.target.value;
-                                  }
-                                  } />
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="form-group">
-                        <div className="row text-center mb-1 m-auto">
-                          <div className="col">
-                            <div className="row border">
-                              <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
-                                <label>Title</label>
-                              </div>
-                              <div className="col d-flex flex-column justify-content-center align-items-center">
-                                <input type="text" className="form-control border-0" defaultValue={tempCatTitle} onChange={e => temp2 = e.target.value} /*placeholder={tempAppTitle}*/ />
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <Conferma alShow={this.state.alShow} handleClose={this.hideAlert}>
-                        <div className="row text-center pt-2">
-                          <div className="col">
-                            <div className="row">
-                              <section className="col pt-2 contenitore solidgreen latowhite d-flex justify-content-center align-items-center ">
-                                <div>
-                                  <p className="norfont">Changes made!</p>
-                                </div>
-                              </section>
-                            </div>
-                          </div>
-                        </div>
-                      </Conferma>
-                      <Upload upShow={this.state.upShow} handleClose={this.hideAlert}>
-                        <div className="row text-center pt-2">
-                          <div className="col">
-                            <div className="row">
-                              <section className="col pt-2 contenitore solidblue latowhite d-flex justify-content-center align-items-center ">
-                                <div>
-                                  <p className="norfont">Loading data... Please wait.</p>
-                                </div>
-                              </section>
-                            </div>
-                          </div>
-                        </div>
-                      </Upload>
-                      <Errore alErrShow={this.state.alErrShow} handleClose={this.hideAlert}>
-                        <div className="row text-center pt-2">
-                          <div className="col">
-                            <div className="row">
-                              <section className="col pt-2 contenitore solidblue latowhite d-flex justify-content-center align-items-center ">
-                                <div>
-                                  <p className="norfont">No changes made or CAT name duplicated!</p>
-                                </div>
-                              </section>
-                            </div>
-                          </div>
-                        </div>
-                      </Errore>
-                    </form>
-                  </div>
-                </div>
-              </CatEditDialog>
-              <CatAddDialog catAddDiaShow={this.state.catAddDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("catadd")} handleSave={this.applyCatAdd}>
-                <div className="modal-content noborder">
-                  <div className="modal-header">
-                    <h5 className="modal-title" >Add Category</h5>
-                  </div>
-                  <div className="modal-body">
-                    <form id="catAddForm">
-
-                      <div className="form-group">
-                        <div className="row text-center mb-1 m-auto">
-                          <div className="col">
-                            <div className="row border">
-                              <div className="col d-flex flex-column justify-content-center align-items-center">
-                                <input type="file" className="form-control boxs border-0" name="icon" onChange={e => fileImg = e.target.files[0]} />
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="form-group">
-                        <div className="row text-center mb-1 m-auto">
-                          <div className="col">
-                            <div className="row border">
-                              <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
-                                <label>Pos</label>
-                              </div>
-                              <div className="col d-flex flex-column justify-content-center align-items-center">
-                                <input type="text" placeholder="Leave blank for last..." id="clearcatpos" className="form-control border-0"
-                                  onChange={e => {
-                                    temp = e.target.value;
-                                  }
-                                  } />
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="form-group">
-                        <div className="row text-center mb-1 m-auto">
-                          <div className="col">
-                            <div className="row border">
-                              <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
-                                <label>Title</label>
-                              </div>
-                              <div className="col d-flex flex-column justify-content-center align-items-center">
-                                <input type="text" className="form-control border-0" id="clearcattitle" onChange={e => temp2 = e.target.value} />
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <Conferma alShow={this.state.alShow} handleClose={this.hideAlert}>
-                        <div className="row text-center pt-2">
-                          <div className="col">
-                            <div className="row">
-                              <section className="col pt-2 contenitore solidgreen latowhite d-flex justify-content-center align-items-center ">
-                                <div>
-                                  <p className="norfont">Cat added!</p>
-                                </div>
-                              </section>
-                            </div>
-                          </div>
-                        </div>
-                      </Conferma>
-                      <Upload upShow={this.state.upShow} handleClose={this.hideAlert}>
-                        <div className="row text-center pt-2">
-                          <div className="col">
-                            <div className="row">
-                              <section className="col pt-2 contenitore solidblue latowhite d-flex justify-content-center align-items-center ">
-                                <div>
-                                  <p className="norfont">Loading data... Please wait.</p>
-                                </div>
-                              </section>
-                            </div>
-                          </div>
-                        </div>
-                      </Upload>
-                      <Errore alErrShow={this.state.alErrShow} handleClose={this.hideAlert}>
-                        <div className="row text-center pt-2">
-                          <div className="col">
-                            <div className="row">
-                              <section className="col pt-2 contenitore brick latowhite d-flex justify-content-center align-items-center ">
-                                <div>
-                                  <p className="norfont">Fill in all fields or CAT name duplicated!</p>
-                                </div>
-                              </section>
-                            </div>
-                          </div>
-                        </div>
-                      </Errore>
-                    </form>
-                  </div>
-                </div>
-              </CatAddDialog>
-              <CatDelDialog catDelDiaShow={this.state.catDelDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("catdel")} handleSave={this.applyCatDel}>
-                <div className="modal-content noborder">
-                  <div className="modal-header">
-                    <h5 className="modal-title" >Permanently delete {tempCatTitle} category?</h5>
-                  </div>
-                  <div className="modal-body">
-                    <Conferma alShow={this.state.alShow} handleClose={this.hideAlert}>
-                      <div className="row text-center pt-2">
-                        <div className="col">
-                          <div className="row">
-                            <section className="col pt-2 contenitore solidgreen latowhite d-flex justify-content-center align-items-center ">
-                              <div>
-                                <p className="norfont">Category removed!</p>
-                              </div>
-                            </section>
-                          </div>
-                        </div>
-                      </div>
-                    </Conferma>
-                  </div>
-                </div>
-              </CatDelDialog>
-              <AppOrCatDialog aocDiaShow={this.state.aocDiaShow} activityChanged={this.state.activityChanged} handleApp={this.appAddItem} handleCat={this.catAddItem}>
-                <div className="modal-content noborder">
-                  <div className="modal-header">
-                    <h5 className="modal-title" >Add App or Category?</h5>
-                  </div>
-                </div>
-              </AppOrCatDialog>
-              <ExCrsDialog exCrsDiaShow={this.state.exCrsDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("excrs")} handleSave={this.applyAppEdit}>
-                <div className="modal-content noborder">
-                  <div className="modal-header-dark">
-                    <h5 className="modal-title-dark" >Credits</h5>
-                  </div>
-                  <div className="modal-body-dark darkBG text-center">
-                    {/* ---------------------- CREDIT ------------------------------- */}
-                    <div className="row">
-                      <button className="col extcredits green m-1"
-                        onClick={() => {
-                          window.open("https://infinityfree.net/");
-                        }}>
-                        <h2><font color="white">
-                          InfinityFree
-                        </font></h2>
-                        <h5><font color="Chartreuse">Free hosting with unlimited disk space and bandwidth.</font></h5>
-                      </button>
+                </BackEditDialog>
+                <CatDialog catDiaShow={this.state.catDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("cat")}>
+                  <div className="modal-content noBG">
+                    <div className="modal-header darkBG">
+                      <h5 className="modal-title latowhite" >{tempCatTitle}</h5>
                     </div>
-                    {/* ---------------------- END CREDIT ------------------------------- */}
-                    {/* ---------------------- CREDIT ------------------------------- */}
-                    <div className="row">
-                      <button className="col extcredits green m-1"
-                        onClick={() => {
-                          window.open("https://softwarelli.rf.gd/");
-                        }}>
-                        <h2><font color="white">
-                          Softwarelli
-                        </font></h2>
-                        <h5><font color="Chartreuse">Solo software gratuito. No ads.</font></h5>
-                      </button>
-                    </div>
-                    {/* ---------------------- END CREDIT ------------------------------- */}
-                    {/* ---------------------- CREDIT ------------------------------- */}
-                    <div className="row">
-                      <button className="col extcredits green m-1"
-                        onClick={() => {
-                          window.open("https://letsencrypt.org");
-                        }}>
-                        <h2><font color="white">
-                          Let's Encrypt
-                        </font></h2>
-                        <h5><font color="Chartreuse">Let's Encrypt is a free, automated, and open Certificate Authority.</font></h5>
-                      </button>
-                    </div>
-                    {/* ---------------------- END CREDIT ------------------------------- */}
-                    {/* ---------------------- CREDIT ------------------------------- */}
-                    <div className="row">
-                      <button className="col extcredits green m-1"
-                        onClick={() => {
-                          window.open("http://www.archive.org");
-                        }}>
-                        <h2><font color="white">
-                          Internet Archive
-                        </font></h2>
-                        <h5><font color="Chartreuse">Worldwide Public Domain Archive.</font></h5>
-                      </button>
-                    </div>
-                    {/* ---------------------- END CREDIT ------------------------------- */}
-                    {/* ---------------------- CREDIT ------------------------------- */}
-                    <div className="row">
-                      <button className="col extcredits green m-1"
-                        onClick={() => {
-                          window.open("http://www.icecast.org/");
-                        }}>
-                        <h2><font color="white">
-                          IceCast
-                        </font></h2>
-                        <h5><font color="Chartreuse">Icecast is free server software for streaming multimedia.</font></h5>
-                      </button>
-                    </div>
-                    {/* ---------------------- END CREDIT ------------------------------- */}
-                    {/* ---------------------- CREDIT ------------------------------- */}
-                    <div className="row">
-                      <button className="col extcredits green m-1"
-                        onClick={() => {
-                          window.open("https://nginx.org/");
-                        }}>
-                        <h2><font color="white">
-                          NGiNX
-                        </font></h2>
-                        <h5><font color="Chartreuse">nginx [engine x] is an HTTP, reverse, mail and TCP/UDP proxy server.</font></h5>
-                      </button>
-                    </div>
-                    {/* ---------------------- END CREDIT ------------------------------- */}
-                    {/* ---------------------- CREDIT ------------------------------- */}
-                    <div className="row">
-                      <button className="col extcredits green m-1"
-                        onClick={() => {
-                          window.open("https://sourceforge.net/projects/truckliststudio/");
-                        }}>
-                        <h2><font color="white">
-                          TrucklistStudio Home Page
-                        </font></h2>
-                        <h5><font color="Chartreuse">TrucklistStudio is a Media playlist broadcasting software.</font></h5>
-                      </button>
-                    </div>
-                    {/* ---------------------- END CREDIT ------------------------------- */}
-                    {/* ---------------------- CREDIT ------------------------------- */}
-                    <div className="row">
-                      <button className="col extcredits green m-1"
-                        onClick={() => {
-                          window.open("http://www.blender.org/");
-                        }}>
-                        <h2><font color="white">
-                          Blender
-                        </font></h2>
-                        <h5><font color="Chartreuse">Blender is the free open source 3D suite.</font></h5>
-                      </button>
-                    </div>
-                    {/* ---------------------- END CREDIT ------------------------------- */}
-                    {/* ---------------------- CREDIT ------------------------------- */}
-                    <div className="row">
-                      <button className="col extcredits green m-1"
-                        onClick={() => {
-                          window.open("http://www.videolan.org/");
-                        }}>
-                        <h2><font color="white">
-                          VLC
-                        </font></h2>
-                        <h5><font color="Chartreuse">VLC, open source multimedia player.</font></h5>
-                      </button>
-                    </div>
-                    {/* ---------------------- END CREDIT ------------------------------- */}
-                    {/* ---------------------- CREDIT ------------------------------- */}
-                    <div className="row">
-                      <button className="col extcredits green m-1"
-                        onClick={() => {
-                          window.open("http://www.gimp.org/");
-                        }}>
-                        <h2><font color="white">
-                          GIMP
-                        </font></h2>
-                        <h5><font color="Chartreuse">GNU Image Manipulation Program.</font></h5>
-                      </button>
-                    </div>
-                    {/* ---------------------- END CREDIT ------------------------------- */}
-                    {/* ---------------------- CREDIT ------------------------------- */}
-                    <div className="row">
-                      <button className="col extcredits green m-1"
-                        onClick={() => {
-                          window.open("https://inkscape.org");
-                        }}>
-                        <h2><font color="white">
-                          Inkscape
-                        </font></h2>
-                        <h5><font color="Chartreuse">Inkscape is a Free and open source vector graphics editor for GNU/Linux, Windows and macOS.</font></h5>
-                      </button>
-                    </div>
-                    {/* ---------------------- END CREDIT ------------------------------- */}
-                    {/* ---------------------- CREDIT ------------------------------- */}
-                    <div className="row">
-                      <button className="col extcredits green m-1"
-                        onClick={() => {
-                          window.open("http://www.ubuntu.com/");
-                        }}>
-                        <h2><font color="white">
-                          UBUNTU
-                        </font></h2>
-                        <h5><font color="Chartreuse">Linux Ubuntu Distro.</font></h5>
-                      </button>
-                    </div>
-                    {/* ---------------------- END CREDIT ------------------------------- */}
-                    {/* ---------------------- CREDIT ------------------------------- */}
-                    <div className="row">
-                      <button className="col extcredits green m-1"
-                        onClick={() => {
-                          window.open("https://www.jamendo.com/artist/368585/blue-daze");
-                        }}>
-                        <h2><font color="white">
-                          Blue Daze
-                        </font></h2>
-                        <h5><font color="Chartreuse">Thanks for the great Jingles.</font></h5>
-                      </button>
-                    </div>
-                    {/* ---------------------- END CREDIT ------------------------------- */}
-                    {/* ---------------------- CREDIT ------------------------------- */}
-                    <div className="row">
-                      <button className="col extcredits green m-1"
-                        onClick={() => {
-                          window.open("https://freedns.afraid.org/");
-                        }}>
-                        <h2><font color="white">
-                          FreeDNS
-                        </font></h2>
-                        <h5><font color="Chartreuse">Free DNS - Dynamic DNS - Static DNS subdomain and domain hosting</font></h5>
-                      </button>
-                    </div>
-                    {/* ---------------------- END CREDIT ------------------------------- */}
-                    {/* ---------------------- CREDIT ------------------------------- */}
-                    <div className="row">
-                      <button className="col extcredits green m-1"
-                        onClick={() => {
-                          window.open("https://github.com/video-dev/hls.js");
-                        }}>
-                        <h2><font color="white">
-                          hls.js
-                        </font></h2>
-                        <h5><font color="Chartreuse">hls.js is a JavaScript library which implements an HTTP Live Streaming client.
-                          It relies on HTML5 video and MediaSource Extensions for playback.</font></h5>
-                      </button>
-                    </div>
-                    {/* ---------------------- END CREDIT ------------------------------- */}
-                  </div>
-                </div>
-              </ExCrsDialog>
-              <SearchDialog searchDiaShow={this.state.searchDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("search")} handleSave={this.appSearch} handleReset={this.appSearchReset}>
-                <div className="modal-content noborder">
-                  <div className="modal-header-dark">
-                    <h5 className="modal-title-dark" >Search</h5>
-                  </div>
-                  <div className="modal-body-dark darkBG">
-                    <form id="searchForm" onKeyDown={this.handleKeyDown}>
-                      <div className="form-group">
-                        <input type="text" className="form-control contenitore pt-2" ref={(input) => { this.searchInput = input; }} onChange={e => temp = e.target.value} placeholder={"Search movie..."} />
-                      </div>
-                      <Conferma alShow={this.state.alShow} handleClose={this.hideAlert}>
-                        <div className="row text-center pt-2">
-                          <div className="col">
-                            <div className="row">
-                              <section className="col pt-2 contenitore solidgreen latowhite d-flex justify-content-center align-items-center ">
-                                <div>
-                                  <p className="norfont">Search results:</p>
-                                </div>
-                              </section>
-                            </div>
-                          </div>
-                        </div>
-                      </Conferma>
-                      <Errore alErrShow={this.state.alErrShow} handleClose={this.hideAlert}>
-                        <div className="row text-center pt-2">
-                          <div className="col">
-                            <div className="row">
-                              <section className="col pt-2 contenitore brick latowhite d-flex justify-content-center align-items-center ">
-                                <div>
-                                  <p className="norfont">Error! Enter at least one character.</p>
-                                </div>
-                              </section>
-                            </div>
-                          </div>
-                        </div>
-                      </Errore>
-                      {/* RESAPPS */}
+                    <div style={this.state.catStyle} className="modal-body-dark">
                       <div className="textcenter">
                         {
-                          this.state.resAppItems.map(({ id, title, link, icon, video }, i) => {
+                          this.state.catAppItems.map(({ id, title, link, icon, video }, i) => {
                             return (
-                              <AppSearchRes key={i} pos={i} id={id}
+                              <AppCatRes showAppsBtn={this.state.appsBtnShow} key={i} pos={i} id={id}
                                 title={title} link={link} icon={icon} video={video}
-                                appVideo={this.resAppVideo} />
+                                appVideo={this.catAppVideo} appEditDel={this.appEditDel} />
                             )
                           })
                         }
+                        <AppAdd showAppsBtn={this.state.appsBtnShow} /* title={title} link={link} icon={icon} */ addItem={this.appOrCatItem} />
                       </div>
-                    </form>
+                    </div>
                   </div>
+                </CatDialog>
+                <AppEditDialog appEditDiaShow={this.state.appEditDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("appedit")} handleSave={this.applyAppEdit}>
+                  <div className="modal-content noborder">
+                    <div className="modal-header">
+                      <h5 className="modal-title" >Edit Web Application</h5>
+                    </div>
+                    <div className="modal-body">
+                      <form id="appEditForm">
+
+                        <div className="form-group">
+                          <div className="row text-center mb-1 m-auto">
+                            <div className="col">
+                              <div className="row border">
+                                <div className="col d-flex flex-column justify-content-center align-items-center">
+                                  <input type="file" className="form-control boxs border-0" name="icon" onChange={e => fileImg = e.target.files[0]} />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="form-group">
+                          <div className="row text-center mb-1 m-auto">
+                            <div className="col">
+                              <div className="row border">
+                                <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
+                                  <label>Pos</label>
+                                </div>
+                                <div className="col d-flex flex-column justify-content-center align-items-center">
+                                  <input type="text" placeholder="Change position..." id="clearappswitchpos" className="form-control border-0"
+                                    onChange={e => {
+                                      cgPos = e.target.value;
+                                    }
+                                    } />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="form-group">
+                          <div className="row text-center mb-1 m-auto">
+                            <div className="col">
+                              <div className="row border">
+                                <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
+                                  <label>Title</label>
+                                </div>
+                                <div className="col d-flex flex-column justify-content-center align-items-center">
+                                  <input type="text" className="form-control border-0" defaultValue={tempAppTitle} onChange={e => temp2 = e.target.value} /*placeholder={tempAppTitle}*/ />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="form-group">
+                          <div className="row text-center mb-1 m-auto">
+                            <div className="col">
+                              <div className="row border">
+                                <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
+                                  <label>Link</label>
+                                </div>
+                                <div className="col d-flex flex-column justify-content-center align-items-center">
+                                  <input type="text" className="form-control border-0" defaultValue={tempAppLink} onChange={e => temp3 = e.target.value} /*placeholder={tempAppLink}*/ />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="form-group">
+                          <div className="row mb-1 m-auto">
+                            <div className="col">
+                              <div className="row border">
+                                <div className="col pt-1 pb-1 padlr latomenu d-flex flex-column justify-content-center align-items-center">
+                                  <label>Video</label>
+                                </div>
+                                <div className="col d-flex flex-column justify-content-center align-items-center">
+                                  <label class="switch">
+                                    <input type="checkbox" className="form-control" defaultChecked={tempAppVideo} onClick={e => {
+                                      if (tempAppVideo === false) {
+                                        temp4 = true;
+                                      } else {
+                                        temp4 = false;
+                                      }
+                                    }} />
+                                    <span class="slider round" title="Video Player"></span>
+                                  </label>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="col-1"></div>
+                            <div className="col">
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="form-group">
+                          <div className="row mb-1 m-auto">
+                            <div className="col">
+                              <div className="row border">
+                                <div className="col pt-1 pb-1 padlr latomenu d-flex flex-column justify-content-center align-items-center">
+                                  <label>Category</label>
+                                </div>
+                                <div className="col d-flex flex-column justify-content-center align-items-center">
+                                  {catMenuButtons}
+                                </div>
+                              </div>
+                            </div>
+                            <div className="col-1"></div>
+                            <div className="col">
+                            </div>
+                          </div>
+                        </div>
+
+                        <Conferma alShow={this.state.alShow} handleClose={this.hideAlert}>
+                          <div className="row text-center pt-2">
+                            <div className="col">
+                              <div className="row">
+                                <section className="col pt-2 contenitore solidgreen latowhite d-flex justify-content-center align-items-center ">
+                                  <div>
+                                    <p className="norfont">Changes made!</p>
+                                  </div>
+                                </section>
+                              </div>
+                            </div>
+                          </div>
+                        </Conferma>
+                        <Upload upShow={this.state.upShow} handleClose={this.hideAlert}>
+                          <div className="row text-center pt-2">
+                            <div className="col">
+                              <div className="row">
+                                <section className="col pt-2 contenitore solidblue latowhite d-flex justify-content-center align-items-center ">
+                                  <div>
+                                    <p className="norfont">Loading data... Please wait.</p>
+                                  </div>
+                                </section>
+                              </div>
+                            </div>
+                          </div>
+                        </Upload>
+                        <Errore alErrShow={this.state.alErrShow} handleClose={this.hideAlert}>
+                          <div className="row text-center pt-2">
+                            <div className="col">
+                              <div className="row">
+                                <section className="col pt-2 contenitore solidblue latowhite d-flex justify-content-center align-items-center ">
+                                  <div>
+                                    <p className="norfont">No changes made!</p>
+                                  </div>
+                                </section>
+                              </div>
+                            </div>
+                          </div>
+                        </Errore>
+                      </form>
+                    </div>
+                  </div>
+                </AppEditDialog>
+                <AppAddDialog appAddDiaShow={this.state.appAddDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("appadd")} handleSave={this.applyAppAdd}>
+                  <div className="modal-content noborder">
+                    <div className="modal-header">
+                      <h5 className="modal-title" >Add Web Application</h5>
+                    </div>
+                    <div className="modal-body">
+                      <form id="appAddForm">
+
+                        <div className="form-group">
+                          <div className="row text-center mb-1 m-auto">
+                            <div className="col">
+                              <div className="row border">
+                                <div className="col d-flex flex-column justify-content-center align-items-center">
+                                  <input type="file" className="form-control boxs border-0" name="icon" onChange={e => fileImg = e.target.files[0]} />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="form-group">
+                          <div className="row text-center mb-1 m-auto">
+                            <div className="col">
+                              <div className="row border">
+                                <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
+                                  <label>Pos</label>
+                                </div>
+                                <div className="col d-flex flex-column justify-content-center align-items-center">
+                                  <input type="text" placeholder="Leave blank for last..." id="clearapppos" className="form-control border-0"
+                                    onChange={e => {
+                                      temp = e.target.value;
+                                    }
+                                    } />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="form-group">
+                          <div className="row text-center mb-1 m-auto">
+                            <div className="col">
+                              <div className="row border">
+                                <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
+                                  <label>Title</label>
+                                </div>
+                                <div className="col d-flex flex-column justify-content-center align-items-center">
+                                  <input type="text" className="form-control border-0" id="clearapptitle" onChange={e => temp2 = e.target.value} />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="form-group">
+                          <div className="row text-center mb-1 m-auto">
+                            <div className="col">
+                              <div className="row border">
+                                <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
+                                  <label>Link</label>
+                                </div>
+                                <div className="col d-flex flex-column justify-content-center align-items-center">
+                                  <input type="text" className="form-control border-0" id="clearapplink" onChange={e => temp3 = e.target.value} />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="form-group">
+                          <div className="row text-center mb-1 m-auto">
+                            <div className="col">
+                              <div className="row border">
+                                <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
+                                  <label>Description</label>
+                                </div>
+                                <div className="col d-flex flex-column justify-content-center align-items-center">
+                                  <textarea id="textareabox" name="textarea1" placeholder="Start here..."></textarea>
+                                  <input type="text" className="form-control border-0" id="clearapptitle" onChange={e => temp2 = e.target.value} />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="form-group">
+                          <div className="row mb-1 m-auto">
+                            <div className="col">
+                              <div className="row border">
+                                <div className="col pt-1 pb-1 padlr latomenu d-flex flex-column justify-content-center align-items-center">
+                                  <label>Video</label>
+                                </div>
+                                <div className="col d-flex flex-column justify-content-center align-items-center">
+                                  <label class="switch">
+                                    <input type="checkbox" className="form-control" defaultChecked={tempAppVideo} onClick={e => {
+                                      if (tempAppVideo === false) {
+                                        temp4 = true;
+                                      } else {
+                                        temp4 = false;
+                                      }
+                                    }} />
+                                    <span class="slider round" title="Video Player"></span>
+                                  </label>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="col-1"></div>
+                            <div className="col">
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="form-group">
+                          <div className="row mb-1 m-auto">
+                            <div className="col">
+                              <div className="row border">
+                                <div className="col pt-1 pb-1 padlr latomenu d-flex flex-column justify-content-center align-items-center">
+                                  <label>Category</label>
+                                </div>
+                                <div className="col d-flex flex-column justify-content-center align-items-center">
+                                  {catMenuButtons}
+                                </div>
+                              </div>
+                            </div>
+                            <div className="col-1"></div>
+                            <div className="col">
+                            </div>
+                          </div>
+                        </div>
+
+                        <Conferma alShow={this.state.alShow} handleClose={this.hideAlert}>
+                          <div className="row text-center pt-2">
+                            <div className="col">
+                              <div className="row">
+                                <section className="col pt-2 contenitore solidgreen latowhite d-flex justify-content-center align-items-center ">
+                                  <div>
+                                    <p className="norfont">App added!</p>
+                                  </div>
+                                </section>
+                              </div>
+                            </div>
+                          </div>
+                        </Conferma>
+                        <Upload upShow={this.state.upShow} handleClose={this.hideAlert}>
+                          <div className="row text-center pt-2">
+                            <div className="col">
+                              <div className="row">
+                                <section className="col pt-2 contenitore solidblue latowhite d-flex justify-content-center align-items-center ">
+                                  <div>
+                                    <p className="norfont">Loading data... Please wait.</p>
+                                  </div>
+                                </section>
+                              </div>
+                            </div>
+                          </div>
+                        </Upload>
+                        <Errore alErrShow={this.state.alErrShow} handleClose={this.hideAlert}>
+                          <div className="row text-center pt-2">
+                            <div className="col">
+                              <div className="row">
+                                <section className="col pt-2 contenitore brick latowhite d-flex justify-content-center align-items-center ">
+                                  <div>
+                                    <p className="norfont">Error! Fill in all fields / Check position.</p>
+                                  </div>
+                                </section>
+                              </div>
+                            </div>
+                          </div>
+                        </Errore>
+                      </form>
+                    </div>
+                  </div>
+                </AppAddDialog>
+                <AppDelDialog appDelDiaShow={this.state.appDelDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("appdel")} handleSave={this.applyAppDel}>
+                  <div className="modal-content noborder">
+                    <div className="modal-header">
+                      <h5 className="modal-title" >Permanently delete {tempAppTitle} application?</h5>
+                    </div>
+                    <div className="modal-body">
+                      <Conferma alShow={this.state.alShow} handleClose={this.hideAlert}>
+                        <div className="row text-center pt-2">
+                          <div className="col">
+                            <div className="row">
+                              <section className="col pt-2 contenitore solidgreen latowhite d-flex justify-content-center align-items-center ">
+                                <div>
+                                  <p className="norfont">Application removed!</p>
+                                </div>
+                              </section>
+                            </div>
+                          </div>
+                        </div>
+                      </Conferma>
+                    </div>
+                  </div>
+                </AppDelDialog>
+                <CatEditDialog catEditDiaShow={this.state.catEditDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("catedit")} handleSave={this.applyCatEdit}>
+                  <div className="modal-content noborder">
+                    <div className="modal-header">
+                      <h5 className="modal-title" >Edit Category</h5>
+                    </div>
+                    <div className="modal-body">
+                      <form id="catEditForm">
+
+                        <div className="form-group">
+                          <div className="row text-center mb-1 m-auto">
+                            <div className="col">
+                              <div className="row border">
+                                <div className="col d-flex flex-column justify-content-center align-items-center">
+                                  <input type="file" className="form-control boxs border-0" name="icon" onChange={e => fileImg = e.target.files[0]} />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="form-group">
+                          <div className="row text-center mb-1 m-auto">
+                            <div className="col">
+                              <div className="row border">
+                                <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
+                                  <label>Pos</label>
+                                </div>
+                                <div className="col d-flex flex-column justify-content-center align-items-center">
+                                  <input type="text" placeholder="Change position..." id="clearcatswitchpos" className="form-control border-0"
+                                    onChange={e => {
+                                      temp = e.target.value;
+                                    }
+                                    } />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="form-group">
+                          <div className="row text-center mb-1 m-auto">
+                            <div className="col">
+                              <div className="row border">
+                                <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
+                                  <label>Title</label>
+                                </div>
+                                <div className="col d-flex flex-column justify-content-center align-items-center">
+                                  <input type="text" className="form-control border-0" defaultValue={tempCatTitle} onChange={e => temp2 = e.target.value} /*placeholder={tempAppTitle}*/ />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <Conferma alShow={this.state.alShow} handleClose={this.hideAlert}>
+                          <div className="row text-center pt-2">
+                            <div className="col">
+                              <div className="row">
+                                <section className="col pt-2 contenitore solidgreen latowhite d-flex justify-content-center align-items-center ">
+                                  <div>
+                                    <p className="norfont">Changes made!</p>
+                                  </div>
+                                </section>
+                              </div>
+                            </div>
+                          </div>
+                        </Conferma>
+                        <Upload upShow={this.state.upShow} handleClose={this.hideAlert}>
+                          <div className="row text-center pt-2">
+                            <div className="col">
+                              <div className="row">
+                                <section className="col pt-2 contenitore solidblue latowhite d-flex justify-content-center align-items-center ">
+                                  <div>
+                                    <p className="norfont">Loading data... Please wait.</p>
+                                  </div>
+                                </section>
+                              </div>
+                            </div>
+                          </div>
+                        </Upload>
+                        <Errore alErrShow={this.state.alErrShow} handleClose={this.hideAlert}>
+                          <div className="row text-center pt-2">
+                            <div className="col">
+                              <div className="row">
+                                <section className="col pt-2 contenitore solidblue latowhite d-flex justify-content-center align-items-center ">
+                                  <div>
+                                    <p className="norfont">No changes made or CAT name duplicated!</p>
+                                  </div>
+                                </section>
+                              </div>
+                            </div>
+                          </div>
+                        </Errore>
+                      </form>
+                    </div>
+                  </div>
+                </CatEditDialog>
+                <CatAddDialog catAddDiaShow={this.state.catAddDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("catadd")} handleSave={this.applyCatAdd}>
+                  <div className="modal-content noborder">
+                    <div className="modal-header">
+                      <h5 className="modal-title" >Add Category</h5>
+                    </div>
+                    <div className="modal-body">
+                      <form id="catAddForm">
+
+                        <div className="form-group">
+                          <div className="row text-center mb-1 m-auto">
+                            <div className="col">
+                              <div className="row border">
+                                <div className="col d-flex flex-column justify-content-center align-items-center">
+                                  <input type="file" className="form-control boxs border-0" name="icon" onChange={e => fileImg = e.target.files[0]} />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="form-group">
+                          <div className="row text-center mb-1 m-auto">
+                            <div className="col">
+                              <div className="row border">
+                                <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
+                                  <label>Pos</label>
+                                </div>
+                                <div className="col d-flex flex-column justify-content-center align-items-center">
+                                  <input type="text" placeholder="Leave blank for last..." id="clearcatpos" className="form-control border-0"
+                                    onChange={e => {
+                                      temp = e.target.value;
+                                    }
+                                    } />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="form-group">
+                          <div className="row text-center mb-1 m-auto">
+                            <div className="col">
+                              <div className="row border">
+                                <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
+                                  <label>Title</label>
+                                </div>
+                                <div className="col d-flex flex-column justify-content-center align-items-center">
+                                  <input type="text" className="form-control border-0" id="clearcattitle" onChange={e => temp2 = e.target.value} />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <Conferma alShow={this.state.alShow} handleClose={this.hideAlert}>
+                          <div className="row text-center pt-2">
+                            <div className="col">
+                              <div className="row">
+                                <section className="col pt-2 contenitore solidgreen latowhite d-flex justify-content-center align-items-center ">
+                                  <div>
+                                    <p className="norfont">Cat added!</p>
+                                  </div>
+                                </section>
+                              </div>
+                            </div>
+                          </div>
+                        </Conferma>
+                        <Upload upShow={this.state.upShow} handleClose={this.hideAlert}>
+                          <div className="row text-center pt-2">
+                            <div className="col">
+                              <div className="row">
+                                <section className="col pt-2 contenitore solidblue latowhite d-flex justify-content-center align-items-center ">
+                                  <div>
+                                    <p className="norfont">Loading data... Please wait.</p>
+                                  </div>
+                                </section>
+                              </div>
+                            </div>
+                          </div>
+                        </Upload>
+                        <Errore alErrShow={this.state.alErrShow} handleClose={this.hideAlert}>
+                          <div className="row text-center pt-2">
+                            <div className="col">
+                              <div className="row">
+                                <section className="col pt-2 contenitore brick latowhite d-flex justify-content-center align-items-center ">
+                                  <div>
+                                    <p className="norfont">Fill in all fields or CAT name duplicated!</p>
+                                  </div>
+                                </section>
+                              </div>
+                            </div>
+                          </div>
+                        </Errore>
+                      </form>
+                    </div>
+                  </div>
+                </CatAddDialog>
+                <CatDelDialog catDelDiaShow={this.state.catDelDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("catdel")} handleSave={this.applyCatDel}>
+                  <div className="modal-content noborder">
+                    <div className="modal-header">
+                      <h5 className="modal-title" >Permanently delete {tempCatTitle} category?</h5>
+                    </div>
+                    <div className="modal-body">
+                      <Conferma alShow={this.state.alShow} handleClose={this.hideAlert}>
+                        <div className="row text-center pt-2">
+                          <div className="col">
+                            <div className="row">
+                              <section className="col pt-2 contenitore solidgreen latowhite d-flex justify-content-center align-items-center ">
+                                <div>
+                                  <p className="norfont">Category removed!</p>
+                                </div>
+                              </section>
+                            </div>
+                          </div>
+                        </div>
+                      </Conferma>
+                    </div>
+                  </div>
+                </CatDelDialog>
+                <AppOrCatDialog aocDiaShow={this.state.aocDiaShow} activityChanged={this.state.activityChanged} handleApp={this.appAddItem} handleCat={this.catAddItem}>
+                  <div className="modal-content noborder">
+                    <div className="modal-header">
+                      <h5 className="modal-title" >Add App or Category?</h5>
+                    </div>
+                  </div>
+                </AppOrCatDialog>
+                <ExCrsDialog exCrsDiaShow={this.state.exCrsDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("excrs")} handleSave={this.applyAppEdit}>
+                  <div className="modal-content noborder">
+                    <div className="modal-header-dark">
+                      <h5 className="modal-title-dark" >Credits</h5>
+                    </div>
+                    <div className="modal-body-dark darkBG text-center">
+                      {/* ---------------------- CREDIT ------------------------------- */}
+                      <div className="row">
+                        <button className="col extcredits green m-1"
+                          onClick={() => {
+                            window.open("https://infinityfree.net/");
+                          }}>
+                          <h2><font color="white">
+                            InfinityFree
+                          </font></h2>
+                          <h5><font color="Chartreuse">Free hosting with unlimited disk space and bandwidth.</font></h5>
+                        </button>
+                      </div>
+                      {/* ---------------------- END CREDIT ------------------------------- */}
+                      {/* ---------------------- CREDIT ------------------------------- */}
+                      <div className="row">
+                        <button className="col extcredits green m-1"
+                          onClick={() => {
+                            window.open("https://softwarelli.rf.gd/");
+                          }}>
+                          <h2><font color="white">
+                            Softwarelli
+                          </font></h2>
+                          <h5><font color="Chartreuse">Solo software gratuito. No ads.</font></h5>
+                        </button>
+                      </div>
+                      {/* ---------------------- END CREDIT ------------------------------- */}
+                      {/* ---------------------- CREDIT ------------------------------- */}
+                      <div className="row">
+                        <button className="col extcredits green m-1"
+                          onClick={() => {
+                            window.open("https://letsencrypt.org");
+                          }}>
+                          <h2><font color="white">
+                            Let's Encrypt
+                          </font></h2>
+                          <h5><font color="Chartreuse">Let's Encrypt is a free, automated, and open Certificate Authority.</font></h5>
+                        </button>
+                      </div>
+                      {/* ---------------------- END CREDIT ------------------------------- */}
+                      {/* ---------------------- CREDIT ------------------------------- */}
+                      <div className="row">
+                        <button className="col extcredits green m-1"
+                          onClick={() => {
+                            window.open("http://www.archive.org");
+                          }}>
+                          <h2><font color="white">
+                            Internet Archive
+                          </font></h2>
+                          <h5><font color="Chartreuse">Worldwide Public Domain Archive.</font></h5>
+                        </button>
+                      </div>
+                      {/* ---------------------- END CREDIT ------------------------------- */}
+                      {/* ---------------------- CREDIT ------------------------------- */}
+                      <div className="row">
+                        <button className="col extcredits green m-1"
+                          onClick={() => {
+                            window.open("http://www.icecast.org/");
+                          }}>
+                          <h2><font color="white">
+                            IceCast
+                          </font></h2>
+                          <h5><font color="Chartreuse">Icecast is free server software for streaming multimedia.</font></h5>
+                        </button>
+                      </div>
+                      {/* ---------------------- END CREDIT ------------------------------- */}
+                      {/* ---------------------- CREDIT ------------------------------- */}
+                      <div className="row">
+                        <button className="col extcredits green m-1"
+                          onClick={() => {
+                            window.open("https://nginx.org/");
+                          }}>
+                          <h2><font color="white">
+                            NGiNX
+                          </font></h2>
+                          <h5><font color="Chartreuse">nginx [engine x] is an HTTP, reverse, mail and TCP/UDP proxy server.</font></h5>
+                        </button>
+                      </div>
+                      {/* ---------------------- END CREDIT ------------------------------- */}
+                      {/* ---------------------- CREDIT ------------------------------- */}
+                      <div className="row">
+                        <button className="col extcredits green m-1"
+                          onClick={() => {
+                            window.open("https://sourceforge.net/projects/truckliststudio/");
+                          }}>
+                          <h2><font color="white">
+                            TrucklistStudio Home Page
+                          </font></h2>
+                          <h5><font color="Chartreuse">TrucklistStudio is a Media playlist broadcasting software.</font></h5>
+                        </button>
+                      </div>
+                      {/* ---------------------- END CREDIT ------------------------------- */}
+                      {/* ---------------------- CREDIT ------------------------------- */}
+                      <div className="row">
+                        <button className="col extcredits green m-1"
+                          onClick={() => {
+                            window.open("http://www.blender.org/");
+                          }}>
+                          <h2><font color="white">
+                            Blender
+                          </font></h2>
+                          <h5><font color="Chartreuse">Blender is the free open source 3D suite.</font></h5>
+                        </button>
+                      </div>
+                      {/* ---------------------- END CREDIT ------------------------------- */}
+                      {/* ---------------------- CREDIT ------------------------------- */}
+                      <div className="row">
+                        <button className="col extcredits green m-1"
+                          onClick={() => {
+                            window.open("http://www.videolan.org/");
+                          }}>
+                          <h2><font color="white">
+                            VLC
+                          </font></h2>
+                          <h5><font color="Chartreuse">VLC, open source multimedia player.</font></h5>
+                        </button>
+                      </div>
+                      {/* ---------------------- END CREDIT ------------------------------- */}
+                      {/* ---------------------- CREDIT ------------------------------- */}
+                      <div className="row">
+                        <button className="col extcredits green m-1"
+                          onClick={() => {
+                            window.open("http://www.gimp.org/");
+                          }}>
+                          <h2><font color="white">
+                            GIMP
+                          </font></h2>
+                          <h5><font color="Chartreuse">GNU Image Manipulation Program.</font></h5>
+                        </button>
+                      </div>
+                      {/* ---------------------- END CREDIT ------------------------------- */}
+                      {/* ---------------------- CREDIT ------------------------------- */}
+                      <div className="row">
+                        <button className="col extcredits green m-1"
+                          onClick={() => {
+                            window.open("https://inkscape.org");
+                          }}>
+                          <h2><font color="white">
+                            Inkscape
+                          </font></h2>
+                          <h5><font color="Chartreuse">Inkscape is a Free and open source vector graphics editor for GNU/Linux, Windows and macOS.</font></h5>
+                        </button>
+                      </div>
+                      {/* ---------------------- END CREDIT ------------------------------- */}
+                      {/* ---------------------- CREDIT ------------------------------- */}
+                      <div className="row">
+                        <button className="col extcredits green m-1"
+                          onClick={() => {
+                            window.open("http://www.ubuntu.com/");
+                          }}>
+                          <h2><font color="white">
+                            UBUNTU
+                          </font></h2>
+                          <h5><font color="Chartreuse">Linux Ubuntu Distro.</font></h5>
+                        </button>
+                      </div>
+                      {/* ---------------------- END CREDIT ------------------------------- */}
+                      {/* ---------------------- CREDIT ------------------------------- */}
+                      <div className="row">
+                        <button className="col extcredits green m-1"
+                          onClick={() => {
+                            window.open("https://www.jamendo.com/artist/368585/blue-daze");
+                          }}>
+                          <h2><font color="white">
+                            Blue Daze
+                          </font></h2>
+                          <h5><font color="Chartreuse">Thanks for the great Jingles.</font></h5>
+                        </button>
+                      </div>
+                      {/* ---------------------- END CREDIT ------------------------------- */}
+                      {/* ---------------------- CREDIT ------------------------------- */}
+                      <div className="row">
+                        <button className="col extcredits green m-1"
+                          onClick={() => {
+                            window.open("https://freedns.afraid.org/");
+                          }}>
+                          <h2><font color="white">
+                            FreeDNS
+                          </font></h2>
+                          <h5><font color="Chartreuse">Free DNS - Dynamic DNS - Static DNS subdomain and domain hosting</font></h5>
+                        </button>
+                      </div>
+                      {/* ---------------------- END CREDIT ------------------------------- */}
+                      {/* ---------------------- CREDIT ------------------------------- */}
+                      <div className="row">
+                        <button className="col extcredits green m-1"
+                          onClick={() => {
+                            window.open("https://github.com/video-dev/hls.js");
+                          }}>
+                          <h2><font color="white">
+                            hls.js
+                          </font></h2>
+                          <h5><font color="Chartreuse">hls.js is a JavaScript library which implements an HTTP Live Streaming client.
+                            It relies on HTML5 video and MediaSource Extensions for playback.</font></h5>
+                        </button>
+                      </div>
+                      {/* ---------------------- END CREDIT ------------------------------- */}
+                    </div>
+                  </div>
+                </ExCrsDialog>
+                <SearchDialog searchDiaShow={this.state.searchDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("search")} handleSave={this.appSearch} handleReset={this.appSearchReset}>
+                  <div className="modal-content noborder">
+                    <div className="modal-header-dark">
+                      <h5 className="modal-title-dark" >Search</h5>
+                    </div>
+                    <div className="modal-body-dark darkBG">
+                      <form id="searchForm" onKeyDown={this.handleKeyDown}>
+                        <div className="form-group">
+                          <input type="text" className="form-control contenitore pt-2" ref={(input) => { this.searchInput = input; }} onChange={e => temp = e.target.value} placeholder={"Search movie..."} />
+                        </div>
+                        <Conferma alShow={this.state.alShow} handleClose={this.hideAlert}>
+                          <div className="row text-center pt-2">
+                            <div className="col">
+                              <div className="row">
+                                <section className="col pt-2 contenitore solidgreen latowhite d-flex justify-content-center align-items-center ">
+                                  <div>
+                                    <p className="norfont">Search results:</p>
+                                  </div>
+                                </section>
+                              </div>
+                            </div>
+                          </div>
+                        </Conferma>
+                        <Errore alErrShow={this.state.alErrShow} handleClose={this.hideAlert}>
+                          <div className="row text-center pt-2">
+                            <div className="col">
+                              <div className="row">
+                                <section className="col pt-2 contenitore brick latowhite d-flex justify-content-center align-items-center ">
+                                  <div>
+                                    <p className="norfont">Error! Enter at least one character.</p>
+                                  </div>
+                                </section>
+                              </div>
+                            </div>
+                          </div>
+                        </Errore>
+                        {/* RESAPPS */}
+                        <div className="textcenter">
+                          {
+                            this.state.resAppItems.map(({ id, title, link, icon, video }, i) => {
+                              return (
+                                <AppSearchRes key={i} pos={i} id={id}
+                                  title={title} link={link} icon={icon} video={video}
+                                  appVideo={this.resAppVideo} />
+                              )
+                            })
+                          }
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </SearchDialog>
+                <AppVideoDialog appVideoDiaShow={this.state.appVideoDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("video")} handleSave={this.applyAppEdit}>
+                  <div className="modal-content darkBG">
+                    <div className="modal-header-dark">
+                      <h5 className="modal-title-dark" >"{tempAppTitle}"</h5>
+                    </div>
+                    <div className="modal-body align-items-center darkBG">
+                      <center>
+                        <iframe width="100%" height="350" src={this.state.videoLink} frameborder="0" allowfullscreen="true"></iframe>
+                      </center>
+                    </div>
+                  </div>
+                </AppVideoDialog>
+                <AppDescrDialog appDescrDiaShow={this.state.appDescrDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("video")} handleSave={this.applyAppEdit}>
+                  <div className="modal-content darkBG">
+                    <div className="modal-header-dark">
+                      <h5 className="modal-title-dark" >"{tempAppTitle}"</h5>
+                    </div>
+                    <div className="modal-body align-items-center darkBG">
+                      <center>
+                        {tempAppDescr}
+                      </center>
+                    </div>
+                  </div>
+                </AppDescrDialog>
+                <div className="stickytop">
+                  {head}
+                  {buttons}
                 </div>
-              </SearchDialog>
-              <AppVideoDialog appVideoDiaShow={this.state.appVideoDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("video")} handleSave={this.applyAppEdit}>
-                <div className="modal-content darkBG">
-                  <div className="modal-header-dark">
-                    <h5 className="modal-title-dark" >"{tempAppTitle}"</h5>
-                  </div>
-                  <div className="modal-body align-items-center darkBG">
-                    <center>
-                      <iframe width="100%" height="350" src={this.state.videoLink} frameborder="0" allowfullscreen="true"></iframe>
-                    </center>
-                  </div>
+                {/* BODY */}
+                <div className="textcenter">
+                  {/* CATEGORIES */}
+                  {
+                    this.state.catItems.map(({ id, title, icon }, i) => {
+                      return (
+                        <Cat showAppsBtn={this.state.appsBtnShow} key={i} pos={i}
+                          title={title} icon={icon} catEditDel={this.catEditDel}
+                          catAddItem={this.catAddItem} catCont={this.catCont} />
+                      )
+                    })
+                  }
+                  {/* APPS */}
+                  {
+                    this.state.rootAppItems.map(({ id, title, link, icon, video }, i) => {
+                      return (
+                        <App showAppsBtn={this.state.appsBtnShow} key={i} pos={i} id={id}
+                          title={title} link={link} icon={icon} video={video}
+                          appEditDel={this.appEditDel} addItem={this.appOrCatItem} appVideo={this.appVideo} />
+                      )
+                    })
+                  }
+                  <AppAdd showAppsBtn={this.state.appsBtnShow} /* title={title} link={link} icon={icon} */ addItem={this.appOrCatItem} />
+                  {/* FOOTER */}
+                  {foot}
                 </div>
-              </AppVideoDialog>
-              <div className="stickytop">
-                {head}
-                {buttons}
-              </div>
-              {/* BODY */}
-              <div className="textcenter">
-                {/* CATEGORIES */}
-                {
-                  this.state.catItems.map(({ id, title, icon }, i) => {
-                    return (
-                      <Cat showAppsBtn={this.state.appsBtnShow} key={i} pos={i}
-                        title={title} icon={icon} catEditDel={this.catEditDel}
-                        catAddItem={this.catAddItem} catCont={this.catCont} />
-                    )
-                  })
-                }
-                {/* APPS */}
-                {
-                  this.state.rootAppItems.map(({ id, title, link, icon, video }, i) => {
-                    return (
-                      <App showAppsBtn={this.state.appsBtnShow} key={i} pos={i} id={id}
-                        title={title} link={link} icon={icon} video={video}
-                        appEditDel={this.appEditDel} addItem={this.appOrCatItem} appVideo={this.appVideo} />
-                    )
-                  })
-                }
-                <AppAdd showAppsBtn={this.state.appsBtnShow} /* title={title} link={link} icon={icon} */ addItem={this.appOrCatItem} />
-                {/* FOOTER */}
-                {foot}
-              </div>
-            </section>
-          </div>
+              </section>
+            </div>
           </div>
         </div>
         {/* Bootstrap JS */}
