@@ -16,6 +16,7 @@ var temp2 = "";
 var temp3 = "";
 var temp4 = "";
 var temp5 = "Root";
+var temp6 = "";
 var disable1 = false;
 var disable2 = false;
 var disable3 = false;
@@ -28,7 +29,7 @@ var tempTextColor = "#0077c8";
 var tempColW = "";
 var radiobtn = "";
 var tempAppTitle = "";
-var tempAppDescr = "";
+var tempAppDescr = "...";
 var tempAppLink = "";
 var tempAppVideo = false;
 var tempCatTitle = "";
@@ -598,6 +599,20 @@ const LogoDialog = ({ handleUpload, handleClose, logoDiaShow, children, activity
   );
 };
 
+const Accordion = ({ title, content }) => {
+  const [isActive, setIsActive] = useState(false);
+
+  return (
+    <div>
+      <div onClick={() => setIsActive(!isActive)}>
+        <div className="lato"><h4><b>{title}</b></h4></div>
+        {/* <div>{isActive ? '-' : '+'}</div> */}
+      </div>
+      {isActive && <div className="lato smallfonts"><i>{content}</i></div>}
+    </div>
+  );
+};
+
 async function fetchUpPHP(file, url, key) {
   // console.log("fetchUpPHP...");
   var data = new FormData()
@@ -955,6 +970,7 @@ class Main extends React.Component {
             appNewItem.icon = array[temp].icon;
             appNewItem.title = array[temp].title;
             appNewItem.link = array[temp].link;
+            appNewItem.descr = array[temp].descr;
             appNewItem.video = array[temp].video;
             appNewItem.cat = array[temp].cat;
             appNewItem.id = index;
@@ -1014,6 +1030,7 @@ class Main extends React.Component {
           appNewItem.icon = "./appicons/" + nome;
           appNewItem.title = temp2;
           appNewItem.link = temp3;
+          appNewItem.descr = temp6;
           appNewItem.video = temp4;
           appNewItem.cat = temp5;
           let index = 0;
@@ -1058,6 +1075,7 @@ class Main extends React.Component {
           appNewItem.icon = "./appicons/" + nome;
           appNewItem.title = temp2;
           appNewItem.link = temp3;
+          appNewItem.descr = temp6;
           appNewItem.video = temp4;
           appNewItem.cat = temp5;
           appNewItem.id = arrayLength;
@@ -1301,6 +1319,7 @@ class Main extends React.Component {
           appNewItem.icon = this.state.appItems[i].icon;
           appNewItem.title = this.state.appItems[i].title;
           appNewItem.link = this.state.appItems[i].link;
+          appNewItem.descr = this.state.appItems[i].descr;
           appNewItem.video = this.state.appItems[i].video;
           appNewItem.cat = this.state.appItems[i].cat;
           appNewItem.id = this.state.appItems[i].id;
@@ -1349,6 +1368,7 @@ class Main extends React.Component {
           appNewItem.icon = items[i].icon;
           appNewItem.title = items[i].title;
           appNewItem.link = items[i].link;
+          appNewItem.descr = items[i].descr;
           appNewItem.video = items[i].video;
           appNewItem.cat = items[i].cat;
           appNewItem.id = items[i].id;
@@ -2335,6 +2355,7 @@ class Main extends React.Component {
     tempCatTitle = temp5;
     document.getElementById('clearapppos').value = "";
     document.getElementById('clearappswitchpos').value = "";
+    document.getElementById('clearappdescr').value = "";
     document.getElementById('clearapptitle').value = "";
     document.getElementById('clearapplink').value = "";
     this.showModal("appAdd");
@@ -2352,6 +2373,7 @@ class Main extends React.Component {
         tempAppTitle = array[i].title;
         console.log("App name: ", tempAppTitle);
         tempAppLink = array[i].link;
+        tempAppDescr = array[i].descr;
         tempAppVideo = array[i].video;
         temp4 = array[i].video;
         temp5 = array[i].cat;
@@ -2365,6 +2387,7 @@ class Main extends React.Component {
     }
     // console.log(id, " for ", pos);
     document.getElementById('clearappswitchpos').value = "";
+    document.getElementById('clearappeditdescr').value = "";
     if (op === "AppEdit") {
       this.showModal("appEdit");
     } else {
@@ -3940,10 +3963,10 @@ class Main extends React.Component {
                     <div style={this.state.catStyle} className="modal-body-dark">
                       <div className="textcenter">
                         {
-                          this.state.catAppItems.map(({ id, title, link, icon, video }, i) => {
+                          this.state.catAppItems.map(({ id, title, link, descr, icon, video }, i) => {
                             return (
                               <AppCatRes showAppsBtn={this.state.appsBtnShow} key={i} pos={i} id={id}
-                                title={title} link={link} icon={icon} video={video}
+                                title={title} link={link} descr={descr} icon={icon} video={video}
                                 appVideo={this.catAppVideo} appEditDel={this.appEditDel} />
                             )
                           })
@@ -4016,6 +4039,22 @@ class Main extends React.Component {
                                 </div>
                                 <div className="col d-flex flex-column justify-content-center align-items-center">
                                   <input type="text" className="form-control border-0" defaultValue={tempAppLink} onChange={e => temp3 = e.target.value} /*placeholder={tempAppLink}*/ />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="form-group">
+                          <div className="row text-center mb-1 m-auto">
+                            <div className="col">
+                              <div className="row border">
+                                <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
+                                  <label>Description</label>
+                                </div>
+                                <div className="col d-flex flex-column justify-content-center align-items-center">
+                                  <textarea id="clearappeditdescr" defaultValue={tempAppDescr} placeholder="Description..." onChange={e => temp6 = e.target.value}></textarea>
+                                  {/* <input type="text" className="form-control border-0" id="clearapptitle" onChange={e => temp2 = e.target.value} /> */}
                                 </div>
                               </div>
                             </div>
@@ -4187,8 +4226,8 @@ class Main extends React.Component {
                                   <label>Description</label>
                                 </div>
                                 <div className="col d-flex flex-column justify-content-center align-items-center">
-                                  <textarea id="textareabox" name="textarea1" placeholder="Start here..."></textarea>
-                                  <input type="text" className="form-control border-0" id="clearapptitle" onChange={e => temp2 = e.target.value} />
+                                  <textarea id="clearappdescr" placeholder="Description..." onChange={e => temp6 = e.target.value}></textarea>
+                                  {/* <input type="text" className="form-control border-0" id="clearapptitle" onChange={e => temp2 = e.target.value} /> */}
                                 </div>
                               </div>
                             </div>
@@ -4772,10 +4811,10 @@ class Main extends React.Component {
                         {/* RESAPPS */}
                         <div className="textcenter">
                           {
-                            this.state.resAppItems.map(({ id, title, link, icon, video }, i) => {
+                            this.state.resAppItems.map(({ id, title, link, descr, icon, video }, i) => {
                               return (
                                 <AppSearchRes key={i} pos={i} id={id}
-                                  title={title} link={link} icon={icon} video={video}
+                                  title={title} link={link} descr={descr} icon={icon} video={video}
                                   appVideo={this.resAppVideo} />
                               )
                             })
@@ -4827,10 +4866,10 @@ class Main extends React.Component {
                   }
                   {/* APPS */}
                   {
-                    this.state.rootAppItems.map(({ id, title, link, icon, video }, i) => {
+                    this.state.rootAppItems.map(({ id, title, link, descr, icon, video }, i) => {
                       return (
                         <App showAppsBtn={this.state.appsBtnShow} key={i} pos={i} id={id}
-                          title={title} link={link} icon={icon} video={video}
+                          title={title} link={link} descr={descr} icon={icon} video={video}
                           appEditDel={this.appEditDel} addItem={this.appOrCatItem} appVideo={this.appVideo} />
                       )
                     })
@@ -4911,12 +4950,23 @@ class App extends React.Component {
         <img className="apps" title={this.props.title} alt={this.props.title} src={this.props.icon} />
       </a>);
 
-    let appBtn = ""
+    let appBtn = "";
+    let descrButton = "";
+    if (this.props.descr !== "") {
+      descrButton = (
+        <Accordion title={this.props.title} content={this.props.descr} />
+      )
+    } else {
+      descrButton = (
+        <h4><p className="lato"><b>{this.props.title}</b></p></h4>
+      );
+    };
     if (this.props.showAppsBtn === "ShowAppBtn") {
       appBtn = (
         <div className="appcontainer">
           {linkOrVideo}
-          <h4><p className="lato"><b>{this.props.title}</b></p></h4>
+          {descrButton}
+          {/* <h4><p className="lato"><b>{this.props.title}</b></p></h4> */}
           <div className="row btncontainer">
             <button className="col appbutton solidgreen m-1" onClick={() => this.props.appEditDel("AppEdit", this.props.id)}>
               Edit
@@ -4934,7 +4984,8 @@ class App extends React.Component {
       appBtn = (
         <div className="appcontainer">
           {linkOrVideo}
-          <h4><p className="lato"><b>{this.props.title}</b></p></h4>
+          {descrButton}
+          {/* <h4><p className="lato"><b>{this.props.title}</b></p></h4> */}
         </div>
       )
     }
@@ -5017,6 +5068,7 @@ class AppCatRes extends React.Component {
       appBtn = (
         <div className="appcontainer">
           {linkOrVideo}
+          <p className="smallfont"><i>{this.props.descr}</i></p>
           <h4><p className="lato"><b>{this.props.title}</b></p></h4>
         </div>
       )
@@ -5050,6 +5102,7 @@ class AppSearchRes extends React.Component {
     appBtn = (
       <div className="appcontainer">
         {linkOrVideo}
+        <p className="smallfont"><i>{this.props.descr}</i></p>
         <h4><p className="lato"><b>{this.props.title}</b></p></h4>
       </div>
     )
