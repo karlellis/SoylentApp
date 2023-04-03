@@ -772,7 +772,7 @@ class Main extends React.Component {
         } else {
           document.querySelector('meta[name="description"]').setAttribute("content", spData.footSubtitle2);
         }
-        console.log("BGOpacity:", (1 - spData.backgroundOpacity).toString());
+        // console.log("BGOpacity:", (1 - spData.backgroundOpacity).toString());
         if (spData.noBackImage === true) {
           this.setState({
             backStyle: {
@@ -1501,7 +1501,7 @@ class Main extends React.Component {
     if (fileImg !== null && temp2 !== "" && temp3 !== "") {
       if (temp !== "") {
         inPos = parseInt(temp) - 1;
-        console.log("InPos: ", inPos);
+        // console.log("InPos: ", inPos);
         if (inPos < arrayLength) {
           this.saveImgFile(fileImg, "icon", "add");
         } else {
@@ -1552,20 +1552,32 @@ class Main extends React.Component {
 
   applyCatEdit = () => {
     if (fileImg !== null || temp2 !== "" || temp !== "") {
+      let dup = false;
+      for (let i = 0; i < arrayLength; i++) {
+        if (array[i].title.toLowerCase() === temp2.toLowerCase()) {
+          console.log("CAT Title Duplicated!!!");
+          dup = true;
+        }
+      }
       if (temp !== "") {
         inPos = parseInt(temp) - 1;
-        console.log("InPos: ", inPos);
-        if (inPos < arrayLength && inPos >= 0 && inPos !== currPos) {
+        // console.log("InPos: ", inPos);
+        if (inPos < arrayLength && inPos >= 0 && inPos !== currPos && !dup) {
           this.saveImgFile(fileImg, "cat", "edit");
         } else {
           this.setState({ alShow: false });
           this.setState({ alErrShow: true });
         }
       } else {
-        this.saveImgFile(fileImg, "cat", "edit");
+        if (!dup) {
+          this.saveImgFile(fileImg, "cat", "edit");
+        } else {
+          this.setState({ alShow: false });
+          this.setState({ alErrShow: true });
+        }
       }
     } else {
-      console.log("fileImg - temp2 - temp are \"\"");
+      // console.log("fileImg - temp2 - temp are \"\"");
       this.setState({ alShow: false });
       this.setState({ alErrShow: true });
     }
@@ -1579,17 +1591,29 @@ class Main extends React.Component {
     // console.log("Pos: ", temp);
     tempIcon = "";
     if (fileImg !== null && temp2 !== "") {
+      let dup = false;
+      for (let i = 0; i < arrayLength; i++) {
+        if (array[i].title.toLowerCase() === temp2.toLowerCase()) {
+          console.log("CAT Title Duplicated!!!");
+          dup = true;
+        }
+      }
       if (temp !== "") {
         inPos = parseInt(temp) - 1;
-        console.log("InPos: ", inPos);
-        if (inPos < arrayLength) {
+        // console.log("InPos: ", inPos);
+        if (inPos < arrayLength && !dup) {
           this.saveImgFile(fileImg, "cat", "add");
         } else {
           this.setState({ alShow: false });
           this.setState({ alErrShow: true });
         }
       } else {
-        this.saveImgFile(fileImg, "cat", "addlast");
+        if (!dup) {
+          this.saveImgFile(fileImg, "cat", "addlast");
+        } else {
+          this.setState({ alShow: false });
+          this.setState({ alErrShow: true });
+        }
       }
     } else {
       this.setState({ alShow: false });
@@ -2534,7 +2558,8 @@ class Main extends React.Component {
       // TITOLO, OROLOGIO E BUTTONS
       <body>
         <noscript>You need to enable JavaScript to run this app.</noscript>
-        <div style={this.state.backStyle}>
+        <div class="whiteback">
+          <div style={this.state.backStyle}>
           <div class="contenitore">
             <section>
               <LoginDialog loginDiaShow={this.state.loginDiaShow} handleClose={() => this.hideModal("login")} handleLogin={this.loginCheck}>
@@ -4314,7 +4339,7 @@ class Main extends React.Component {
                             <div className="row">
                               <section className="col pt-2 contenitore solidblue latowhite d-flex justify-content-center align-items-center ">
                                 <div>
-                                  <p className="norfont">No changes made!</p>
+                                  <p className="norfont">No changes made or CAT name duplicated!</p>
                                 </div>
                               </section>
                             </div>
@@ -4411,7 +4436,7 @@ class Main extends React.Component {
                             <div className="row">
                               <section className="col pt-2 contenitore brick latowhite d-flex justify-content-center align-items-center ">
                                 <div>
-                                  <p className="norfont">Error! Fill in all fields.</p>
+                                  <p className="norfont">Fill in all fields or CAT name duplicated!</p>
                                 </div>
                               </section>
                             </div>
@@ -4751,6 +4776,7 @@ class Main extends React.Component {
                 {foot}
               </div>
             </section>
+          </div>
           </div>
         </div>
         {/* Bootstrap JS */}
