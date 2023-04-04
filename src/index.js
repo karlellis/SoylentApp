@@ -958,6 +958,9 @@ class Main extends React.Component {
           }
           array[temp].video = temp4;
           array[temp].cat = temp5;
+          if (temp6 !== "") {
+            array[temp].descr = temp6;
+          }
           if (inPos !== "") {
             let index = 0;
             if (tempCatTitle !== "Root") {
@@ -1011,6 +1014,7 @@ class Main extends React.Component {
           temp3 = "";
           temp4 = "";
           temp5 = tempCatTitle;
+          temp6 = "";
           tempID = 0;
           appNewItem = {
             "title": "",
@@ -1026,6 +1030,8 @@ class Main extends React.Component {
           this.setState({ alErrShow: false });
           // console.log("Edit Icon correctly Uploaded!");
           this.saveFile(spData, "./api/img-upload.php", "config");
+          // document.getElementById('clearappswitchpos').value = "";
+          // document.getElementById('clearappeditdescr').value = "";
         } else if (url === "icon" && op === "add") {
           appNewItem.icon = "./appicons/" + nome;
           appNewItem.title = temp2;
@@ -1056,6 +1062,7 @@ class Main extends React.Component {
           temp3 = "";
           temp4 = "";
           temp5 = tempCatTitle;
+          temp6 = "";
           tempID = 0;
           appNewItem = {
             "title": "",
@@ -1099,6 +1106,7 @@ class Main extends React.Component {
           //   catSel: tempCatTitle
           // });
           temp5 = tempCatTitle;
+          temp6 = "";
           tempID = 0;
           appNewItem = {
             "title": "",
@@ -1515,16 +1523,18 @@ class Main extends React.Component {
 
   applyAppEdit = () => {
     array = [...this.state.appItems];
-    // console.log("FileImg: ", fileImg);
-    // console.log("cgPos: ", cgPos);
-    // console.log("Temp2: ", temp2);
-    // console.log("Temp3: ", temp3);
-    // console.log("Temp4: ", temp4);
-    if (fileImg !== null || temp2 !== "" || temp3 !== "" || temp4 !== tempAppVideo || temp5 !== tempCatTitle || cgPos !== "") {
+    console.log("FileImg: ", fileImg);
+    console.log("cgPos: ", cgPos);
+    console.log("Temp2: ", temp2);
+    console.log("Temp3: ", temp3);
+    console.log("Temp4: ", temp4, " ",tempAppVideo);
+    console.log("Temp5: ", temp5, " ", tempCatTitle);
+    console.log("Temp6: ", temp6, " ", tempAppDescr );
+    if (fileImg !== null || temp2 !== "" || temp3 !== "" || temp4 !== tempAppVideo || temp5 !== tempCatTitle || temp6 !== "" || cgPos !== "") {
       if (cgPos !== "") {
         inPos = parseInt(cgPos) - 1;
-        // console.log("Edit cgPos: ", cgPos, " currPos: ", currPos);
-        if (inPos < arrayLength && inPos >= 0 && inPos + 1 !== currPos) {
+        console.log("Edit inPos: ", inPos, " currPos: ", currPos);
+        if (inPos < arrayLength && inPos >= 0 && inPos !== currPos) {
           this.saveImgFile(fileImg, "icon", "edit");
         } else {
           this.setState({ alShow: false });
@@ -1551,7 +1561,7 @@ class Main extends React.Component {
     if (fileImg !== null && temp2 !== "" && temp3 !== "") {
       if (temp !== "") {
         inPos = parseInt(temp) - 1;
-        // console.log("InPos: ", inPos);
+        console.log("InPos: ", inPos);
         if (inPos < arrayLength) {
           this.saveImgFile(fileImg, "icon", "add");
         } else {
@@ -2035,6 +2045,7 @@ class Main extends React.Component {
         this.setState({ creditDiaShow: true });
         break;
       case "appEdit":
+        console.log("CurrPos ", currPos);
         this.setState({ appEditDiaShow: true });
         break;
       case "appDel":
@@ -2154,6 +2165,7 @@ class Main extends React.Component {
         break;
       case "appedit":
         this.setState({ appEditDiaShow: false });
+        temp = "";
         document.getElementById('appEditForm').reset();
         break;
       case "appdel":
@@ -2354,7 +2366,7 @@ class Main extends React.Component {
     })
     tempCatTitle = temp5;
     document.getElementById('clearapppos').value = "";
-    document.getElementById('clearappswitchpos').value = "";
+    // document.getElementById('clearappswitchpos').value = "";
     document.getElementById('clearappdescr').value = "";
     document.getElementById('clearapptitle').value = "";
     document.getElementById('clearapplink').value = "";
@@ -2365,7 +2377,7 @@ class Main extends React.Component {
   appEditDel(op, id, pos) {
     temp = id;
     currPos = pos;
-    console.log(op, " for ", id);
+    console.log(op, " for ", id, "pos ", currPos);
     array = [...this.state.appItems];
     arrayLength = (array.length);
     for (let i = 0; i < array.length; i++) {
@@ -2374,6 +2386,7 @@ class Main extends React.Component {
         console.log("App name: ", tempAppTitle);
         tempAppLink = array[i].link;
         tempAppDescr = array[i].descr;
+        console.log(" App descr.: ", tempAppDescr);
         tempAppVideo = array[i].video;
         temp4 = array[i].video;
         temp5 = array[i].cat;
@@ -2387,7 +2400,7 @@ class Main extends React.Component {
     }
     // console.log(id, " for ", pos);
     document.getElementById('clearappswitchpos').value = "";
-    document.getElementById('clearappeditdescr').value = "";
+    // document.getElementById('clearappeditdescr').value = "";
     if (op === "AppEdit") {
       this.showModal("appEdit");
     } else {
@@ -4004,7 +4017,7 @@ class Main extends React.Component {
                                   <label>Pos</label>
                                 </div>
                                 <div className="col d-flex flex-column justify-content-center align-items-center">
-                                  <input type="text" placeholder="Change position..." id="clearappswitchpos" className="form-control border-0"
+                                  <input type="text" className="form-control border-0" placeholder={currPos + 1} id="clearappswitchpos" /* onChange={e => cgPos = e.target.value} /> */
                                     onChange={e => {
                                       cgPos = e.target.value;
                                     }
@@ -4053,8 +4066,8 @@ class Main extends React.Component {
                                   <label>Description</label>
                                 </div>
                                 <div className="col d-flex flex-column justify-content-center align-items-center">
-                                  <textarea id="clearappeditdescr" defaultValue={tempAppDescr} placeholder="Description..." onChange={e => temp6 = e.target.value}></textarea>
-                                  {/* <input type="text" className="form-control border-0" id="clearapptitle" onChange={e => temp2 = e.target.value} /> */}
+                                  {/* <textarea id="clearappeditdescr" defaultValue={tempAppDescr} placeholder="Description..." onChange={e => temp6 = e.target.value}></textarea> */}
+                                  <input type="text" className="form-control border-0" defaultValue={tempAppDescr} /* placeholder="Description..." */ /* id="clearappeditdescr" */ onChange={e => temp6 = e.target.value} />
                                 </div>
                               </div>
                             </div>
@@ -4223,11 +4236,11 @@ class Main extends React.Component {
                             <div className="col">
                               <div className="row border">
                                 <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
-                                  <label>Description</label>
+                                  <label>Descr.</label>
                                 </div>
                                 <div className="col d-flex flex-column justify-content-center align-items-center">
-                                  <textarea id="clearappdescr" placeholder="Description..." onChange={e => temp6 = e.target.value}></textarea>
-                                  {/* <input type="text" className="form-control border-0" id="clearapptitle" onChange={e => temp2 = e.target.value} /> */}
+                                  {/* <textarea id="clearappdescr" placeholder="Description..." onChange={e => temp6 = e.target.value}></textarea> */}
+                                  <input type="text" className="form-control border-0" placeholder="Description..." id="clearappdescr" onChange={e => temp6 = e.target.value} />
                                 </div>
                               </div>
                             </div>
@@ -4968,7 +4981,7 @@ class App extends React.Component {
           {descrButton}
           {/* <h4><p className="lato"><b>{this.props.title}</b></p></h4> */}
           <div className="row btncontainer">
-            <button className="col appbutton solidgreen m-1" onClick={() => this.props.appEditDel("AppEdit", this.props.id)}>
+            <button className="col appbutton solidgreen m-1" onClick={() => this.props.appEditDel("AppEdit", this.props.id, this.props.pos)}>
               Edit
             </button>
             <button className="col-1 appbutton black m-1 pad01">
@@ -5045,14 +5058,24 @@ class AppCatRes extends React.Component {
       </a>);
 
     let appBtn = ""
-
+    let descrButton = "";
+    if (this.props.descr !== "") {
+      descrButton = (
+        <Accordion title={this.props.title} content={this.props.descr} />
+      )
+    } else {
+      descrButton = (
+        <h4><p className="lato"><b>{this.props.title}</b></p></h4>
+      );
+    };
     if (this.props.showAppsBtn === "ShowAppBtn") {
       appBtn = (
         <div className="appcontainer">
           {linkOrVideo}
-          <h4><p className="lato"><b>{this.props.title}</b></p></h4>
+          {descrButton}
+          {/* <h4><p className="lato"><b>{this.props.title}</b></p></h4> */}
           <div className="row btncontainer">
-            <button className="col appbutton solidgreen m-1" onClick={() => this.props.appEditDel("AppEdit", this.props.id, this.props.pos + 1)}>
+            <button className="col appbutton solidgreen m-1" onClick={() => this.props.appEditDel("AppEdit", this.props.id, this.props.pos)}>
               Edit
             </button>
             <button className="col-1 appbutton black m-1 pad01">
@@ -5068,8 +5091,9 @@ class AppCatRes extends React.Component {
       appBtn = (
         <div className="appcontainer">
           {linkOrVideo}
-          <p className="smallfont"><i>{this.props.descr}</i></p>
-          <h4><p className="lato"><b>{this.props.title}</b></p></h4>
+          {descrButton}
+          {/* <p className="smallfont"><i>{this.props.descr}</i></p>
+          <h4><p className="lato"><b>{this.props.title}</b></p></h4> */}
         </div>
       )
     }
@@ -5098,12 +5122,22 @@ class AppSearchRes extends React.Component {
       </a>);
 
     let appBtn = ""
-
+    let descrButton = "";
+    if (this.props.descr !== "") {
+      descrButton = (
+        <Accordion title={this.props.title} content={this.props.descr} />
+      )
+    } else {
+      descrButton = (
+        <h4><p className="lato"><b>{this.props.title}</b></p></h4>
+      );
+    };
     appBtn = (
       <div className="appcontainer">
         {linkOrVideo}
-        <p className="smallfont"><i>{this.props.descr}</i></p>
-        <h4><p className="lato"><b>{this.props.title}</b></p></h4>
+        {descrButton}
+        {/* <p className="smallfont"><i>{this.props.descr}</i></p>
+        <h4><p className="lato"><b>{this.props.title}</b></p></h4> */}
       </div>
     )
     return (
