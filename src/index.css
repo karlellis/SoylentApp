@@ -627,3 +627,7 @@ label{
 .disNone {
 	display: none !important;
 }
+
+.pointer {
+	cursor: pointer;
+}

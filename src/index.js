@@ -605,7 +605,7 @@ const Accordion = ({ title, content }) => {
   return (
     <div>
       <div onClick={() => setIsActive(!isActive)}>
-        <div className="lato"><h4><b>{title}</b></h4></div>
+        <div className="lato pointer"><h4><b>{title}</b></h4></div>
         {/* <div>{isActive ? '-' : '+'}</div> */}
       </div>
       {isActive && <div className="lato smallfonts"><i>{content}</i></div>}
