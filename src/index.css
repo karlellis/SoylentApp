@@ -474,8 +474,6 @@ label{
 	border-radius: 0 !important;
 }
 
-
-
 .modal-main {
 	position: fixed;
 	background: white;
@@ -626,6 +624,10 @@ label{
 
 .disNone {
 	display: none !important;
+}
+
+.width16 {
+	width: 16em;
 }
 
 .pointer {

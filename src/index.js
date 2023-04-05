@@ -20,6 +20,7 @@ var temp6 = "";
 var disable1 = false;
 var disable2 = false;
 var disable3 = false;
+var noDescr = false;
 var tempID = 0;
 var tempColor = "#0077c8";
 var tempOpacity = 0.7;
@@ -380,7 +381,7 @@ const AppDescrDialog = ({ handleSave, handleClose, appDescrDiaShow, children, ac
       <section className="modal-main-dark">
         {children}
         <div className="modal-footer-dark">
-          <button type="button" /* disabled={(activityChanged) ? true : false} */ className="btn btn-primary" onClick={handleSave}>Show</button>
+          {/* <button type="button" className="btn btn-primary" onClick={handleSave}>Show</button> */}
           <button type="button" /* disabled={(activityChanged) ? true : false} */ className="btn btn-secondary" data-dismiss="modal" onClick={handleClose}>Close</button>
         </div>
       </section>
@@ -735,6 +736,8 @@ class Main extends React.Component {
       disFieldC: false,
       disFieldC2: false,
       disFieldC3: false,
+      disFieldAA: true,
+      disFieldAE: false,
       catSel: "Root",
       selectedCat: "Root",
       backStyle: {
@@ -760,6 +763,7 @@ class Main extends React.Component {
     this.catEditDel = this.catEditDel.bind(this);
     this.catAddItem = this.catAddItem.bind(this);
     this.appVideo = this.appVideo.bind(this);
+    this.appDescr = this.appDescr.bind(this);
     this.catCont = this.catCont.bind(this);
     this.resAppVideo = this.resAppVideo.bind(this);
     this.catAppVideo = this.catAppVideo.bind(this);
@@ -958,9 +962,9 @@ class Main extends React.Component {
           }
           array[temp].video = temp4;
           array[temp].cat = temp5;
-          if (temp6 !== "") {
-            array[temp].descr = temp6;
-          }
+          // if (temp6 !== "") {
+          array[temp].descr = temp6;
+          // }
           if (inPos !== "") {
             let index = 0;
             if (tempCatTitle !== "Root") {
@@ -1015,6 +1019,7 @@ class Main extends React.Component {
           temp4 = "";
           temp5 = tempCatTitle;
           temp6 = "";
+          noDescr = false;
           tempID = 0;
           appNewItem = {
             "title": "",
@@ -1323,7 +1328,8 @@ class Main extends React.Component {
     if (temp !== "") {
       let count = 0;
       for (let i = 0; i < this.state.appItems.length; i++) {
-        if (this.state.appItems[i].title.toLowerCase().includes(temp.toLowerCase())) {
+        if (this.state.appItems[i].title.toLowerCase().includes(temp.toLowerCase()) ||
+          this.state.appItems[i].descr.toLowerCase().includes(temp.toLowerCase())) {
           appNewItem.icon = this.state.appItems[i].icon;
           appNewItem.title = this.state.appItems[i].title;
           appNewItem.link = this.state.appItems[i].link;
@@ -1527,10 +1533,13 @@ class Main extends React.Component {
     console.log("cgPos: ", cgPos);
     console.log("Temp2: ", temp2);
     console.log("Temp3: ", temp3);
-    console.log("Temp4: ", temp4, " ",tempAppVideo);
+    console.log("Temp4: ", temp4, " ", tempAppVideo);
     console.log("Temp5: ", temp5, " ", tempCatTitle);
-    console.log("Temp6: ", temp6, " ", tempAppDescr );
-    if (fileImg !== null || temp2 !== "" || temp3 !== "" || temp4 !== tempAppVideo || temp5 !== tempCatTitle || temp6 !== "" || cgPos !== "") {
+    console.log("Temp6: ", temp6, " ", tempAppDescr);
+    if (noDescr === true) {
+      temp6 = "";
+    }
+    if (fileImg !== null || temp2 !== "" || temp3 !== "" || temp4 !== tempAppVideo || temp5 !== tempCatTitle || temp6 !== tempAppDescr || cgPos !== "") {
       if (cgPos !== "") {
         inPos = parseInt(cgPos) - 1;
         console.log("Edit inPos: ", inPos, " currPos: ", currPos);
@@ -1558,6 +1567,9 @@ class Main extends React.Component {
     // console.log("Link: ", temp3);
     // console.log("Pos: ", temp);
     tempIcon = "";
+    if (noDescr === true) {
+      temp6 = "";
+    }
     if (fileImg !== null && temp2 !== "" && temp3 !== "") {
       if (temp !== "") {
         inPos = parseInt(temp) - 1;
@@ -2356,6 +2368,7 @@ class Main extends React.Component {
 
   appAddItem(id, pos) {
     this.hideModal("apporcat");
+    noDescr = true;
     array = [...this.state.appItems];
     arrayLength = (array.length);
     tempAppVideo = false;
@@ -2386,13 +2399,26 @@ class Main extends React.Component {
         console.log("App name: ", tempAppTitle);
         tempAppLink = array[i].link;
         tempAppDescr = array[i].descr;
+        if (tempAppDescr === "") {
+          noDescr = true;
+          this.setState({
+            disFieldAE: true
+          });
+        } else {
+          noDescr = false;
+          this.setState({
+            disFieldAE: false
+          });
+        }
         console.log(" App descr.: ", tempAppDescr);
         tempAppVideo = array[i].video;
         temp4 = array[i].video;
         temp5 = array[i].cat;
+        temp6 = array[i].descr;
         this.setState({
           catSel: temp5
         })
+
         tempCatTitle = temp5;
         // console.log(" Category: ", );
         tempIcon = array[i].icon;
@@ -2406,6 +2432,19 @@ class Main extends React.Component {
     } else {
       this.showModal("appDel");
     }
+  }
+
+  appDescr(name, id) {
+    temp3 = id;
+    array = [...this.state.appItems];
+    for (let i = 0; i < array.length; i++) {
+      if (array[i].id === id) {
+        tempAppDescr = array[i].descr;
+        tempAppTitle = array[i].title;
+      }
+    }
+    // console.log(id, " for ", pos);
+    this.showModal("appDescr");
   }
 
   appVideo(name, id) {
@@ -2504,6 +2543,8 @@ class Main extends React.Component {
     const { disFieldC: disFieldC } = this.state;
     const { disFieldC2: disFieldC2 } = this.state;
     const { disFieldC3: disFieldC3 } = this.state;
+    const { disFieldAA: disFieldAA } = this.state;
+    const { disFieldAE: disFieldAE } = this.state;
     let buttons = "";
 
     let menuButtons = (
@@ -3556,7 +3597,7 @@ class Main extends React.Component {
                                 <div className="col-2 border d-flex flex-column justify-content-center align-items-center">
                                   <label class="switch">
                                     <input type="checkbox" className="form-control" defaultChecked={spData.noFootCreditiTitle} onClick={e => {
-                                      if (spData.noFootCreditiTitle === false) {
+                                      if (this.state.disFieldC === false) {
                                         this.setState({
                                           disFieldC: true
                                         });
@@ -3980,7 +4021,7 @@ class Main extends React.Component {
                             return (
                               <AppCatRes showAppsBtn={this.state.appsBtnShow} key={i} pos={i} id={id}
                                 title={title} link={link} descr={descr} icon={icon} video={video}
-                                appVideo={this.catAppVideo} appEditDel={this.appEditDel} />
+                                appVideo={this.catAppVideo} appEditDel={this.appEditDel} appDescr={this.appDescr} />
                             )
                           })
                         }
@@ -4063,12 +4104,34 @@ class Main extends React.Component {
                             <div className="col">
                               <div className="row border">
                                 <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
-                                  <label>Description</label>
+                                  <label>Descr.</label>
                                 </div>
+
                                 <div className="col d-flex flex-column justify-content-center align-items-center">
-                                  {/* <textarea id="clearappeditdescr" defaultValue={tempAppDescr} placeholder="Description..." onChange={e => temp6 = e.target.value}></textarea> */}
-                                  <input type="text" className="form-control border-0" defaultValue={tempAppDescr} /* placeholder="Description..." */ /* id="clearappeditdescr" */ onChange={e => temp6 = e.target.value} />
+                                  <input type="text" disabled={disFieldAE} className="form-control border-0" defaultValue={tempAppDescr} onChange={e => temp6 = e.target.value} />
                                 </div>
+                                <div className="col-2 border d-flex flex-column justify-content-center align-items-center">
+                                  <label class="switch">
+                                    <input type="checkbox" className="form-control" defaultChecked={noDescr} onClick={e => {
+                                      if (this.state.disFieldAE === false) {
+                                        this.setState({
+                                          disFieldAE: true
+                                        });
+                                        noDescr = true;
+                                      } else {
+                                        this.setState({
+                                          disFieldAE: false
+                                        });
+                                        noDescr = false;
+                                      }
+                                    }} />
+                                    <span class="slider round" title="Hide"></span>
+                                  </label>
+                                </div>
+
+                                {/* <div className="col d-flex flex-column justify-content-center align-items-center">
+                                  <input type="text" className="form-control border-0" defaultValue={tempAppDescr} onChange={e => temp6 = e.target.value} />
+                                </div> */}
                               </div>
                             </div>
                           </div>
@@ -4238,14 +4301,48 @@ class Main extends React.Component {
                                 <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
                                   <label>Descr.</label>
                                 </div>
+
                                 <div className="col d-flex flex-column justify-content-center align-items-center">
-                                  {/* <textarea id="clearappdescr" placeholder="Description..." onChange={e => temp6 = e.target.value}></textarea> */}
+                                  <input type="text" disabled={disFieldAA} className="form-control border-0" defaultValue={tempAppDescr} id="clearappdescr" onChange={e => temp6 = e.target.value} />
+                                </div>
+                                <div className="col-2 border d-flex flex-column justify-content-center align-items-center">
+                                  <label class="switch">
+                                    <input type="checkbox" className="form-control" defaultChecked={noDescr} onClick={e => {
+                                      if (this.state.disFieldAA === false) {
+                                        this.setState({
+                                          disFieldAA: true
+                                        });
+                                        noDescr = true;
+                                      } else {
+                                        this.setState({
+                                          disFieldAA: false
+                                        });
+                                        noDescr = false;
+                                      }
+                                    }} />
+                                    <span class="slider round" title="Hide"></span>
+                                  </label>
+                                </div>
+
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* <div className="form-group">
+                          <div className="row text-center mb-1 m-auto">
+                            <div className="col">
+                              <div className="row border">
+                                <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
+                                  <label>Descr.</label>
+                                </div>
+                                <div className="col d-flex flex-column justify-content-center align-items-center">
                                   <input type="text" className="form-control border-0" placeholder="Description..." id="clearappdescr" onChange={e => temp6 = e.target.value} />
                                 </div>
                               </div>
                             </div>
                           </div>
-                        </div>
+                        </div> */}
 
                         <div className="form-group">
                           <div className="row mb-1 m-auto">
@@ -4385,7 +4482,7 @@ class Main extends React.Component {
                                   <label>Pos</label>
                                 </div>
                                 <div className="col d-flex flex-column justify-content-center align-items-center">
-                                  <input type="text" placeholder="Change position..." id="clearcatswitchpos" className="form-control border-0"
+                                  <input type="text" placeholder={currPos + 1} id="clearcatswitchpos" className="form-control border-0"
                                     onChange={e => {
                                       temp = e.target.value;
                                     }
@@ -4793,7 +4890,7 @@ class Main extends React.Component {
                     <div className="modal-body-dark darkBG">
                       <form id="searchForm" onKeyDown={this.handleKeyDown}>
                         <div className="form-group">
-                          <input type="text" className="form-control contenitore pt-2" ref={(input) => { this.searchInput = input; }} onChange={e => temp = e.target.value} placeholder={"Search movie..."} />
+                          <input type="text" className="form-control contenitore pt-2" ref={(input) => { this.searchInput = input; }} onChange={e => temp = e.target.value} placeholder={"Search..."} />
                         </div>
                         <Conferma alShow={this.state.alShow} handleClose={this.hideAlert}>
                           <div className="row text-center pt-2">
@@ -4828,7 +4925,7 @@ class Main extends React.Component {
                               return (
                                 <AppSearchRes key={i} pos={i} id={id}
                                   title={title} link={link} descr={descr} icon={icon} video={video}
-                                  appVideo={this.resAppVideo} />
+                                  appVideo={this.resAppVideo} appDescr={this.appDescr} />
                               )
                             })
                           }
@@ -4849,14 +4946,14 @@ class Main extends React.Component {
                     </div>
                   </div>
                 </AppVideoDialog>
-                <AppDescrDialog appDescrDiaShow={this.state.appDescrDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("video")} handleSave={this.applyAppEdit}>
+                <AppDescrDialog appDescrDiaShow={this.state.appDescrDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("appdescr")} handleSave={this.applyAppEdit}>
                   <div className="modal-content darkBG">
                     <div className="modal-header-dark">
                       <h5 className="modal-title-dark" >"{tempAppTitle}"</h5>
                     </div>
                     <div className="modal-body align-items-center darkBG">
                       <center>
-                        {tempAppDescr}
+                        <div className="lato medfonts"><i>{tempAppDescr}</i></div>
                       </center>
                     </div>
                   </div>
@@ -4883,7 +4980,7 @@ class Main extends React.Component {
                       return (
                         <App showAppsBtn={this.state.appsBtnShow} key={i} pos={i} id={id}
                           title={title} link={link} descr={descr} icon={icon} video={video}
-                          appEditDel={this.appEditDel} addItem={this.appOrCatItem} appVideo={this.appVideo} />
+                          appEditDel={this.appEditDel} addItem={this.appOrCatItem} appVideo={this.appVideo} appDescr={this.appDescr} />
                       )
                     })
                   }
@@ -4967,7 +5064,12 @@ class App extends React.Component {
     let descrButton = "";
     if (this.props.descr !== "") {
       descrButton = (
-        <Accordion title={this.props.title} content={this.props.descr} />
+        // <Accordion title={this.props.title} content={this.props.descr}/>
+        // <h4><p className="lato pointer" onClick={() => this.props.appDescr("AppDescr", this.props.id)}><b>{this.props.title}</b></p></h4>
+        <div className="row lato">
+          <div className="col"><h4><p className="lato"><b>{this.props.title}</b></p></h4></div>
+          <div className="col-2"><h4><p className="lato pointer" onClick={() => this.props.appDescr("AppDescr", this.props.id)}><b>+</b></p></h4></div>
+        </div>
       )
     } else {
       descrButton = (
@@ -5061,8 +5163,13 @@ class AppCatRes extends React.Component {
     let descrButton = "";
     if (this.props.descr !== "") {
       descrButton = (
-        <Accordion title={this.props.title} content={this.props.descr} />
-      )
+        // <Accordion title={this.props.title} content={this.props.descr} />
+        // <h4><p className="lato pointer" onClick={() => this.props.appDescr("AppDescr", this.props.id)}><b>{this.props.title}</b></p></h4>
+        <div className="row">
+          <div className="col"><h4><p className="lato"><b>{this.props.title}</b></p></h4></div>
+          <div className="col-1"><h4><p className="lato pointer" onClick={() => this.props.appDescr("AppDescr", this.props.id)}><b>+</b></p></h4></div>
+        </div>
+        )
     } else {
       descrButton = (
         <h4><p className="lato"><b>{this.props.title}</b></p></h4>
@@ -5125,7 +5232,8 @@ class AppSearchRes extends React.Component {
     let descrButton = "";
     if (this.props.descr !== "") {
       descrButton = (
-        <Accordion title={this.props.title} content={this.props.descr} />
+        // <Accordion title={this.props.title} content={this.props.descr} />
+        <h4><p className="lato pointer" onClick={() => this.props.appDescr("AppDescr", this.props.id)}><b>{this.props.title}</b></p></h4>
       )
     } else {
       descrButton = (
@@ -5253,9 +5361,9 @@ class Credit extends React.Component {
 }
 
 class Dropdown extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+  // constructor(props) {
+  //   super(props);
+  // }
 
   state = {
     isOpen: false
@@ -5300,9 +5408,9 @@ class Dropdown extends React.Component {
 }
 
 class DropdownCat extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+  // constructor(props) {
+  //   super(props);
+  // }
 
   state = {
     isOpen: false
