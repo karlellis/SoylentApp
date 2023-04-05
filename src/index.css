@@ -405,7 +405,7 @@ label{
 }
 
 .smallfont {
-	font-size: 1em;
+	font-size: 1em !important;
 }
 
 .stickytop {
@@ -531,11 +531,27 @@ label{
     border-bottom-left-radius: calc(.3rem - 1px) */
 }
 
+.borderleft {
+	border-left: 0.05em solid;
+	/* border: .1em solid #000000; */
+}
+
 .modal-main-dark {
 	position: fixed;
 	/* background: rgb(40, 39, 39); */
 	/* border-radius: 5px; */
 	width: 80%;
+	height: auto;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.descr-dark {
+	position: relative;
+	/* background: rgb(40, 39, 39); */
+	/* border-radius: 5px; */
+	width: 50%;
 	height: auto;
 	top: 50%;
 	left: 50%;

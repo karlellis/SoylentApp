@@ -378,7 +378,7 @@ const AppDescrDialog = ({ handleSave, handleClose, appDescrDiaShow, children, ac
   const showHideClassName = appDescrDiaShow ? "modal display-block" : "modal display-none";
   return (
     <div className={showHideClassName}>
-      <section className="modal-main-dark">
+      <section className="descr-dark">
         {children}
         <div className="modal-footer-dark">
           {/* <button type="button" className="btn btn-primary" onClick={handleSave}>Show</button> */}
@@ -604,13 +604,38 @@ const Accordion = ({ title, content }) => {
   const [isActive, setIsActive] = useState(false);
 
   return (
-    <div>
-      <div onClick={() => setIsActive(!isActive)}>
-        <div className="lato pointer"><h4><b>{title}</b></h4></div>
-        {/* <div>{isActive ? '-' : '+'}</div> */}
+    <>
+      <div className="row smallfonts lato text-center m-auto">
+        {isActive && <i>{content}</i>}
       </div>
-      {isActive && <div className="lato smallfonts"><i>{content}</i></div>}
-    </div>
+      <h4>
+        <div className="row lato text-center m-auto">
+          <div className="col">
+            <div className="row">
+              <div className="col d-flex flex-column justify-content-center align-items-center">
+                <b>{title}</b>
+              </div>
+              <div className="col-2 borderleft pointer d-flex flex-column justify-content-center align-items-center"
+                onClick={() => setIsActive(!isActive)}>
+                <b>{isActive ? '-' : '+'}</b>
+                {/* <b>+</b> */}
+              </div>
+            </div>
+          </div>
+          {/* {isActive && <i className="row smallfonts">{content}</i>} */}
+        </div>
+      </h4>
+      
+    </>
+
+
+    // <div>
+    //   <div onClick={() => setIsActive(!isActive)}>
+    //     <div className="lato pointer"><h4><b>{title}</b></h4></div>
+    //     <div>{isActive ? '-' : '+'}</div>
+    //   </div>
+    //   {isActive && <div className="lato smallfonts"><i>{content}</i></div>}
+    // </div>
   );
 };
 
@@ -5064,12 +5089,25 @@ class App extends React.Component {
     let descrButton = "";
     if (this.props.descr !== "") {
       descrButton = (
-        // <Accordion title={this.props.title} content={this.props.descr}/>
+        // <Accordion title={this.props.title} content={this.props.descr} />
+
         // <h4><p className="lato pointer" onClick={() => this.props.appDescr("AppDescr", this.props.id)}><b>{this.props.title}</b></p></h4>
-        <div className="row lato">
-          <div className="col"><h4><p className="lato"><b>{this.props.title}</b></p></h4></div>
-          <div className="col-2"><h4><p className="lato pointer" onClick={() => this.props.appDescr("AppDescr", this.props.id)}><b>+</b></p></h4></div>
-        </div>
+
+        <h4>
+          <div className="row lato text-center m-auto">
+            <div className="col">
+              <div className="row">
+                <div className="col d-flex flex-column justify-content-center align-items-center">
+                  <b>{this.props.title}</b>
+                </div>
+                <div className="col-2 borderleft pointer d-flex flex-column justify-content-center align-items-center"
+                  onClick={() => this.props.appDescr("AppDescr", this.props.id)}>
+                  <b>+</b>
+                </div>
+              </div>
+            </div>
+          </div>
+        </h4>
       )
     } else {
       descrButton = (
@@ -5163,13 +5201,13 @@ class AppCatRes extends React.Component {
     let descrButton = "";
     if (this.props.descr !== "") {
       descrButton = (
-        // <Accordion title={this.props.title} content={this.props.descr} />
+        <Accordion title={this.props.title} content={this.props.descr} />
         // <h4><p className="lato pointer" onClick={() => this.props.appDescr("AppDescr", this.props.id)}><b>{this.props.title}</b></p></h4>
-        <div className="row">
-          <div className="col"><h4><p className="lato"><b>{this.props.title}</b></p></h4></div>
-          <div className="col-1"><h4><p className="lato pointer" onClick={() => this.props.appDescr("AppDescr", this.props.id)}><b>+</b></p></h4></div>
-        </div>
-        )
+        // <div className="row">
+        //   <div className="col"><h4><p className="lato"><b>{this.props.title}</b></p></h4></div>
+        //   <div className="col-1"><h4><p className="lato pointer" onClick={() => this.props.appDescr("AppDescr", this.props.id)}><b>+</b></p></h4></div>
+        // </div>
+      )
     } else {
       descrButton = (
         <h4><p className="lato"><b>{this.props.title}</b></p></h4>
@@ -5232,8 +5270,8 @@ class AppSearchRes extends React.Component {
     let descrButton = "";
     if (this.props.descr !== "") {
       descrButton = (
-        // <Accordion title={this.props.title} content={this.props.descr} />
-        <h4><p className="lato pointer" onClick={() => this.props.appDescr("AppDescr", this.props.id)}><b>{this.props.title}</b></p></h4>
+        <Accordion title={this.props.title} content={this.props.descr} />
+        // <h4><p className="lato pointer" onClick={() => this.props.appDescr("AppDescr", this.props.id)}><b>{this.props.title}</b></p></h4>
       )
     } else {
       descrButton = (
