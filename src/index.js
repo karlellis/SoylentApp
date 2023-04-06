@@ -77,6 +77,184 @@ var spData = require("./initData.json");
 //   return new Promise(resolve => setTimeout(resolve, milliseconds))
 // }
 
+const App = ({ showAppsBtn, pos, id, title, link, descr, icon, video, appEditDel, appVideo, appDescr }) => {
+  const [isActive, setIsActive] = useState(false);
+  const linkOrVideo = video
+    ?
+    (<a title={title} onClick={() => appVideo("AppVideo", id)}>
+      <img className="apps" title={title} alt={title} src={icon} />
+    </a>)
+    :
+    (< a title={title} href={link} target="_blank" >
+      <img className="apps" title={title} alt={title} src={icon} />
+    </a>);
+  let appBtn = "";
+  let descrButton = "";
+  if (descr !== "") {
+    descrButton = (
+      <>
+        {isActive &&
+          <div className="row smallfonts lato text-center m-auto mb-5">
+            <i>{descr}</i>
+          </div>
+        }
+        <h4>
+          <div className="row lato text-center m-1">
+            <div className="col">
+              <div className="row">
+                <div className="col d-flex flex-column justify-content-center align-items-center">
+                  <b>{title}</b>
+                </div>
+                <div className="col-2 borderleft pointer d-flex flex-column justify-content-center align-items-center"
+                  onClick={() => setIsActive(!isActive)}>
+                  <b>{isActive ? '-' : '+'}</b>
+                  {/* <b>+</b> */}
+                </div>
+              </div>
+            </div>
+            {/* {isActive && <i className="row smallfonts">{content}</i>} */}
+          </div>
+        </h4>
+      </>
+
+      // <Accordion title={this.props.title} content={this.props.descr} />
+
+      // <h4><p className="lato pointer" onClick={() => this.props.appDescr("AppDescr", this.props.id)}><b>{this.props.title}</b></p></h4>
+
+      // <h4>
+      //   <div className="row lato text-center m-auto">
+      //     <div className="col">
+      //       <div className="row">
+      //         <div className="col d-flex flex-column justify-content-center align-items-center">
+      //           <b>{title}</b>
+      //         </div>
+      //         <div className="col-2 borderleft pointer d-flex flex-column justify-content-center align-items-center"
+      //           onClick={() => appDescr("AppDescr", id)}>
+      //           <b>+</b>
+      //         </div>
+      //       </div>
+      //     </div>
+      //   </div>
+      // </h4>
+    )
+  } else {
+    descrButton = (
+      <h4><p className="lato"><b>{title}</b></p></h4>
+    );
+  };
+  if (showAppsBtn === "ShowAppBtn") {
+    appBtn = (
+      <div className="appcontainer">
+        {!isActive && linkOrVideo}
+        {descrButton}
+        {/* <h4><p className="lato"><b>{this.props.title}</b></p></h4> */}
+        <div className="row btncontainer">
+          <button className="col appbutton solidgreen m-1" onClick={() => appEditDel("AppEdit", id, pos)}>
+            Edit
+          </button>
+          <button className="col-1 appbutton black m-1 pad01">
+            {pos + 1} {/* {this.props.id} */}
+          </button>
+          <button className="col appbutton solidbrick m-1" onClick={() => appEditDel("AppDel", id)}>
+            Remove
+          </button>
+        </div>
+      </div>
+    )
+  } else {
+    appBtn = (
+      <div className="appcontainer">
+        {!isActive && linkOrVideo}
+        {descrButton}
+        {/* <h4><p className="lato"><b>{this.props.title}</b></p></h4> */}
+      </div>
+    )
+  }
+  return (
+    <>
+      {appBtn}
+    </>
+  );
+}
+
+const AppSearchRes = ({ id, title, link, descr, icon, video, appVideo}) => {
+  const [isActive, setIsActive] = useState(false);
+  const linkOrVideo = video
+    ?
+    (<a title={title} onClick={() => appVideo("AppVideo", id)}>
+      <img className="apps" title={title} alt={title} src={icon} />
+    </a>)
+    :
+    (< a title={title} href={link} target="_blank" >
+      <img className="apps" title={title} alt={title} src={icon} />
+    </a>);
+  let appBtn = "";
+  let descrButton = "";
+  if (descr !== "") {
+    descrButton = (
+      <>
+        {isActive &&
+          <div className="row smallfonts lato text-center m-auto mb-5">
+            <i>{descr}</i>
+          </div>
+        }
+        <h4>
+          <div className="row lato text-center m-1">
+            <div className="col">
+              <div className="row">
+                <div className="col d-flex flex-column justify-content-center align-items-center">
+                  <b>{title}</b>
+                </div>
+                <div className="col-2 borderleft pointer d-flex flex-column justify-content-center align-items-center"
+                  onClick={() => setIsActive(!isActive)}>
+                  <b>{isActive ? '-' : '+'}</b>
+                  {/* <b>+</b> */}
+                </div>
+              </div>
+            </div>
+            {/* {isActive && <i className="row smallfonts">{content}</i>} */}
+          </div>
+        </h4>
+      </>
+
+      // <Accordion title={this.props.title} content={this.props.descr} />
+
+      // <h4><p className="lato pointer" onClick={() => this.props.appDescr("AppDescr", this.props.id)}><b>{this.props.title}</b></p></h4>
+
+      // <h4>
+      //   <div className="row lato text-center m-auto">
+      //     <div className="col">
+      //       <div className="row">
+      //         <div className="col d-flex flex-column justify-content-center align-items-center">
+      //           <b>{title}</b>
+      //         </div>
+      //         <div className="col-2 borderleft pointer d-flex flex-column justify-content-center align-items-center"
+      //           onClick={() => appDescr("AppDescr", id)}>
+      //           <b>+</b>
+      //         </div>
+      //       </div>
+      //     </div>
+      //   </div>
+      // </h4>
+    )
+  } else {
+    descrButton = (
+      <h4><p className="lato"><b>{title}</b></p></h4>
+    );
+  };
+  appBtn = (
+    <div className="appcontainer">
+      {!isActive && linkOrVideo}
+      {descrButton}
+    </div>
+  )
+  return (
+    <>
+      {appBtn}
+    </>
+  );
+}
+
 const Menu = ({ menuShow, children, mainBtn }) => {
   const showHideClassName = menuShow ? "d-block" : "d-none";
   const justifyCenterEnd = mainBtn ? "justify-content-end" : "justify-content-center";
@@ -605,9 +783,6 @@ const Accordion = ({ title, content }) => {
 
   return (
     <>
-      <div className="row smallfonts lato text-center m-auto">
-        {isActive && <i>{content}</i>}
-      </div>
       <h4>
         <div className="row lato text-center m-auto">
           <div className="col">
@@ -625,7 +800,9 @@ const Accordion = ({ title, content }) => {
           {/* {isActive && <i className="row smallfonts">{content}</i>} */}
         </div>
       </h4>
-      
+      <div className="row smallfonts lato text-center m-auto">
+        {isActive && <i>{content}</i>}
+      </div>
     </>
 
 
@@ -4044,7 +4221,7 @@ class Main extends React.Component {
                         {
                           this.state.catAppItems.map(({ id, title, link, descr, icon, video }, i) => {
                             return (
-                              <AppCatRes showAppsBtn={this.state.appsBtnShow} key={i} pos={i} id={id}
+                              <App showAppsBtn={this.state.appsBtnShow} key={i} pos={i} id={id}
                                 title={title} link={link} descr={descr} icon={icon} video={video}
                                 appVideo={this.catAppVideo} appEditDel={this.appEditDel} appDescr={this.appDescr} />
                             )
@@ -5068,87 +5245,87 @@ class LogoImg extends React.Component {
   }
 }
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+// class App extends React.Component {
+//   constructor(props) {
+//     super(props);
+//   }
 
-  render() {
+//   render() {
 
-    const linkOrVideo = this.props.video
-      ?
-      (<a title={this.props.title} onClick={() => this.props.appVideo("AppVideo", this.props.id)}>
-        <img className="apps" title={this.props.title} alt={this.props.title} src={this.props.icon} />
-      </a>)
-      :
-      (< a title={this.props.title} href={this.props.link} target="_blank" >
-        <img className="apps" title={this.props.title} alt={this.props.title} src={this.props.icon} />
-      </a>);
+//     const linkOrVideo = this.props.video
+//       ?
+//       (<a title={this.props.title} onClick={() => this.props.appVideo("AppVideo", this.props.id)}>
+//         <img className="apps" title={this.props.title} alt={this.props.title} src={this.props.icon} />
+//       </a>)
+//       :
+//       (< a title={this.props.title} href={this.props.link} target="_blank" >
+//         <img className="apps" title={this.props.title} alt={this.props.title} src={this.props.icon} />
+//       </a>);
 
-    let appBtn = "";
-    let descrButton = "";
-    if (this.props.descr !== "") {
-      descrButton = (
-        // <Accordion title={this.props.title} content={this.props.descr} />
+//     let appBtn = "";
+//     let descrButton = "";
+//     if (this.props.descr !== "") {
+//       descrButton = (
+//         // <Accordion title={this.props.title} content={this.props.descr} />
 
-        // <h4><p className="lato pointer" onClick={() => this.props.appDescr("AppDescr", this.props.id)}><b>{this.props.title}</b></p></h4>
+//         // <h4><p className="lato pointer" onClick={() => this.props.appDescr("AppDescr", this.props.id)}><b>{this.props.title}</b></p></h4>
 
-        <h4>
-          <div className="row lato text-center m-auto">
-            <div className="col">
-              <div className="row">
-                <div className="col d-flex flex-column justify-content-center align-items-center">
-                  <b>{this.props.title}</b>
-                </div>
-                <div className="col-2 borderleft pointer d-flex flex-column justify-content-center align-items-center"
-                  onClick={() => this.props.appDescr("AppDescr", this.props.id)}>
-                  <b>+</b>
-                </div>
-              </div>
-            </div>
-          </div>
-        </h4>
-      )
-    } else {
-      descrButton = (
-        <h4><p className="lato"><b>{this.props.title}</b></p></h4>
-      );
-    };
-    if (this.props.showAppsBtn === "ShowAppBtn") {
-      appBtn = (
-        <div className="appcontainer">
-          {linkOrVideo}
-          {descrButton}
-          {/* <h4><p className="lato"><b>{this.props.title}</b></p></h4> */}
-          <div className="row btncontainer">
-            <button className="col appbutton solidgreen m-1" onClick={() => this.props.appEditDel("AppEdit", this.props.id, this.props.pos)}>
-              Edit
-            </button>
-            <button className="col-1 appbutton black m-1 pad01">
-              {this.props.pos + 1} {/* {this.props.id} */}
-            </button>
-            <button className="col appbutton solidbrick m-1" onClick={() => this.props.appEditDel("AppDel", this.props.id)}>
-              Remove
-            </button>
-          </div>
-        </div>
-      )
-    } else {
-      appBtn = (
-        <div className="appcontainer">
-          {linkOrVideo}
-          {descrButton}
-          {/* <h4><p className="lato"><b>{this.props.title}</b></p></h4> */}
-        </div>
-      )
-    }
-    return (
-      <>
-        {appBtn}
-      </>
-    );
-  }
-}
+//         <h4>
+//           <div className="row lato text-center m-auto">
+//             <div className="col">
+//               <div className="row">
+//                 <div className="col d-flex flex-column justify-content-center align-items-center">
+//                   <b>{this.props.title}</b>
+//                 </div>
+//                 <div className="col-2 borderleft pointer d-flex flex-column justify-content-center align-items-center"
+//                   onClick={() => this.props.appDescr("AppDescr", this.props.id)}>
+//                   <b>+</b>
+//                 </div>
+//               </div>
+//             </div>
+//           </div>
+//         </h4>
+//       )
+//     } else {
+//       descrButton = (
+//         <h4><p className="lato"><b>{this.props.title}</b></p></h4>
+//       );
+//     };
+//     if (this.props.showAppsBtn === "ShowAppBtn") {
+//       appBtn = (
+//         <div className="appcontainer">
+//           {linkOrVideo}
+//           {descrButton}
+//           {/* <h4><p className="lato"><b>{this.props.title}</b></p></h4> */}
+//           <div className="row btncontainer">
+//             <button className="col appbutton solidgreen m-1" onClick={() => this.props.appEditDel("AppEdit", this.props.id, this.props.pos)}>
+//               Edit
+//             </button>
+//             <button className="col-1 appbutton black m-1 pad01">
+//               {this.props.pos + 1} {/* {this.props.id} */}
+//             </button>
+//             <button className="col appbutton solidbrick m-1" onClick={() => this.props.appEditDel("AppDel", this.props.id)}>
+//               Remove
+//             </button>
+//           </div>
+//         </div>
+//       )
+//     } else {
+//       appBtn = (
+//         <div className="appcontainer">
+//           {linkOrVideo}
+//           {descrButton}
+//           {/* <h4><p className="lato"><b>{this.props.title}</b></p></h4> */}
+//         </div>
+//       )
+//     }
+//     return (
+//       <>
+//         {appBtn}
+//       </>
+//     );
+//   }
+// }
 
 class AppAdd extends React.Component {
   constructor(props) {
@@ -5181,118 +5358,118 @@ class AppAdd extends React.Component {
   }
 }
 
-class AppCatRes extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+// class AppCatRes extends React.Component {
+//   constructor(props) {
+//     super(props);
+//   }
 
-  render() {
-    const linkOrVideo = this.props.video
-      ?
-      (<a title={this.props.title} onClick={() => this.props.appVideo("AppVideo", this.props.id)}>
-        <img className="apps" title={this.props.title} alt={this.props.title} src={this.props.icon} />
-      </a>)
-      :
-      (< a title={this.props.title} href={this.props.link} target="_blank" >
-        <img className="apps" title={this.props.title} alt={this.props.title} src={this.props.icon} />
-      </a>);
+//   render() {
+//     const linkOrVideo = this.props.video
+//       ?
+//       (<a title={this.props.title} onClick={() => this.props.appVideo("AppVideo", this.props.id)}>
+//         <img className="apps" title={this.props.title} alt={this.props.title} src={this.props.icon} />
+//       </a>)
+//       :
+//       (< a title={this.props.title} href={this.props.link} target="_blank" >
+//         <img className="apps" title={this.props.title} alt={this.props.title} src={this.props.icon} />
+//       </a>);
 
-    let appBtn = ""
-    let descrButton = "";
-    if (this.props.descr !== "") {
-      descrButton = (
-        <Accordion title={this.props.title} content={this.props.descr} />
-        // <h4><p className="lato pointer" onClick={() => this.props.appDescr("AppDescr", this.props.id)}><b>{this.props.title}</b></p></h4>
-        // <div className="row">
-        //   <div className="col"><h4><p className="lato"><b>{this.props.title}</b></p></h4></div>
-        //   <div className="col-1"><h4><p className="lato pointer" onClick={() => this.props.appDescr("AppDescr", this.props.id)}><b>+</b></p></h4></div>
-        // </div>
-      )
-    } else {
-      descrButton = (
-        <h4><p className="lato"><b>{this.props.title}</b></p></h4>
-      );
-    };
-    if (this.props.showAppsBtn === "ShowAppBtn") {
-      appBtn = (
-        <div className="appcontainer">
-          {linkOrVideo}
-          {descrButton}
-          {/* <h4><p className="lato"><b>{this.props.title}</b></p></h4> */}
-          <div className="row btncontainer">
-            <button className="col appbutton solidgreen m-1" onClick={() => this.props.appEditDel("AppEdit", this.props.id, this.props.pos)}>
-              Edit
-            </button>
-            <button className="col-1 appbutton black m-1 pad01">
-              {this.props.pos + 1} {/* {this.props.id} */}
-            </button>
-            <button className="col appbutton solidbrick m-1" onClick={() => this.props.appEditDel("AppDel", this.props.id)}>
-              Remove
-            </button>
-          </div>
-        </div>
-      )
-    } else {
-      appBtn = (
-        <div className="appcontainer">
-          {linkOrVideo}
-          {descrButton}
-          {/* <p className="smallfont"><i>{this.props.descr}</i></p>
-          <h4><p className="lato"><b>{this.props.title}</b></p></h4> */}
-        </div>
-      )
-    }
-    return (
-      <>
-        {appBtn}
-      </>
-    );
-  }
-}
+//     let appBtn = ""
+//     let descrButton = "";
+//     if (this.props.descr !== "") {
+//       descrButton = (
+//         <Accordion title={this.props.title} content={this.props.descr} />
+//         // <h4><p className="lato pointer" onClick={() => this.props.appDescr("AppDescr", this.props.id)}><b>{this.props.title}</b></p></h4>
+//         // <div className="row">
+//         //   <div className="col"><h4><p className="lato"><b>{this.props.title}</b></p></h4></div>
+//         //   <div className="col-1"><h4><p className="lato pointer" onClick={() => this.props.appDescr("AppDescr", this.props.id)}><b>+</b></p></h4></div>
+//         // </div>
+//       )
+//     } else {
+//       descrButton = (
+//         <h4><p className="lato"><b>{this.props.title}</b></p></h4>
+//       );
+//     };
+//     if (this.props.showAppsBtn === "ShowAppBtn") {
+//       appBtn = (
+//         <div className="appcontainer">
+//           {linkOrVideo}
+//           {descrButton}
+//           {/* <h4><p className="lato"><b>{this.props.title}</b></p></h4> */}
+//           <div className="row btncontainer">
+//             <button className="col appbutton solidgreen m-1" onClick={() => this.props.appEditDel("AppEdit", this.props.id, this.props.pos)}>
+//               Edit
+//             </button>
+//             <button className="col-1 appbutton black m-1 pad01">
+//               {this.props.pos + 1} {/* {this.props.id} */}
+//             </button>
+//             <button className="col appbutton solidbrick m-1" onClick={() => this.props.appEditDel("AppDel", this.props.id)}>
+//               Remove
+//             </button>
+//           </div>
+//         </div>
+//       )
+//     } else {
+//       appBtn = (
+//         <div className="appcontainer">
+//           {linkOrVideo}
+//           {descrButton}
+//           {/* <p className="smallfont"><i>{this.props.descr}</i></p>
+//           <h4><p className="lato"><b>{this.props.title}</b></p></h4> */}
+//         </div>
+//       )
+//     }
+//     return (
+//       <>
+//         {appBtn}
+//       </>
+//     );
+//   }
+// }
 
-class AppSearchRes extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+// class AppSearchRes extends React.Component {
+//   constructor(props) {
+//     super(props);
+//   }
 
-  render() {
-    const linkOrVideo = this.props.video
-      ?
-      (<a title={this.props.title} onClick={() => this.props.appVideo("AppVideo", this.props.id)}>
-        <img className="apps" title={this.props.title} alt={this.props.title} src={this.props.icon} />
-      </a>)
-      :
-      (< a title={this.props.title} href={this.props.link} target="_blank" >
-        <img className="apps" title={this.props.title} alt={this.props.title} src={this.props.icon} />
-      </a>);
+//   render() {
+//     const linkOrVideo = this.props.video
+//       ?
+//       (<a title={this.props.title} onClick={() => this.props.appVideo("AppVideo", this.props.id)}>
+//         <img className="apps" title={this.props.title} alt={this.props.title} src={this.props.icon} />
+//       </a>)
+//       :
+//       (< a title={this.props.title} href={this.props.link} target="_blank" >
+//         <img className="apps" title={this.props.title} alt={this.props.title} src={this.props.icon} />
+//       </a>);
 
-    let appBtn = ""
-    let descrButton = "";
-    if (this.props.descr !== "") {
-      descrButton = (
-        <Accordion title={this.props.title} content={this.props.descr} />
-        // <h4><p className="lato pointer" onClick={() => this.props.appDescr("AppDescr", this.props.id)}><b>{this.props.title}</b></p></h4>
-      )
-    } else {
-      descrButton = (
-        <h4><p className="lato"><b>{this.props.title}</b></p></h4>
-      );
-    };
-    appBtn = (
-      <div className="appcontainer">
-        {linkOrVideo}
-        {descrButton}
-        {/* <p className="smallfont"><i>{this.props.descr}</i></p>
-        <h4><p className="lato"><b>{this.props.title}</b></p></h4> */}
-      </div>
-    )
-    return (
-      <>
-        {appBtn}
-      </>
-    );
-  }
-}
+//     let appBtn = ""
+//     let descrButton = "";
+//     if (this.props.descr !== "") {
+//       descrButton = (
+//         <Accordion title={this.props.title} content={this.props.descr} />
+//         // <h4><p className="lato pointer" onClick={() => this.props.appDescr("AppDescr", this.props.id)}><b>{this.props.title}</b></p></h4>
+//       )
+//     } else {
+//       descrButton = (
+//         <h4><p className="lato"><b>{this.props.title}</b></p></h4>
+//       );
+//     };
+//     appBtn = (
+//       <div className="appcontainer">
+//         {linkOrVideo}
+//         {descrButton}
+//         {/* <p className="smallfont"><i>{this.props.descr}</i></p>
+//         <h4><p className="lato"><b>{this.props.title}</b></p></h4> */}
+//       </div>
+//     )
+//     return (
+//       <>
+//         {appBtn}
+//       </>
+//     );
+//   }
+// }
 
 class Cat extends React.Component {
   constructor(props) {
