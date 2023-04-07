@@ -78,32 +78,6 @@ var spData = require("./initData.json");
 // }
 
 const App = ({ showAppsBtn, pos, id, title, link, descr, icon, video, appEditDel, appVideo, appDescr }) => {
-
-  // const useMousePosition = () => {
-  //   const [
-  //     mousePosition,
-  //     setMousePosition
-  //   ] = React.useState({ x: null, y: null });
-  //   React.useEffect(() => {
-  //     const updateMousePosition = ev => {
-  //       setMousePosition({ x: ev.clientX, y: ev.clientY });
-  //     };
-  //     window.addEventListener('mousemove', updateMousePosition);
-  //     return () => {
-  //       window.removeEventListener('mousemove', updateMousePosition);
-  //     };
-  //   }, []);
-  //   return mousePosition;
-  // };
-  // const mousePosition = useMousePosition();
-
-  const [position, setPosition] = useState([0, 0]) // State to save the position where you clicked
-
-  const handleClick = (event) => {
-    setIsActive(!isActive);
-    setPosition([event.pageX, event.pageY]) // clientX and clientY Save the pos where you clicked
-  }
-
   const [isActive, setIsActive] = useState(false);
   const linkOrVideo = video
     ?
@@ -114,20 +88,23 @@ const App = ({ showAppsBtn, pos, id, title, link, descr, icon, video, appEditDel
     (< a title={title} href={link} target="_blank" >
       <img className="apps" title={title} alt={title} src={icon} />
     </a>);
+
   let appBtn = "";
   let descrButton = "";
+  
   if (descr !== "") {
     descrButton = (
       <>
         {isActive &&
-          <div className="row smallfonts lato text-center infover m-auto mt-3 mb-3"
+          <div className="row medfonts fade-in-image lato text-center m-auto mt-3 mb-3"
             style={{
-              position: "absolute",
-              left: position[0],
-              top: position[1],
-              transform: "translate(-25rem, -40ex)"
+              backgroundImage: "url(" + icon + ")",
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat',
+              backgroundAttachment: "fixed",
+              width: "16em"
             }}>
-            <i>{descr}</i>
+            <i style={{backgroundColor:"rgba(0, 0, 0, 0.8)"}}>{descr}</i>
           </div>
         }
         <h4>
@@ -138,37 +115,14 @@ const App = ({ showAppsBtn, pos, id, title, link, descr, icon, video, appEditDel
                   <b>{title}</b>
                 </div>
                 <div className="col-2 borderleft pointer d-flex flex-column justify-content-center align-items-center"
-                  /* onClick={() => setIsActive(!isActive)}> */
-                    onClick={handleClick}>
+                  onClick={() => setIsActive(!isActive)}>
                   <b>{isActive ? '-' : '+'}</b>
-                  {/* <b>+</b> */}
                 </div>
               </div>
             </div>
-            {/* {isActive && <i className="row smallfonts">{content}</i>} */}
           </div>
         </h4>
       </>
-
-      // <Accordion title={this.props.title} content={this.props.descr} />
-
-      // <h4><p className="lato pointer" onClick={() => this.props.appDescr("AppDescr", this.props.id)}><b>{this.props.title}</b></p></h4>
-
-      // <h4>
-      //   <div className="row lato text-center m-auto">
-      //     <div className="col">
-      //       <div className="row">
-      //         <div className="col d-flex flex-column justify-content-center align-items-center">
-      //           <b>{title}</b>
-      //         </div>
-      //         <div className="col-2 borderleft pointer d-flex flex-column justify-content-center align-items-center"
-      //           onClick={() => appDescr("AppDescr", id)}>
-      //           <b>+</b>
-      //         </div>
-      //       </div>
-      //     </div>
-      //   </div>
-      // </h4>
     )
   } else {
     descrButton = (
@@ -178,10 +132,8 @@ const App = ({ showAppsBtn, pos, id, title, link, descr, icon, video, appEditDel
   if (showAppsBtn === "ShowAppBtn") {
     appBtn = (
       <div className="appcontainer">
-        {/* !isActive && */ linkOrVideo}
+        {!isActive && linkOrVideo}
         {descrButton}
-        {/* {JSON.stringify(mousePosition)} */}
-        {/* <h4><p className="lato"><b>{this.props.title}</b></p></h4> */}
         <div className="row btncontainer">
           <button className="col appbutton solidgreen m-1" onClick={() => appEditDel("AppEdit", id, pos)}>
             Edit
@@ -198,10 +150,8 @@ const App = ({ showAppsBtn, pos, id, title, link, descr, icon, video, appEditDel
   } else {
     appBtn = (
       <div className="appcontainer">
-        {/* !isActive && */ linkOrVideo}
+        {!isActive && linkOrVideo}
         {descrButton}
-        {/* {JSON.stringify(mousePosition)} */}
-        {/* <h4><p className="lato"><b>{this.props.title}</b></p></h4> */}
       </div>
     )
   }
@@ -225,12 +175,73 @@ const AppSearchRes = ({ id, title, link, descr, icon, video, appVideo }) => {
     </a>);
   let appBtn = "";
   let descrButton = "";
+
+  // if (descr !== "") {
+  //   descrButton = (
+  //     <>
+  //       {isActive &&
+  //         <div className="row smallfonts lato text-center m-auto mb-5">
+  //           <i>{descr}</i>
+  //         </div>
+  //       }
+  //       <h4>
+  //         <div className="row lato text-center m-1">
+  //           <div className="col">
+  //             <div className="row">
+  //               <div className="col d-flex flex-column justify-content-center align-items-center">
+  //                 <b>{title}</b>
+  //               </div>
+  //               <div className="col-2 borderleft pointer d-flex flex-column justify-content-center align-items-center"
+  //                 onClick={() => setIsActive(!isActive)}>
+  //                 <b>{isActive ? '-' : '+'}</b>
+  //                 {/* <b>+</b> */}
+  //               </div>
+  //             </div>
+  //           </div>
+  //           {/* {isActive && <i className="row smallfonts">{content}</i>} */}
+  //         </div>
+  //       </h4>
+  //     </>
+
+  //     // <Accordion title={this.props.title} content={this.props.descr} />
+
+  //     // <h4><p className="lato pointer" onClick={() => this.props.appDescr("AppDescr", this.props.id)}><b>{this.props.title}</b></p></h4>
+
+  //     // <h4>
+  //     //   <div className="row lato text-center m-auto">
+  //     //     <div className="col">
+  //     //       <div className="row">
+  //     //         <div className="col d-flex flex-column justify-content-center align-items-center">
+  //     //           <b>{title}</b>
+  //     //         </div>
+  //     //         <div className="col-2 borderleft pointer d-flex flex-column justify-content-center align-items-center"
+  //     //           onClick={() => appDescr("AppDescr", id)}>
+  //     //           <b>+</b>
+  //     //         </div>
+  //     //       </div>
+  //     //     </div>
+  //     //   </div>
+  //     // </h4>
+  //   )
+  // } else {
+  //   descrButton = (
+  //     <h4><p className="lato"><b>{title}</b></p></h4>
+  //   );
+  // };
+
   if (descr !== "") {
     descrButton = (
       <>
         {isActive &&
-          <div className="row smallfonts lato text-center m-auto mb-5">
-            <i>{descr}</i>
+          <div className="row medfonts fade-in-image lato text-center m-auto mt-3 mb-3"
+            style={{
+              backgroundImage: "url(" + icon + ")",
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat',
+              backgroundAttachment: "fixed",
+              width: "16em"
+            }}>
+            <i style={{backgroundColor:"rgba(0, 0, 0, 0.8)"}}>{descr}</i>
           </div>
         }
         <h4>
@@ -243,40 +254,19 @@ const AppSearchRes = ({ id, title, link, descr, icon, video, appVideo }) => {
                 <div className="col-2 borderleft pointer d-flex flex-column justify-content-center align-items-center"
                   onClick={() => setIsActive(!isActive)}>
                   <b>{isActive ? '-' : '+'}</b>
-                  {/* <b>+</b> */}
                 </div>
               </div>
             </div>
-            {/* {isActive && <i className="row smallfonts">{content}</i>} */}
           </div>
         </h4>
       </>
-
-      // <Accordion title={this.props.title} content={this.props.descr} />
-
-      // <h4><p className="lato pointer" onClick={() => this.props.appDescr("AppDescr", this.props.id)}><b>{this.props.title}</b></p></h4>
-
-      // <h4>
-      //   <div className="row lato text-center m-auto">
-      //     <div className="col">
-      //       <div className="row">
-      //         <div className="col d-flex flex-column justify-content-center align-items-center">
-      //           <b>{title}</b>
-      //         </div>
-      //         <div className="col-2 borderleft pointer d-flex flex-column justify-content-center align-items-center"
-      //           onClick={() => appDescr("AppDescr", id)}>
-      //           <b>+</b>
-      //         </div>
-      //       </div>
-      //     </div>
-      //   </div>
-      // </h4>
     )
   } else {
     descrButton = (
       <h4><p className="lato"><b>{title}</b></p></h4>
     );
   };
+
   appBtn = (
     <div className="appcontainer">
       {!isActive && linkOrVideo}
