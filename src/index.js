@@ -78,6 +78,32 @@ var spData = require("./initData.json");
 // }
 
 const App = ({ showAppsBtn, pos, id, title, link, descr, icon, video, appEditDel, appVideo, appDescr }) => {
+
+  // const useMousePosition = () => {
+  //   const [
+  //     mousePosition,
+  //     setMousePosition
+  //   ] = React.useState({ x: null, y: null });
+  //   React.useEffect(() => {
+  //     const updateMousePosition = ev => {
+  //       setMousePosition({ x: ev.clientX, y: ev.clientY });
+  //     };
+  //     window.addEventListener('mousemove', updateMousePosition);
+  //     return () => {
+  //       window.removeEventListener('mousemove', updateMousePosition);
+  //     };
+  //   }, []);
+  //   return mousePosition;
+  // };
+  // const mousePosition = useMousePosition();
+
+  const [position, setPosition] = useState([0, 0]) // State to save the position where you clicked
+
+  const handleClick = (event) => {
+    setIsActive(!isActive);
+    setPosition([event.pageX, event.pageY]) // clientX and clientY Save the pos where you clicked
+  }
+
   const [isActive, setIsActive] = useState(false);
   const linkOrVideo = video
     ?
@@ -94,7 +120,13 @@ const App = ({ showAppsBtn, pos, id, title, link, descr, icon, video, appEditDel
     descrButton = (
       <>
         {isActive &&
-          <div className="row smallfonts lato text-center m-auto mb-5">
+          <div className="row smallfonts lato text-center infover m-auto mt-3 mb-3"
+            style={{
+              position: "absolute",
+              left: position[0],
+              top: position[1],
+              transform: "translate(-25rem, -40ex)"
+            }}>
             <i>{descr}</i>
           </div>
         }
@@ -106,7 +138,8 @@ const App = ({ showAppsBtn, pos, id, title, link, descr, icon, video, appEditDel
                   <b>{title}</b>
                 </div>
                 <div className="col-2 borderleft pointer d-flex flex-column justify-content-center align-items-center"
-                  onClick={() => setIsActive(!isActive)}>
+                  /* onClick={() => setIsActive(!isActive)}> */
+                    onClick={handleClick}>
                   <b>{isActive ? '-' : '+'}</b>
                   {/* <b>+</b> */}
                 </div>
@@ -145,8 +178,9 @@ const App = ({ showAppsBtn, pos, id, title, link, descr, icon, video, appEditDel
   if (showAppsBtn === "ShowAppBtn") {
     appBtn = (
       <div className="appcontainer">
-        {!isActive && linkOrVideo}
+        {/* !isActive && */ linkOrVideo}
         {descrButton}
+        {/* {JSON.stringify(mousePosition)} */}
         {/* <h4><p className="lato"><b>{this.props.title}</b></p></h4> */}
         <div className="row btncontainer">
           <button className="col appbutton solidgreen m-1" onClick={() => appEditDel("AppEdit", id, pos)}>
@@ -164,8 +198,9 @@ const App = ({ showAppsBtn, pos, id, title, link, descr, icon, video, appEditDel
   } else {
     appBtn = (
       <div className="appcontainer">
-        {!isActive && linkOrVideo}
+        {/* !isActive && */ linkOrVideo}
         {descrButton}
+        {/* {JSON.stringify(mousePosition)} */}
         {/* <h4><p className="lato"><b>{this.props.title}</b></p></h4> */}
       </div>
     )
@@ -177,7 +212,7 @@ const App = ({ showAppsBtn, pos, id, title, link, descr, icon, video, appEditDel
   );
 }
 
-const AppSearchRes = ({ id, title, link, descr, icon, video, appVideo}) => {
+const AppSearchRes = ({ id, title, link, descr, icon, video, appVideo }) => {
   const [isActive, setIsActive] = useState(false);
   const linkOrVideo = video
     ?
