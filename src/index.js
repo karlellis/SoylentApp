@@ -105,7 +105,7 @@ const App = ({ showAppsBtn, pos, id, title, link, descr, icon, video, appEditDel
               backgroundAttachment: "fixed",
               width: "16em"
             }}>
-            <b style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}>{descr}</b>
+            <b style={{ backgroundColor: "rgba(0, 0, 0, 0.7)" }}>{descr}</b>
           </div>
         }
         <h4>
@@ -242,7 +242,7 @@ const AppSearchRes = ({ id, title, link, descr, icon, video, appVideo }) => {
               backgroundAttachment: "fixed",
               width: "16em"
             }}>
-            <b style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}>{descr}</b>
+            <b style={{ backgroundColor: "rgba(0, 0, 0, 0.7)" }}>{descr}</b>
           </div>
         }
         <h4>

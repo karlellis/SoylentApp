@@ -548,10 +548,11 @@ label {
 }
 
 .descr {
-	height: 14em;
+	height: 14.35em;
 	overflow-y: scroll;
 	scrollbar-width: none;
 	overflow-x: hidden;
+	text-shadow: 2px 2px 0px #000000;
 }
 
 .display-block {
