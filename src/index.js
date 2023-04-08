@@ -79,6 +79,7 @@ var spData = require("./initData.json");
 
 const App = ({ showAppsBtn, pos, id, title, link, descr, icon, video, appEditDel, appVideo, appDescr }) => {
   const [isActive, setIsActive] = useState(false);
+
   const linkOrVideo = video
     ?
     (<a title={title} onClick={() => appVideo("AppVideo", id)}>
@@ -91,12 +92,12 @@ const App = ({ showAppsBtn, pos, id, title, link, descr, icon, video, appEditDel
 
   let appBtn = "";
   let descrButton = "";
-  
+
   if (descr !== "") {
     descrButton = (
       <>
         {isActive &&
-          <div className="row medfonts fade-in-image lato text-center m-auto mt-3 mb-3"
+          <div className="row medfonts descr fade-in-image lato text-center m-auto mt-3 mb-3"
             style={{
               backgroundImage: "url(" + icon + ")",
               backgroundPosition: 'center',
@@ -104,7 +105,7 @@ const App = ({ showAppsBtn, pos, id, title, link, descr, icon, video, appEditDel
               backgroundAttachment: "fixed",
               width: "16em"
             }}>
-            <i style={{backgroundColor:"rgba(0, 0, 0, 0.8)"}}>{descr}</i>
+            <b style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}>{descr}</b>
           </div>
         }
         <h4>
@@ -233,7 +234,7 @@ const AppSearchRes = ({ id, title, link, descr, icon, video, appVideo }) => {
     descrButton = (
       <>
         {isActive &&
-          <div className="row medfonts fade-in-image lato text-center m-auto mt-3 mb-3"
+          <div className="row medfonts descr fade-in-image lato text-center m-auto mt-3 mb-3"
             style={{
               backgroundImage: "url(" + icon + ")",
               backgroundPosition: 'center',
@@ -241,7 +242,7 @@ const AppSearchRes = ({ id, title, link, descr, icon, video, appVideo }) => {
               backgroundAttachment: "fixed",
               width: "16em"
             }}>
-            <i style={{backgroundColor:"rgba(0, 0, 0, 0.8)"}}>{descr}</i>
+            <b style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}>{descr}</b>
           </div>
         }
         <h4>

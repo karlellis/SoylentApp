@@ -547,15 +547,11 @@ label {
 	transform: translate(-50%, -50%);
 }
 
-.descr-dark {
-	position: relative;
-	/* background: rgb(40, 39, 39); */
-	/* border-radius: 5px; */
-	width: 50%;
-	height: auto;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
+.descr {
+	height: 14em;
+	overflow-y: scroll;
+	scrollbar-width: none;
+	overflow-x: hidden;
 }
 
 .display-block {
@@ -652,7 +648,7 @@ label {
 }
 
 .fade-in-image {
-	animation: fadeIn 2s;
+	animation: fadeIn 1s;
 }
 
 @keyframes fadeIn {
