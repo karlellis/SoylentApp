@@ -5175,7 +5175,7 @@ class Main extends React.Component {
                             <OverlayImg></OverlayImg>
                           </div>
                           <div className="col-md latotitle d-flex flex-column justify-content-center align-items-center">
-                            "{tempAppTitle}"
+                            <center>"{tempAppTitle}"</center>
                           </div>
                           <div className="col-md-3">
                           </div>
