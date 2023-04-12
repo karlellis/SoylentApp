@@ -505,6 +505,7 @@ label {
 .modal-header-dark {
 	background: rgb(40, 39, 39);
 	padding-left: 1em;
+	padding-right: 1em;
 	padding-top: 1em;
 	padding-bottom: 1em;
 }
@@ -652,6 +653,13 @@ label {
 	animation: fadeIn 1s;
 }
 
+.latotitle {
+	font-size: 1.3em;
+	color: white;
+	background-color: rgba(47, 79, 79, 0.7) !important;
+	/* border:#2b5374 solid; */
+}
+
 @keyframes fadeIn {
 	0% {
 		opacity: 0;
@@ -704,4 +712,11 @@ label {
 
 ::-webkit-scrollbar {
 	width: 0px;
+}
+
+.overlay {
+	/* position: absolute;
+	top: 50px;
+	left: 25px; */
+	width: 5em;
 }

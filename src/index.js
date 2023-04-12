@@ -2438,7 +2438,7 @@ class Main extends React.Component {
           catSel: tempCatTitle
         })
         this.setState({ catAppItems: [] });
-        console.log("Current Cat: ", this.state.catSel);
+        // console.log("Current Cat: ", this.state.catSel);
         break;
       case "video":
         this.setState({ appVideoDiaShow: false });
@@ -2698,7 +2698,7 @@ class Main extends React.Component {
     // console.log("Cat Array: ", array);
     tempCatTitle = array[pos].title;
     temp5 = tempCatTitle;
-    console.log("Current Cat In: ", tempCatTitle);
+    // console.log("Current Cat In: ", tempCatTitle);
     this.appCatSearch(array[pos].title, this.state.appItems);
     this.showModal("cat");
   }
@@ -5167,9 +5167,29 @@ class Main extends React.Component {
                 </SearchDialog>
                 <AppVideoDialog appVideoDiaShow={this.state.appVideoDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("video")} handleSave={this.applyAppEdit}>
                   <div className="modal-content darkBG">
-                    <div className="modal-header-dark">
-                      <h5 className="modal-title-dark" >"{tempAppTitle}"</h5>
+
+                    <div className="row mb-1 m-1 modal-header-dark">
+                      <div className="col">
+                        <div className="row">
+                          <div className="col-md-3 mb-1 d-flex flex-column justify-content-center align-items-center">
+                            <OverlayImg></OverlayImg>
+                          </div>
+                          <div className="col-md latotitle d-flex flex-column justify-content-center align-items-center">
+                            "{tempAppTitle}"
+                          </div>
+                          <div className="col-md-3">
+                          </div>
+                        </div>
+                      </div>
                     </div>
+
+                    {/* <div className="row modal-header-dark">
+                      <OverlayImg></OverlayImg>
+                      <div className="col">
+                        <h5 className="modal-title-dark" >"{tempAppTitle}"</h5>
+                      </div>
+                    </div> */}
+
                     <div className="modal-body align-items-center darkBG">
                       <center>
                         <iframe width="100%" height="350" src={this.state.videoLink} frameborder="0" allowfullscreen="true"></iframe>
@@ -5243,6 +5263,20 @@ class SettingsGear extends React.Component {
     }
     return (
       <img className="gear mt-2 mb-2" alt="Settings Mode" src="./img/gears.svg" onClick={() => gearClick()} />
+    );
+  }
+}
+
+class OverlayImg extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+  render() {
+    // const gearClick = () => {
+    //   this.props.handleShowButtons(true);
+    // }
+    return (
+      <img className="overlay" alt="Overlay" src="./img/soytv.gif" /* onClick={() => gearClick()}  */ />
     );
   }
 }
