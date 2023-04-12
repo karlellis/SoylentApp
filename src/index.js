@@ -97,7 +97,7 @@ const App = ({ showAppsBtn, pos, id, title, link, descr, icon, video, appEditDel
     descrButton = (
       <>
         {isActive &&
-          <div className="row medfonts descr fade-in-image lato text-center m-auto mt-3 mb-3"
+          <div className="row medfonts descr fade-in-image lato text-center m-auto mt-5 mb-5"
             style={{
               backgroundImage: "url(" + icon + ")",
               backgroundPosition: 'center',
@@ -234,7 +234,7 @@ const AppSearchRes = ({ id, title, link, descr, icon, video, appVideo }) => {
     descrButton = (
       <>
         {isActive &&
-          <div className="row medfonts descr fade-in-image lato text-center m-auto mt-3 mb-3"
+          <div className="row medfonts descr fade-in-image lato text-center m-auto mt-5 mb-5"
             style={{
               backgroundImage: "url(" + icon + ")",
               backgroundPosition: 'center',
@@ -1306,6 +1306,7 @@ class Main extends React.Component {
             "cat": "",
             "id": 0
           };
+          // this.setState({ disFieldAA: true });
           this.setState({ upShow: false });
           this.setState({ alShow: true });
           this.setState({ alErrShow: false });
@@ -1350,6 +1351,7 @@ class Main extends React.Component {
             "cat": "",
             "id": 0
           };
+          // this.setState({ disFieldAA: true });
           this.setState({ upShow: false });
           this.setState({ alShow: true });
           this.setState({ alErrShow: false });
@@ -2414,6 +2416,7 @@ class Main extends React.Component {
       case "appadd":
         this.setState({ appAddDiaShow: false });
         temp5 = tempCatTitle;
+        this.setState({ disFieldAA: true });
         document.getElementById('appAddForm').reset();
         break;
       case "catedit":
