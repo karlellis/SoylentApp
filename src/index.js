@@ -855,7 +855,7 @@ async function fetchUpPHP(file, url, key) {
   }).then((response) => response.json())
     .then((json) => {
       nome = json.filename;
-      console.log("Image Upload:", nome);
+      // console.log("Image Upload:", nome);
     });
 }
 
@@ -1135,7 +1135,7 @@ class Main extends React.Component {
         this.appCatSearch(tempCatTitle, spData.appItems);
         this.appCatSearch("Root", spData.appItems);
         // console.log("Save Conf. result=", res);
-        console.log("TempCat= ", tempCatTitle);
+        // console.log("TempCat= ", tempCatTitle);
       });;
   }
 
@@ -1247,7 +1247,7 @@ class Main extends React.Component {
           temp4 = "";
           temp5 = tempCatTitle;
           temp6 = "";
-          noDescr = false;
+          // noDescr = false;
           tempID = 0;
           appNewItem = {
             "title": "",
@@ -1321,7 +1321,7 @@ class Main extends React.Component {
           appNewItem.cat = temp5;
           appNewItem.id = arrayLength;
           inPos = arrayLength;
-          console.log("Pos: ", inPos);
+          // console.log("Pos: ", inPos);
           tempIcon = "";
           arrayAdd = this.addAfter(array, inPos, appNewItem);
           this.setState({ appItems: arrayAdd });
@@ -1379,8 +1379,8 @@ class Main extends React.Component {
             })
           }
           if (temp !== "") {
-            console.log("CurrPos: ", currPos);
-            console.log("InPos: ", inPos);
+            // console.log("CurrPos: ", currPos);
+            // console.log("InPos: ", inPos);
             catNewItem.icon = array[currPos].icon;
             catNewItem.title = array[currPos].title;
             if (inPos > currPos) {
@@ -1410,7 +1410,7 @@ class Main extends React.Component {
           // console.log("Edit Cat correctly Uploaded!");
           this.saveFile(spData, "./api/img-upload.php", "config");
         } else if (url === "cat" && op === "add") {
-          console.log("CatAdd in Pos: ", inPos);
+          // console.log("CatAdd in Pos: ", inPos);
           catNewItem.icon = "./appicons/" + nome;
           catNewItem.title = temp2;
           tempIcon = "";
@@ -1431,12 +1431,12 @@ class Main extends React.Component {
           // console.log("Add Icon correctly Uploaded!");
           this.saveFile(spData, "./api/img-upload.php", "config");
         } else if (url === "cat" && op === "addlast") {
-          console.log("CatAddLast...");
+          // console.log("CatAddLast...");
           catNewItem.icon = "./appicons/" + nome;
           catNewItem.title = temp2;
-          console.log("CatNewItem: ", catNewItem);
+          // console.log("CatNewItem: ", catNewItem);
           inPos = arrayLength;
-          console.log("Pos: ", inPos);
+          // console.log("Pos: ", inPos);
           tempIcon = "";
           arrayAdd = this.addAfter(array, inPos, catNewItem);
           this.setState({ catItems: arrayAdd });
@@ -1759,20 +1759,20 @@ class Main extends React.Component {
 
   applyAppEdit = () => {
     array = [...this.state.appItems];
-    console.log("FileImg: ", fileImg);
-    console.log("cgPos: ", cgPos);
-    console.log("Temp2: ", temp2);
-    console.log("Temp3: ", temp3);
-    console.log("Temp4: ", temp4, " ", tempAppVideo);
-    console.log("Temp5: ", temp5, " ", tempCatTitle);
-    console.log("Temp6: ", temp6, " ", tempAppDescr);
+    // console.log("FileImg: ", fileImg);
+    // console.log("cgPos: ", cgPos);
+    // console.log("Temp2: ", temp2);
+    // console.log("Temp3: ", temp3);
+    // console.log("Temp4: ", temp4, " ", tempAppVideo);
+    // console.log("Temp5: ", temp5, " ", tempCatTitle);
+    // console.log("Temp6: ", temp6, " ", tempAppDescr);
     if (noDescr === true) {
       temp6 = "";
     }
     if (fileImg !== null || temp2 !== "" || temp3 !== "" || temp4 !== tempAppVideo || temp5 !== tempCatTitle || temp6 !== tempAppDescr || cgPos !== "") {
       if (cgPos !== "") {
         inPos = parseInt(cgPos) - 1;
-        console.log("Edit inPos: ", inPos, " currPos: ", currPos);
+        // console.log("Edit inPos: ", inPos, " currPos: ", currPos);
         if (inPos < arrayLength && inPos >= 0 && inPos !== currPos) {
           this.saveImgFile(fileImg, "icon", "edit");
         } else {
@@ -1803,7 +1803,7 @@ class Main extends React.Component {
     if (fileImg !== null && temp2 !== "" && temp3 !== "") {
       if (temp !== "") {
         inPos = parseInt(temp) - 1;
-        console.log("InPos: ", inPos);
+        // console.log("InPos: ", inPos);
         if (inPos < arrayLength) {
           this.saveImgFile(fileImg, "icon", "add");
         } else {
@@ -1822,7 +1822,7 @@ class Main extends React.Component {
   applyAppDel = () => {
     var array = [...this.state.appItems];
     var index = temp;
-    console.log("AppDel ID: ", temp);
+    // console.log("AppDel ID: ", temp);
     if (index !== -1) {
       fetchDelPHP(tempIcon, "./api/img-upload.php", "icon");
       tempIcon = "";
@@ -1857,7 +1857,7 @@ class Main extends React.Component {
       let dup = false;
       for (let i = 0; i < arrayLength; i++) {
         if (array[i].title.toLowerCase() === temp2.toLowerCase()) {
-          console.log("CAT Title Duplicated!!!");
+          // console.log("CAT Title Duplicated!!!");
           dup = true;
         }
       }
@@ -1896,7 +1896,7 @@ class Main extends React.Component {
       let dup = false;
       for (let i = 0; i < arrayLength; i++) {
         if (array[i].title.toLowerCase() === temp2.toLowerCase()) {
-          console.log("CAT Title Duplicated!!!");
+          // console.log("CAT Title Duplicated!!!");
           dup = true;
         }
       }
@@ -2287,7 +2287,7 @@ class Main extends React.Component {
         this.setState({ creditDiaShow: true });
         break;
       case "appEdit":
-        console.log("CurrPos ", currPos);
+        // console.log("CurrPos ", currPos);
         this.setState({ appEditDiaShow: true });
         break;
       case "appDel":
@@ -2572,12 +2572,12 @@ class Main extends React.Component {
 
   catEditDel(op, pos) {
     currPos = pos;
-    console.log(op, " for ", pos);
+    // console.log(op, " for ", pos);
     array = [...this.state.catItems];
     arrayLength = (array.length);
     tempCatTitle = array[pos].title;
     tempIcon = array[pos].icon;
-    console.log("Cat name: ", tempCatTitle);
+    // console.log("Cat name: ", tempCatTitle);
     document.getElementById('clearcatswitchpos').value = "";
     if (op === "CatEdit") {
       this.showModal("catEdit");
@@ -2604,7 +2604,7 @@ class Main extends React.Component {
     arrayLength = (array.length);
     tempAppVideo = false;
     temp4 = false;
-    console.log("AppAdd Temp5: ", temp5);
+    // console.log("AppAdd Temp5: ", temp5);
     this.setState({
       catSel: temp5
     })
@@ -2621,13 +2621,13 @@ class Main extends React.Component {
   appEditDel(op, id, pos) {
     temp = id;
     currPos = pos;
-    console.log(op, " for ", id, "pos ", currPos);
+    // console.log(op, " for ", id, "pos ", currPos);
     array = [...this.state.appItems];
     arrayLength = (array.length);
     for (let i = 0; i < array.length; i++) {
       if (array[i].id === id) {
         tempAppTitle = array[i].title;
-        console.log("App name: ", tempAppTitle);
+        // console.log("App name: ", tempAppTitle);
         tempAppLink = array[i].link;
         tempAppDescr = array[i].descr;
         if (tempAppDescr === "") {
@@ -2641,7 +2641,7 @@ class Main extends React.Component {
             disFieldAE: false
           });
         }
-        console.log(" App descr.: ", tempAppDescr);
+        // console.log(" App descr.: ", tempAppDescr);
         tempAppVideo = array[i].video;
         temp4 = array[i].video;
         temp5 = array[i].cat;
@@ -2743,7 +2743,7 @@ class Main extends React.Component {
     this.setState({
       catSel: catName
     })
-    console.log("CatName: ", catName);
+    // console.log("CatName: ", catName);
   }
 
   search() {

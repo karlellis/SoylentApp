@@ -16,7 +16,7 @@
     "clockColor": "rgba(216, 66, 6, 0.7)",
     "clockOpacity": 0.7,
     "clockTextColor": "rgba(255, 255, 255, 1)",
-    "clockColW": "col",
+    "clockColW": "col-md",
     "footTitle": "Site Name",
     "noFootTitle": false,
     "footSubtitle": "Subtitle 1",
