@@ -55,6 +55,7 @@
     "LogoIcon": "./img/logo.svg",
     "backgroundImage": "./img/background.jpg",
     "catImage": "./img/catBackground.jpg",
+    "videoOverlay": "./img/soytv.gif",
     "noBackImage": false,
     "noCatImage": false,
     "appItems": [],
