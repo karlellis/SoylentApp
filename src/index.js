@@ -5672,13 +5672,13 @@ class Dropdown extends React.Component {
             }}>
             Search
           </button>
-          <button className="col menuItem blue m-1"
+          {/* <button className="col menuItem blue m-1"
             onClick={() => {
               // window.location = "./credits.html";
               this.props.exCrsShow();
             }}>
             Credits
-          </button>
+          </button> */}
         </div>
       </div>
     );
