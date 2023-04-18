@@ -5276,7 +5276,7 @@ class OverlayImg extends React.Component {
     //   this.props.handleShowButtons(true);
     // }
     return (
-      <img className="overlay" alt="Overlay" src={spData.videoOverlay} /* onClick={() => gearClick()}  */ />
+      <img className="overlay" alt="Overlay" src={spData.LogoIcon} /* onClick={() => gearClick()}  */ />
     );
   }
 }
