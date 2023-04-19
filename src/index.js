@@ -550,7 +550,7 @@ const AppVideoDialog = ({ handleClose, appVideoDiaShow, children, activityChange
   );
 };
 
-const ExCrsDialog = ({ handleClose, exCrsDiaShow, children, activityChanged }) => {
+const CrsDialog = ({ handleClose, exCrsDiaShow, children, activityChanged }) => {
   const showHideClassName = exCrsDiaShow ? "modal display-block" : "modal display-none";
   return (
     <div className={showHideClassName}>
@@ -966,6 +966,8 @@ class Main extends React.Component {
       disFieldC3: false,
       disFieldAA: true,
       disFieldAE: false,
+      disFieldMS: false,
+      disFieldMC: false,
       catSel: "Root",
       selectedCat: "Root",
       backStyle: {
@@ -1025,6 +1027,7 @@ class Main extends React.Component {
           clockShow: spData.clockShow,
           appItems: spData.appItems,
           catItems: spData.catItems,
+          creditsItems: spData.creditsItems,
           disFieldB: spData.noBackImage,
           disFieldBC: spData.noCatImage,
           disField: spData.noFootTitle,
@@ -1033,6 +1036,7 @@ class Main extends React.Component {
           disFieldC: spData.noFootCreditiTitle,
           disFieldC2: spData.noFootCreditiSubtitle,
           disFieldC3: spData.noFootCreditiSubtitle2
+
         });
         document.title = spData.headTitle;
         if (spData.footTitle !== "") {
@@ -2597,6 +2601,17 @@ class Main extends React.Component {
     // console.log("CATAdding IT!");
   }
 
+  addCrsItem() {
+    // this.hideModal("apporcat");
+    array = [...this.state.creditsItems];
+    arrayLength = (array.length);
+    temp4 = false;
+    document.getElementById('clearcrspos').value = "";
+    document.getElementById('clearcrstitle').value = "";
+    this.showModal("crsAdd");
+    // console.log("CATAdding IT!");
+  }
+
   appAddItem(id, pos) {
     this.hideModal("apporcat");
     noDescr = true;
@@ -2776,6 +2791,9 @@ class Main extends React.Component {
     const { disFieldC3: disFieldC3 } = this.state;
     const { disFieldAA: disFieldAA } = this.state;
     const { disFieldAE: disFieldAE } = this.state;
+    const { disFieldMS: disFieldMS } = this.state;
+    const { disFieldMC: disFieldMC } = this.state;
+
     let buttons = "";
 
     let menuButtons = (
@@ -3063,6 +3081,72 @@ class Main extends React.Component {
                                 </div>
                                 <div className="col d-flex flex-column justify-content-center align-items-center">
                                   <input type="range" class="form-range border-0 p-0" min="0" max="1" step="0.1" defaultValue={spData.menuOpacity} id="menuOpRange" onChange={e => tempOpacity = e.target.value} ></input>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="form-group">
+                          <div className="row text-center mb-1 m-auto">
+                            <div className="col">
+                              <div className="row border">
+                                <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
+                                  <label>Search</label>
+                                </div>
+                                <div className="col d-flex flex-column justify-content-center align-items-center">
+                                  <input type="text" disabled={disFieldMS} className="form-control border-0" defaultValue={spData.menuSearchLabel} onChange={e => temp = e.target.value} />
+                                </div>
+                                <div className="col-2 border d-flex flex-column justify-content-center align-items-center">
+                                  <label className="switch">
+                                    <input type="checkbox" className="form-control" defaultChecked={spData.noMenuSearch} onClick={e => {
+                                      if (this.state.disFieldMS === false) {
+                                        this.setState({
+                                          disFieldMS: true
+                                        });
+                                        spData.noMenuSearch = true;
+                                      } else {
+                                        this.setState({
+                                          disFieldMS: false
+                                        });
+                                        spData.noMenuSearch = false;
+                                      }
+                                    }} />
+                                    <span class="slider round" title="Hide"></span>
+                                  </label>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="form-group">
+                          <div className="row text-center mb-1 m-auto">
+                            <div className="col">
+                              <div className="row border">
+                                <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
+                                  <label>Credit</label>
+                                </div>
+                                <div className="col d-flex flex-column justify-content-center align-items-center">
+                                  <input type="text" disabled={disFieldMC} className="form-control border-0" defaultValue={spData.menuCreditsLabel} onChange={e => temp = e.target.value} />
+                                </div>
+                                <div className="col-2 border d-flex flex-column justify-content-center align-items-center">
+                                  <label className="switch">
+                                    <input type="checkbox" className="form-control" defaultChecked={spData.noMenuCredits} onClick={e => {
+                                      if (this.state.disFieldMC === false) {
+                                        this.setState({
+                                          disFieldMC: true
+                                        });
+                                        spData.noMenuCredits = true;
+                                      } else {
+                                        this.setState({
+                                          disFieldMC: false
+                                        });
+                                        spData.noMenuCredits = false;
+                                      }
+                                    }} />
+                                    <span class="slider round" title="Hide"></span>
+                                  </label>
                                 </div>
                               </div>
                             </div>
@@ -4908,7 +4992,8 @@ class Main extends React.Component {
                     </div>
                   </div>
                 </AppOrCatDialog>
-                <ExCrsDialog exCrsDiaShow={this.state.exCrsDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("excrs")} handleSave={this.applyAppEdit}>
+
+                <CrsDialog exCrsDiaShow={this.state.exCrsDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("excrs")} handleSave={this.applyAppEdit}>
                   <div className="modal-content noborder">
                     <div className="modal-header-dark">
                       <h5 className="modal-title-dark" >Credits</h5>
@@ -5112,7 +5197,29 @@ class Main extends React.Component {
                       {/* ---------------------- END CREDIT ------------------------------- */}
                     </div>
                   </div>
-                </ExCrsDialog>
+
+                  <div className="modal-content noBG">
+                    <div className="modal-header darkBG">
+                      <h5 className="modal-title latowhite" >{spData.menuCreditsLabel}</h5>
+                    </div>
+                    <div style={this.state.catStyle} className="modal-body-dark">
+                      <div className="textcenter">
+                        {
+                          this.state.creditsItems.map(({ id, title, link, descr, }, i) => {
+                            return (
+                              <Credit showAppsBtn={this.state.appsBtnShow} key={i} pos={i}
+                                title={title} link={link} descr={descr} crsEditDel={this.crsEditDel}
+                                crsAddItem={this.crsAddItem} />
+                            )
+                          })
+                        }
+                        <AppAdd showAppsBtn={this.state.appsBtnShow} /* title={title} link={link} icon={icon} */ addItem={this.addCrsItem} />
+                      </div>
+                    </div>
+                  </div>
+
+                </CrsDialog>
+
                 <SearchDialog searchDiaShow={this.state.searchDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("search")} handleSave={this.appSearch} handleReset={this.appSearchReset}>
                   <div className="modal-content noborder">
                     <div className="modal-header-dark">
@@ -5421,6 +5528,37 @@ class AppAdd extends React.Component {
   }
 }
 
+// class CrsAdd extends React.Component {
+//   constructor(props) {
+//     super(props);
+//   }
+//   render() {
+//     let crsBtn = ""
+//     if (this.props.showAppsBtn === "ShowAppBtn") {
+//       crsBtn = (
+//         <div className="appcontainer">
+//           < a title="Add Item" onClick={() => this.props.addItem()} >
+//             <img className="apps" title="Add Item" alt="Add Item" src="./appicons/ac_add.svg" />
+//           </a>
+//           <h4><p className="lato"><b>Add Item</b></p></h4>
+//           <div className="row btncontainer">
+//             <button className="col addbutton solidgreen m-1" onClick={() => this.props.addItem()}>
+//               Add Item
+//             </button>
+//           </div>
+//         </div>
+//       )
+//     } else {
+//       crsBtn = "";
+//     }
+//     return (
+//       <>
+//         {crsBtn}
+//       </>
+//     );
+//   }
+// }
+
 // class AppCatRes extends React.Component {
 //   constructor(props) {
 //     super(props);
@@ -5542,7 +5680,7 @@ class Cat extends React.Component {
   render() {
 
     let catBtn = ""
-    if (this.props.showAppsBtn === "ShowAppBtn" && this.props.title !== "Add Item") {
+    if (this.props.showAppsBtn === "ShowAppBtn") {
       catBtn = (
         <div className="appcontainer">
           <a title={this.props.title} onClick={() => this.props.catCont("catCont", this.props.pos)}>
@@ -5587,46 +5725,45 @@ class Credit extends React.Component {
 
   render() {
     let creditBtn = ""
-    if (this.props.showCreditBtn === "ShowCreditBtn" && this.props.title !== "Add Item") {
+    if (this.props.showAppsBtn === "ShowAppBtn") {
       creditBtn = (
-        <div className="appcontainer">
-          <a title={this.props.title} onClick={() => this.props.appVideo("AppVideo", this.props.pos)}>
-            {/* < a title={this.props.title} href={this.props.link} target="_blank"> */}
-            <img className="apps" title={this.props.title} alt={this.props.title} src={this.props.icon} />
-          </a>
-          <h4><p className="lato"><b>{this.props.title}</b></p></h4>
+        <>
+          <div className="row">
+            <button className="col extcredits green m-1"
+              onClick={() => {
+                window.open(this.props.link);
+              }}>
+              <h2><font color="white">
+                {this.props.title}
+              </font></h2>
+              <h5><font color="Chartreuse">{this.props.descr}</font></h5>
+            </button>
+          </div>
           <div className="row btncontainer">
-            <button className="col appbutton solidgreen m-1" onClick={() => this.props.appEditDel("AppEdit", this.props.pos)}>
+            <button className="col appbutton solidgreen m-1" onClick={() => this.props.crsEditDel("CrsEdit", this.props.pos)}>
               Edit
             </button>
-            <button className="col appbutton solidbrick m-1" onClick={() => this.props.appEditDel("AppDel", this.props.pos)}>
+            <button className="col-1 appbutton black m-1 pad01">
+              {this.props.pos + 1}
+            </button>
+            <button className="col appbutton solidbrick m-1" onClick={() => this.props.catEditDel("CrsDel", this.props.pos)}>
               Remove
             </button>
           </div>
-        </div>
-      )
-    } else if (this.props.title === "Add Item") {
-      creditBtn = (
-        <div className="appcontainer">
-          < a title={this.props.title} target="_blank" onClick={() => this.props.appAddItem("AddItem", this.props.pos)} >
-            <img className="apps" title={this.props.title} alt={this.props.title} src={this.props.icon} />
-          </a>
-          <h4><p className="lato"><b>{this.props.title}</b></p></h4>
-          <div className="row btncontainer">
-            <button className="col addbutton solidgreen m-1" onClick={() => this.props.appAddItem("AddItem", this.props.pos)}>
-              Add Item
-            </button>
-          </div>
-        </div>
+        </>
       )
     } else {
       creditBtn = (
-        <div className="appcontainer">
-          < a title={this.props.title} onClick={() => this.props.appVideo("AppVideo", this.props.pos)}>
-            {/* < a title={this.props.title} href={this.props.link} target="_blank" > */}
-            <img className="apps" title={this.props.title} alt={this.props.title} src={this.props.icon} />
-          </a>
-          <h4><p className="lato"><b>{this.props.title}</b></p></h4>
+        <div className="row">
+          <button className="col extcredits green m-1"
+            onClick={() => {
+              window.open(this.props.link);
+            }}>
+            <h2><font color="white">
+              {this.props.title}
+            </font></h2>
+            <h5><font color="Chartreuse">{this.props.descr}</font></h5>
+          </button>
         </div>
       )
     }
@@ -5670,15 +5807,15 @@ class Dropdown extends React.Component {
               // window.location = "./searching.php";
               this.props.search();
             }}>
-            Search
+            {spData.menuSearchLabel}
           </button>
-          {/* <button className="col menuItem blue m-1"
+          <button className="col menuItem blue m-1"
             onClick={() => {
               // window.location = "./credits.html";
               this.props.exCrsShow();
             }}>
-            Credits
-          </button> */}
+            {spData.menuCreditsLabel}
+          </button>
         </div>
       </div>
     );
