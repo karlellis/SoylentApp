@@ -34,9 +34,9 @@ var tempAppDescr = "...";
 var tempAppLink = "";
 var tempAppVideo = false;
 var tempCatTitle = "";
-var tempExCrsTitle = "";
-var tempExCrsLink = "";
-var tempExCrsDescr = "";
+var tempCrsTitle = "";
+var tempCrsLink = "";
+var tempCrsDescr = "";
 var tempAppCat = "";
 var tempIcon = "";
 var tempCatIcon = "";
@@ -64,7 +64,7 @@ var appDescr = {
   "icon": "",
   "descr": ""
 };
-var exCrsNewItem = {
+var CrsNewItem = {
   "title": "",
   "link": "",
   "descr": ""
@@ -699,8 +699,8 @@ const CatAddDialog = ({ handleSave, handleClose, catAddDiaShow, children, activi
   );
 };
 
-const ExCrsEditDialog = ({ handleSave, handleClose, exCrsEditDiaShow, children, activityChanged }) => {
-  const showHideClassName = exCrsEditDiaShow ? "modal display-block" : "modal display-none";
+const CrsEditDialog = ({ handleSave, handleClose, crsEditDiaShow, children, activityChanged }) => {
+  const showHideClassName = crsEditDiaShow ? "modal display-block" : "modal display-none";
   return (
     <div className={showHideClassName}>
       <section className="modal-main">
@@ -714,8 +714,8 @@ const ExCrsEditDialog = ({ handleSave, handleClose, exCrsEditDiaShow, children, 
   );
 };
 
-const ExCrsDelDialog = ({ handleSave, handleClose, exCrsDelDiaShow, children, activityChanged }) => {
-  const showHideClassName = exCrsDelDiaShow ? "modal display-block" : "modal display-none";
+const CrsDelDialog = ({ handleSave, handleClose, crsDelDiaShow, children, activityChanged }) => {
+  const showHideClassName = crsDelDiaShow ? "modal display-block" : "modal display-none";
   return (
     <div className={showHideClassName}>
       <section className="modal-main">
@@ -729,8 +729,8 @@ const ExCrsDelDialog = ({ handleSave, handleClose, exCrsDelDiaShow, children, ac
   );
 };
 
-const ExCrsAddDialog = ({ handleSave, handleClose, exCrsAddDiaShow, children, activityChanged }) => {
-  const showHideClassName = exCrsAddDiaShow ? "modal display-block" : "modal display-none";
+const CrsAddDialog = ({ handleSave, handleClose, crsAddDiaShow, children, activityChanged }) => {
+  const showHideClassName = crsAddDiaShow ? "modal display-block" : "modal display-none";
   return (
     <div className={showHideClassName}>
       <section className="modal-main">
@@ -946,6 +946,10 @@ class Main extends React.Component {
       catEditDiaShow: false,
       catDelDiaShow: false,
       catAddDiaShow: false,
+      crsEditDiaShow: false,
+      crsDelDiaShow: false,
+      crsAddDiaShow: false,
+      exCrsDiaShow: false,
       searchDiaShow: false,
       catDiaShow: false,
       appDescrDiaShow: false,
@@ -1109,6 +1113,8 @@ class Main extends React.Component {
         document.getElementById('appAddForm').reset();
         document.getElementById('catEditForm').reset();
         document.getElementById('catAddForm').reset();
+        document.getElementById('crsEditForm').reset();
+        document.getElementById('crsAddForm').reset();
         document.getElementById('backEditForm').reset();
         document.getElementById('clockForm').reset();
         document.getElementById('searchForm').reset();
@@ -1508,6 +1514,33 @@ class Main extends React.Component {
         fileImg = null;
         // console.log("Result=", user);
       });
+  }
+
+  saveCrs(url, op) {
+    if (url === "crs" && op === "add") {
+      CrsNewItem.title = temp2;
+      CrsNewItem.link = temp3;
+      CrsNewItem.descr = temp4;
+      arrayAdd = this.addAfter(array, inPos, CrsNewItem);
+      this.setState({ creditsItems: arrayAdd });
+      spData.creditsItems = arrayAdd;
+      arrayAdd = [];
+      temp2 = "";
+      temp3 = "";
+      temp4 = "";
+      temp = "";
+      CrsNewItem = {
+        "title": "",
+        "link": "",
+        "descr": ""
+      };
+    } else if (url === "crs" && op === "addlast") {
+      CrsNewItem.title = temp2;
+      CrsNewItem.link = temp3;
+      CrsNewItem.descr = temp4;
+      inPos = arrayLength;
+
+    }
   }
 
   hexToRgb(hex) {
@@ -1954,6 +1987,45 @@ class Main extends React.Component {
     });
   }
 
+  applyCrsAdd = () => {
+    array = [...this.state.creditsItems];
+    // console.log("Image: ", fileImg);
+    // console.log("Name: ", temp2);
+    // console.log("Link: ", temp3);
+    // console.log("Pos: ", temp);
+    tempIcon = "";
+    if (temp2 !== null && temp3 !== "" && temp4 !== "") {
+      // let dup = false;
+      // for (let i = 0; i < arrayLength; i++) {
+      //   if (array[i].title.toLowerCase() === temp2.toLowerCase()) {
+      // console.log("CAT Title Duplicated!!!");
+      //     dup = true;
+      //   }
+      // }
+      if (temp !== "") {
+        inPos = parseInt(temp) - 1;
+        // console.log("InPos: ", inPos);
+        if (inPos < arrayLength/*  && !dup */) {
+
+          this.saveCrs("crs", "add");
+        } else {
+          this.setState({ alShow: false });
+          this.setState({ alErrShow: true });
+        }
+      } else {
+        // if (!dup) {
+        this.saveCrs("crs", "addlast");
+        // } else {
+        //   this.setState({ alShow: false });
+        //   this.setState({ alErrShow: true });
+        // }
+      }
+    } else {
+      this.setState({ alShow: false });
+      this.setState({ alErrShow: true });
+    }
+  }
+
   saveBack = () => {
     // console.log("NoImage:", spData.noBackImage);
     // console.log("disField:", this.state.disField);
@@ -2312,6 +2384,18 @@ class Main extends React.Component {
       case "cat":
         this.setState({ catDiaShow: true });
         break;
+      case "crsEdit":
+        this.setState({ crsEditDiaShow: true });
+        break;
+      case "crsDel":
+        this.setState({ crsDelDiaShow: true });
+        break;
+      case "crsAdd":
+        this.setState({ crsAddDiaShow: true });
+        break;
+      case "exCrs":
+        this.setState({ exCrsDiaShow: true });
+        break;
       case "appOrCatAdd":
         this.setState({ aocDiaShow: true });
         break;
@@ -2320,9 +2404,6 @@ class Main extends React.Component {
         break;
       case "appDescr":
         this.setState({ appDescrDiaShow: true });
-        break;
-      case "exCrs":
-        this.setState({ exCrsDiaShow: true });
         break;
       case "search":
         this.setState({ searchDiaShow: true });
@@ -2444,6 +2525,20 @@ class Main extends React.Component {
         this.setState({ catAppItems: [] });
         // console.log("Current Cat: ", this.state.catSel);
         break;
+      case "crsedit":
+        this.setState({ crsEditDiaShow: false });
+        document.getElementById('crsEditForm').reset();
+        break;
+      case "crsdel":
+        this.setState({ crsDelDiaShow: false });
+        break;
+      case "crsadd":
+        this.setState({ crsAddDiaShow: false });
+        document.getElementById('crsAddForm').reset();
+        break;
+      case "excrs":
+        this.setState({ exCrsDiaShow: false });
+        break;
       case "video":
         this.setState({ appVideoDiaShow: false });
         this.stopVideos();
@@ -2453,9 +2548,6 @@ class Main extends React.Component {
         break;
       case "apporcat":
         this.setState({ aocDiaShow: false });
-        break;
-      case "excrs":
-        this.setState({ exCrsDiaShow: false });
         break;
       case "back":
         this.setState({ backEditDiaShow: false });
@@ -2601,15 +2693,33 @@ class Main extends React.Component {
     // console.log("CATAdding IT!");
   }
 
-  addCrsItem() {
+  crsAddItem() {
     // this.hideModal("apporcat");
     array = [...this.state.creditsItems];
     arrayLength = (array.length);
     temp4 = false;
     document.getElementById('clearcrspos').value = "";
     document.getElementById('clearcrstitle').value = "";
+    document.getElementById('clearcrslink').value = "";
+    document.getElementById('clearcrsdescr').value = "";
     this.showModal("crsAdd");
     // console.log("CATAdding IT!");
+  }
+
+  crsEditDel(op, pos) {
+    currPos = pos;
+    // console.log(op, " for ", pos);
+    array = [...this.state.creditsItems];
+    arrayLength = (array.length);
+    tempCrsTitle = array[pos].title;
+    // tempIcon = array[pos].icon;
+    // console.log("Cat name: ", tempCatTitle);
+    document.getElementById('clearcrsswitchpos').value = "";
+    if (op === "CrsEdit") {
+      this.showModal("crsEdit");
+    } else {
+      this.showModal("crsDel");
+    }
   }
 
   appAddItem(id, pos) {
@@ -4992,6 +5102,259 @@ class Main extends React.Component {
                     </div>
                   </div>
                 </AppOrCatDialog>
+
+                <CrsAddDialog crsAddDiaShow={this.state.crsAddDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("crsadd")} handleSave={this.applyCrsAdd}>
+                  <div className="modal-content noborder">
+                    <div className="modal-header">
+                      <h5 className="modal-title" >Add Credit</h5>
+                    </div>
+                    <div className="modal-body">
+                      <form id="crsAddForm">
+
+                        <div className="form-group">
+                          <div className="row text-center mb-1 m-auto">
+                            <div className="col">
+                              <div className="row border">
+                                <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
+                                  <label>Pos</label>
+                                </div>
+                                <div className="col d-flex flex-column justify-content-center align-items-center">
+                                  <input type="text" placeholder="Leave blank for last..." id="clearcrspos" className="form-control border-0"
+                                    onChange={e => {
+                                      temp = e.target.value;
+                                    }
+                                    } />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="form-group">
+                          <div className="row text-center mb-1 m-auto">
+                            <div className="col">
+                              <div className="row border">
+                                <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
+                                  <label>Title</label>
+                                </div>
+                                <div className="col d-flex flex-column justify-content-center align-items-center">
+                                  <input type="text" className="form-control border-0" id="clearcrstitle" onChange={e => temp2 = e.target.value} />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="form-group">
+                          <div className="row text-center mb-1 m-auto">
+                            <div className="col">
+                              <div className="row border">
+                                <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
+                                  <label>Link</label>
+                                </div>
+                                <div className="col d-flex flex-column justify-content-center align-items-center">
+                                  <input type="text" className="form-control border-0" id="clearcrslink" onChange={e => temp3 = e.target.value} />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="form-group">
+                          <div className="row text-center mb-1 m-auto">
+                            <div className="col">
+                              <div className="row border">
+                                <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
+                                  <label>Descr.</label>
+                                </div>
+                                <div className="col d-flex flex-column justify-content-center align-items-center">
+                                  <input type="text" className="form-control border-0" id="clearcrsdescr" onChange={e => temp4 = e.target.value} />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <Conferma alShow={this.state.alShow} handleClose={this.hideAlert}>
+                          <div className="row text-center pt-2">
+                            <div className="col">
+                              <div className="row">
+                                <section className="col pt-2 contenitore solidgreen latowhite d-flex justify-content-center align-items-center ">
+                                  <div>
+                                    <p className="norfont">Cat added!</p>
+                                  </div>
+                                </section>
+                              </div>
+                            </div>
+                          </div>
+                        </Conferma>
+                        <Upload upShow={this.state.upShow} handleClose={this.hideAlert}>
+                          <div className="row text-center pt-2">
+                            <div className="col">
+                              <div className="row">
+                                <section className="col pt-2 contenitore solidblue latowhite d-flex justify-content-center align-items-center ">
+                                  <div>
+                                    <p className="norfont">Loading data... Please wait.</p>
+                                  </div>
+                                </section>
+                              </div>
+                            </div>
+                          </div>
+                        </Upload>
+                        <Errore alErrShow={this.state.alErrShow} handleClose={this.hideAlert}>
+                          <div className="row text-center pt-2">
+                            <div className="col">
+                              <div className="row">
+                                <section className="col pt-2 contenitore brick latowhite d-flex justify-content-center align-items-center ">
+                                  <div>
+                                    <p className="norfont">Fill in all fields or CAT name duplicated!</p>
+                                  </div>
+                                </section>
+                              </div>
+                            </div>
+                          </div>
+                        </Errore>
+                      </form>
+                    </div>
+                  </div>
+                </CrsAddDialog>
+                <CrsEditDialog crsEditDiaShow={this.state.crsEditDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("catedit")} handleSave={this.applyCrsEdit}>
+                  <div className="modal-content noborder">
+                    <div className="modal-header">
+                      <h5 className="modal-title" >Edit Credit</h5>
+                    </div>
+                    <div className="modal-body">
+                      <form id="crsEditForm">
+
+                        <div className="form-group">
+                          <div className="row text-center mb-1 m-auto">
+                            <div className="col">
+                              <div className="row border">
+                                <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
+                                  <label>Pos</label>
+                                </div>
+                                <div className="col d-flex flex-column justify-content-center align-items-center">
+                                  <input type="text" placeholder={currPos + 1} id="clearcrsswitchpos" className="form-control border-0"
+                                    onChange={e => {
+                                      temp = e.target.value;
+                                    }
+                                    } />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="form-group">
+                          <div className="row text-center mb-1 m-auto">
+                            <div className="col">
+                              <div className="row border">
+                                <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
+                                  <label>Title</label>
+                                </div>
+                                <div className="col d-flex flex-column justify-content-center align-items-center">
+                                  <input type="text" className="form-control border-0" defaultValue={tempCrsTitle} onChange={e => temp2 = e.target.value} /*placeholder={tempAppTitle}*/ />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="form-group">
+                          <div className="row text-center mb-1 m-auto">
+                            <div className="col">
+                              <div className="row border">
+                                <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
+                                  <label>Link</label>
+                                </div>
+                                <div className="col d-flex flex-column justify-content-center align-items-center">
+                                  <input type="text" className="form-control border-0" defaultValue={tempCrsLink} onChange={e => temp3 = e.target.value} /*placeholder={tempAppLink}*/ />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="form-group">
+                          <div className="row text-center mb-1 m-auto">
+                            <div className="col">
+                              <div className="row border">
+                                <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
+                                  <label>Descr.</label>
+                                </div>
+                                <div className="col d-flex flex-column justify-content-center align-items-center">
+                                  <input type="text" className="form-control border-0" defaultValue={tempCrsDescr} onChange={e => temp4 = e.target.value} /*placeholder={tempAppTitle}*/ />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <Conferma alShow={this.state.alShow} handleClose={this.hideAlert}>
+                          <div className="row text-center pt-2">
+                            <div className="col">
+                              <div className="row">
+                                <section className="col pt-2 contenitore solidgreen latowhite d-flex justify-content-center align-items-center ">
+                                  <div>
+                                    <p className="norfont">Changes made!</p>
+                                  </div>
+                                </section>
+                              </div>
+                            </div>
+                          </div>
+                        </Conferma>
+                        <Upload upShow={this.state.upShow} handleClose={this.hideAlert}>
+                          <div className="row text-center pt-2">
+                            <div className="col">
+                              <div className="row">
+                                <section className="col pt-2 contenitore solidblue latowhite d-flex justify-content-center align-items-center ">
+                                  <div>
+                                    <p className="norfont">Loading data... Please wait.</p>
+                                  </div>
+                                </section>
+                              </div>
+                            </div>
+                          </div>
+                        </Upload>
+                        <Errore alErrShow={this.state.alErrShow} handleClose={this.hideAlert}>
+                          <div className="row text-center pt-2">
+                            <div className="col">
+                              <div className="row">
+                                <section className="col pt-2 contenitore solidblue latowhite d-flex justify-content-center align-items-center ">
+                                  <div>
+                                    <p className="norfont">No changes made or CAT name duplicated!</p>
+                                  </div>
+                                </section>
+                              </div>
+                            </div>
+                          </div>
+                        </Errore>
+                      </form>
+                    </div>
+                  </div>
+                </CrsEditDialog>
+                <CrsDelDialog crsDelDiaShow={this.state.crsDelDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("crsdel")} handleSave={this.applyCrsDel}>
+                  <div className="modal-content noborder">
+                    <div className="modal-header">
+                      <h5 className="modal-title" >Permanently delete {tempCrsTitle} credit?</h5>
+                    </div>
+                    <div className="modal-body">
+                      <Conferma alShow={this.state.alShow} handleClose={this.hideAlert}>
+                        <div className="row text-center pt-2">
+                          <div className="col">
+                            <div className="row">
+                              <section className="col pt-2 contenitore solidgreen latowhite d-flex justify-content-center align-items-center ">
+                                <div>
+                                  <p className="norfont">Category removed!</p>
+                                </div>
+                              </section>
+                            </div>
+                          </div>
+                        </div>
+                      </Conferma>
+                    </div>
+                  </div>
+                </CrsDelDialog>
 
                 <CrsDialog exCrsDiaShow={this.state.exCrsDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("excrs")} handleSave={this.applyAppEdit}>
                   <div className="modal-content noborder">
