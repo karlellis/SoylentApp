@@ -996,6 +996,8 @@ class Main extends React.Component {
     this.appOrCatItem = this.appOrCatItem.bind(this);
     this.catEditDel = this.catEditDel.bind(this);
     this.catAddItem = this.catAddItem.bind(this);
+    this.crsEditDel = this.crsEditDel.bind(this);
+    this.crsAddItem = this.crsAddItem.bind(this);
     this.appVideo = this.appVideo.bind(this);
     this.appDescr = this.appDescr.bind(this);
     this.catCont = this.catCont.bind(this);
