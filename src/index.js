@@ -1539,8 +1539,64 @@ class Main extends React.Component {
       CrsNewItem.link = temp3;
       CrsNewItem.descr = temp4;
       inPos = arrayLength;
-
+      arrayAdd = this.addAfter(array, inPos, CrsNewItem);
+      this.setState({ creditsItems: arrayAdd });
+      spData.creditsItems = arrayAdd;
+      arrayAdd = [];
+      temp2 = "";
+      temp3 = "";
+      temp4 = "";
+      temp = "";
+      CrsNewItem = {
+        "title": "",
+        "link": "",
+        "descr": ""
+      };
+    } else if (url === "crs" && op === "edit") {
+      if (temp2 !== "") {
+        array[currPos].title = temp2;
+      }
+      if (temp3 !== "") {
+        array[currPos].link = temp3;
+      }
+      if (temp4 !== "") {
+        array[currPos].descr = temp4;
+      }
+      if (temp !== "") {
+        // console.log("CurrPos: ", currPos);
+        // console.log("InPos: ", inPos);
+        CrsNewItem.title = array[currPos].title;
+        CrsNewItem.link = array[currPos].link;
+        CrsNewItem.descr = array[currPos].descr;
+        if (inPos > currPos) {
+          arrayAdd = this.addAfter(array, inPos + 1, CrsNewItem);
+          arrayAdd.splice(currPos, 1);
+          this.setState({ creditsItems: arrayAdd });
+          spData.creditsItems = arrayAdd;
+        } else {
+          arrayAdd = this.addAfter(array, inPos, CrsNewItem);
+          arrayAdd.splice(currPos + 1, 1);
+          this.setState({ creditsItems: arrayAdd });
+          spData.creditsItems = arrayAdd;
+        }
+      }
+      arrayAdd = [];
+      temp2 = "";
+      temp3 = "";
+      temp4 = "";
+      temp = "";
+      CrsNewItem = {
+        "title": "",
+        "link": "",
+        "descr": ""
+      };
+      this.setState({ upShow: false });
+      this.setState({ alShow: true });
+      this.setState({ alErrShow: false });
+      // console.log("Edit Cat correctly Uploaded!");
+      // this.saveFile(spData, "./api/img-upload.php", "config");
     }
+    this.saveFile(spData, "./api/img-upload.php", "config");
   }
 
   hexToRgb(hex) {
@@ -1987,14 +2043,47 @@ class Main extends React.Component {
     });
   }
 
+  applyCrsEdit = () => {
+    if (temp2 !== "" || temp3 !== "" || temp4 !== "" || temp !== "") {
+      // let dup = false;
+      // for (let i = 0; i < arrayLength; i++) {
+      //   if (array[i].title.toLowerCase() === temp2.toLowerCase()) {
+      // console.log("CAT Title Duplicated!!!");
+      //     dup = true;
+      //   }
+      // }
+      if (temp !== "") {
+        inPos = parseInt(temp) - 1;
+        // console.log("InPos: ", inPos);
+        if (inPos < arrayLength && inPos >= 0 && inPos !== currPos) {
+          this.saveCrs("crs", "edit");
+        } else {
+          this.setState({ alShow: false });
+          this.setState({ alErrShow: true });
+        }
+      } else {
+        // if (!dup) {
+        this.saveCrs("crs", "edit");
+        // } else {
+        //   this.setState({ alShow: false });
+        //   this.setState({ alErrShow: true });
+        // }
+      }
+    } else {
+      // console.log("fileImg - temp2 - temp are \"\"");
+      this.setState({ alShow: false });
+      this.setState({ alErrShow: true });
+    }
+  }
+
   applyCrsAdd = () => {
     array = [...this.state.creditsItems];
-    // console.log("Image: ", fileImg);
     // console.log("Name: ", temp2);
     // console.log("Link: ", temp3);
+    // console.log("Descr: ", temp4);
     // console.log("Pos: ", temp);
-    tempIcon = "";
-    if (temp2 !== null && temp3 !== "" && temp4 !== "") {
+    // tempIcon = "";
+    if (temp2 !== "" && temp3 !== "" && temp4 !== "") {
       // let dup = false;
       // for (let i = 0; i < arrayLength; i++) {
       //   if (array[i].title.toLowerCase() === temp2.toLowerCase()) {
@@ -2024,6 +2113,27 @@ class Main extends React.Component {
       this.setState({ alShow: false });
       this.setState({ alErrShow: true });
     }
+  }
+
+  applyCrsDel = () => {
+    var array = [...this.state.creditsItems];
+    var index = currPos;
+    // console.log("Index: ", temp);
+    if (index !== -1) {
+      array.splice(index, 1);
+      var noAddArray = [...array];
+      this.setState({ creditsItems: array });
+      spData.creditsItems = noAddArray;
+    }
+    currPos = "";
+    temp2 = "";
+    temp3 = "";
+    temp4 = "";
+    this.setState({ alShow: true });
+    this.saveFile(spData, "./api/img-upload.php", "config");
+    this.setState({
+      activityChanged: true
+    });
   }
 
   saveBack = () => {
@@ -5322,7 +5432,7 @@ class Main extends React.Component {
                               <div className="row">
                                 <section className="col pt-2 contenitore solidblue latowhite d-flex justify-content-center align-items-center ">
                                   <div>
-                                    <p className="norfont">No changes made or CAT name duplicated!</p>
+                                    <p className="norfont">No changes made!</p>
                                   </div>
                                 </section>
                               </div>
@@ -5345,7 +5455,7 @@ class Main extends React.Component {
                             <div className="row">
                               <section className="col pt-2 contenitore solidgreen latowhite d-flex justify-content-center align-items-center ">
                                 <div>
-                                  <p className="norfont">Category removed!</p>
+                                  <p className="norfont">Credit removed!</p>
                                 </div>
                               </section>
                             </div>
@@ -5357,210 +5467,6 @@ class Main extends React.Component {
                 </CrsDelDialog>
 
                 <CrsDialog exCrsDiaShow={this.state.exCrsDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("excrs")} handleSave={this.applyAppEdit}>
-                  <div className="modal-content noborder">
-                    <div className="modal-header-dark">
-                      <h5 className="modal-title-dark" >Credits</h5>
-                    </div>
-                    <div className="modal-body-dark darkBG text-center">
-                      {/* ---------------------- CREDIT ------------------------------- */}
-                      <div className="row">
-                        <button className="col extcredits green m-1"
-                          onClick={() => {
-                            window.open("https://infinityfree.net/");
-                          }}>
-                          <h2><font color="white">
-                            InfinityFree
-                          </font></h2>
-                          <h5><font color="Chartreuse">Free hosting with unlimited disk space and bandwidth.</font></h5>
-                        </button>
-                      </div>
-                      {/* ---------------------- END CREDIT ------------------------------- */}
-                      {/* ---------------------- CREDIT ------------------------------- */}
-                      <div className="row">
-                        <button className="col extcredits green m-1"
-                          onClick={() => {
-                            window.open("https://softwarelli.rf.gd/");
-                          }}>
-                          <h2><font color="white">
-                            Softwarelli
-                          </font></h2>
-                          <h5><font color="Chartreuse">Solo software gratuito. No ads.</font></h5>
-                        </button>
-                      </div>
-                      {/* ---------------------- END CREDIT ------------------------------- */}
-                      {/* ---------------------- CREDIT ------------------------------- */}
-                      <div className="row">
-                        <button className="col extcredits green m-1"
-                          onClick={() => {
-                            window.open("https://letsencrypt.org");
-                          }}>
-                          <h2><font color="white">
-                            Let's Encrypt
-                          </font></h2>
-                          <h5><font color="Chartreuse">Let's Encrypt is a free, automated, and open Certificate Authority.</font></h5>
-                        </button>
-                      </div>
-                      {/* ---------------------- END CREDIT ------------------------------- */}
-                      {/* ---------------------- CREDIT ------------------------------- */}
-                      <div className="row">
-                        <button className="col extcredits green m-1"
-                          onClick={() => {
-                            window.open("http://www.archive.org");
-                          }}>
-                          <h2><font color="white">
-                            Internet Archive
-                          </font></h2>
-                          <h5><font color="Chartreuse">Worldwide Public Domain Archive.</font></h5>
-                        </button>
-                      </div>
-                      {/* ---------------------- END CREDIT ------------------------------- */}
-                      {/* ---------------------- CREDIT ------------------------------- */}
-                      <div className="row">
-                        <button className="col extcredits green m-1"
-                          onClick={() => {
-                            window.open("http://www.icecast.org/");
-                          }}>
-                          <h2><font color="white">
-                            IceCast
-                          </font></h2>
-                          <h5><font color="Chartreuse">Icecast is free server software for streaming multimedia.</font></h5>
-                        </button>
-                      </div>
-                      {/* ---------------------- END CREDIT ------------------------------- */}
-                      {/* ---------------------- CREDIT ------------------------------- */}
-                      <div className="row">
-                        <button className="col extcredits green m-1"
-                          onClick={() => {
-                            window.open("https://nginx.org/");
-                          }}>
-                          <h2><font color="white">
-                            NGiNX
-                          </font></h2>
-                          <h5><font color="Chartreuse">nginx [engine x] is an HTTP, reverse, mail and TCP/UDP proxy server.</font></h5>
-                        </button>
-                      </div>
-                      {/* ---------------------- END CREDIT ------------------------------- */}
-                      {/* ---------------------- CREDIT ------------------------------- */}
-                      <div className="row">
-                        <button className="col extcredits green m-1"
-                          onClick={() => {
-                            window.open("https://sourceforge.net/projects/truckliststudio/");
-                          }}>
-                          <h2><font color="white">
-                            TrucklistStudio Home Page
-                          </font></h2>
-                          <h5><font color="Chartreuse">TrucklistStudio is a Media playlist broadcasting software.</font></h5>
-                        </button>
-                      </div>
-                      {/* ---------------------- END CREDIT ------------------------------- */}
-                      {/* ---------------------- CREDIT ------------------------------- */}
-                      <div className="row">
-                        <button className="col extcredits green m-1"
-                          onClick={() => {
-                            window.open("http://www.blender.org/");
-                          }}>
-                          <h2><font color="white">
-                            Blender
-                          </font></h2>
-                          <h5><font color="Chartreuse">Blender is the free open source 3D suite.</font></h5>
-                        </button>
-                      </div>
-                      {/* ---------------------- END CREDIT ------------------------------- */}
-                      {/* ---------------------- CREDIT ------------------------------- */}
-                      <div className="row">
-                        <button className="col extcredits green m-1"
-                          onClick={() => {
-                            window.open("http://www.videolan.org/");
-                          }}>
-                          <h2><font color="white">
-                            VLC
-                          </font></h2>
-                          <h5><font color="Chartreuse">VLC, open source multimedia player.</font></h5>
-                        </button>
-                      </div>
-                      {/* ---------------------- END CREDIT ------------------------------- */}
-                      {/* ---------------------- CREDIT ------------------------------- */}
-                      <div className="row">
-                        <button className="col extcredits green m-1"
-                          onClick={() => {
-                            window.open("http://www.gimp.org/");
-                          }}>
-                          <h2><font color="white">
-                            GIMP
-                          </font></h2>
-                          <h5><font color="Chartreuse">GNU Image Manipulation Program.</font></h5>
-                        </button>
-                      </div>
-                      {/* ---------------------- END CREDIT ------------------------------- */}
-                      {/* ---------------------- CREDIT ------------------------------- */}
-                      <div className="row">
-                        <button className="col extcredits green m-1"
-                          onClick={() => {
-                            window.open("https://inkscape.org");
-                          }}>
-                          <h2><font color="white">
-                            Inkscape
-                          </font></h2>
-                          <h5><font color="Chartreuse">Inkscape is a Free and open source vector graphics editor for GNU/Linux, Windows and macOS.</font></h5>
-                        </button>
-                      </div>
-                      {/* ---------------------- END CREDIT ------------------------------- */}
-                      {/* ---------------------- CREDIT ------------------------------- */}
-                      <div className="row">
-                        <button className="col extcredits green m-1"
-                          onClick={() => {
-                            window.open("http://www.ubuntu.com/");
-                          }}>
-                          <h2><font color="white">
-                            UBUNTU
-                          </font></h2>
-                          <h5><font color="Chartreuse">Linux Ubuntu Distro.</font></h5>
-                        </button>
-                      </div>
-                      {/* ---------------------- END CREDIT ------------------------------- */}
-                      {/* ---------------------- CREDIT ------------------------------- */}
-                      <div className="row">
-                        <button className="col extcredits green m-1"
-                          onClick={() => {
-                            window.open("https://www.jamendo.com/artist/368585/blue-daze");
-                          }}>
-                          <h2><font color="white">
-                            Blue Daze
-                          </font></h2>
-                          <h5><font color="Chartreuse">Thanks for the great Jingles.</font></h5>
-                        </button>
-                      </div>
-                      {/* ---------------------- END CREDIT ------------------------------- */}
-                      {/* ---------------------- CREDIT ------------------------------- */}
-                      <div className="row">
-                        <button className="col extcredits green m-1"
-                          onClick={() => {
-                            window.open("https://freedns.afraid.org/");
-                          }}>
-                          <h2><font color="white">
-                            FreeDNS
-                          </font></h2>
-                          <h5><font color="Chartreuse">Free DNS - Dynamic DNS - Static DNS subdomain and domain hosting</font></h5>
-                        </button>
-                      </div>
-                      {/* ---------------------- END CREDIT ------------------------------- */}
-                      {/* ---------------------- CREDIT ------------------------------- */}
-                      <div className="row">
-                        <button className="col extcredits green m-1"
-                          onClick={() => {
-                            window.open("https://github.com/video-dev/hls.js");
-                          }}>
-                          <h2><font color="white">
-                            hls.js
-                          </font></h2>
-                          <h5><font color="Chartreuse">hls.js is a JavaScript library which implements an HTTP Live Streaming client.
-                            It relies on HTML5 video and MediaSource Extensions for playback.</font></h5>
-                        </button>
-                      </div>
-                      {/* ---------------------- END CREDIT ------------------------------- */}
-                    </div>
-                  </div>
-
                   <div className="modal-content noBG">
                     <div className="modal-header darkBG">
                       <h5 className="modal-title latowhite" >{spData.menuCreditsLabel}</h5>
@@ -5576,7 +5482,7 @@ class Main extends React.Component {
                             )
                           })
                         }
-                        <AppAdd showAppsBtn={this.state.appsBtnShow} /* title={title} link={link} icon={icon} */ addItem={this.addCrsItem} />
+                        <AppAdd showAppsBtn={this.state.appsBtnShow} /* title={title} link={link} icon={icon} */ addItem={this.crsAddItem} />
                       </div>
                     </div>
                   </div>
