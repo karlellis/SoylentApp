@@ -17,9 +17,9 @@ var temp3 = "";
 var temp4 = "";
 var temp5 = "Root";
 var temp6 = "";
-var disable1 = false;
-var disable2 = false;
-var disable3 = false;
+var disable1 = "none";
+var disable2 = "none";
+var disable3 = "none";
 var noDescr = false;
 var tempID = 0;
 var tempColor = "#0077c8";
@@ -1041,7 +1041,9 @@ class Main extends React.Component {
           disField3: spData.noFootSubtitle2,
           disFieldC: spData.noFootCreditiTitle,
           disFieldC2: spData.noFootCreditiSubtitle,
-          disFieldC3: spData.noFootCreditiSubtitle2
+          disFieldC3: spData.noFootCreditiSubtitle2,
+          disFieldMS: spData.noMenuSearch,
+          disFieldMC: spData.noMenuCredits
 
         });
         document.title = spData.headTitle;
@@ -1763,6 +1765,16 @@ class Main extends React.Component {
   }
 
   saveMenu = () => {
+    if (disable1 !== "none") {
+      spData.noMenuSearch = disable1;
+      // if (disable1 === true)
+      // spData.footTitle = disable1 ? "":temp;
+    }
+    if (disable2 !== "none") {
+      spData.noMenuCredits = disable2;
+      // if (disable1 === true)
+      // spData.footTitle = disable1 ? "":temp;
+    }
     // console.log(tempColor);
     spData.menuColor = this.hexToRgb(tempColor) + ", " + tempOpacity + ")";
     spData.menuOpacity = parseFloat(tempOpacity.replace(/,/g, "."))/* .toFixed(1) */;
@@ -1770,31 +1782,51 @@ class Main extends React.Component {
     if (blockHide !== "none") {
       spData.menuShow = blockHide;
     }
+
     this.setState({ alShow: true });
     this.setState({ alErrShow: false });
     this.saveFile(spData, "./api/img-upload.php", "config");
     blockHide = "none";
+    disable1 = "none";
+    disable2 = "none";
   }
 
   saveInfo = () => {
+    if (disable1 !== "none") {
+      spData.noFootTitle = disable1;
+      spData.footTitle = spData.noFootTitle ? "" : spData.footTitle;
+      // if (disable1 === true)
+      // spData.footTitle = disable1 ? "":temp;
+    }
     if (temp !== "") {
       spData.footTitle = temp;
+      // spData.footTitle = temp;
     }
-    if (spData.noFootTitle === true) {
-      spData.footTitle = "";
+    // if (spData.noFootTitle === true) {
+    //   spData.footTitle = "";
+    // }
+    if (disable2 !== "none") {
+      spData.noFootSubtitle = disable2;
+      spData.footSubtitle = spData.noFootSubtitle ? "" : spData.footSubtitle;
+      // spData.footSubtitle = "";
     }
     if (temp2 !== "") {
       spData.footSubtitle = temp2;
     }
-    if (spData.noFootSubtitle === true) {
-      spData.footSubtitle = "";
+    // if (spData.noFootSubtitle === true) {
+    //   spData.footSubtitle = "";
+    // }
+    if (disable3 !== "none") {
+      spData.noFootSubtitle2 = disable3;
+      spData.footSubtitle2 = spData.noFootSubtitle2 ? "" : spData.footSubtitle2;
+      // spData.footSubtitle2 = "";
     }
     if (temp3 !== "") {
       spData.footSubtitle2 = temp3;
     }
-    if (spData.noFootSubtitle2 === true) {
-      spData.footSubtitle2 = "";
-    }
+    // if (spData.noFootSubtitle2 === true) {
+    //   spData.footSubtitle2 = "";
+    // }
     spData.footInfoColor = this.hexToRgb(tempColor) + ", " + tempOpacity + ")";
     spData.footInfoOpacity = parseFloat(tempOpacity.replace(/,/g, "."))/* .toFixed(1) */;
     // spData.footInfoColor = this.hexToRgb(tempColor) + ", 0.7)";
@@ -1807,6 +1839,9 @@ class Main extends React.Component {
     temp = "";
     temp2 = "";
     temp3 = "";
+    disable1 = "none";
+    disable2 = "none";
+    disable3 = "none";
     this.setState({ alShow: true });
     this.saveFile(spData, "./api/img-upload.php", "config");
   }
@@ -1845,9 +1880,9 @@ class Main extends React.Component {
     temp = "";
     temp2 = "";
     temp3 = "";
-    disable1 = false;
-    disable2 = false;
-    disable3 = false;
+    disable1 = "none";
+    disable2 = "none";
+    disable3 = "none";
     this.setState({ alShow: true });
     this.saveFile(spData, "./api/img-upload.php", "config");
   }
@@ -2059,6 +2094,8 @@ class Main extends React.Component {
         // console.log("InPos: ", inPos);
         if (inPos < arrayLength && inPos >= 0 && inPos !== currPos) {
           this.saveCrs("crs", "edit");
+          this.setState({ alShow: true });
+          this.setState({ alErrShow: false });
         } else {
           this.setState({ alShow: false });
           this.setState({ alErrShow: true });
@@ -2067,8 +2104,8 @@ class Main extends React.Component {
         // if (!dup) {
         this.saveCrs("crs", "edit");
         // } else {
-        //   this.setState({ alShow: false });
-        //   this.setState({ alErrShow: true });
+        this.setState({ alShow: true });
+        this.setState({ alErrShow: false });
         // }
       }
     } else {
@@ -2097,8 +2134,9 @@ class Main extends React.Component {
         inPos = parseInt(temp) - 1;
         // console.log("InPos: ", inPos);
         if (inPos < arrayLength/*  && !dup */) {
-
           this.saveCrs("crs", "add");
+          this.setState({ alShow: true });
+          this.setState({ alErrShow: false });
         } else {
           this.setState({ alShow: false });
           this.setState({ alErrShow: true });
@@ -2107,8 +2145,8 @@ class Main extends React.Component {
         // if (!dup) {
         this.saveCrs("crs", "addlast");
         // } else {
-        //   this.setState({ alShow: false });
-        //   this.setState({ alErrShow: true });
+        this.setState({ alShow: true });
+        this.setState({ alErrShow: false });
         // }
       }
     } else {
@@ -2569,6 +2607,14 @@ class Main extends React.Component {
         document.getElementById('titleForm').reset();
         break;
       case "menu":
+        this.setState({
+          disFieldMS: spData.noMenuSearch
+        });
+        this.setState({
+          disFieldMC: spData.noMenuCredits
+        });
+        disable1 = "none";
+        disable2 = "none";
         this.setState({ menuDiaShow: false });
         document.getElementById('menuForm').reset();
         break;
@@ -2585,6 +2631,18 @@ class Main extends React.Component {
         document.getElementById('logoForm').reset();
         break;
       case "info":
+        this.setState({
+          disField: spData.noFootTitle
+        });
+        this.setState({
+          disField2: spData.noFootSubtitle
+        });
+        this.setState({
+          disField3: spData.noFootSubtitle2
+        });
+        disable1 = "none";
+        disable2 = "none";
+        disable3 = "none";
         this.setState({ infoDiaShow: false });
         document.getElementById('infoForm').reset();
         break;
@@ -2598,7 +2656,9 @@ class Main extends React.Component {
         this.setState({
           disFieldC3: spData.noFootCreditiSubtitle2
         });
-
+        disable1 = "none";
+        disable2 = "none";
+        disable3 = "none";
         this.setState({ creditDiaShow: false });
         document.getElementById('creditForm').reset();
         break;
@@ -2824,6 +2884,8 @@ class Main extends React.Component {
     array = [...this.state.creditsItems];
     arrayLength = (array.length);
     tempCrsTitle = array[pos].title;
+    tempCrsLink = array[pos].link;
+    tempCrsDescr = array[pos].descr;
     // tempIcon = array[pos].icon;
     // console.log("Cat name: ", tempCatTitle);
     document.getElementById('clearcrsswitchpos').value = "";
@@ -3326,12 +3388,14 @@ class Main extends React.Component {
                                         this.setState({
                                           disFieldMS: true
                                         });
-                                        spData.noMenuSearch = true;
+                                        disable1 = true;
+                                        // spData.noMenuSearch = true;
                                       } else {
                                         this.setState({
                                           disFieldMS: false
                                         });
-                                        spData.noMenuSearch = false;
+                                        disable1 = false;
+                                        // spData.noMenuSearch = false;
                                       }
                                     }} />
                                     <span class="slider round" title="Hide"></span>
@@ -3359,12 +3423,14 @@ class Main extends React.Component {
                                         this.setState({
                                           disFieldMC: true
                                         });
-                                        spData.noMenuCredits = true;
+                                        disable2 = true;
+                                        // spData.noMenuCredits = true;
                                       } else {
                                         this.setState({
                                           disFieldMC: false
                                         });
-                                        spData.noMenuCredits = false;
+                                        disable2 = false;
+                                        // spData.noMenuCredits = false;
                                       }
                                     }} />
                                     <span class="slider round" title="Hide"></span>
@@ -3905,12 +3971,14 @@ class Main extends React.Component {
                                         this.setState({
                                           disField: true
                                         });
-                                        spData.noFootTitle = true;
+                                        disable1 = true;
+                                        // spData.noFootTitle = true;
                                       } else {
                                         this.setState({
                                           disField: false
                                         });
-                                        spData.noFootTitle = false;
+                                        disable1 = false;
+                                        // spData.noFootTitle = false;
                                       }
                                     }} />
                                     <span class="slider round" title="Hide"></span>
@@ -3938,12 +4006,14 @@ class Main extends React.Component {
                                         this.setState({
                                           disField2: true
                                         });
-                                        spData.noFootSubtitle = true;
+                                        disable2 = true;
+                                        // spData.noFootSubtitle = true;
                                       } else {
                                         this.setState({
                                           disField2: false
                                         });
-                                        spData.noFootSubtitle = false;
+                                        disable2 = false;
+                                        // spData.noFootSubtitle = false;
                                       }
                                     }} />
                                     <span class="slider round" title="Hide"></span>
@@ -3972,12 +4042,14 @@ class Main extends React.Component {
                                         this.setState({
                                           disField3: true
                                         });
-                                        spData.noFootSubtitle2 = true;
+                                        disable3 = true;
+                                        // spData.noFootSubtitle2 = true;
                                       } else {
                                         this.setState({
                                           disField3: false
                                         });
-                                        spData.noFootSubtitle2 = false;
+                                        disable3 = false;
+                                        // spData.noFootSubtitle2 = false;
                                       }
                                     }} />
                                     <span class="slider round" title="Hide"></span>
@@ -5215,6 +5287,28 @@ class Main extends React.Component {
                   </div>
                 </AppOrCatDialog>
 
+                <CrsDialog exCrsDiaShow={this.state.exCrsDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("excrs")} handleSave={this.applyAppEdit}>
+                  <div className="modal-content noBG">
+                    <div className="modal-header darkBG">
+                      <h5 className="modal-title latowhite" >{spData.menuCreditsLabel}</h5>
+                    </div>
+                    <div style={this.state.catStyle} className="modal-body-dark">
+                      <div className="textcenter">
+                        {
+                          this.state.creditsItems.map(({ id, title, link, descr, }, i) => {
+                            return (
+                              <Credit showAppsBtn={this.state.appsBtnShow} key={i} pos={i}
+                                title={title} link={link} descr={descr} crsEditDel={this.crsEditDel}
+                                crsAddItem={this.crsAddItem} />
+                            )
+                          })
+                        }
+                        <CrsAdd showAppsBtn={this.state.appsBtnShow} /* title={title} link={link} icon={icon} */ addItem={this.crsAddItem} />
+                      </div>
+                    </div>
+                  </div>
+
+                </CrsDialog>
                 <CrsAddDialog crsAddDiaShow={this.state.crsAddDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("crsadd")} handleSave={this.applyCrsAdd}>
                   <div className="modal-content noborder">
                     <div className="modal-header">
@@ -5330,7 +5424,7 @@ class Main extends React.Component {
                     </div>
                   </div>
                 </CrsAddDialog>
-                <CrsEditDialog crsEditDiaShow={this.state.crsEditDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("catedit")} handleSave={this.applyCrsEdit}>
+                <CrsEditDialog crsEditDiaShow={this.state.crsEditDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("crsedit")} handleSave={this.applyCrsEdit}>
                   <div className="modal-content noborder">
                     <div className="modal-header">
                       <h5 className="modal-title" >Edit Credit</h5>
@@ -5467,29 +5561,6 @@ class Main extends React.Component {
                     </div>
                   </div>
                 </CrsDelDialog>
-
-                <CrsDialog exCrsDiaShow={this.state.exCrsDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("excrs")} handleSave={this.applyAppEdit}>
-                  <div className="modal-content noBG">
-                    <div className="modal-header darkBG">
-                      <h5 className="modal-title latowhite" >{spData.menuCreditsLabel}</h5>
-                    </div>
-                    <div style={this.state.catStyle} className="modal-body-dark">
-                      <div className="textcenter">
-                        {
-                          this.state.creditsItems.map(({ id, title, link, descr, }, i) => {
-                            return (
-                              <Credit showAppsBtn={this.state.appsBtnShow} key={i} pos={i}
-                                title={title} link={link} descr={descr} crsEditDel={this.crsEditDel}
-                                crsAddItem={this.crsAddItem} />
-                            )
-                          })
-                        }
-                        <AppAdd showAppsBtn={this.state.appsBtnShow} /* title={title} link={link} icon={icon} */ addItem={this.crsAddItem} />
-                      </div>
-                    </div>
-                  </div>
-
-                </CrsDialog>
 
                 <SearchDialog searchDiaShow={this.state.searchDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("search")} handleSave={this.appSearch} handleReset={this.appSearchReset}>
                   <div className="modal-content noborder">
@@ -5799,36 +5870,47 @@ class AppAdd extends React.Component {
   }
 }
 
-// class CrsAdd extends React.Component {
-//   constructor(props) {
-//     super(props);
-//   }
-//   render() {
-//     let crsBtn = ""
-//     if (this.props.showAppsBtn === "ShowAppBtn") {
-//       crsBtn = (
-//         <div className="appcontainer">
-//           < a title="Add Item" onClick={() => this.props.addItem()} >
-//             <img className="apps" title="Add Item" alt="Add Item" src="./appicons/ac_add.svg" />
-//           </a>
-//           <h4><p className="lato"><b>Add Item</b></p></h4>
-//           <div className="row btncontainer">
-//             <button className="col addbutton solidgreen m-1" onClick={() => this.props.addItem()}>
-//               Add Item
-//             </button>
-//           </div>
-//         </div>
-//       )
-//     } else {
-//       crsBtn = "";
-//     }
-//     return (
-//       <>
-//         {crsBtn}
-//       </>
-//     );
-//   }
-// }
+class CrsAdd extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+  render() {
+    let crsBtn = ""
+    if (this.props.showAppsBtn === "ShowAppBtn") {
+      crsBtn = (
+
+        <div className="row">
+          <button className="col extcredits solidgreen m-1"
+            onClick={() => this.props.addItem()}>
+            <h2><font color="white">
+              +
+            </font></h2>
+            <h5><font color="Chartreuse">Add Item</font></h5>
+          </button>
+        </div>
+
+        // <div className="appcontainer">
+        //   < a title="Add Item" onClick={() => this.props.addItem()} >
+        //     <img className="apps" title="Add Item" alt="Add Item" src="./appicons/ac_add.svg" />
+        //   </a>
+        //   <h4><p className="lato"><b>Add Item</b></p></h4>
+        //   <div className="row btncontainer">
+        //     <button className="col addbutton solidgreen m-1" onClick={() => this.props.addItem()}>
+        //       Add Item
+        //     </button>
+        //   </div>
+        // </div>
+      )
+    } else {
+      crsBtn = "";
+    }
+    return (
+      <>
+        {crsBtn}
+      </>
+    );
+  }
+}
 
 // class AppCatRes extends React.Component {
 //   constructor(props) {
@@ -6017,7 +6099,7 @@ class Credit extends React.Component {
             <button className="col-1 appbutton black m-1 pad01">
               {this.props.pos + 1}
             </button>
-            <button className="col appbutton solidbrick m-1" onClick={() => this.props.catEditDel("CrsDel", this.props.pos)}>
+            <button className="col appbutton solidbrick m-1" onClick={() => this.props.crsEditDel("CrsDel", this.props.pos)}>
               Remove
             </button>
           </div>
@@ -6047,9 +6129,9 @@ class Credit extends React.Component {
 }
 
 class Dropdown extends React.Component {
-  // constructor(props) {
-  //   super(props);
-  // }
+  constructor(props) {
+    super(props);
+  }
 
   state = {
     isOpen: false
@@ -6058,6 +6140,8 @@ class Dropdown extends React.Component {
   toggleOpen = () => this.setState({ isOpen: !this.state.isOpen });
 
   render() {
+    const showHideSearch = /* this.props.menuSearch */ spData.noMenuSearch ? "d-none" : "d-block";
+    const showHideCredits = /* this.props.menuCredits */ spData.noMenuCredits ? "d-none" : "d-block";
     const menuClass = `dropdown-menu${this.state.isOpen ? " show d-flex flex-column justify-content-center align-items-center" : " disNone"}`;
     return (
       <div className="dropdown" onClick={this.toggleOpen}>
@@ -6073,14 +6157,14 @@ class Dropdown extends React.Component {
         </button>
         <div className={menuClass + " menuBG"} /* aria-labelledby="dropdownMenuButton" */>
 
-          <button className="col menuItem green m-1"
+          <button className={showHideSearch + " col menuItem green m-1"}
             onClick={() => {
               // window.location = "./searching.php";
               this.props.search();
             }}>
             {spData.menuSearchLabel}
           </button>
-          <button className="col menuItem blue m-1"
+          <button className={showHideCredits + " col menuItem blue m-1"}
             onClick={() => {
               // window.location = "./credits.html";
               this.props.exCrsShow();
