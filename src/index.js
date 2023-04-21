@@ -1770,11 +1770,15 @@ class Main extends React.Component {
       // if (disable1 === true)
       // spData.footTitle = disable1 ? "":temp;
     }
+    if (temp !== "")
+      spData.menuSearchLabel = temp;
     if (disable2 !== "none") {
       spData.noMenuCredits = disable2;
       // if (disable1 === true)
       // spData.footTitle = disable1 ? "":temp;
     }
+    if (temp2 !== "")
+      spData.menuCreditsLabel = temp2;
     // console.log(tempColor);
     spData.menuColor = this.hexToRgb(tempColor) + ", " + tempOpacity + ")";
     spData.menuOpacity = parseFloat(tempOpacity.replace(/,/g, "."))/* .toFixed(1) */;
@@ -1786,6 +1790,8 @@ class Main extends React.Component {
     this.setState({ alShow: true });
     this.setState({ alErrShow: false });
     this.saveFile(spData, "./api/img-upload.php", "config");
+    temp = "";
+    temp2 = "";
     blockHide = "none";
     disable1 = "none";
     disable2 = "none";
@@ -1794,7 +1800,7 @@ class Main extends React.Component {
   saveInfo = () => {
     if (disable1 !== "none") {
       spData.noFootTitle = disable1;
-      spData.footTitle = spData.noFootTitle ? "" : spData.footTitle;
+      // spData.footTitle = spData.noFootTitle ? "" : spData.footTitle;
       // if (disable1 === true)
       // spData.footTitle = disable1 ? "":temp;
     }
@@ -1807,7 +1813,7 @@ class Main extends React.Component {
     // }
     if (disable2 !== "none") {
       spData.noFootSubtitle = disable2;
-      spData.footSubtitle = spData.noFootSubtitle ? "" : spData.footSubtitle;
+      // spData.footSubtitle = spData.noFootSubtitle ? "" : spData.footSubtitle;
       // spData.footSubtitle = "";
     }
     if (temp2 !== "") {
@@ -1818,7 +1824,7 @@ class Main extends React.Component {
     // }
     if (disable3 !== "none") {
       spData.noFootSubtitle2 = disable3;
-      spData.footSubtitle2 = spData.noFootSubtitle2 ? "" : spData.footSubtitle2;
+      // spData.footSubtitle2 = spData.noFootSubtitle2 ? "" : spData.footSubtitle2;
       // spData.footSubtitle2 = "";
     }
     if (temp3 !== "") {
@@ -1847,27 +1853,25 @@ class Main extends React.Component {
   }
 
   saveCredit = () => {
+    if (disable1 !== "none") {
+      spData.noFootCreditiTitle = disable1;
+    }
     if (temp !== "") {
       spData.footCreditiTitle = temp;
     }
-    if (disable1 === true) {
-      spData.noFootCreditiTitle = true;
-      spData.footCreditiTitle = "";
+    if (disable2 !== "none") {
+      spData.noFootCreditiSubtitle = disable2;
     }
     if (temp2 !== "") {
       spData.footCreditiSubtitle = temp2;
     }
-    if (disable2 === true) {
-      spData.noFootCreditiSubtitle = true;
-      spData.footCreditiSubtitle = "";
+    if (disable3 !== "none") {
+      spData.noFootCreditiSubtitle2 = disable3;
     }
     if (temp3 !== "") {
       spData.footCreditiSubtitle2 = temp3;
     }
-    if (disable3 === true) {
-      spData.noFootCreditiSubtitle2 = true;
-      spData.footCreditiSubtitle2 = "";
-    }
+    
     spData.footCreditColor = this.hexToRgb(tempColor) + ", " + tempOpacity + ")";
     spData.footCreditOpacity = parseFloat(tempOpacity.replace(/,/g, "."))/* .toFixed(1) */;
     // spData.footCreditColor = this.hexToRgb(tempColor) + ", 0.7)";
@@ -3078,6 +3082,12 @@ class Main extends React.Component {
     const { disFieldMS: disFieldMS } = this.state;
     const { disFieldMC: disFieldMC } = this.state;
 
+    const showHideFootTitle = spData.noFootTitle ? "d-none" : "d-block";
+    const showHideFootSub = spData.noFootSubtitle ? "d-none" : "d-block";
+    const showHideFootSub2 = spData.noFootSubtitle2 ? "d-none" : "d-block";
+    const showHideCrTitle = spData.noFootCreditiTitle ? "d-none" : "d-block";
+    const showHideCrSub = spData.noFootCreditiSubtitle ? "d-none" : "d-block";
+    const showHideCrSub2 = spData.noFootCreditiSubtitle2 ? "d-none" : "d-block";
     let buttons = "";
 
     let menuButtons = (
@@ -3172,9 +3182,9 @@ class Main extends React.Component {
             {/* INFO */}
             <Info infoShow={this.state.infoShow} mainBtn={this.state.mainBtn}>
               <div>
-                <p className="medfont">{spData.footTitle}</p>
-                <p className="smallfont">{spData.footSubtitle}</p>
-                <p className="smallfont">{spData.footSubtitle2}</p>
+                <p className={showHideFootTitle + " medfont"}>{spData.footTitle}</p>
+                <p className={showHideFootSub + " smallfont"}>{spData.footSubtitle}</p>
+                <p className={showHideFootSub2 + " smallfont"}>{spData.footSubtitle2}</p>
               </div>
               <EditInfo editInfoShow={this.state.mainBtn} hidden={spData.infoShow}>
                 <button className="col flexbutton solidgreen m-1" onClick={() => this.footInfoEdit("InfoEdit")}>
@@ -3185,9 +3195,9 @@ class Main extends React.Component {
             {/* CREDITI */}
             <Crediti creditShow={this.state.creditShow} infoShow={this.state.infoShow} mainBtn={this.state.mainBtn}>
               <div>
-                <p className="smallfont">{spData.footCreditiTitle}</p>
-                <p className="smallfont"><i>{spData.footCreditiSubtitle}</i></p>
-                <p className="verysmallfont">{spData.footCreditiSubtitle2}</p>
+                <p className={showHideCrTitle + " smallfont"}>{spData.footCreditiTitle}</p>
+                <p className={showHideCrSub + " smallfont"}><i>{spData.footCreditiSubtitle}</i></p>
+                <p className={showHideCrSub2 + " verysmallfont"}>{spData.footCreditiSubtitle2}</p>
               </div>
               <EditCrediti editCreditShow={this.state.mainBtn} hidden={spData.creditShow}>
                 <button className="col flexbutton brick m-1" onClick={() => this.footCreditsEdit("CreditsEdit")}>
@@ -3414,7 +3424,7 @@ class Main extends React.Component {
                                   <label>Credit</label>
                                 </div>
                                 <div className="col d-flex flex-column justify-content-center align-items-center">
-                                  <input type="text" disabled={disFieldMC} className="form-control border-0" defaultValue={spData.menuCreditsLabel} onChange={e => temp = e.target.value} />
+                                  <input type="text" disabled={disFieldMC} className="form-control border-0" defaultValue={spData.menuCreditsLabel} onChange={e => temp2 = e.target.value} />
                                 </div>
                                 <div className="col-2 border d-flex flex-column justify-content-center align-items-center">
                                   <label className="switch">
@@ -5670,7 +5680,7 @@ class Main extends React.Component {
                       return (
                         <Cat showAppsBtn={this.state.appsBtnShow} key={i} pos={i}
                           title={title} icon={icon} catEditDel={this.catEditDel}
-                          catAddItem={this.catAddItem} catCont={this.catCont} />
+                          /* catAddItem={this.catAddItem} */ catCont={this.catCont} />
                       )
                     })
                   }
@@ -5680,7 +5690,7 @@ class Main extends React.Component {
                       return (
                         <App showAppsBtn={this.state.appsBtnShow} key={i} pos={i} id={id}
                           title={title} link={link} descr={descr} icon={icon} video={video}
-                          appEditDel={this.appEditDel} addItem={this.appOrCatItem} appVideo={this.appVideo} appDescr={this.appDescr} />
+                          appEditDel={this.appEditDel} /* addItem={this.appOrCatItem} */ appVideo={this.appVideo} appDescr={this.appDescr} />
                       )
                     })
                   }
