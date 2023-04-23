@@ -289,7 +289,7 @@ input:checked+.slider:before {
 	min-height: 1em;
 	max-height: 9em;
 	min-width: 1em;
-	max-width: 80%;
+	max-width: 90%;
 	position: sticky;
 	/*cursor: pointer; */
 	/* box-sizing: unset; */
@@ -722,5 +722,6 @@ label {
 	/* position: absolute;
 	top: 50px;
 	left: 25px; */
-	width: 5em;
+	max-width: 20ch;
+	max-height: 5rem;
 }
