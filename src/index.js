@@ -2377,7 +2377,7 @@ class Main extends React.Component {
   showModal(id) {
     switch (id) {
       case "title":
-        temp = spData.headTitle;
+        // temp = spData.headTitle;
         tempColW = spData.headColW;
         switch (spData.headColW) {
           case "col":
