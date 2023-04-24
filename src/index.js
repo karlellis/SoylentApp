@@ -461,15 +461,16 @@ const MenuDialog = ({ handleSave, handleClose, menuDiaShow, children }) => {
   );
 };
 
-const AppOrCatDialog = ({ handleApp, handleCat, aocDiaShow, children }) => {
+const AppOrCatDialog = ({ handleApp, handleCat, handleClose, aocDiaShow, children }) => {
   const showHideClassName = aocDiaShow ? "modal display-block" : "modal display-none";
   return (
     <div className={showHideClassName}>
       <section className="modal-main">
         {children}
         <div className="modal-footer">
-          <button type="button" className="btn btn-primary" data-dismiss="modal" onClick={handleApp}>App</button>
+          <button type="button" className="btn btn-primary" data-dismiss="modal" onClick={handleApp}>Item</button>
           <button type="button" className="btn btn-success" data-dismiss="modal" onClick={handleCat}>Category</button>
+          <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={handleClose}>Close</button>
         </div>
       </section>
     </div>
@@ -578,20 +579,20 @@ const CatDialog = ({ handleClose, catDiaShow, children, activityChanged }) => {
   );
 };
 
-const AppDescrDialog = ({ handleSave, handleClose, appDescrDiaShow, children, activityChanged }) => {
-  const showHideClassName = appDescrDiaShow ? "modal display-block" : "modal display-none";
-  return (
-    <div className={showHideClassName}>
-      <section className="descr-dark">
-        {children}
-        <div className="modal-footer-dark">
-          {/* <button type="button" className="btn btn-primary" onClick={handleSave}>Show</button> */}
-          <button type="button" /* disabled={(activityChanged) ? true : false} */ className="btn btn-secondary" data-dismiss="modal" onClick={handleClose}>Close</button>
-        </div>
-      </section>
-    </div>
-  );
-};
+// const AppDescrDialog = ({ handleSave, handleClose, appDescrDiaShow, children, activityChanged }) => {
+//   const showHideClassName = appDescrDiaShow ? "modal display-block" : "modal display-none";
+//   return (
+//     <div className={showHideClassName}>
+//       <section className="descr-dark">
+//         {children}
+//         <div className="modal-footer-dark">
+//           {/* <button type="button" className="btn btn-primary" onClick={handleSave}>Show</button> */}
+//           <button type="button" /* disabled={(activityChanged) ? true : false} */ className="btn btn-secondary" data-dismiss="modal" onClick={handleClose}>Close</button>
+//         </div>
+//       </section>
+//     </div>
+//   );
+// };
 
 const SearchDialog = ({ handleClose, handleSave, handleReset, searchDiaShow, children, activityChanged }) => {
   const showHideClassName = searchDiaShow ? "modal display-block" : "modal display-none";
@@ -1871,7 +1872,7 @@ class Main extends React.Component {
     if (temp3 !== "") {
       spData.footCreditiSubtitle2 = temp3;
     }
-    
+
     spData.footCreditColor = this.hexToRgb(tempColor) + ", " + tempOpacity + ")";
     spData.footCreditOpacity = parseFloat(tempOpacity.replace(/,/g, "."))/* .toFixed(1) */;
     // spData.footCreditColor = this.hexToRgb(tempColor) + ", 0.7)";
@@ -3144,7 +3145,7 @@ class Main extends React.Component {
             </Clock>
             {/* SETTINGS */}
             <Set clockShow={this.state.clockShow} mainBtn={this.state.mainBtn}>
-              <SettingsGear handleShowButtons={this.loginSession} />
+              <LoginGear handleShowButtons={this.loginSession} />
               <EditSet editSetShow={this.state.mainBtn}>
                 <button className="col latowhite flexbutton solidgreen m-1" onClick={() => this.loginEditSession("LoginEdit")}>
                   Edit Login
@@ -3164,7 +3165,7 @@ class Main extends React.Component {
           <div className="row">
             <button className="col button solidindaco m-1"
               onClick={() => this.appsButtonShow("ShowAppBtn")}>
-              App Settings
+              <SettingsGear></SettingsGear>
             </button>
             <button className="col button solidbrick m-1"
               onClick={() => this.backEdit()}>
@@ -3346,7 +3347,7 @@ class Main extends React.Component {
                 <MenuDialog menuDiaShow={this.state.menuDiaShow} handleClose={() => this.hideModal("menu")} handleSave={this.saveMenu}>
                   <div className="modal-content noborder">
                     <div className="modal-header">
-                      <h5 className="modal-title" >Menu wallpaper change</h5>
+                      <h5 className="modal-title" >Edit Menu</h5>
                     </div>
                     <div className="modal-body">
                       <form id="menuForm">
@@ -3511,7 +3512,7 @@ class Main extends React.Component {
                 <TitleDialog titleDiaShow={this.state.titleDiaShow} handleClose={() => this.hideModal("title")} handleSave={this.saveTitle}>
                   <div className="modal-content noborder">
                     <div className="modal-header">
-                      <h5 className="modal-title" >Change site name</h5>
+                      <h5 className="modal-title" >Edit Title (Site name)</h5>
                     </div>
                     <div className="modal-body">
                       <form id="titleForm" onKeyDown={this.handleKeyDown}>
@@ -3666,7 +3667,7 @@ class Main extends React.Component {
                 <ClockDialog clockDiaShow={this.state.clockDiaShow} handleClose={() => this.hideModal("clock")} handleSave={this.saveClock}>
                   <div className="modal-content noborder">
                     <div className="modal-header">
-                      <h5 className="modal-title" >Clock wallpaper change</h5>
+                      <h5 className="modal-title" >Edit Clock</h5>
                     </div>
                     <div className="modal-body">
                       <form id="clockForm">
@@ -3808,7 +3809,7 @@ class Main extends React.Component {
                 <LogoDialog logoDiaShow={this.state.logoDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("logo")} handleUpload={this.saveLogo}>
                   <div className="modal-content noborder">
                     <div className="modal-header">
-                      <h5 className="modal-title" >Change logo</h5>
+                      <h5 className="modal-title" >Edit Logo</h5>
                     </div>
                     <div className="modal-body">
                       <form id="logoForm">
@@ -3959,7 +3960,7 @@ class Main extends React.Component {
                 <InfoDialog infoDiaShow={this.state.infoDiaShow} handleClose={() => this.hideModal("info")} handleSave={this.saveInfo}>
                   <div className="modal-content noborder">
                     <div className="modal-header">
-                      <h5 className="modal-title" >Edit site info</h5>
+                      <h5 className="modal-title" >Edit Foot Info</h5>
                     </div>
                     <div className="modal-body">
                       <form id="infoForm">
@@ -4197,7 +4198,7 @@ class Main extends React.Component {
                 <CreditDialog creditDiaShow={this.state.creditDiaShow} handleClose={() => this.hideModal("credit")} handleSave={this.saveCredit}>
                   <div className="modal-content noborder">
                     <div className="modal-header">
-                      <h5 className="modal-title" >Edit site credits</h5>
+                      <h5 className="modal-title" >Edit Foot additional Info</h5>
                     </div>
                     <div className="modal-body">
                       <form id="creditForm">
@@ -4431,7 +4432,7 @@ class Main extends React.Component {
                 <BackEditDialog backEditDiaShow={this.state.backEditDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("back")} handleSave={this.saveBack}>
                   <div className="modal-content noborder">
                     <div className="modal-header">
-                      <h5 className="modal-title" >Edit Page Background</h5>
+                      <h5 className="modal-title" >Edit Backgrounds</h5>
                     </div>
                     <div className="modal-body">
                       <form id="backEditForm">
@@ -4476,7 +4477,7 @@ class Main extends React.Component {
                             <div className="col">
                               <div className="row border">
                                 <div className="col borderight pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
-                                  <label>Cats</label>
+                                  <label>Cats/Credit</label>
                                 </div>
                                 <div className="col d-flex flex-column justify-content-center align-items-center">
                                   <input type="file" disabled={disFieldBC} id="catfiles" className="form-control boxs border-0" name="icon" onChange={e => fileCatImg = e.target.files[0]} />
@@ -4557,7 +4558,7 @@ class Main extends React.Component {
                             <div className="col">
                               <div className="row border">
                                 <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
-                                  <label>Cat back color</label>
+                                  <label>Cat/Credit back color</label>
                                 </div>
                                 <div className="col d-flex flex-column justify-content-center align-items-center">
                                   <input type="color" className="form-control border-0 p-0" defaultValue={this.rgbToHex(spData.catColor)} onChange={e => tempCatColor = e.target.value} />
@@ -4652,7 +4653,7 @@ class Main extends React.Component {
                 <AppEditDialog appEditDiaShow={this.state.appEditDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("appedit")} handleSave={this.applyAppEdit}>
                   <div className="modal-content noborder">
                     <div className="modal-header">
-                      <h5 className="modal-title" >Edit Web Application</h5>
+                      <h5 className="modal-title" >Edit Item</h5>
                     </div>
                     <div className="modal-body">
                       <form id="appEditForm">
@@ -4847,7 +4848,7 @@ class Main extends React.Component {
                 <AppAddDialog appAddDiaShow={this.state.appAddDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("appadd")} handleSave={this.applyAppAdd}>
                   <div className="modal-content noborder">
                     <div className="modal-header">
-                      <h5 className="modal-title" >Add Web Application</h5>
+                      <h5 className="modal-title" >Add Item</h5>
                     </div>
                     <div className="modal-body">
                       <form id="appAddForm">
@@ -5054,7 +5055,7 @@ class Main extends React.Component {
                 <AppDelDialog appDelDiaShow={this.state.appDelDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("appdel")} handleSave={this.applyAppDel}>
                   <div className="modal-content noborder">
                     <div className="modal-header">
-                      <h5 className="modal-title" >Permanently delete {tempAppTitle} application?</h5>
+                      <h5 className="modal-title" >Permanently delete {tempAppTitle} item?</h5>
                     </div>
                     <div className="modal-body">
                       <Conferma alShow={this.state.alShow} handleClose={this.hideAlert}>
@@ -5289,10 +5290,10 @@ class Main extends React.Component {
                     </div>
                   </div>
                 </CatDelDialog>
-                <AppOrCatDialog aocDiaShow={this.state.aocDiaShow} activityChanged={this.state.activityChanged} handleApp={this.appAddItem} handleCat={this.catAddItem}>
+                <AppOrCatDialog aocDiaShow={this.state.aocDiaShow} activityChanged={this.state.activityChanged} handleApp={this.appAddItem} handleCat={this.catAddItem} handleClose={() => this.hideModal("apporcat")}>
                   <div className="modal-content noborder">
                     <div className="modal-header">
-                      <h5 className="modal-title" >Add App or Category?</h5>
+                      <h5 className="modal-title" >Add Item or Category?</h5>
                     </div>
                   </div>
                 </AppOrCatDialog>
@@ -5656,7 +5657,7 @@ class Main extends React.Component {
                     </div>
                   </div>
                 </AppVideoDialog>
-                <AppDescrDialog appDescrDiaShow={this.state.appDescrDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("appdescr")} handleSave={this.applyAppEdit}>
+                {/* <AppDescrDialog appDescrDiaShow={this.state.appDescrDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("appdescr")} handleSave={this.applyAppEdit}>
                   <div className="modal-content darkBG">
                     <div className="modal-header-dark">
                       <h5 className="modal-title-dark" >"{tempAppTitle}"</h5>
@@ -5667,7 +5668,7 @@ class Main extends React.Component {
                       </center>
                     </div>
                   </div>
-                </AppDescrDialog>
+                </AppDescrDialog> */}
                 <div className="stickytop">
                   {head}
                   {buttons}
@@ -5712,7 +5713,7 @@ class Main extends React.Component {
   }
 }
 
-class SettingsGear extends React.Component {
+class LoginGear extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -5721,12 +5722,12 @@ class SettingsGear extends React.Component {
       this.props.handleShowButtons(true);
     }
     return (
-      <img className="gear mt-2 mb-2" alt="Settings Mode" src="./img/gears.svg" onClick={() => gearClick()} />
+      <img className="gear mt-2 mb-2" alt="Login" src="./img/gears.svg" onClick={() => gearClick()} />
     );
   }
 }
 
-class OverlayImg extends React.Component {
+class SettingsGear extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -5735,15 +5736,26 @@ class OverlayImg extends React.Component {
     //   this.props.handleShowButtons(true);
     // }
     return (
+      <img className="gear mt-2 mb-2" alt="Settings" title="Settings" src="./img/gear.svg" /* onClick={() => gearClick()} */ />
+    );
+  }
+}
+
+class OverlayImg extends React.Component {
+  // constructor(props) {
+  //   super(props);
+  // }
+  render() {
+    return (
       <img className="overlay" alt="Overlay" src={spData.LogoIcon} /* onClick={() => gearClick()}  */ />
     );
   }
 }
 
 class RedPoint extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+  // constructor(props) {
+  //   super(props);
+  // }
   render() {
     return (
       <img className="gear mt-2 mb-2" title="Hidden" alt="Hidden" src="./img/point.svg" />
@@ -5892,24 +5904,13 @@ class CrsAdd extends React.Component {
         <div className="row">
           <button className="col extcredits solidgreen m-1"
             onClick={() => this.props.addItem()}>
-            <h2><font color="white">
+            <b><h2><font color="white">
               +
-            </font></h2>
+            </font></h2></b>
             <h5><font color="Chartreuse">Add Item</font></h5>
           </button>
         </div>
 
-        // <div className="appcontainer">
-        //   < a title="Add Item" onClick={() => this.props.addItem()} >
-        //     <img className="apps" title="Add Item" alt="Add Item" src="./appicons/ac_add.svg" />
-        //   </a>
-        //   <h4><p className="lato"><b>Add Item</b></p></h4>
-        //   <div className="row btncontainer">
-        //     <button className="col addbutton solidgreen m-1" onClick={() => this.props.addItem()}>
-        //       Add Item
-        //     </button>
-        //   </div>
-        // </div>
       )
     } else {
       crsBtn = "";
