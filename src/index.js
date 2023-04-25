@@ -21,7 +21,7 @@ var disable1 = "none";
 var disable2 = "none";
 var disable3 = "none";
 var noDescr = false;
-var tempID = 0;
+// var tempID = 0;
 var tempColor = "#0077c8";
 var tempOpacity = 0.7;
 var tempOpacity1 = 0.7;
@@ -37,7 +37,7 @@ var tempCatTitle = "";
 var tempCrsTitle = "";
 var tempCrsLink = "";
 var tempCrsDescr = "";
-var tempAppCat = "";
+// var tempAppCat = "";
 var tempIcon = "";
 var tempCatIcon = "";
 var arrayLength = 0;
@@ -805,43 +805,43 @@ const LogoDialog = ({ handleUpload, handleClose, logoDiaShow, children, activity
   );
 };
 
-const Accordion = ({ title, content }) => {
-  const [isActive, setIsActive] = useState(false);
+// const Accordion = ({ title, content }) => {
+//   const [isActive, setIsActive] = useState(false);
 
-  return (
-    <>
-      <h4>
-        <div className="row lato text-center m-auto">
-          <div className="col">
-            <div className="row">
-              <div className="col d-flex flex-column justify-content-center align-items-center">
-                <b>{title}</b>
-              </div>
-              <div className="col-2 borderleft pointer d-flex flex-column justify-content-center align-items-center"
-                onClick={() => setIsActive(!isActive)}>
-                <b>{isActive ? '-' : '+'}</b>
-                {/* <b>+</b> */}
-              </div>
-            </div>
-          </div>
-          {/* {isActive && <i className="row smallfonts">{content}</i>} */}
-        </div>
-      </h4>
-      <div className="row smallfonts lato text-center m-auto">
-        {isActive && <i>{content}</i>}
-      </div>
-    </>
+//   return (
+//     <>
+//       <h4>
+//         <div className="row lato text-center m-auto">
+//           <div className="col">
+//             <div className="row">
+//               <div className="col d-flex flex-column justify-content-center align-items-center">
+//                 <b>{title}</b>
+//               </div>
+//               <div className="col-2 borderleft pointer d-flex flex-column justify-content-center align-items-center"
+//                 onClick={() => setIsActive(!isActive)}>
+//                 <b>{isActive ? '-' : '+'}</b>
+//                 {/* <b>+</b> */}
+//               </div>
+//             </div>
+//           </div>
+//           {/* {isActive && <i className="row smallfonts">{content}</i>} */}
+//         </div>
+//       </h4>
+//       <div className="row smallfonts lato text-center m-auto">
+//         {isActive && <i>{content}</i>}
+//       </div>
+//     </>
 
 
-    // <div>
-    //   <div onClick={() => setIsActive(!isActive)}>
-    //     <div className="lato pointer"><h4><b>{title}</b></h4></div>
-    //     <div>{isActive ? '-' : '+'}</div>
-    //   </div>
-    //   {isActive && <div className="lato smallfonts"><i>{content}</i></div>}
-    // </div>
-  );
-};
+//     // <div>
+//     //   <div onClick={() => setIsActive(!isActive)}>
+//     //     <div className="lato pointer"><h4><b>{title}</b></h4></div>
+//     //     <div>{isActive ? '-' : '+'}</div>
+//     //   </div>
+//     //   {isActive && <div className="lato smallfonts"><i>{content}</i></div>}
+//     // </div>
+//   );
+// };
 
 async function fetchUpPHP(file, url, key) {
   // console.log("fetchUpPHP...");
@@ -1000,7 +1000,7 @@ class Main extends React.Component {
     this.crsEditDel = this.crsEditDel.bind(this);
     this.crsAddItem = this.crsAddItem.bind(this);
     this.appVideo = this.appVideo.bind(this);
-    this.appDescr = this.appDescr.bind(this);
+    // this.appDescr = this.appDescr.bind(this);
     this.catCont = this.catCont.bind(this);
     this.resAppVideo = this.resAppVideo.bind(this);
     this.catAppVideo = this.catAppVideo.bind(this);
@@ -1013,9 +1013,9 @@ class Main extends React.Component {
     this.hideModal = this.hideModal.bind(this);
     this.loginSession = this.loginSession.bind(this);
     this.loginEditSession = this.loginEditSession.bind(this);
-    this.saveTitle = this.saveTitle.bind(this);
-    this.loginCheck = this.loginCheck.bind(this);
-    this.loginEditCheck = this.loginEditCheck.bind(this);
+    // this.saveTitle = this.saveTitle.bind(this);
+    // this.loginCheck = this.loginCheck.bind(this);
+    // this.loginEditCheck = this.loginEditCheck.bind(this);
   }
 
   componentDidMount() {
@@ -1263,7 +1263,7 @@ class Main extends React.Component {
           temp5 = tempCatTitle;
           temp6 = "";
           // noDescr = false;
-          tempID = 0;
+          // tempID = 0;
           appNewItem = {
             "title": "",
             "link": "",
@@ -1311,7 +1311,7 @@ class Main extends React.Component {
           temp4 = "";
           temp5 = tempCatTitle;
           temp6 = "";
-          tempID = 0;
+          // tempID = 0;
           appNewItem = {
             "title": "",
             "link": "",
@@ -1356,7 +1356,7 @@ class Main extends React.Component {
           // });
           temp5 = tempCatTitle;
           temp6 = "";
-          tempID = 0;
+          // tempID = 0;
           appNewItem = {
             "title": "",
             "link": "",
@@ -2557,9 +2557,9 @@ class Main extends React.Component {
       case "appVideo":
         this.setState({ appVideoDiaShow: true });
         break;
-      case "appDescr":
-        this.setState({ appDescrDiaShow: true });
-        break;
+      // case "appDescr":
+      //   this.setState({ appDescrDiaShow: true });
+      //   break;
       case "search":
         this.setState({ searchDiaShow: true });
         break;
@@ -2720,9 +2720,9 @@ class Main extends React.Component {
         this.setState({ appVideoDiaShow: false });
         this.stopVideos();
         break;
-      case "appdescr":
-        this.setState({ appDescrDiaShow: false });
-        break;
+      // case "appdescr":
+      //   this.setState({ appDescrDiaShow: false });
+      //   break;
       case "apporcat":
         this.setState({ aocDiaShow: false });
         break;
@@ -2753,9 +2753,9 @@ class Main extends React.Component {
     });
   };
 
-  hideAlert = () => {
-    this.setState({ alShow: false });
-  };
+  // hideAlert = () => {
+  //   this.setState({ alShow: false });
+  // };
 
   appsButtonShow(id) {
     if (this.state.appsBtnShow !== id) {
@@ -2969,18 +2969,18 @@ class Main extends React.Component {
     }
   }
 
-  appDescr(name, id) {
-    temp3 = id;
-    array = [...this.state.appItems];
-    for (let i = 0; i < array.length; i++) {
-      if (array[i].id === id) {
-        tempAppDescr = array[i].descr;
-        tempAppTitle = array[i].title;
-      }
-    }
-    // console.log(id, " for ", pos);
-    this.showModal("appDescr");
-  }
+  // appDescr(name, id) {
+  //   temp3 = id;
+  //   array = [...this.state.appItems];
+  //   for (let i = 0; i < array.length; i++) {
+  //     if (array[i].id === id) {
+  //       tempAppDescr = array[i].descr;
+  //       tempAppTitle = array[i].title;
+  //     }
+  //   }
+  //   // console.log(id, " for ", pos);
+  //   this.showModal("appDescr");
+  // }
 
   appVideo(name, id) {
     temp3 = id;
@@ -3065,7 +3065,6 @@ class Main extends React.Component {
     if (e.keyCode === 13) {
       e.preventDefault();
     }
-
   }
 
   render() {
@@ -3258,7 +3257,7 @@ class Main extends React.Component {
                           </div>
                         </div>
 
-                        <Conferma alShow={this.state.alShow} handleClose={this.hideAlert}>
+                        <Conferma alShow={this.state.alShow} /* handleClose={this.hideAlert} */>
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
@@ -3314,7 +3313,7 @@ class Main extends React.Component {
                           </div>
                         </div>
 
-                        <Conferma alShow={this.state.alShow} handleClose={this.hideAlert}>
+                        <Conferma alShow={this.state.alShow} /* handleClose={this.hideAlert} */>
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
@@ -3327,7 +3326,7 @@ class Main extends React.Component {
                             </div>
                           </div>
                         </Conferma>
-                        <Errore alErrShow={this.state.alErrShow} handleClose={this.hideAlert}>
+                        <Errore alErrShow={this.state.alErrShow} /* handleClose={this.hideAlert} */>
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
@@ -3479,7 +3478,7 @@ class Main extends React.Component {
                           </div>
                         </div>
 
-                        <Conferma alShow={this.state.alShow} handleClose={this.hideAlert}>
+                        <Conferma alShow={this.state.alShow} /* handleClose={this.hideAlert} */>
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
@@ -3492,7 +3491,7 @@ class Main extends React.Component {
                             </div>
                           </div>
                         </Conferma>
-                        <Errore alErrShow={this.state.alErrShow} handleClose={this.hideAlert}>
+                        <Errore alErrShow={this.state.alErrShow} /* handleClose={this.hideAlert} */>
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
@@ -3634,7 +3633,7 @@ class Main extends React.Component {
                           </div>
                         </div>
 
-                        <Conferma alShow={this.state.alShow} handleClose={this.hideAlert}>
+                        <Conferma alShow={this.state.alShow} /* handleClose={this.hideAlert} */>
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
@@ -3647,7 +3646,7 @@ class Main extends React.Component {
                             </div>
                           </div>
                         </Conferma>
-                        <Errore alErrShow={this.state.alErrShow} handleClose={this.hideAlert}>
+                        <Errore alErrShow={this.state.alErrShow} /* handleClose={this.hideAlert} */>
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
@@ -3776,7 +3775,7 @@ class Main extends React.Component {
                           </div>
                         </div>
 
-                        <Conferma alShow={this.state.alShow} handleClose={this.hideAlert}>
+                        <Conferma alShow={this.state.alShow} /* handleClose={this.hideAlert} */>
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
@@ -3789,7 +3788,7 @@ class Main extends React.Component {
                             </div>
                           </div>
                         </Conferma>
-                        <Errore alErrShow={this.state.alErrShow} handleClose={this.hideAlert}>
+                        <Errore alErrShow={this.state.alErrShow} /* handleClose={this.hideAlert} */>
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
@@ -3927,7 +3926,7 @@ class Main extends React.Component {
                           </div>
                         </div>
 
-                        <Conferma alShow={this.state.alShow} handleClose={this.hideAlert}>
+                        <Conferma alShow={this.state.alShow} /* handleClose={this.hideAlert} */>
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
@@ -3940,7 +3939,7 @@ class Main extends React.Component {
                             </div>
                           </div>
                         </Conferma>
-                        <Upload upShow={this.state.upShow} handleClose={this.hideAlert}>
+                        <Upload upShow={this.state.upShow} /* handleClose={this.hideAlert} */>
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
@@ -4178,7 +4177,7 @@ class Main extends React.Component {
                           </div>
                         </div>
 
-                        <Conferma alShow={this.state.alShow} handleClose={this.hideAlert}>
+                        <Conferma alShow={this.state.alShow} /* handleClose={this.hideAlert} */>
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
@@ -4412,7 +4411,7 @@ class Main extends React.Component {
                             </div>
                           </div>
                         </div>
-                        <Conferma alShow={this.state.alShow} handleClose={this.hideAlert}>
+                        <Conferma alShow={this.state.alShow} /* handleClose={this.hideAlert} */>
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
@@ -4599,7 +4598,7 @@ class Main extends React.Component {
                           </div>
                         </div>
 
-                        <Conferma alShow={this.state.alShow} handleClose={this.hideAlert}>
+                        <Conferma alShow={this.state.alShow} /* handleClose={this.hideAlert} */>
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
@@ -4612,7 +4611,7 @@ class Main extends React.Component {
                             </div>
                           </div>
                         </Conferma>
-                        <Upload upShow={this.state.upShow} handleClose={this.hideAlert}>
+                        <Upload upShow={this.state.upShow} /* handleClose={this.hideAlert} */>
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
@@ -4641,7 +4640,7 @@ class Main extends React.Component {
                             return (
                               <App showAppsBtn={this.state.appsBtnShow} key={i} pos={i} id={id}
                                 title={title} link={link} descr={descr} icon={icon} video={video}
-                                appVideo={this.catAppVideo} appEditDel={this.appEditDel} appDescr={this.appDescr} />
+                                appVideo={this.catAppVideo} appEditDel={this.appEditDel} /* appDescr={this.appDescr} */ />
                             )
                           })
                         }
@@ -4802,7 +4801,7 @@ class Main extends React.Component {
                           </div>
                         </div>
 
-                        <Conferma alShow={this.state.alShow} handleClose={this.hideAlert}>
+                        <Conferma alShow={this.state.alShow} /* handleClose={this.hideAlert} */>
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
@@ -4815,7 +4814,7 @@ class Main extends React.Component {
                             </div>
                           </div>
                         </Conferma>
-                        <Upload upShow={this.state.upShow} handleClose={this.hideAlert}>
+                        <Upload upShow={this.state.upShow} /* handleClose={this.hideAlert} */>
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
@@ -4828,7 +4827,7 @@ class Main extends React.Component {
                             </div>
                           </div>
                         </Upload>
-                        <Errore alErrShow={this.state.alErrShow} handleClose={this.hideAlert}>
+                        <Errore alErrShow={this.state.alErrShow} /* handleClose={this.hideAlert} */>
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
@@ -5009,7 +5008,7 @@ class Main extends React.Component {
                           </div>
                         </div>
 
-                        <Conferma alShow={this.state.alShow} handleClose={this.hideAlert}>
+                        <Conferma alShow={this.state.alShow} /* handleClose={this.hideAlert} */>
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
@@ -5022,7 +5021,7 @@ class Main extends React.Component {
                             </div>
                           </div>
                         </Conferma>
-                        <Upload upShow={this.state.upShow} handleClose={this.hideAlert}>
+                        <Upload upShow={this.state.upShow} /* handleClose={this.hideAlert} */>
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
@@ -5035,7 +5034,7 @@ class Main extends React.Component {
                             </div>
                           </div>
                         </Upload>
-                        <Errore alErrShow={this.state.alErrShow} handleClose={this.hideAlert}>
+                        <Errore alErrShow={this.state.alErrShow} /* handleClose={this.hideAlert} */>
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
@@ -5058,7 +5057,7 @@ class Main extends React.Component {
                       <h5 className="modal-title" >Permanently delete {tempAppTitle} item?</h5>
                     </div>
                     <div className="modal-body">
-                      <Conferma alShow={this.state.alShow} handleClose={this.hideAlert}>
+                      <Conferma alShow={this.state.alShow} /* handleClose={this.hideAlert} */>
                         <div className="row text-center pt-2">
                           <div className="col">
                             <div className="row">
@@ -5128,7 +5127,7 @@ class Main extends React.Component {
                           </div>
                         </div>
 
-                        <Conferma alShow={this.state.alShow} handleClose={this.hideAlert}>
+                        <Conferma alShow={this.state.alShow} /* handleClose={this.hideAlert} */>
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
@@ -5141,7 +5140,7 @@ class Main extends React.Component {
                             </div>
                           </div>
                         </Conferma>
-                        <Upload upShow={this.state.upShow} handleClose={this.hideAlert}>
+                        <Upload upShow={this.state.upShow} /* handleClose={this.hideAlert} */>
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
@@ -5154,7 +5153,7 @@ class Main extends React.Component {
                             </div>
                           </div>
                         </Upload>
-                        <Errore alErrShow={this.state.alErrShow} handleClose={this.hideAlert}>
+                        <Errore alErrShow={this.state.alErrShow} /* handleClose={this.hideAlert} */>
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
@@ -5225,7 +5224,7 @@ class Main extends React.Component {
                           </div>
                         </div>
 
-                        <Conferma alShow={this.state.alShow} handleClose={this.hideAlert}>
+                        <Conferma alShow={this.state.alShow} /* handleClose={this.hideAlert} */>
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
@@ -5238,7 +5237,7 @@ class Main extends React.Component {
                             </div>
                           </div>
                         </Conferma>
-                        <Upload upShow={this.state.upShow} handleClose={this.hideAlert}>
+                        <Upload upShow={this.state.upShow} /* handleClose={this.hideAlert} */>
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
@@ -5251,7 +5250,7 @@ class Main extends React.Component {
                             </div>
                           </div>
                         </Upload>
-                        <Errore alErrShow={this.state.alErrShow} handleClose={this.hideAlert}>
+                        <Errore alErrShow={this.state.alErrShow} /* handleClose={this.hideAlert} */>
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
@@ -5274,7 +5273,7 @@ class Main extends React.Component {
                       <h5 className="modal-title" >Permanently delete {tempCatTitle} category?</h5>
                     </div>
                     <div className="modal-body">
-                      <Conferma alShow={this.state.alShow} handleClose={this.hideAlert}>
+                      <Conferma alShow={this.state.alShow} /* handleClose={this.hideAlert} */>
                         <div className="row text-center pt-2">
                           <div className="col">
                             <div className="row">
@@ -5392,7 +5391,7 @@ class Main extends React.Component {
                           </div>
                         </div>
 
-                        <Conferma alShow={this.state.alShow} handleClose={this.hideAlert}>
+                        <Conferma alShow={this.state.alShow} /* handleClose={this.hideAlert} */>
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
@@ -5405,7 +5404,7 @@ class Main extends React.Component {
                             </div>
                           </div>
                         </Conferma>
-                        <Upload upShow={this.state.upShow} handleClose={this.hideAlert}>
+                        <Upload upShow={this.state.upShow} /* handleClose={this.hideAlert} */>
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
@@ -5418,7 +5417,7 @@ class Main extends React.Component {
                             </div>
                           </div>
                         </Upload>
-                        <Errore alErrShow={this.state.alErrShow} handleClose={this.hideAlert}>
+                        <Errore alErrShow={this.state.alErrShow} /* handleClose={this.hideAlert} */>
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
@@ -5507,7 +5506,7 @@ class Main extends React.Component {
                           </div>
                         </div>
 
-                        <Conferma alShow={this.state.alShow} handleClose={this.hideAlert}>
+                        <Conferma alShow={this.state.alShow} /* handleClose={this.hideAlert} */>
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
@@ -5520,7 +5519,7 @@ class Main extends React.Component {
                             </div>
                           </div>
                         </Conferma>
-                        <Upload upShow={this.state.upShow} handleClose={this.hideAlert}>
+                        <Upload upShow={this.state.upShow} /* handleClose={this.hideAlert} */>
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
@@ -5533,7 +5532,7 @@ class Main extends React.Component {
                             </div>
                           </div>
                         </Upload>
-                        <Errore alErrShow={this.state.alErrShow} handleClose={this.hideAlert}>
+                        <Errore alErrShow={this.state.alErrShow} /* handleClose={this.hideAlert} */>
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
@@ -5556,7 +5555,7 @@ class Main extends React.Component {
                       <h5 className="modal-title" >Permanently delete {tempCrsTitle} credit?</h5>
                     </div>
                     <div className="modal-body">
-                      <Conferma alShow={this.state.alShow} handleClose={this.hideAlert}>
+                      <Conferma alShow={this.state.alShow} /* handleClose={this.hideAlert} */>
                         <div className="row text-center pt-2">
                           <div className="col">
                             <div className="row">
@@ -5583,7 +5582,7 @@ class Main extends React.Component {
                         <div className="form-group">
                           <input type="text" className="form-control contenitore pt-2" ref={(input) => { this.searchInput = input; }} onChange={e => temp = e.target.value} placeholder={"Search..."} />
                         </div>
-                        <Conferma alShow={this.state.alShow} handleClose={this.hideAlert}>
+                        <Conferma alShow={this.state.alShow} /* handleClose={this.hideAlert} */>
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
@@ -5596,7 +5595,7 @@ class Main extends React.Component {
                             </div>
                           </div>
                         </Conferma>
-                        <Errore alErrShow={this.state.alErrShow} handleClose={this.hideAlert}>
+                        <Errore alErrShow={this.state.alErrShow} /* handleClose={this.hideAlert} */>
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
@@ -5616,7 +5615,7 @@ class Main extends React.Component {
                               return (
                                 <AppSearchRes key={i} pos={i} id={id}
                                   title={title} link={link} descr={descr} icon={icon} video={video}
-                                  appVideo={this.resAppVideo} appDescr={this.appDescr} />
+                                  appVideo={this.resAppVideo} /* appDescr={this.appDescr} */ />
                               )
                             })
                           }
@@ -5691,7 +5690,7 @@ class Main extends React.Component {
                       return (
                         <App showAppsBtn={this.state.appsBtnShow} key={i} pos={i} id={id}
                           title={title} link={link} descr={descr} icon={icon} video={video}
-                          appEditDel={this.appEditDel} /* addItem={this.appOrCatItem} */ appVideo={this.appVideo} appDescr={this.appDescr} />
+                          appEditDel={this.appEditDel} /* addItem={this.appOrCatItem} */ appVideo={this.appVideo} /* appDescr={this.appDescr} */ />
                       )
                     })
                   }
