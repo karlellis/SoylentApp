@@ -59,11 +59,11 @@ var catNewItem = {
   "title": "",
   "icon": ""
 };
-var appDescr = {
-  "title": "",
-  "icon": "",
-  "descr": ""
-};
+// var appDescr = {
+//   "title": "",
+//   "icon": "",
+//   "descr": ""
+// };
 var CrsNewItem = {
   "title": "",
   "link": "",
@@ -176,59 +176,6 @@ const AppSearchRes = ({ id, title, link, descr, icon, video, appVideo }) => {
     </a>);
   let appBtn = "";
   let descrButton = "";
-
-  // if (descr !== "") {
-  //   descrButton = (
-  //     <>
-  //       {isActive &&
-  //         <div className="row smallfonts lato text-center m-auto mb-5">
-  //           <i>{descr}</i>
-  //         </div>
-  //       }
-  //       <h4>
-  //         <div className="row lato text-center m-1">
-  //           <div className="col">
-  //             <div className="row">
-  //               <div className="col d-flex flex-column justify-content-center align-items-center">
-  //                 <b>{title}</b>
-  //               </div>
-  //               <div className="col-2 borderleft pointer d-flex flex-column justify-content-center align-items-center"
-  //                 onClick={() => setIsActive(!isActive)}>
-  //                 <b>{isActive ? '-' : '+'}</b>
-  //                 {/* <b>+</b> */}
-  //               </div>
-  //             </div>
-  //           </div>
-  //           {/* {isActive && <i className="row smallfonts">{content}</i>} */}
-  //         </div>
-  //       </h4>
-  //     </>
-
-  //     // <Accordion title={this.props.title} content={this.props.descr} />
-
-  //     // <h4><p className="lato pointer" onClick={() => this.props.appDescr("AppDescr", this.props.id)}><b>{this.props.title}</b></p></h4>
-
-  //     // <h4>
-  //     //   <div className="row lato text-center m-auto">
-  //     //     <div className="col">
-  //     //       <div className="row">
-  //     //         <div className="col d-flex flex-column justify-content-center align-items-center">
-  //     //           <b>{title}</b>
-  //     //         </div>
-  //     //         <div className="col-2 borderleft pointer d-flex flex-column justify-content-center align-items-center"
-  //     //           onClick={() => appDescr("AppDescr", id)}>
-  //     //           <b>+</b>
-  //     //         </div>
-  //     //       </div>
-  //     //     </div>
-  //     //   </div>
-  //     // </h4>
-  //   )
-  // } else {
-  //   descrButton = (
-  //     <h4><p className="lato"><b>{title}</b></p></h4>
-  //   );
-  // };
 
   if (descr !== "") {
     descrButton = (
@@ -1008,7 +955,7 @@ class Main extends React.Component {
     this.search = this.search.bind(this);
     this.setCat = this.setCat.bind(this);
     this.showMainButtons = this.showMainButtons.bind(this);
-    this.headLogoEdit = this.headLogoEdit.bind(this);
+    // this.headLogoEdit = this.headLogoEdit.bind(this);
     this.showModal = this.showModal.bind(this);
     this.hideModal = this.hideModal.bind(this);
     this.loginSession = this.loginSession.bind(this);
@@ -1130,23 +1077,18 @@ class Main extends React.Component {
         // console.log("Hashed first password: ", hashPassword(password));
       })
     })
-    // document.title = spData.headTitle;
-    // document.querySelector('meta[name="description"]').setAttribute("content", spData.footTitle);
   }
 
   componentDidUpdate() {
     this.userInput.focus();
     this.userChangeInput.focus();
     this.searchInput.focus();
-    // console.log("Apps: ", this.state.appItems);
-    // this.appRootSearch("Root");
   }
 
   saveFile(file, url, key) {
     fetchUpConfig(file, url, key)
       .then(res => {
         console.log("Config Saved!");
-        // this.appCatSearch("Root", spData.appItems);
         this.appCatSearch(tempCatTitle, spData.appItems);
         this.appCatSearch("Root", spData.appItems);
         // console.log("Save Conf. result=", res);
@@ -1205,9 +1147,7 @@ class Main extends React.Component {
           }
           array[temp].video = temp4;
           array[temp].cat = temp5;
-          // if (temp6 !== "") {
           array[temp].descr = temp6;
-          // }
           if (inPos !== "") {
             let index = 0;
             if (tempCatTitle !== "Root") {
@@ -1262,8 +1202,6 @@ class Main extends React.Component {
           temp4 = "";
           temp5 = tempCatTitle;
           temp6 = "";
-          // noDescr = false;
-          // tempID = 0;
           appNewItem = {
             "title": "",
             "link": "",
@@ -1278,8 +1216,6 @@ class Main extends React.Component {
           this.setState({ alErrShow: false });
           // console.log("Edit Icon correctly Uploaded!");
           this.saveFile(spData, "./api/img-upload.php", "config");
-          // document.getElementById('clearappswitchpos').value = "";
-          // document.getElementById('clearappeditdescr').value = "";
         } else if (url === "icon" && op === "add") {
           appNewItem.icon = "./appicons/" + nome;
           appNewItem.title = temp2;
@@ -1311,7 +1247,6 @@ class Main extends React.Component {
           temp4 = "";
           temp5 = tempCatTitle;
           temp6 = "";
-          // tempID = 0;
           appNewItem = {
             "title": "",
             "link": "",
@@ -1321,7 +1256,6 @@ class Main extends React.Component {
             "cat": "",
             "id": 0
           };
-          // this.setState({ disFieldAA: true });
           this.setState({ upShow: false });
           this.setState({ alShow: true });
           this.setState({ alErrShow: false });
@@ -1351,12 +1285,8 @@ class Main extends React.Component {
           temp2 = "";
           temp3 = "";
           temp4 = "";
-          // this.setState({
-          //   catSel: tempCatTitle
-          // });
           temp5 = tempCatTitle;
           temp6 = "";
-          // tempID = 0;
           appNewItem = {
             "title": "",
             "link": "",
@@ -1366,19 +1296,11 @@ class Main extends React.Component {
             "cat": "",
             "id": 0
           };
-          // this.setState({ disFieldAA: true });
           this.setState({ upShow: false });
           this.setState({ alShow: true });
           this.setState({ alErrShow: false });
           // console.log("Add Last Icon correctly Uploaded!");
-          // this.setState({
-          //   activityChanged: false
-          // });
-          // spData.appItems.pop();
           this.saveFile(spData, "./api/img-upload.php", "config");
-          // this.setState(previousState => ({
-          //   appItems: [...previousState.appItems, spData.appAdd]
-          // }));
         } else if (url === "cat" && op === "edit") {
           if (fileImg !== null) {
             // console.log("Cat edit!");
@@ -1476,13 +1398,11 @@ class Main extends React.Component {
           this.setState({
             backStyle: {
               backgroundImage: "linear-gradient(rgba(255,255,255," + (1 - spData.backgroundOpacity).toString() + "), rgba(255,255,255," + (1 - spData.backgroundOpacity).toString() + ")), url(" + spData.backgroundImage + ")",
-              // backgroundImage: "url(" + spData.backgroundImage + ")",
               backgroundColor: spData.backgroundColor,
               backgroundPosition: 'center',
               backgroundSize: 'cover',
               backgroundRepeat: 'no-repeat',
               backgroundAttachment: "fixed"
-              // opacity: spData.backgroundOpacity
             }
           });
           this.setState({ upShow: false });
@@ -1598,8 +1518,6 @@ class Main extends React.Component {
       this.setState({ upShow: false });
       this.setState({ alShow: true });
       this.setState({ alErrShow: false });
-      // console.log("Edit Cat correctly Uploaded!");
-      // this.saveFile(spData, "./api/img-upload.php", "config");
     }
     this.saveFile(spData, "./api/img-upload.php", "config");
   }
@@ -1629,7 +1547,6 @@ class Main extends React.Component {
     // console.log("Titolo: " + spData.headTitle);
     spData.headColor = this.hexToRgb(tempColor) + ", " + tempOpacity + ")";
     spData.headOpacity = parseFloat(tempOpacity.replace(/,/g, "."))/* .toFixed(1) */;
-    // spData.headColor = this.hexToRgb(tempColor) + ", 0.95)";
     spData.headTextColor = this.hexToRgb(tempTextColor) + ", 1)";
     spData.headColW = tempColW;
     // console.log("Colore: " + spData.headColor);
@@ -1752,8 +1669,7 @@ class Main extends React.Component {
   saveClock = () => {
     // console.log(tempColor);
     spData.clockColor = this.hexToRgb(tempColor) + ", " + tempOpacity + ")";
-    spData.clockOpacity = parseFloat(tempOpacity.replace(/,/g, "."))/* .toFixed(1) */;
-    // spData.clockColor = this.hexToRgb(tempColor) + ", 0.7)";
+    spData.clockOpacity = parseFloat(tempOpacity.replace(/,/g, "."));
     spData.clockTextColor = this.hexToRgb(tempTextColor) + ", 1)";
     spData.clockColW = tempColW;
     if (blockHide !== "none") {
@@ -1768,22 +1684,17 @@ class Main extends React.Component {
   saveMenu = () => {
     if (disable1 !== "none") {
       spData.noMenuSearch = disable1;
-      // if (disable1 === true)
-      // spData.footTitle = disable1 ? "":temp;
     }
     if (temp !== "")
       spData.menuSearchLabel = temp;
     if (disable2 !== "none") {
       spData.noMenuCredits = disable2;
-      // if (disable1 === true)
-      // spData.footTitle = disable1 ? "":temp;
     }
     if (temp2 !== "")
       spData.menuCreditsLabel = temp2;
     // console.log(tempColor);
     spData.menuColor = this.hexToRgb(tempColor) + ", " + tempOpacity + ")";
-    spData.menuOpacity = parseFloat(tempOpacity.replace(/,/g, "."))/* .toFixed(1) */;
-    // spData.menuOpacity = parseInt(tempOpacity);
+    spData.menuOpacity = parseFloat(tempOpacity.replace(/,/g, "."));
     if (blockHide !== "none") {
       spData.menuShow = blockHide;
     }
@@ -1801,42 +1712,24 @@ class Main extends React.Component {
   saveInfo = () => {
     if (disable1 !== "none") {
       spData.noFootTitle = disable1;
-      // spData.footTitle = spData.noFootTitle ? "" : spData.footTitle;
-      // if (disable1 === true)
-      // spData.footTitle = disable1 ? "":temp;
     }
     if (temp !== "") {
       spData.footTitle = temp;
-      // spData.footTitle = temp;
     }
-    // if (spData.noFootTitle === true) {
-    //   spData.footTitle = "";
-    // }
     if (disable2 !== "none") {
       spData.noFootSubtitle = disable2;
-      // spData.footSubtitle = spData.noFootSubtitle ? "" : spData.footSubtitle;
-      // spData.footSubtitle = "";
     }
     if (temp2 !== "") {
       spData.footSubtitle = temp2;
     }
-    // if (spData.noFootSubtitle === true) {
-    //   spData.footSubtitle = "";
-    // }
     if (disable3 !== "none") {
       spData.noFootSubtitle2 = disable3;
-      // spData.footSubtitle2 = spData.noFootSubtitle2 ? "" : spData.footSubtitle2;
-      // spData.footSubtitle2 = "";
     }
     if (temp3 !== "") {
       spData.footSubtitle2 = temp3;
     }
-    // if (spData.noFootSubtitle2 === true) {
-    //   spData.footSubtitle2 = "";
-    // }
     spData.footInfoColor = this.hexToRgb(tempColor) + ", " + tempOpacity + ")";
-    spData.footInfoOpacity = parseFloat(tempOpacity.replace(/,/g, "."))/* .toFixed(1) */;
-    // spData.footInfoColor = this.hexToRgb(tempColor) + ", 0.7)";
+    spData.footInfoOpacity = parseFloat(tempOpacity.replace(/,/g, "."));
     spData.footInfoTextColor = this.hexToRgb(tempTextColor) + ", 1)";
     spData.footInfoColW = tempColW;
     if (blockHide !== "none") {
@@ -1874,8 +1767,7 @@ class Main extends React.Component {
     }
 
     spData.footCreditColor = this.hexToRgb(tempColor) + ", " + tempOpacity + ")";
-    spData.footCreditOpacity = parseFloat(tempOpacity.replace(/,/g, "."))/* .toFixed(1) */;
-    // spData.footCreditColor = this.hexToRgb(tempColor) + ", 0.7)";
+    spData.footCreditOpacity = parseFloat(tempOpacity.replace(/,/g, "."));
     spData.footCreditTextColor = this.hexToRgb(tempTextColor) + ", 1)";
     spData.footCreditColW = tempColW;
     if (blockHide !== "none") {
@@ -2087,13 +1979,6 @@ class Main extends React.Component {
 
   applyCrsEdit = () => {
     if (temp2 !== "" || temp3 !== "" || temp4 !== "" || temp !== "") {
-      // let dup = false;
-      // for (let i = 0; i < arrayLength; i++) {
-      //   if (array[i].title.toLowerCase() === temp2.toLowerCase()) {
-      // console.log("CAT Title Duplicated!!!");
-      //     dup = true;
-      //   }
-      // }
       if (temp !== "") {
         inPos = parseInt(temp) - 1;
         // console.log("InPos: ", inPos);
@@ -2106,12 +1991,9 @@ class Main extends React.Component {
           this.setState({ alErrShow: true });
         }
       } else {
-        // if (!dup) {
         this.saveCrs("crs", "edit");
-        // } else {
         this.setState({ alShow: true });
         this.setState({ alErrShow: false });
-        // }
       }
     } else {
       // console.log("fileImg - temp2 - temp are \"\"");
@@ -2128,13 +2010,6 @@ class Main extends React.Component {
     // console.log("Pos: ", temp);
     // tempIcon = "";
     if (temp2 !== "" && temp3 !== "" && temp4 !== "") {
-      // let dup = false;
-      // for (let i = 0; i < arrayLength; i++) {
-      //   if (array[i].title.toLowerCase() === temp2.toLowerCase()) {
-      // console.log("CAT Title Duplicated!!!");
-      //     dup = true;
-      //   }
-      // }
       if (temp !== "") {
         inPos = parseInt(temp) - 1;
         // console.log("InPos: ", inPos);
@@ -2147,12 +2022,9 @@ class Main extends React.Component {
           this.setState({ alErrShow: true });
         }
       } else {
-        // if (!dup) {
         this.saveCrs("crs", "addlast");
-        // } else {
         this.setState({ alShow: true });
         this.setState({ alErrShow: false });
-        // }
       }
     } else {
       this.setState({ alShow: false });
@@ -2189,8 +2061,7 @@ class Main extends React.Component {
       this.saveImgFile(fileImg, "back", "edit");
     } else {
       spData.backgroundColor = this.hexToRgb(tempColor) + ", " + tempOpacity + ")";
-      spData.backgroundOpacity = parseFloat(tempOpacity.replace(/,/g, "."))/* .toFixed(1) */;
-      // spData.backgroundColor = this.hexToRgb(tempColor) + ", 1)";
+      spData.backgroundOpacity = parseFloat(tempOpacity.replace(/,/g, "."));
       this.setState({
         activityChanged: true
       })
@@ -2203,20 +2074,17 @@ class Main extends React.Component {
             backgroundSize: 'cover',
             backgroundRepeat: 'no-repeat',
             backgroundAttachment: "fixed"
-            // opacity: spData.backgroundOpacity
           }
         });
       } else {
         this.setState({
           backStyle: {
             backgroundImage: "linear-gradient(rgba(255,255,255," + (1 - spData.backgroundOpacity).toString() + "), rgba(255,255,255," + (1 - spData.backgroundOpacity).toString() + ")), url(" + spData.backgroundImage + ")",
-            // backgroundImage: "url(" + spData.backgroundImage + ")",
             backgroundColor: spData.backgroundColor,
             backgroundPosition: 'center',
             backgroundSize: 'cover',
             backgroundRepeat: 'no-repeat',
             backgroundAttachment: "fixed"
-            // opacity: spData.backgroundOpacity
           }
         });
       }
@@ -2231,8 +2099,7 @@ class Main extends React.Component {
       this.saveImgFile(fileCatImg, "backcat", "edit");
     } else {
       spData.catColor = this.hexToRgb(tempCatColor) + ", " + tempOpacity1 + ")";
-      spData.catOpacity = parseFloat(tempOpacity1.replace(/,/g, "."))/* .toFixed(1) */;
-      // spData.catColor = this.hexToRgb(tempCatColor) + ", 1)";
+      spData.catOpacity = parseFloat(tempOpacity1.replace(/,/g, "."));
       this.setState({
         activityChanged: true
       })
@@ -2245,20 +2112,17 @@ class Main extends React.Component {
             backgroundSize: 'cover',
             backgroundRepeat: 'no-repeat',
             backgroundAttachment: "fixed"
-            // opacity: spData.catOpacity
           }
         });
       } else {
         this.setState({
           catStyle: {
             backgroundImage: "linear-gradient(rgba(255,255,255," + (1 - spData.catOpacity).toString() + "), rgba(255,255,255," + (1 - spData.catOpacity).toString() + ")), url(" + spData.catImage + ")",
-            // backgroundImage: "url(" + spData.catImage + ")",
             backgroundColor: spData.catColor,
             backgroundPosition: 'center',
             backgroundSize: 'cover',
             backgroundRepeat: 'no-repeat',
             backgroundAttachment: "fixed"
-            // opacity: spData.catOpacity
           }
         });
       }
@@ -2274,8 +2138,7 @@ class Main extends React.Component {
       tempIcon = spData.LogoIcon;
       this.saveImgFile(fileImg, "logo", "edit");
       spData.logoColor = this.hexToRgb(tempColor) + ", " + tempOpacity + ")";
-      spData.logoOpacity = parseFloat(tempOpacity.replace(/,/g, "."))/* .toFixed(1) */;
-      // spData.logoColor = this.hexToRgb(tempColor) + ", 0.7)";
+      spData.logoOpacity = parseFloat(tempOpacity.replace(/,/g, "."));
       spData.logoColW = tempColW;
       if (blockHide !== "none") {
         spData.logoShow = blockHide;
@@ -2283,8 +2146,7 @@ class Main extends React.Component {
       blockHide = "none";
     } else {
       spData.logoColor = this.hexToRgb(tempColor) + ", " + tempOpacity + ")";
-      spData.logoOpacity = parseFloat(tempOpacity.replace(/,/g, "."))/* .toFixed(1) */;
-      // spData.logoColor = this.hexToRgb(tempColor) + ", 0.7)";
+      spData.logoOpacity = parseFloat(tempOpacity.replace(/,/g, "."));
       spData.logoColW = tempColW;
       if (blockHide !== "none") {
         spData.logoShow = blockHide;
@@ -2309,8 +2171,6 @@ class Main extends React.Component {
   }
 
   loginEditSession(id) {
-    // tempUser = "";
-    // tempPsw = "";
     this.showModal("loginEdit");
   }
 
@@ -2378,7 +2238,6 @@ class Main extends React.Component {
   showModal(id) {
     switch (id) {
       case "title":
-        // temp = spData.headTitle;
         tempColW = spData.headColW;
         switch (spData.headColW) {
           case "col":
@@ -2557,9 +2416,6 @@ class Main extends React.Component {
       case "appVideo":
         this.setState({ appVideoDiaShow: true });
         break;
-      // case "appDescr":
-      //   this.setState({ appDescrDiaShow: true });
-      //   break;
       case "search":
         this.setState({ searchDiaShow: true });
         break;
@@ -2720,9 +2576,6 @@ class Main extends React.Component {
         this.setState({ appVideoDiaShow: false });
         this.stopVideos();
         break;
-      // case "appdescr":
-      //   this.setState({ appDescrDiaShow: false });
-      //   break;
       case "apporcat":
         this.setState({ aocDiaShow: false });
         break;
@@ -2752,10 +2605,6 @@ class Main extends React.Component {
       activityChanged: false
     });
   };
-
-  // hideAlert = () => {
-  //   this.setState({ alShow: false });
-  // };
 
   appsButtonShow(id) {
     if (this.state.appsBtnShow !== id) {
@@ -2802,45 +2651,8 @@ class Main extends React.Component {
     }
   }
 
-  headLogoEdit(id) {
-    this.showModal("logo");
-  }
-
-  headTitleEdit(id) {
-    this.showModal("title");
-    // console.log("Title Edit Clicked:", id);
-  }
-
-  headMenuEdit(id) {
-    this.showModal("menu");
-  }
-
-  backEdit(id) {
-    this.showModal("back");
-    // console.log("Background Edit Clicked:");
-  }
-
-  clockEdit(id) {
-    this.showModal("clock");
-    // console.log("Clock Edit Clicked:");
-  }
-
-  footCreditsEdit(id) {
-    this.showModal("credit");
-    // console.log("Credits Edit Clicked:", id);
-  }
-
-  footInfoEdit(id) {
-    this.showModal("info");
-    // console.log("Info Edit Clicked:", id);
-  }
-
   appOrCatItem() {
-    if (temp5 !== "Root") {
-      this.appAddItem();
-    } else {
-      this.showModal("appOrCatAdd");
-    }
+    this.showModal("appOrCatAdd");
   }
 
   catEditDel(op, pos) {
@@ -2871,7 +2683,6 @@ class Main extends React.Component {
   }
 
   crsAddItem() {
-    // this.hideModal("apporcat");
     array = [...this.state.creditsItems];
     arrayLength = (array.length);
     temp4 = false;
@@ -2880,7 +2691,6 @@ class Main extends React.Component {
     document.getElementById('clearcrslink').value = "";
     document.getElementById('clearcrsdescr').value = "";
     this.showModal("crsAdd");
-    // console.log("CATAdding IT!");
   }
 
   crsEditDel(op, pos) {
@@ -2891,8 +2701,6 @@ class Main extends React.Component {
     tempCrsTitle = array[pos].title;
     tempCrsLink = array[pos].link;
     tempCrsDescr = array[pos].descr;
-    // tempIcon = array[pos].icon;
-    // console.log("Cat name: ", tempCatTitle);
     document.getElementById('clearcrsswitchpos').value = "";
     if (op === "CrsEdit") {
       this.showModal("crsEdit");
@@ -2961,26 +2769,12 @@ class Main extends React.Component {
     }
     // console.log(id, " for ", pos);
     document.getElementById('clearappswitchpos').value = "";
-    // document.getElementById('clearappeditdescr').value = "";
     if (op === "AppEdit") {
       this.showModal("appEdit");
     } else {
       this.showModal("appDel");
     }
   }
-
-  // appDescr(name, id) {
-  //   temp3 = id;
-  //   array = [...this.state.appItems];
-  //   for (let i = 0; i < array.length; i++) {
-  //     if (array[i].id === id) {
-  //       tempAppDescr = array[i].descr;
-  //       tempAppTitle = array[i].title;
-  //     }
-  //   }
-  //   // console.log(id, " for ", pos);
-  //   this.showModal("appDescr");
-  // }
 
   appVideo(name, id) {
     temp3 = id;
@@ -3108,7 +2902,7 @@ class Main extends React.Component {
               {/* MENU */}
               {menuButtons}
               <EditMenu editMenuShow={this.state.mainBtn} hidden={spData.menuShow}>
-                <button className="col flexbutton solidgreen m-1" onClick={() => this.headMenuEdit("MenuEdit")}>
+                <button className="col flexbutton solidgreen m-1" onClick={() => this.showModal("menu")}>
                   Edit Menu
                 </button>
               </EditMenu>
@@ -3119,7 +2913,7 @@ class Main extends React.Component {
                 <p className="medfont">{spData.headTitle}</p>
               </div>
               <EditTitolo editTitleShow={this.state.mainBtn} hidden={spData.titleShow}>
-                <button className="col flexbutton solidgreen m-1" onClick={() => this.headTitleEdit("TitleEdit")}>
+                <button className="col flexbutton solidgreen m-1" onClick={() => this.showModal("title")}>
                   Edit Title
                 </button>
               </EditTitolo>
@@ -3128,7 +2922,7 @@ class Main extends React.Component {
               {/* LOGO */}
               <LogoImg />
               <EditLogo editLogoShow={this.state.mainBtn} hidden={spData.logoShow}>
-                <button className="col latowhite flexbutton solidgreen m-1" onClick={() => this.headLogoEdit("LogoEdit")}>
+                <button className="col latowhite flexbutton solidgreen m-1" onClick={() => this.showModal("logo")}>
                   Edit Logo
                 </button>
               </EditLogo>
@@ -3137,7 +2931,7 @@ class Main extends React.Component {
               {/* OROLOGIO */}
               <Orologio />
               <EditClock editClockShow={this.state.mainBtn} hidden={spData.clockShow}>
-                <button className="col flexbutton solidgreen m-1" onClick={() => this.clockEdit()}>
+                <button className="col flexbutton solidgreen m-1" onClick={() => this.showModal("clock")}>
                   Edit Clock
                 </button>
               </EditClock>
@@ -3167,7 +2961,7 @@ class Main extends React.Component {
               <SettingsGear></SettingsGear>
             </button>
             <button className="col button solidbrick m-1"
-              onClick={() => this.backEdit()}>
+              onClick={() => this.showModal("back")}>
               Background
             </button>
           </div>
@@ -3187,7 +2981,7 @@ class Main extends React.Component {
                 <p className={showHideFootSub2 + " smallfont"}>{spData.footSubtitle2}</p>
               </div>
               <EditInfo editInfoShow={this.state.mainBtn} hidden={spData.infoShow}>
-                <button className="col flexbutton solidgreen m-1" onClick={() => this.footInfoEdit("InfoEdit")}>
+                <button className="col flexbutton solidgreen m-1" onClick={() => this.showModal("info")}>
                   Edit Info
                 </button>
               </EditInfo>
@@ -3200,7 +2994,7 @@ class Main extends React.Component {
                 <p className={showHideCrSub2 + " verysmallfont"}>{spData.footCreditiSubtitle2}</p>
               </div>
               <EditCrediti editCreditShow={this.state.mainBtn} hidden={spData.creditShow}>
-                <button className="col flexbutton brick m-1" onClick={() => this.footCreditsEdit("CreditsEdit")}>
+                <button className="col flexbutton brick m-1" onClick={() => this.showModal("credit")}>
                   Edit Credits
                 </button>
               </EditCrediti>
@@ -3257,7 +3051,7 @@ class Main extends React.Component {
                           </div>
                         </div>
 
-                        <Conferma alShow={this.state.alShow} /* handleClose={this.hideAlert} */>
+                        <Conferma alShow={this.state.alShow}>
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
@@ -3313,7 +3107,7 @@ class Main extends React.Component {
                           </div>
                         </div>
 
-                        <Conferma alShow={this.state.alShow} /* handleClose={this.hideAlert} */>
+                        <Conferma alShow={this.state.alShow}>
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
@@ -3326,7 +3120,7 @@ class Main extends React.Component {
                             </div>
                           </div>
                         </Conferma>
-                        <Errore alErrShow={this.state.alErrShow} /* handleClose={this.hideAlert} */>
+                        <Errore alErrShow={this.state.alErrShow}>
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
@@ -3399,13 +3193,11 @@ class Main extends React.Component {
                                           disFieldMS: true
                                         });
                                         disable1 = true;
-                                        // spData.noMenuSearch = true;
                                       } else {
                                         this.setState({
                                           disFieldMS: false
                                         });
                                         disable1 = false;
-                                        // spData.noMenuSearch = false;
                                       }
                                     }} />
                                     <span class="slider round" title="Hide"></span>
@@ -3434,13 +3226,11 @@ class Main extends React.Component {
                                           disFieldMC: true
                                         });
                                         disable2 = true;
-                                        // spData.noMenuCredits = true;
                                       } else {
                                         this.setState({
                                           disFieldMC: false
                                         });
                                         disable2 = false;
-                                        // spData.noMenuCredits = false;
                                       }
                                     }} />
                                     <span class="slider round" title="Hide"></span>
@@ -3478,7 +3268,7 @@ class Main extends React.Component {
                           </div>
                         </div>
 
-                        <Conferma alShow={this.state.alShow} /* handleClose={this.hideAlert} */>
+                        <Conferma alShow={this.state.alShow}>
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
@@ -3491,7 +3281,7 @@ class Main extends React.Component {
                             </div>
                           </div>
                         </Conferma>
-                        <Errore alErrShow={this.state.alErrShow} /* handleClose={this.hideAlert} */>
+                        <Errore alErrShow={this.state.alErrShow}>
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
@@ -3633,7 +3423,7 @@ class Main extends React.Component {
                           </div>
                         </div>
 
-                        <Conferma alShow={this.state.alShow} /* handleClose={this.hideAlert} */>
+                        <Conferma alShow={this.state.alShow}>
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
@@ -3646,7 +3436,7 @@ class Main extends React.Component {
                             </div>
                           </div>
                         </Conferma>
-                        <Errore alErrShow={this.state.alErrShow} /* handleClose={this.hideAlert} */>
+                        <Errore alErrShow={this.state.alErrShow}>
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
@@ -3775,7 +3565,7 @@ class Main extends React.Component {
                           </div>
                         </div>
 
-                        <Conferma alShow={this.state.alShow} /* handleClose={this.hideAlert} */>
+                        <Conferma alShow={this.state.alShow}>
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
@@ -3788,7 +3578,7 @@ class Main extends React.Component {
                             </div>
                           </div>
                         </Conferma>
-                        <Errore alErrShow={this.state.alErrShow} /* handleClose={this.hideAlert} */>
+                        <Errore alErrShow={this.state.alErrShow}>
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
@@ -3871,11 +3661,6 @@ class Main extends React.Component {
                                 </div>
                               </div>
                             </div>
-                            {/* <div className="col-1"></div>
-                        <div className="col">
-                          <div className="row">
-                          </div>
-                        </div> */}
                           </div>
                         </div>
 
@@ -3891,11 +3676,6 @@ class Main extends React.Component {
                                 </div>
                               </div>
                             </div>
-                            {/* <div className="col-1"></div>
-                        <div className="col">
-                          <div className="row">
-                          </div>
-                        </div> */}
                           </div>
                         </div>
 
@@ -3926,7 +3706,7 @@ class Main extends React.Component {
                           </div>
                         </div>
 
-                        <Conferma alShow={this.state.alShow} /* handleClose={this.hideAlert} */>
+                        <Conferma alShow={this.state.alShow}>
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
@@ -3939,7 +3719,7 @@ class Main extends React.Component {
                             </div>
                           </div>
                         </Conferma>
-                        <Upload upShow={this.state.upShow} /* handleClose={this.hideAlert} */>
+                        <Upload upShow={this.state.upShow}>
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
@@ -3982,13 +3762,11 @@ class Main extends React.Component {
                                           disField: true
                                         });
                                         disable1 = true;
-                                        // spData.noFootTitle = true;
                                       } else {
                                         this.setState({
                                           disField: false
                                         });
                                         disable1 = false;
-                                        // spData.noFootTitle = false;
                                       }
                                     }} />
                                     <span class="slider round" title="Hide"></span>
@@ -4017,13 +3795,11 @@ class Main extends React.Component {
                                           disField2: true
                                         });
                                         disable2 = true;
-                                        // spData.noFootSubtitle = true;
                                       } else {
                                         this.setState({
                                           disField2: false
                                         });
                                         disable2 = false;
-                                        // spData.noFootSubtitle = false;
                                       }
                                     }} />
                                     <span class="slider round" title="Hide"></span>
@@ -4053,13 +3829,11 @@ class Main extends React.Component {
                                           disField3: true
                                         });
                                         disable3 = true;
-                                        // spData.noFootSubtitle2 = true;
                                       } else {
                                         this.setState({
                                           disField3: false
                                         });
                                         disable3 = false;
-                                        // spData.noFootSubtitle2 = false;
                                       }
                                     }} />
                                     <span class="slider round" title="Hide"></span>
@@ -4142,11 +3916,6 @@ class Main extends React.Component {
                                 </div>
                               </div>
                             </div>
-                            {/* <div className="col-1"></div>
-                        <div className="col">
-                          <div className="row">
-                          </div>
-                        </div> */}
                           </div>
                         </div>
 
@@ -4177,7 +3946,7 @@ class Main extends React.Component {
                           </div>
                         </div>
 
-                        <Conferma alShow={this.state.alShow} /* handleClose={this.hideAlert} */>
+                        <Conferma alShow={this.state.alShow}>
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
@@ -4376,11 +4145,6 @@ class Main extends React.Component {
                                 </div>
                               </div>
                             </div>
-                            {/* <div className="col-1"></div>
-                        <div className="col">
-                          <div className="row">
-                          </div>
-                        </div> */}
                           </div>
                         </div>
 
@@ -4411,7 +4175,7 @@ class Main extends React.Component {
                             </div>
                           </div>
                         </div>
-                        <Conferma alShow={this.state.alShow} /* handleClose={this.hideAlert} */>
+                        <Conferma alShow={this.state.alShow}>
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
@@ -4518,17 +4282,6 @@ class Main extends React.Component {
                                 </div>
                               </div>
                             </div>
-                            {/* <div className="col-1"></div>
-                        <div className="col">
-                          <div className="row border">
-                            <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
-                              <label>Opacity</label>
-                            </div>
-                            <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="range" class="form-range border-0 p-0" min="0" max="1" step="0.1" defaultValue={spData.backgroundOpacity} id="backOpRange" onChange={e => tempOpacity = e.target.value} ></input>
-                            </div>
-                          </div>
-                        </div> */}
                           </div>
                         </div>
 
@@ -4544,11 +4297,6 @@ class Main extends React.Component {
                                 </div>
                               </div>
                             </div>
-                            {/* <div className="col-1"></div>
-                        <div className="col">
-                          <div className="row">
-                          </div>
-                        </div> */}
                           </div>
                         </div>
 
@@ -4564,17 +4312,6 @@ class Main extends React.Component {
                                 </div>
                               </div>
                             </div>
-                            {/* <div className="col-1"></div>
-                        <div className="col">
-                          <div className="row border">
-                            <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
-                              <label>Opacity</label>
-                            </div>
-                            <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="range" class="form-range border-0 p-0" min="0" max="1" step="0.1" defaultValue={spData.catOpacity} id="catOpRange" onChange={e => tempOpacity1 = e.target.value} ></input>
-                            </div>
-                          </div>
-                        </div> */}
                           </div>
                         </div>
 
@@ -4590,15 +4327,11 @@ class Main extends React.Component {
                                 </div>
                               </div>
                             </div>
-                            {/* <div className="col-1"></div>
-                        <div className="col">
-                          <div className="row">
-                          </div>
-                        </div> */}
+  
                           </div>
                         </div>
 
-                        <Conferma alShow={this.state.alShow} /* handleClose={this.hideAlert} */>
+                        <Conferma alShow={this.state.alShow}>
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
@@ -4611,7 +4344,7 @@ class Main extends React.Component {
                             </div>
                           </div>
                         </Conferma>
-                        <Upload upShow={this.state.upShow} /* handleClose={this.hideAlert} */>
+                        <Upload upShow={this.state.upShow}>
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
@@ -4640,11 +4373,11 @@ class Main extends React.Component {
                             return (
                               <App showAppsBtn={this.state.appsBtnShow} key={i} pos={i} id={id}
                                 title={title} link={link} descr={descr} icon={icon} video={video}
-                                appVideo={this.catAppVideo} appEditDel={this.appEditDel} /* appDescr={this.appDescr} */ />
+                                appVideo={this.catAppVideo} appEditDel={this.appEditDel}/>
                             )
                           })
                         }
-                        <AppAdd showAppsBtn={this.state.appsBtnShow} /* title={title} link={link} icon={icon} */ addItem={this.appOrCatItem} />
+                        <AppAdd showAppsBtn={this.state.appsBtnShow} addItem={this.appAddItem} />
                       </div>
                     </div>
                   </div>
