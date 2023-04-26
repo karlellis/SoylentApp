@@ -7,8 +7,6 @@ import "./index.css";
 const bcrypt = require("bcryptjs")
 var fileImg = null;
 var fileCatImg = null;
-// var tempUser = "";
-// var tempPsw = "";
 var cgPos = "";
 var currPos = "";
 var temp = "";
@@ -21,7 +19,6 @@ var disable1 = "none";
 var disable2 = "none";
 var disable3 = "none";
 var noDescr = false;
-// var tempID = 0;
 var tempColor = "#0077c8";
 var tempOpacity = 0.7;
 var tempOpacity1 = 0.7;
@@ -37,7 +34,6 @@ var tempCatTitle = "";
 var tempCrsTitle = "";
 var tempCrsLink = "";
 var tempCrsDescr = "";
-// var tempAppCat = "";
 var tempIcon = "";
 var tempCatIcon = "";
 var arrayLength = 0;
@@ -59,11 +55,6 @@ var catNewItem = {
   "title": "",
   "icon": ""
 };
-// var appDescr = {
-//   "title": "",
-//   "icon": "",
-//   "descr": ""
-// };
 var CrsNewItem = {
   "title": "",
   "link": "",
@@ -73,11 +64,7 @@ var nome = "";
 var credentials = require("./initSec.json");
 var spData = require("./initData.json");
 
-// const sleep = (milliseconds) => {
-//   return new Promise(resolve => setTimeout(resolve, milliseconds))
-// }
-
-const App = ({ showAppsBtn, pos, id, title, link, descr, icon, video, appEditDel, appVideo, appDescr }) => {
+const Item = ({ showAppsBtn, pos, id, title, link, descr, icon, video, appEditDel, appVideo }) => {
   const [isActive, setIsActive] = useState(false);
 
   const linkOrVideo = video
@@ -163,7 +150,7 @@ const App = ({ showAppsBtn, pos, id, title, link, descr, icon, video, appEditDel
   );
 }
 
-const AppSearchRes = ({ id, title, link, descr, icon, video, appVideo }) => {
+const ItemSearchRes = ({ id, title, link, descr, icon, video, appVideo }) => {
   const [isActive, setIsActive] = useState(false);
   const linkOrVideo = video
     ?
@@ -268,18 +255,18 @@ const EditInfo = ({ editInfoShow, children, hidden }) => {
   );
 };
 
-const Crediti = ({ creditShow, children, infoShow, mainBtn }) => {
-  const showHideClassName = creditShow ? "d-block" : "d-none";
+const AddInfo = ({ addInfoShow, children, mainBtn }) => {
+  const showHideClassName = addInfoShow ? "d-block" : "d-none";
   const justifyCenterEnd = mainBtn ? "justify-content-end" : "justify-content-center";
   return (
-    <section id="FootCrediti" style={{ backgroundColor: spData.footCreditColor, color: spData.footCreditTextColor }} className={showHideClassName + " " + justifyCenterEnd + " " + spData.footCreditColW + " latoplain d-flex flex-column align-items-center"}>
+    <section id="FootAddInfo" style={{ backgroundColor: spData.footCreditColor, color: spData.footCreditTextColor }} className={showHideClassName + " " + justifyCenterEnd + " " + spData.footCreditColW + " latoplain d-flex flex-column align-items-center"}>
       {children}
     </section>
   );
 };
 
-const EditCrediti = ({ editCreditShow, children, hidden }) => {
-  const showHideClassName = editCreditShow ? "d-block" : "d-none";
+const EditAddInfo = ({ editAddInfoShow, children, hidden }) => {
+  const showHideClassName = editAddInfoShow ? "d-block" : "d-none";
   const hide = hidden ? "" : <RedPoint />
   return (
     <div className={showHideClassName + " stretch d-flex justify-content-center align-items-center"}>
@@ -484,8 +471,8 @@ const BackEditDialog = ({ handleSave, handleClose, backEditDiaShow, children, ac
   );
 };
 
-const AppVideoDialog = ({ handleClose, appVideoDiaShow, children, activityChanged }) => {
-  const showHideClassName = appVideoDiaShow ? "modal display-block" : "modal display-none";
+const ItemVideoDialog = ({ handleClose, itemVideoDiaShow, children, activityChanged }) => {
+  const showHideClassName = itemVideoDiaShow ? "modal display-block" : "modal display-none";
   return (
     <div className={showHideClassName}>
       <section className="modal-main darkBG">
@@ -498,8 +485,8 @@ const AppVideoDialog = ({ handleClose, appVideoDiaShow, children, activityChange
   );
 };
 
-const CrsDialog = ({ handleClose, exCrsDiaShow, children, activityChanged }) => {
-  const showHideClassName = exCrsDiaShow ? "modal display-block" : "modal display-none";
+const CrsDialog = ({ handleClose, crsDiaShow, children, activityChanged }) => {
+  const showHideClassName = crsDiaShow ? "modal display-block" : "modal display-none";
   return (
     <div className={showHideClassName}>
       <section className="modal-main-dark">
@@ -525,21 +512,6 @@ const CatDialog = ({ handleClose, catDiaShow, children, activityChanged }) => {
     </div>
   );
 };
-
-// const AppDescrDialog = ({ handleSave, handleClose, appDescrDiaShow, children, activityChanged }) => {
-//   const showHideClassName = appDescrDiaShow ? "modal display-block" : "modal display-none";
-//   return (
-//     <div className={showHideClassName}>
-//       <section className="descr-dark">
-//         {children}
-//         <div className="modal-footer-dark">
-//           {/* <button type="button" className="btn btn-primary" onClick={handleSave}>Show</button> */}
-//           <button type="button" /* disabled={(activityChanged) ? true : false} */ className="btn btn-secondary" data-dismiss="modal" onClick={handleClose}>Close</button>
-//         </div>
-//       </section>
-//     </div>
-//   );
-// };
 
 const SearchDialog = ({ handleClose, handleSave, handleReset, searchDiaShow, children, activityChanged }) => {
   const showHideClassName = searchDiaShow ? "modal display-block" : "modal display-none";
@@ -867,7 +839,7 @@ class Main extends React.Component {
     super(props)
     this.state = {
       infoShow: false,
-      creditShow: false,
+      addInfoShow: false,
       mainBtn: false,
       appsBtnShow: "null",
       appItems: [],
@@ -890,18 +862,18 @@ class Main extends React.Component {
       appEditDiaShow: false,
       appDelDiaShow: false,
       appAddDiaShow: false,
-      appVideoDiaShow: false,
+      itemVideoDiaShow: false,
       catEditDiaShow: false,
       catDelDiaShow: false,
       catAddDiaShow: false,
       crsEditDiaShow: false,
       crsDelDiaShow: false,
       crsAddDiaShow: false,
-      exCrsDiaShow: false,
+      crsDiaShow: false,
       searchDiaShow: false,
       catDiaShow: false,
       appDescrDiaShow: false,
-      creditsDiaShow: false,
+      // creditsDiaShow: false,
       aocDiaShow: false,
       videoLink: tempAppLink,
       alShow: false,
@@ -972,7 +944,7 @@ class Main extends React.Component {
         // console.log("Apps: ", settings.appItems);
         this.setState({
           infoShow: spData.infoShow,
-          creditShow: spData.creditShow,
+          addInfoShow: spData.addInfoShow,
           mainBtn: spData.mainBtn,
           appsBtnShow: spData.appsBtnShow,
           menuShow: spData.menuShow,
@@ -1771,7 +1743,7 @@ class Main extends React.Component {
     spData.footCreditTextColor = this.hexToRgb(tempTextColor) + ", 1)";
     spData.footCreditColW = tempColW;
     if (blockHide !== "none") {
-      spData.creditShow = blockHide;
+      spData.addInfoShow = blockHide;
     }
     blockHide = "none";
     temp = "";
@@ -2408,13 +2380,13 @@ class Main extends React.Component {
         this.setState({ crsAddDiaShow: true });
         break;
       case "exCrs":
-        this.setState({ exCrsDiaShow: true });
+        this.setState({ crsDiaShow: true });
         break;
       case "appOrCatAdd":
         this.setState({ aocDiaShow: true });
         break;
       case "appVideo":
-        this.setState({ appVideoDiaShow: true });
+        this.setState({ itemVideoDiaShow: true });
         break;
       case "search":
         this.setState({ searchDiaShow: true });
@@ -2570,10 +2542,10 @@ class Main extends React.Component {
         document.getElementById('crsAddForm').reset();
         break;
       case "excrs":
-        this.setState({ exCrsDiaShow: false });
+        this.setState({ crsDiaShow: false });
         break;
       case "video":
-        this.setState({ appVideoDiaShow: false });
+        this.setState({ itemVideoDiaShow: false });
         this.stopVideos();
         break;
       case "apporcat":
@@ -2628,7 +2600,7 @@ class Main extends React.Component {
       this.setState({ logoShow: true });
       this.setState({ clockShow: true });
       this.setState({ infoShow: true });
-      this.setState({ creditShow: true });
+      this.setState({ addInfoShow: true });
     } else {
       this.setState({
         mainBtn: false
@@ -2638,7 +2610,7 @@ class Main extends React.Component {
       this.setState({ logoShow: spData.logoShow });
       this.setState({ clockShow: spData.clockShow });
       this.setState({ infoShow: spData.infoShow });
-      this.setState({ creditShow: spData.creditShow });
+      this.setState({ addInfoShow: spData.addInfoShow });
       login = false;
       var array = [...this.state.appItems];
       if (this.state.appsBtnShow !== false) {
@@ -2987,18 +2959,18 @@ class Main extends React.Component {
               </EditInfo>
             </Info>
             {/* CREDITI */}
-            <Crediti creditShow={this.state.creditShow} infoShow={this.state.infoShow} mainBtn={this.state.mainBtn}>
+            <AddInfo addInfoShow={this.state.addInfoShow} infoShow={this.state.infoShow} mainBtn={this.state.mainBtn}>
               <div>
                 <p className={showHideCrTitle + " smallfont"}>{spData.footCreditiTitle}</p>
                 <p className={showHideCrSub + " smallfont"}><i>{spData.footCreditiSubtitle}</i></p>
                 <p className={showHideCrSub2 + " verysmallfont"}>{spData.footCreditiSubtitle2}</p>
               </div>
-              <EditCrediti editCreditShow={this.state.mainBtn} hidden={spData.creditShow}>
+              <EditAddInfo editAddInfoShow={this.state.mainBtn} hidden={spData.addInfoShow}>
                 <button className="col flexbutton brick m-1" onClick={() => this.showModal("credit")}>
-                  Edit Credits
+                  Edit Add Info
                 </button>
-              </EditCrediti>
-            </Crediti>
+              </EditAddInfo>
+            </AddInfo>
           </div>
         </div>
       </div >
@@ -4158,8 +4130,8 @@ class Main extends React.Component {
                                 <div className="col d-flex flex-column justify-content-center align-items-center">
                                   <label class="switch">
 
-                                    <input type="checkbox" className="form-control" defaultChecked={!spData.creditShow} onClick={e => {
-                                      if (spData.creditShow === false) {
+                                    <input type="checkbox" className="form-control" defaultChecked={!spData.addInfoShow} onClick={e => {
+                                      if (spData.addInfoShow === false) {
                                         blockHide = true;
                                       } else {
                                         blockHide = false;
@@ -4327,7 +4299,7 @@ class Main extends React.Component {
                                 </div>
                               </div>
                             </div>
-  
+
                           </div>
                         </div>
 
@@ -4371,9 +4343,9 @@ class Main extends React.Component {
                         {
                           this.state.catAppItems.map(({ id, title, link, descr, icon, video }, i) => {
                             return (
-                              <App showAppsBtn={this.state.appsBtnShow} key={i} pos={i} id={id}
+                              <Item showAppsBtn={this.state.appsBtnShow} key={i} pos={i} id={id}
                                 title={title} link={link} descr={descr} icon={icon} video={video}
-                                appVideo={this.catAppVideo} appEditDel={this.appEditDel}/>
+                                appVideo={this.catAppVideo} appEditDel={this.appEditDel} />
                             )
                           })
                         }
@@ -4747,7 +4719,7 @@ class Main extends React.Component {
                               <div className="row">
                                 <section className="col pt-2 contenitore solidgreen latowhite d-flex justify-content-center align-items-center ">
                                   <div>
-                                    <p className="norfont">App added!</p>
+                                    <p className="norfont">Item added!</p>
                                   </div>
                                 </section>
                               </div>
@@ -5030,7 +5002,7 @@ class Main extends React.Component {
                   </div>
                 </AppOrCatDialog>
 
-                <CrsDialog exCrsDiaShow={this.state.exCrsDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("excrs")} handleSave={this.applyAppEdit}>
+                <CrsDialog crsDiaShow={this.state.crsDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("excrs")} handleSave={this.applyAppEdit}>
                   <div className="modal-content noBG">
                     <div className="modal-header darkBG">
                       <h5 className="modal-title latowhite" >{spData.menuCreditsLabel}</h5>
@@ -5341,12 +5313,12 @@ class Main extends React.Component {
                             </div>
                           </div>
                         </Errore>
-                        {/* RESAPPS */}
+                        {/* RESITEMS */}
                         <div className="textcenter">
                           {
                             this.state.resAppItems.map(({ id, title, link, descr, icon, video }, i) => {
                               return (
-                                <AppSearchRes key={i} pos={i} id={id}
+                                <ItemSearchRes key={i} pos={i} id={id}
                                   title={title} link={link} descr={descr} icon={icon} video={video}
                                   appVideo={this.resAppVideo} /* appDescr={this.appDescr} */ />
                               )
@@ -5357,7 +5329,7 @@ class Main extends React.Component {
                     </div>
                   </div>
                 </SearchDialog>
-                <AppVideoDialog appVideoDiaShow={this.state.appVideoDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("video")} handleSave={this.applyAppEdit}>
+                <ItemVideoDialog itemVideoDiaShow={this.state.itemVideoDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("video")} handleSave={this.applyAppEdit}>
                   <div className="modal-content darkBG">
 
                     <div className="row mb-1 m-1 modal-header-dark">
@@ -5375,32 +5347,14 @@ class Main extends React.Component {
                       </div>
                     </div>
 
-                    {/* <div className="row modal-header-dark">
-                      <OverlayImg></OverlayImg>
-                      <div className="col">
-                        <h5 className="modal-title-dark" >"{tempAppTitle}"</h5>
-                      </div>
-                    </div> */}
-
                     <div className="modal-body align-items-center darkBG">
                       <center>
                         <iframe width="100%" height="350" src={this.state.videoLink} frameborder="0" allowfullscreen="true"></iframe>
                       </center>
                     </div>
                   </div>
-                </AppVideoDialog>
-                {/* <AppDescrDialog appDescrDiaShow={this.state.appDescrDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("appdescr")} handleSave={this.applyAppEdit}>
-                  <div className="modal-content darkBG">
-                    <div className="modal-header-dark">
-                      <h5 className="modal-title-dark" >"{tempAppTitle}"</h5>
-                    </div>
-                    <div className="modal-body align-items-center darkBG">
-                      <center>
-                        <div className="lato medfonts"><i>{tempAppDescr}</i></div>
-                      </center>
-                    </div>
-                  </div>
-                </AppDescrDialog> */}
+                </ItemVideoDialog>
+
                 <div className="stickytop">
                   {head}
                   {buttons}
@@ -5421,7 +5375,7 @@ class Main extends React.Component {
                   {
                     this.state.rootAppItems.map(({ id, title, link, descr, icon, video }, i) => {
                       return (
-                        <App showAppsBtn={this.state.appsBtnShow} key={i} pos={i} id={id}
+                        <Item showAppsBtn={this.state.appsBtnShow} key={i} pos={i} id={id}
                           title={title} link={link} descr={descr} icon={icon} video={video}
                           appEditDel={this.appEditDel} /* addItem={this.appOrCatItem} */ appVideo={this.appVideo} /* appDescr={this.appDescr} */ />
                       )
@@ -5654,119 +5608,6 @@ class CrsAdd extends React.Component {
     );
   }
 }
-
-// class AppCatRes extends React.Component {
-//   constructor(props) {
-//     super(props);
-//   }
-
-//   render() {
-//     const linkOrVideo = this.props.video
-//       ?
-//       (<a title={this.props.title} onClick={() => this.props.appVideo("AppVideo", this.props.id)}>
-//         <img className="apps" title={this.props.title} alt={this.props.title} src={this.props.icon} />
-//       </a>)
-//       :
-//       (< a title={this.props.title} href={this.props.link} target="_blank" >
-//         <img className="apps" title={this.props.title} alt={this.props.title} src={this.props.icon} />
-//       </a>);
-
-//     let appBtn = ""
-//     let descrButton = "";
-//     if (this.props.descr !== "") {
-//       descrButton = (
-//         <Accordion title={this.props.title} content={this.props.descr} />
-//         // <h4><p className="lato pointer" onClick={() => this.props.appDescr("AppDescr", this.props.id)}><b>{this.props.title}</b></p></h4>
-//         // <div className="row">
-//         //   <div className="col"><h4><p className="lato"><b>{this.props.title}</b></p></h4></div>
-//         //   <div className="col-1"><h4><p className="lato pointer" onClick={() => this.props.appDescr("AppDescr", this.props.id)}><b>+</b></p></h4></div>
-//         // </div>
-//       )
-//     } else {
-//       descrButton = (
-//         <h4><p className="lato"><b>{this.props.title}</b></p></h4>
-//       );
-//     };
-//     if (this.props.showAppsBtn === "ShowAppBtn") {
-//       appBtn = (
-//         <div className="appcontainer">
-//           {linkOrVideo}
-//           {descrButton}
-//           {/* <h4><p className="lato"><b>{this.props.title}</b></p></h4> */}
-//           <div className="row btncontainer">
-//             <button className="col appbutton solidgreen m-1" onClick={() => this.props.appEditDel("AppEdit", this.props.id, this.props.pos)}>
-//               Edit
-//             </button>
-//             <button className="col-1 appbutton black m-1 pad01">
-//               {this.props.pos + 1} {/* {this.props.id} */}
-//             </button>
-//             <button className="col appbutton solidbrick m-1" onClick={() => this.props.appEditDel("AppDel", this.props.id)}>
-//               Remove
-//             </button>
-//           </div>
-//         </div>
-//       )
-//     } else {
-//       appBtn = (
-//         <div className="appcontainer">
-//           {linkOrVideo}
-//           {descrButton}
-//           {/* <p className="smallfont"><i>{this.props.descr}</i></p>
-//           <h4><p className="lato"><b>{this.props.title}</b></p></h4> */}
-//         </div>
-//       )
-//     }
-//     return (
-//       <>
-//         {appBtn}
-//       </>
-//     );
-//   }
-// }
-
-// class AppSearchRes extends React.Component {
-//   constructor(props) {
-//     super(props);
-//   }
-
-//   render() {
-//     const linkOrVideo = this.props.video
-//       ?
-//       (<a title={this.props.title} onClick={() => this.props.appVideo("AppVideo", this.props.id)}>
-//         <img className="apps" title={this.props.title} alt={this.props.title} src={this.props.icon} />
-//       </a>)
-//       :
-//       (< a title={this.props.title} href={this.props.link} target="_blank" >
-//         <img className="apps" title={this.props.title} alt={this.props.title} src={this.props.icon} />
-//       </a>);
-
-//     let appBtn = ""
-//     let descrButton = "";
-//     if (this.props.descr !== "") {
-//       descrButton = (
-//         <Accordion title={this.props.title} content={this.props.descr} />
-//         // <h4><p className="lato pointer" onClick={() => this.props.appDescr("AppDescr", this.props.id)}><b>{this.props.title}</b></p></h4>
-//       )
-//     } else {
-//       descrButton = (
-//         <h4><p className="lato"><b>{this.props.title}</b></p></h4>
-//       );
-//     };
-//     appBtn = (
-//       <div className="appcontainer">
-//         {linkOrVideo}
-//         {descrButton}
-//         {/* <p className="smallfont"><i>{this.props.descr}</i></p>
-//         <h4><p className="lato"><b>{this.props.title}</b></p></h4> */}
-//       </div>
-//     )
-//     return (
-//       <>
-//         {appBtn}
-//       </>
-//     );
-//   }
-// }
 
 class Cat extends React.Component {
   constructor(props) {

@@ -48,7 +48,7 @@
     "headShow": false,
     "footShow": false,
     "infoShow": true,
-    "creditShow": true,
+    "addInfoShow": true,
     "mainBtn": false,
     "appsBtnShow": false,
     "menuShow": true,
