@@ -295,8 +295,8 @@ input:checked+.slider:before {
 	/* box-sizing: unset; */
 }
 
-.crediti {
-	width: 8em;
+.plus {
+	width: 3em;
 	/* height: 6em !important; 
 	position: sticky;
 	cursor: pointer;

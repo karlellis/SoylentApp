@@ -64,7 +64,7 @@ var nome = "";
 var credentials = require("./initSec.json");
 var spData = require("./initData.json");
 
-const Item = ({ showAppsBtn, pos, id, title, link, descr, icon, video, appEditDel, appVideo }) => {
+const Item = ({ showItemsBtn, pos, id, title, link, descr, icon, video, appEditDel, appVideo }) => {
   const [isActive, setIsActive] = useState(false);
 
   const linkOrVideo = video
@@ -117,7 +117,7 @@ const Item = ({ showAppsBtn, pos, id, title, link, descr, icon, video, appEditDe
       <h4><p className="lato"><b>{title}</b></p></h4>
     );
   };
-  if (showAppsBtn === "ShowAppBtn") {
+  if (showItemsBtn === "ShowItemBtn") {
     appBtn = (
       <div className="appcontainer">
         {!isActive && linkOrVideo}
@@ -841,7 +841,7 @@ class Main extends React.Component {
       infoShow: false,
       addInfoShow: false,
       mainBtn: false,
-      appsBtnShow: "null",
+      itemsBtnShow: "null",
       appItems: [],
       rootAppItems: [],
       catItems: [],
@@ -946,7 +946,7 @@ class Main extends React.Component {
           infoShow: spData.infoShow,
           addInfoShow: spData.addInfoShow,
           mainBtn: spData.mainBtn,
-          appsBtnShow: spData.appsBtnShow,
+          itemsBtnShow: spData.itemsBtnShow,
           menuShow: spData.menuShow,
           titleShow: spData.titleShow,
           logoShow: spData.logoShow,
@@ -2502,7 +2502,7 @@ class Main extends React.Component {
       case "appdel":
         this.setState({ appDelDiaShow: false });
         break;
-      case "appadd":
+      case "appAdd":
         this.setState({ appAddDiaShow: false });
         temp5 = tempCatTitle;
         this.setState({ disFieldAA: true });
@@ -2578,13 +2578,13 @@ class Main extends React.Component {
   };
 
   appsButtonShow(id) {
-    if (this.state.appsBtnShow !== id) {
+    if (this.state.itemsBtnShow !== id) {
       this.setState({
-        appsBtnShow: id
+        itemsBtnShow: id
       })
     } else {
       this.setState({
-        appsBtnShow: false
+        itemsBtnShow: false
       })
     }
   }
@@ -2612,9 +2612,9 @@ class Main extends React.Component {
       this.setState({ addInfoShow: spData.addInfoShow });
       login = false;
       var array = [...this.state.appItems];
-      if (this.state.appsBtnShow !== false) {
+      if (this.state.itemsBtnShow !== false) {
         this.setState({
-          appsBtnShow: false
+          itemsBtnShow: false
         })
       }
       spData.appItems = array;
@@ -2928,7 +2928,7 @@ class Main extends React.Component {
         <>
           <div className="row">
             <button className="col button solidindaco m-1"
-              onClick={() => this.appsButtonShow("ShowAppBtn")}>
+              onClick={() => this.appsButtonShow("ShowItemBtn")}>
               <SettingsGear></SettingsGear>
             </button>
             <button className="col button solidbrick m-1"
@@ -4342,13 +4342,13 @@ class Main extends React.Component {
                         {
                           this.state.catAppItems.map(({ id, title, link, descr, icon, video }, i) => {
                             return (
-                              <Item showAppsBtn={this.state.appsBtnShow} key={i} pos={i} id={id}
+                              <Item showItemsBtn={this.state.itemsBtnShow} key={i} pos={i} id={id}
                                 title={title} link={link} descr={descr} icon={icon} video={video}
                                 appVideo={this.catAppVideo} appEditDel={this.appEditDel} />
                             )
                           })
                         }
-                        <AppAdd showAppsBtn={this.state.appsBtnShow} addItem={this.appAddItem} />
+                        <ItemAdd showItemsBtn={this.state.itemsBtnShow} addItem={this.appAddItem} />
                       </div>
                     </div>
                   </div>
@@ -4548,7 +4548,7 @@ class Main extends React.Component {
                     </div>
                   </div>
                 </AppEditDialog>
-                <AppAddDialog appAddDiaShow={this.state.appAddDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("appadd")} handleSave={this.applyAppAdd}>
+                <AppAddDialog appAddDiaShow={this.state.appAddDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("appAdd")} handleSave={this.applyAppAdd}>
                   <div className="modal-content noborder">
                     <div className="modal-header">
                       <h5 className="modal-title" >Add Item</h5>
@@ -5011,13 +5011,13 @@ class Main extends React.Component {
                         {
                           this.state.creditsItems.map(({ id, title, link, descr, }, i) => {
                             return (
-                              <Credit showAppsBtn={this.state.appsBtnShow} key={i} pos={i}
+                              <Credit showItemsBtn={this.state.itemsBtnShow} key={i} pos={i}
                                 title={title} link={link} descr={descr} crsEditDel={this.crsEditDel}
                                 crsAddItem={this.crsAddItem} />
                             )
                           })
                         }
-                        <CrsAdd showAppsBtn={this.state.appsBtnShow} /* title={title} link={link} icon={icon} */ addItem={this.crsAddItem} />
+                        <CrsAdd showItemsBtn={this.state.itemsBtnShow} /* title={title} link={link} icon={icon} */ addItem={this.crsAddItem} />
                       </div>
                     </div>
                   </div>
@@ -5364,7 +5364,7 @@ class Main extends React.Component {
                   {
                     this.state.catItems.map(({ id, title, icon }, i) => {
                       return (
-                        <Cat showAppsBtn={this.state.appsBtnShow} key={i} pos={i}
+                        <Cat showItemsBtn={this.state.itemsBtnShow} key={i} pos={i}
                           title={title} icon={icon} catEditDel={this.catEditDel}
                           /* catAddItem={this.catAddItem} */ catCont={this.catCont} />
                       )
@@ -5374,13 +5374,13 @@ class Main extends React.Component {
                   {
                     this.state.rootAppItems.map(({ id, title, link, descr, icon, video }, i) => {
                       return (
-                        <Item showAppsBtn={this.state.appsBtnShow} key={i} pos={i} id={id}
+                        <Item showItemsBtn={this.state.itemsBtnShow} key={i} pos={i} id={id}
                           title={title} link={link} descr={descr} icon={icon} video={video}
                           appEditDel={this.appEditDel} /* addItem={this.appOrCatItem} */ appVideo={this.appVideo} /* appDescr={this.appDescr} */ />
                       )
                     })
                   }
-                  <AppAdd showAppsBtn={this.state.appsBtnShow} /* title={title} link={link} icon={icon} */ addItem={this.appOrCatItem} />
+                  <ItemAdd showItemsBtn={this.state.itemsBtnShow} /* title={title} link={link} icon={icon} */ addItem={this.appOrCatItem} />
                   {/* FOOTER */}
                   {foot}
                 </div>
@@ -5510,7 +5510,7 @@ class LogoImg extends React.Component {
 //         <h4><p className="lato"><b>{this.props.title}</b></p></h4>
 //       );
 //     };
-//     if (this.props.showAppsBtn === "ShowAppBtn") {
+//     if (this.props.showItemsBtn === "ShowItemBtn") {
 //       appBtn = (
 //         <div className="appcontainer">
 //           {linkOrVideo}
@@ -5546,13 +5546,13 @@ class LogoImg extends React.Component {
 //   }
 // }
 
-class AppAdd extends React.Component {
+class ItemAdd extends React.Component {
   constructor(props) {
     super(props);
   }
   render() {
     let appBtn = ""
-    if (this.props.showAppsBtn === "ShowAppBtn") {
+    if (this.props.showItemsBtn === "ShowItemBtn") {
       appBtn = (
         <div className="appcontainer">
           < a title="Add Item" onClick={() => this.props.addItem()} >
@@ -5583,15 +5583,16 @@ class CrsAdd extends React.Component {
   }
   render() {
     let crsBtn = ""
-    if (this.props.showAppsBtn === "ShowAppBtn") {
+    if (this.props.showItemsBtn === "ShowItemBtn") {
       crsBtn = (
 
         <div className="row">
           <button className="col extcredits solidgreen m-1"
             onClick={() => this.props.addItem()}>
-            <b><h2><font color="white">
-              +
-            </font></h2></b>
+            {/* <b><h2><font color="white"> */}
+              <img className="plus mt-2 mb-1" title="Add Item" alt="Add Item" src="./appicons/plus.svg" />
+              {/* + */}
+            {/* </font></h2></b> */}
             <h5><font color="Chartreuse">Add Item</font></h5>
           </button>
         </div>
@@ -5616,7 +5617,7 @@ class Cat extends React.Component {
   render() {
 
     let catBtn = ""
-    if (this.props.showAppsBtn === "ShowAppBtn") {
+    if (this.props.showItemsBtn === "ShowItemBtn") {
       catBtn = (
         <div className="appcontainer">
           <a title={this.props.title} onClick={() => this.props.catCont("catCont", this.props.pos)}>
@@ -5661,7 +5662,7 @@ class Credit extends React.Component {
 
   render() {
     let creditBtn = ""
-    if (this.props.showAppsBtn === "ShowAppBtn") {
+    if (this.props.showItemsBtn === "ShowItemBtn") {
       creditBtn = (
         <>
           <div className="row">

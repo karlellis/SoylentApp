@@ -2,8 +2,8 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="192.20953mm"
-   height="192.22711mm"
+   width="190.75732mm"
+   height="190.76997mm"
    id="svg2"
    version="1.1"
    xmlns="http://www.w3.org/2000/svg"
@@ -26,10 +26,9 @@
   </metadata>
   <g
      id="layer1"
-     transform="translate(-30.732584,-131.28946)"
-     style="fill:#00ff00;stroke:#00e458;stroke-width:6.67087;stroke-dasharray:none;stroke-opacity:1">
+     transform="translate(-33.476927,-134.05246)">
     <path
-       style="display:inline;fill:#00ff00;fill-rule:evenodd;stroke:#00e458;stroke-width:6.67087;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:#ffffff;fill-rule:evenodd;stroke:#000000;stroke-width:1.18218px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="M 389.97427,134.66012 C 195.4437,136.70386 36.968497,293.57778 34.068017,489.22261 v 11.3125 C 37.296767,694.87619 194.25273,851.56013 388.59927,854.44136 587.34956,857.38788 750.8715,698.66041 753.81802,499.91011 756.76454,301.15981 598.03707,137.63789 399.28677,134.69137 c -3.10547,-0.046 -6.22471,-0.0637 -9.3125,-0.0312 z m -30.1875,145.06249 h 68.34375 c 2.09772,0 3.78125,1.68354 3.78125,3.78125 v 173.09375 h 173.09375 c 2.09772,0 3.78125,1.68353 3.78125,3.78125 v 68.34375 c 0,2.09772 -1.68353,3.8125 -3.78125,3.8125 H 431.91177 v 173.09375 c 0,2.09772 -1.68353,3.78125 -3.78125,3.78125 h -68.34375 c -2.09772,0 -3.78125,-1.68353 -3.78125,-3.78125 V 532.53511 H 182.91177 c -2.09772,0 -3.78125,-1.71478 -3.78125,-3.8125 v -68.34375 c 0,-2.09772 1.68353,-3.78125 3.78125,-3.78125 H 356.00552 V 283.50386 c 0,-2.09771 1.68353,-3.78125 3.78125,-3.78125 z"
        id="path2996" />
   </g>
