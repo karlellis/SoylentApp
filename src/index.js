@@ -478,7 +478,7 @@ const ItemVideoDialog = ({ handleClose, itemVideoDiaShow, children, activityChan
       <section className="modal-main darkBG">
         {children}
         <div className="modal-footer-dark">
-          <button type="button" disabled={(activityChanged) ? true : false} className="btn btn-secondary" data-dismiss="modal" onClick={handleClose}>Close</button>
+          <button type="button" /* disabled={(activityChanged) ? true : false} */ className="btn btn-secondary" data-dismiss="modal" onClick={handleClose}>Close</button>
         </div>
       </section>
     </div>
@@ -492,7 +492,7 @@ const CrsDialog = ({ handleClose, crsDiaShow, children, activityChanged }) => {
       <section className="modal-main-dark">
         {children}
         <div className="modal-footer-dark">
-          <button type="button" disabled={(activityChanged) ? true : false} className="btn btn-secondary" data-dismiss="modal" onClick={handleClose}>Close</button>
+          <button type="button" /* disabled={(activityChanged) ? true : false} */ className="btn btn-secondary" data-dismiss="modal" onClick={handleClose}>Close</button>
         </div>
       </section>
     </div>
@@ -1396,7 +1396,6 @@ class Main extends React.Component {
               backgroundSize: 'cover',
               backgroundRepeat: 'no-repeat',
               backgroundAttachment: "fixed"
-              // opacity: spData.catOpacity
             }
           });
           this.setState({ upShow: false });
@@ -4506,7 +4505,7 @@ class Main extends React.Component {
                           </div>
                         </div>
 
-                        <Conferma alShow={this.state.alShow} /* handleClose={this.hideAlert} */>
+                        <Conferma alShow={this.state.alShow}>
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
@@ -4713,7 +4712,7 @@ class Main extends React.Component {
                           </div>
                         </div>
 
-                        <Conferma alShow={this.state.alShow} /* handleClose={this.hideAlert} */>
+                        <Conferma alShow={this.state.alShow}>
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
@@ -4762,7 +4761,7 @@ class Main extends React.Component {
                       <h5 className="modal-title" >Permanently delete {tempAppTitle} item?</h5>
                     </div>
                     <div className="modal-body">
-                      <Conferma alShow={this.state.alShow} /* handleClose={this.hideAlert} */>
+                      <Conferma alShow={this.state.alShow}>
                         <div className="row text-center pt-2">
                           <div className="col">
                             <div className="row">
@@ -4832,7 +4831,7 @@ class Main extends React.Component {
                           </div>
                         </div>
 
-                        <Conferma alShow={this.state.alShow} /* handleClose={this.hideAlert} */>
+                        <Conferma alShow={this.state.alShow}>
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
@@ -4929,7 +4928,7 @@ class Main extends React.Component {
                           </div>
                         </div>
 
-                        <Conferma alShow={this.state.alShow} /* handleClose={this.hideAlert} */>
+                        <Conferma alShow={this.state.alShow}>
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
@@ -4978,7 +4977,7 @@ class Main extends React.Component {
                       <h5 className="modal-title" >Permanently delete {tempCatTitle} category?</h5>
                     </div>
                     <div className="modal-body">
-                      <Conferma alShow={this.state.alShow} /* handleClose={this.hideAlert} */>
+                      <Conferma alShow={this.state.alShow}>
                         <div className="row text-center pt-2">
                           <div className="col">
                             <div className="row">
@@ -5096,7 +5095,7 @@ class Main extends React.Component {
                           </div>
                         </div>
 
-                        <Conferma alShow={this.state.alShow} /* handleClose={this.hideAlert} */>
+                        <Conferma alShow={this.state.alShow}>
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
@@ -5211,7 +5210,7 @@ class Main extends React.Component {
                           </div>
                         </div>
 
-                        <Conferma alShow={this.state.alShow} /* handleClose={this.hideAlert} */>
+                        <Conferma alShow={this.state.alShow}>
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
@@ -5260,7 +5259,7 @@ class Main extends React.Component {
                       <h5 className="modal-title" >Permanently delete {tempCrsTitle} credit?</h5>
                     </div>
                     <div className="modal-body">
-                      <Conferma alShow={this.state.alShow} /* handleClose={this.hideAlert} */>
+                      <Conferma alShow={this.state.alShow}>
                         <div className="row text-center pt-2">
                           <div className="col">
                             <div className="row">
@@ -5287,7 +5286,7 @@ class Main extends React.Component {
                         <div className="form-group">
                           <input type="text" className="form-control contenitore pt-2" ref={(input) => { this.searchInput = input; }} onChange={e => temp = e.target.value} placeholder={"Search..."} />
                         </div>
-                        <Conferma alShow={this.state.alShow} /* handleClose={this.hideAlert} */>
+                        <Conferma alShow={this.state.alShow}>
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
