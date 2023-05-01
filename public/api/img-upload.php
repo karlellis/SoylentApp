@@ -103,7 +103,7 @@ if ($_FILES['logo']) {
         }
     }
 } else if ($_FILES['cat']) {
-    $upload_dir = '../appicons/';
+    $upload_dir = '../itemicons/';
     $icon_name = $_FILES["cat"]["name"];
     $icon_tmp_name = $_FILES["cat"]["tmp_name"];
     $error = $_FILES["cat"]["error"];
@@ -169,7 +169,7 @@ if ($_FILES['logo']) {
         }
     }
 } else if ($_FILES['icon']) {
-    $upload_dir = '../appicons/';
+    $upload_dir = '../itemicons/';
     $icon_name = $_FILES["icon"]["name"];
     $icon_tmp_name = $_FILES["icon"]["tmp_name"];
     $error = $_FILES["icon"]["error"];

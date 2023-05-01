@@ -40,6 +40,13 @@ td {
 	z-index: 999;
 }
 
+.ontopabsolute {
+	position: absolute;
+	top: 5px;
+	width: 100%;
+	z-index: 999;
+}
+
 .button {
 	/* background-color: #4CAF50;  Green */
 	border: none;
@@ -61,7 +68,7 @@ td {
 	font-size: 16px;
 }
 
-.appbutton {
+.itembutton {
 	/* background-color: #4CAF50;  Green */
 	border: none;
 	color: white;
@@ -161,7 +168,7 @@ td {
 	box-sizing: border-box;
 }
 
-.appcontainer {
+.itemcontainer {
 	display: inline-block;
 	max-width: 277px;
 	margin: auto;
@@ -259,7 +266,7 @@ input:checked+.slider:before {
 	transform: scale(1.05, 1.05);
 }
 
-.apps {
+.items {
 	/* Geometry */
 	width: 16em;
 	/* width: 277px;
@@ -429,7 +436,7 @@ label {
 	/* font-size: calc(1.375rem + 1.5vw); */
 }
 
-.apps:hover {
+.items:hover {
 	/* ZoomIn */
 	-webkit-transform: scale(1.05, 1.05);
 	-moz-transform: scale(1.05, 1.05);
@@ -657,12 +664,45 @@ label {
 	animation: fadeIn 1s;
 }
 
+.fade-out-image {
+	animation: fadeOut 1s;
+}
+
+.alert-shown {
+	opacity: 1;
+	transition: all 250ms linear;
+	max-height: 30px;
+}
+
+.alert-hidden {
+	opacity: 0;
+	max-height: 0;
+    transition: max-height 1s ease-out;
+    overflow: hidden;
+	transition: all 250ms linear;
+}
+
 .latotitle {
 	font-size: 1.3em;
 	color: white;
 	/* background-color: rgba(47, 79, 79, 0.7) !important; */
 	border: rgb(47, 79, 79)
 }
+
+/* .fadeOut{
+	opacity:0;
+	width:0;
+	height:0;
+	transition: width 0.5s 0.5s, height 0.5s 0.5s, opacity 0.5s;
+
+} */
+/* .fadeIn{
+	opacity:1;
+	width:100px;
+	height:100px;
+	transition: width 0.5s, height 0.5s, opacity 0.5s 0.5s;
+
+} */
 
 @keyframes fadeIn {
 	0% {
@@ -711,6 +751,56 @@ label {
 
 	100% {
 		opacity: 1;
+	}
+}
+
+@keyframes fadeOut {
+	0% {
+		opacity: 1;
+	}
+
+	100% {
+		opacity: 0;
+	}
+}
+
+@-moz-keyframes fadeOut {
+	0% {
+		opacity: 1;
+	}
+
+	100% {
+		opacity: 0;
+	}
+}
+
+@-webkit-keyframes fadeOut {
+	0% {
+		opacity: 1;
+	}
+
+	100% {
+		opacity: 0;
+	}
+}
+
+@-o-keyframes fadeOut {
+	0% {
+		opacity: 1;
+	}
+
+	100% {
+		opacity: 0;
+	}
+}
+
+@-ms-keyframes fadeOut {
+	0% {
+		opacity: 1;
+	}
+
+	100% {
+		opacity: 0;
 	}
 }
 

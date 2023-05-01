@@ -26,10 +26,10 @@ var tempCatColor = "#0077c8";
 var tempTextColor = "#0077c8";
 var tempColW = "";
 var radiobtn = "";
-var tempAppTitle = "";
-var tempAppDescr = "...";
-var tempAppLink = "";
-var tempAppVideo = false;
+var tempItemTitle = "";
+var tempItemDescr = "...";
+var tempItemLink = "";
+var tempItemVideo = false;
 var tempCatTitle = "";
 var tempCrsTitle = "";
 var tempCrsLink = "";
@@ -42,7 +42,7 @@ var array = [];
 var arrayAdd = [];
 var inPos = "";
 var blockHide = "none";
-var appNewItem = {
+var newItem = {
   "title": "",
   "link": "",
   "icon": "",
@@ -64,20 +64,20 @@ var nome = "";
 var credentials = require("./initSec.json");
 var spData = require("./initData.json");
 
-const Item = ({ showItemsBtn, pos, id, title, link, descr, icon, video, appEditDel, appVideo }) => {
+const Item = ({ showItemsBtn, pos, id, title, link, descr, icon, video, itemEditDel, itemVideo }) => {
   const [isActive, setIsActive] = useState(false);
 
   const linkOrVideo = video
     ?
-    (<a title={title} onClick={() => appVideo("AppVideo", id)}>
-      <img className="apps" title={title} alt={title} src={icon} />
+    (<a title={title} onClick={() => itemVideo("itemVideo", id)}>
+      <img className="items" title={title} alt={title} src={icon} />
     </a>)
     :
     (< a title={title} href={link} target="_blank" >
-      <img className="apps" title={title} alt={title} src={icon} />
+      <img className="items" title={title} alt={title} src={icon} />
     </a>);
 
-  let appBtn = "";
+  let itemBtn = "";
   let descrButton = "";
 
   if (descr !== "") {
@@ -85,11 +85,12 @@ const Item = ({ showItemsBtn, pos, id, title, link, descr, icon, video, appEditD
       <>
         {isActive &&
           <div className="row medfonts descr fade-in-image lato text-center m-auto mt-5 mb-5"
+          // <div className={`row medfonts descr lato text-center m-auto mt-5 mb-5 ${isActive ? 'alert-shown' : 'alert-hidden'}`}
             style={{
               backgroundImage: "url(" + icon + ")",
               backgroundPosition: 'center',
               backgroundRepeat: 'no-repeat',
-              backgroundAttachment: "fixed",
+              // backgroundAttachment: "fixed",
               width: "16em"
             }}>
             <b style={{ backgroundColor: "rgba(0, 0, 0, 0.7)" }}>{descr}</b>
@@ -118,26 +119,26 @@ const Item = ({ showItemsBtn, pos, id, title, link, descr, icon, video, appEditD
     );
   };
   if (showItemsBtn === "ShowItemBtn") {
-    appBtn = (
-      <div className="appcontainer">
+    itemBtn = (
+      <div className="itemcontainer">
         {!isActive && linkOrVideo}
         {descrButton}
         <div className="row btncontainer">
-          <button className="col appbutton solidgreen m-1" onClick={() => appEditDel("AppEdit", id, pos)}>
+          <button className="col itembutton solidgreen m-1" onClick={() => itemEditDel("itemEdit", id, pos)}>
             Edit
           </button>
-          <button className="col-1 appbutton black m-1 pad01">
+          <button className="col-1 itembutton black m-1 pad01">
             {pos + 1} {/* {this.props.id} */}
           </button>
-          <button className="col appbutton solidbrick m-1" onClick={() => appEditDel("AppDel", id)}>
+          <button className="col itembutton solidbrick m-1" onClick={() => itemEditDel("itemDel", id)}>
             Remove
           </button>
         </div>
       </div>
     )
   } else {
-    appBtn = (
-      <div className="appcontainer">
+    itemBtn = (
+      <div className="itemcontainer">
         {!isActive && linkOrVideo}
         {descrButton}
       </div>
@@ -145,23 +146,23 @@ const Item = ({ showItemsBtn, pos, id, title, link, descr, icon, video, appEditD
   }
   return (
     <>
-      {appBtn}
+      {itemBtn}
     </>
   );
 }
 
-const ItemSearchRes = ({ id, title, link, descr, icon, video, appVideo }) => {
+const ItemSearchRes = ({ id, title, link, descr, icon, video, itemVideo }) => {
   const [isActive, setIsActive] = useState(false);
   const linkOrVideo = video
     ?
-    (<a title={title} onClick={() => appVideo("AppVideo", id)}>
-      <img className="apps" title={title} alt={title} src={icon} />
+    (<a title={title} onClick={() => itemVideo("itemVideo", id)}>
+      <img className="items" title={title} alt={title} src={icon} />
     </a>)
     :
     (< a title={title} href={link} target="_blank" >
-      <img className="apps" title={title} alt={title} src={icon} />
+      <img className="items" title={title} alt={title} src={icon} />
     </a>);
-  let appBtn = "";
+  let itemBtn = "";
   let descrButton = "";
 
   if (descr !== "") {
@@ -173,7 +174,7 @@ const ItemSearchRes = ({ id, title, link, descr, icon, video, appVideo }) => {
               backgroundImage: "url(" + icon + ")",
               backgroundPosition: 'center',
               backgroundRepeat: 'no-repeat',
-              backgroundAttachment: "fixed",
+              // backgroundAttachment: "fixed",
               width: "16em"
             }}>
             <b style={{ backgroundColor: "rgba(0, 0, 0, 0.7)" }}>{descr}</b>
@@ -202,15 +203,15 @@ const ItemSearchRes = ({ id, title, link, descr, icon, video, appVideo }) => {
     );
   };
 
-  appBtn = (
-    <div className="appcontainer">
+  itemBtn = (
+    <div className="itemcontainer">
       {!isActive && linkOrVideo}
       {descrButton}
     </div>
   )
   return (
     <>
-      {appBtn}
+      {itemBtn}
     </>
   );
 }
@@ -259,7 +260,7 @@ const AddInfo = ({ addInfoShow, children, mainBtn }) => {
   const showHideClassName = addInfoShow ? "d-block" : "d-none";
   const justifyCenterEnd = mainBtn ? "justify-content-end" : "justify-content-center";
   return (
-    <section id="FootAddInfo" style={{ backgroundColor: spData.footCreditColor, color: spData.footCreditTextColor }} className={showHideClassName + " " + justifyCenterEnd + " " + spData.footCreditColW + " latoplain d-flex flex-column align-items-center"}>
+    <section id="FootAddInfo" style={{ backgroundColor: spData.footAddColor, color: spData.footAddTextColor }} className={showHideClassName + " " + justifyCenterEnd + " " + spData.footAddColW + " latoplain d-flex flex-column align-items-center"}>
       {children}
     </section>
   );
@@ -353,31 +354,70 @@ const EditSet = ({ editSetShow, children }) => {
   );
 };
 
-const Conferma = ({ alShow, children }) => {
-  const showHideClassName = alShow ? "display-block" : "display-none";
+// const Ok = ({ okShow, display, children }) => {
+//   const showHideClassName = okShow ? "dispaly-block fade-in-image" : "fade-out-image";
+//   const displayClassName = display ? "" : " display-none";
+//   return (
+//     <div className={showHideClassName + displayClassName}>
+//       {children}
+//     </div>
+//   );
+// };
+
+const Ok = ({ okShow, children }) => {
+  // const showHideClassName = okShow ? "dispaly-block fade-in-image" : "fade-out-image";
+  // const displayClassName = display ? "" : " display-none";
+  // const setShowingAlert = React.useState(false);
+  // const [isShowingAlert, setShowingAlert] = React.useState(false);
+
+  // return (
+  //   <div className={`ontopabsolute ${okShow ? 'alert-shown' : 'alert-hidden'}`} >
+  //     {children}
+  //   </div>
+  // );
+
   return (
-    <div className={showHideClassName}>
+    <div className={`${okShow ? 'alert-shown' : 'alert-hidden'}`} >
       {children}
     </div>
   );
+
 };
 
 const Upload = ({ upShow, children }) => {
-  const showHideClassName = upShow ? "display-block" : "display-none";
+  // const showHideClassName = upShow ? "display-block" : "display-none";
+  // return (
+  //   <div className={showHideClassName}>
+  //     {children}
+  //   </div>
+  // );
+
   return (
-    <div className={showHideClassName}>
+    <div className={`${upShow ? 'alert-shown' : 'alert-hidden'}`} >
       {children}
     </div>
   );
 };
 
-const Errore = ({ alErrShow, children }) => {
-  const showHideClassName = alErrShow ? "display-block" : "display-none";
+const Error = ({ errShow, children }) => {
+  // return (
+  //   <div className={`ontopabsolute ${errShow ? 'alert-shown' : 'alert-hidden'}`} >
+  //     {children}
+  //   </div>
+  // );
+
   return (
-    <div className={showHideClassName}>
+    <div className={`${errShow ? 'alert-shown' : 'alert-hidden'}`} >
       {children}
     </div>
   );
+
+  // const showHideClassName = errShow ? "display-block" : "display-none";
+  // return (
+  //   <div className={showHideClassName}>
+  //     {children}
+  //   </div>
+  // );
 };
 
 const MenuDialog = ({ handleSave, handleClose, menuDiaShow, children }) => {
@@ -395,14 +435,14 @@ const MenuDialog = ({ handleSave, handleClose, menuDiaShow, children }) => {
   );
 };
 
-const AppOrCatDialog = ({ handleApp, handleCat, handleClose, aocDiaShow, children }) => {
-  const showHideClassName = aocDiaShow ? "modal display-block" : "modal display-none";
+const ItemOrCatDialog = ({ handleItem, handleCat, handleClose, iocDiaShow, children }) => {
+  const showHideClassName = iocDiaShow ? "modal display-block" : "modal display-none";
   return (
     <div className={showHideClassName}>
       <section className="modal-main">
         {children}
         <div className="modal-footer">
-          <button type="button" className="btn btn-primary" data-dismiss="modal" onClick={handleApp}>Item</button>
+          <button type="button" className="btn btn-primary" data-dismiss="modal" onClick={handleItem}>Item</button>
           <button type="button" className="btn btn-success" data-dismiss="modal" onClick={handleCat}>Category</button>
           <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={handleClose}>Close</button>
         </div>
@@ -456,7 +496,7 @@ const InfoDialog = ({ handleSave, handleClose, infoDiaShow, children }) => {
   );
 };
 
-const BackEditDialog = ({ handleSave, handleClose, backEditDiaShow, children, activityChanged, disField }) => {
+const BackEditDialog = ({ handleSave, handleClose, backEditDiaShow, children, activityChanged }) => {
   const showHideClassName = backEditDiaShow ? "modal display-block" : "modal display-none";
   return (
     <div className={showHideClassName}>
@@ -529,8 +569,8 @@ const SearchDialog = ({ handleClose, handleSave, handleReset, searchDiaShow, chi
   );
 };
 
-const AppEditDialog = ({ handleSave, handleClose, appEditDiaShow, children, activityChanged }) => {
-  const showHideClassName = appEditDiaShow ? "modal display-block" : "modal display-none";
+const ItemEditDialog = ({ handleSave, handleClose, itemEditDiaShow, children, activityChanged }) => {
+  const showHideClassName = itemEditDiaShow ? "modal display-block" : "modal display-none";
   return (
     <div className={showHideClassName}>
       <section className="modal-main">
@@ -544,8 +584,8 @@ const AppEditDialog = ({ handleSave, handleClose, appEditDiaShow, children, acti
   );
 };
 
-const AppDelDialog = ({ handleSave, handleClose, appDelDiaShow, children, activityChanged }) => {
-  const showHideClassName = appDelDiaShow ? "modal display-block" : "modal display-none";
+const ItemDelDialog = ({ handleSave, handleClose, itemDelDiaShow, children, activityChanged }) => {
+  const showHideClassName = itemDelDiaShow ? "modal display-block" : "modal display-none";
   return (
     <div className={showHideClassName}>
       <section className="modal-main">
@@ -559,8 +599,8 @@ const AppDelDialog = ({ handleSave, handleClose, appDelDiaShow, children, activi
   );
 };
 
-const AppAddDialog = ({ handleSave, handleClose, appAddDiaShow, children, activityChanged }) => {
-  const showHideClassName = appAddDiaShow ? "modal display-block" : "modal display-none";
+const ItemAddDialog = ({ handleSave, handleClose, itemAddDiaShow, children, activityChanged }) => {
+  const showHideClassName = itemAddDiaShow ? "modal display-block" : "modal display-none";
   return (
     <div className={showHideClassName /* + " ontop" */}>
       <section className="modal-main">
@@ -664,8 +704,8 @@ const CrsAddDialog = ({ handleSave, handleClose, crsAddDiaShow, children, activi
   );
 };
 
-const CreditDialog = ({ handleSave, handleClose, creditDiaShow, children }) => {
-  const showHideClassName = creditDiaShow ? "modal display-block" : "modal display-none";
+const AddInfoDialog = ({ handleSave, handleClose, addInfoDiaShow, children }) => {
+  const showHideClassName = addInfoDiaShow ? "modal display-block" : "modal display-none";
   return (
     <div className={showHideClassName}>
       <section className="modal-main">
@@ -724,44 +764,6 @@ const LogoDialog = ({ handleUpload, handleClose, logoDiaShow, children, activity
   );
 };
 
-// const Accordion = ({ title, content }) => {
-//   const [isActive, setIsActive] = useState(false);
-
-//   return (
-//     <>
-//       <h4>
-//         <div className="row lato text-center m-auto">
-//           <div className="col">
-//             <div className="row">
-//               <div className="col d-flex flex-column justify-content-center align-items-center">
-//                 <b>{title}</b>
-//               </div>
-//               <div className="col-2 borderleft pointer d-flex flex-column justify-content-center align-items-center"
-//                 onClick={() => setIsActive(!isActive)}>
-//                 <b>{isActive ? '-' : '+'}</b>
-//                 {/* <b>+</b> */}
-//               </div>
-//             </div>
-//           </div>
-//           {/* {isActive && <i className="row smallfonts">{content}</i>} */}
-//         </div>
-//       </h4>
-//       <div className="row smallfonts lato text-center m-auto">
-//         {isActive && <i>{content}</i>}
-//       </div>
-//     </>
-
-
-//     // <div>
-//     //   <div onClick={() => setIsActive(!isActive)}>
-//     //     <div className="lato pointer"><h4><b>{title}</b></h4></div>
-//     //     <div>{isActive ? '-' : '+'}</div>
-//     //   </div>
-//     //   {isActive && <div className="lato smallfonts"><i>{content}</i></div>}
-//     // </div>
-//   );
-// };
-
 async function fetchUpPHP(file, url, key) {
   // console.log("fetchUpPHP...");
   var data = new FormData()
@@ -808,9 +810,9 @@ async function fetchDownCredentials(url) {
     });
 }
 
-async function fetchDelPHP(appIcon, url, key) {
+async function fetchDelPHP(itemIcon, url, key) {
   var data = new FormData()
-  data.append(key, appIcon)
+  data.append(key, itemIcon)
   const response = await fetch(url, {
     method: 'POST',
     headers: {
@@ -842,11 +844,11 @@ class Main extends React.Component {
       addInfoShow: false,
       mainBtn: false,
       itemsBtnShow: "null",
-      appItems: [],
-      rootAppItems: [],
+      items: [],
+      rootItems: [],
+      cats: [],
+      resItems: [],
       catItems: [],
-      resAppItems: [],
-      catAppItems: [],
       creditsItems: [],
       menuShow: false,
       titleShow: false,
@@ -856,12 +858,12 @@ class Main extends React.Component {
       menuDiaShow: false,
       logoDiaShow: false,
       loginDiaShow: false,
-      creditDiaShow: false,
+      addInfoDiaShow: false,
       loginEditDiaShow: false,
       infoDiaShow: false,
-      appEditDiaShow: false,
-      appDelDiaShow: false,
-      appAddDiaShow: false,
+      itemEditDiaShow: false,
+      itemDelDiaShow: false,
+      itemAddDiaShow: false,
       itemVideoDiaShow: false,
       catEditDiaShow: false,
       catDelDiaShow: false,
@@ -872,24 +874,25 @@ class Main extends React.Component {
       crsDiaShow: false,
       searchDiaShow: false,
       catDiaShow: false,
-      appDescrDiaShow: false,
+      // appDescrDiaShow: false,
       // creditsDiaShow: false,
-      aocDiaShow: false,
-      videoLink: tempAppLink,
-      alShow: false,
-      alErrShow: false,
+      iocDiaShow: false,
+      videoLink: tempItemLink,
+      okShow: false,
+      display: false,
+      errShow: false,
       upShow: false,
       activityChanged: false,
       disFieldB: false,
       disFieldBC: false,
-      disField: false,
-      disField2: false,
-      disField3: false,
+      disFieldT: false,
+      disFieldT2: false,
+      disFieldT3: false,
       disFieldC: false,
       disFieldC2: false,
       disFieldC3: false,
-      disFieldAA: true,
-      disFieldAE: false,
+      disFieldIA: true,
+      disFieldIE: false,
       disFieldMS: false,
       disFieldMC: false,
       catSel: "Root",
@@ -911,19 +914,19 @@ class Main extends React.Component {
         backgroundAttachment: "fixed"
       }
     }
-    this.appEditDel = this.appEditDel.bind(this);
-    this.appAddItem = this.appAddItem.bind(this);
-    this.appOrCatItem = this.appOrCatItem.bind(this);
+    this.itemEditDel = this.itemEditDel.bind(this);
+    this.addItem = this.addItem.bind(this);
+    this.itemOrCat = this.itemOrCat.bind(this);
     this.catEditDel = this.catEditDel.bind(this);
     this.catAddItem = this.catAddItem.bind(this);
     this.crsEditDel = this.crsEditDel.bind(this);
     this.crsAddItem = this.crsAddItem.bind(this);
-    this.appVideo = this.appVideo.bind(this);
+    this.itemVideo = this.itemVideo.bind(this);
     // this.appDescr = this.appDescr.bind(this);
     this.catCont = this.catCont.bind(this);
-    this.resAppVideo = this.resAppVideo.bind(this);
-    this.catAppVideo = this.catAppVideo.bind(this);
-    this.exCrsShow = this.exCrsShow.bind(this);
+    this.resItemVideo = this.resItemVideo.bind(this);
+    this.catItemVideo = this.catItemVideo.bind(this);
+    this.crsShow = this.crsShow.bind(this);
     this.search = this.search.bind(this);
     this.setCat = this.setCat.bind(this);
     this.showMainButtons = this.showMainButtons.bind(this);
@@ -941,7 +944,7 @@ class Main extends React.Component {
     fetch('./config/data.json').then(response => {
       response.json().then(settings => {
         spData = settings;
-        // console.log("Apps: ", settings.appItems);
+        // console.log("Apps: ", settings.items);
         this.setState({
           infoShow: spData.infoShow,
           addInfoShow: spData.addInfoShow,
@@ -951,31 +954,31 @@ class Main extends React.Component {
           titleShow: spData.titleShow,
           logoShow: spData.logoShow,
           clockShow: spData.clockShow,
-          appItems: spData.appItems,
-          catItems: spData.catItems,
+          items: spData.items,
+          cats: spData.cats,
           creditsItems: spData.creditsItems,
           disFieldB: spData.noBackImage,
           disFieldBC: spData.noCatImage,
-          disField: spData.noFootTitle,
-          disField2: spData.noFootSubtitle,
-          disField3: spData.noFootSubtitle2,
-          disFieldC: spData.noFootCreditiTitle,
-          disFieldC2: spData.noFootCreditiSubtitle,
-          disFieldC3: spData.noFootCreditiSubtitle2,
+          disFieldT: spData.noFootTitle,
+          disFieldT2: spData.noFootSubtitle,
+          disFieldT3: spData.noFootSubtitle2,
+          disFieldC: spData.noFootAddTitle,
+          disFieldC2: spData.noFootAddSubtitle,
+          disFieldC3: spData.noFootAddSubtitle2,
           disFieldMS: spData.noMenuSearch,
           disFieldMC: spData.noMenuCredits
 
         });
         document.title = spData.headTitle;
-        if (spData.footTitle !== "") {
+        if (!spData.noFootTitle) {
           document.querySelector('meta[name="description"]').setAttribute("content", spData.footTitle);
-        } else if (spData.footSubtitle !== "") {
+        } else if (!spData.noFootSubtitle) {
           document.querySelector('meta[name="description"]').setAttribute("content", spData.footSubtitle);
-        } else {
+        } else if (!spData.noFootSubtitle2) {
           document.querySelector('meta[name="description"]').setAttribute("content", spData.footSubtitle2);
         }
         // console.log("BGOpacity:", (1 - spData.backgroundOpacity).toString());
-        if (spData.noBackImage === true) {
+        if (spData.noBackImage) {
           this.setState({
             backStyle: {
               backgroundImage: "none",
@@ -990,7 +993,6 @@ class Main extends React.Component {
           this.setState({
             backStyle: {
               backgroundImage: "linear-gradient(rgba(255,255,255," + (1 - spData.backgroundOpacity).toString() + "), rgba(255,255,255," + (1 - spData.backgroundOpacity).toString() + ")), url(" + spData.backgroundImage + ")",
-              // backgroundImage: "url(" + spData.backgroundImage + ")",
               backgroundColor: spData.backgroundColor,
               backgroundPosition: 'center',
               backgroundSize: 'cover',
@@ -1000,7 +1002,7 @@ class Main extends React.Component {
           });
         }
 
-        if (spData.noCatImage === true) {
+        if (spData.noCatImage) {
           this.setState({
             catStyle: {
               backgroundImage: "none",
@@ -1015,7 +1017,6 @@ class Main extends React.Component {
           this.setState({
             catStyle: {
               backgroundImage: "linear-gradient(rgba(255,255,255," + (1 - spData.catOpacity).toString() + "), rgba(255,255,255," + (1 - spData.catOpacity).toString() + ")), url(" + spData.catImage + ")",
-              // backgroundImage: "url(" + spData.catImage + ")",
               backgroundColor: spData.catColor,
               backgroundPosition: 'center',
               backgroundSize: 'cover',
@@ -1033,8 +1034,8 @@ class Main extends React.Component {
         document.getElementById('menuForm').reset();
         document.getElementById('infoForm').reset();
         document.getElementById('creditForm').reset();
-        document.getElementById('appEditForm').reset();
-        document.getElementById('appAddForm').reset();
+        document.getElementById('itemEditForm').reset();
+        document.getElementById('itemAddForm').reset();
         document.getElementById('catEditForm').reset();
         document.getElementById('catAddForm').reset();
         document.getElementById('crsEditForm').reset();
@@ -1042,9 +1043,9 @@ class Main extends React.Component {
         document.getElementById('backEditForm').reset();
         document.getElementById('clockForm').reset();
         document.getElementById('searchForm').reset();
-        // console.log("Apps: ", this.state.appItems);
-        this.appCatSearch("Root", spData.appItems);
-        // console.log("Root Apps: ", this.state.rootAppItems);
+        this.itemCatSearch("Root", spData.items);
+        // console.log("Apps: ", this.state.items);
+        // console.log("Root Apps: ", this.state.rootItems);
         // console.log("Check password: ", comparePassword("admin", password));
         // console.log("Hashed first password: ", hashPassword(password));
       })
@@ -1061,8 +1062,8 @@ class Main extends React.Component {
     fetchUpConfig(file, url, key)
       .then(res => {
         console.log("Config Saved!");
-        this.appCatSearch(tempCatTitle, spData.appItems);
-        this.appCatSearch("Root", spData.appItems);
+        this.itemCatSearch(tempCatTitle, spData.items);
+        this.itemCatSearch("Root", spData.items);
         // console.log("Save Conf. result=", res);
         // console.log("TempCat= ", tempCatTitle);
       });;
@@ -1087,9 +1088,10 @@ class Main extends React.Component {
     }
     tempIcon = "";
     tempCatIcon = "";
-    this.setState({ alErrShow: false });
-    this.setState({ upShow: true });
-    this.setState({ alShow: false });
+    this.showAlert("up");
+    // this.setState({ errShow: false });
+    // this.setState({ upShow: true });
+    // this.setState({ okShow: false });
     this.setState({
       activityChanged: true
     })
@@ -1097,9 +1099,10 @@ class Main extends React.Component {
       .then(res => {
         if (url === "logo" && op === "edit") {
           spData.LogoIcon = "./img/" + nome;
-          this.setState({ upShow: false });
-          this.setState({ alShow: true });
-          this.setState({ alErrShow: false });
+          this.showAlert("ok");
+          // this.setState({ upShow: false });
+          // this.setState({ okShow: true });
+          // this.setState({ errShow: false });
           // console.log("File correctly Uploaded!");
           this.setState({
             activityChanged: false
@@ -1109,7 +1112,7 @@ class Main extends React.Component {
         } else if (url === "icon" && op === "edit") {
           if (fileImg !== null) {
             // console.log("Icon edit!");
-            array[temp].icon = "./appicons/" + nome;
+            array[temp].icon = "./itemicons/" + nome;
           }
           if (temp2 !== "") {
             array[temp].title = temp2;
@@ -1123,21 +1126,21 @@ class Main extends React.Component {
           if (inPos !== "") {
             let index = 0;
             if (tempCatTitle !== "Root") {
-              index = this.state.catAppItems[inPos].id;
+              index = this.state.catItems[inPos].id;
             } else {
-              index = this.state.rootAppItems[inPos].id;
+              index = this.state.rootItems[inPos].id;
             }
             // console.log("Index: ", index);
             // console.log("temp: ", temp);
-            appNewItem.icon = array[temp].icon;
-            appNewItem.title = array[temp].title;
-            appNewItem.link = array[temp].link;
-            appNewItem.descr = array[temp].descr;
-            appNewItem.video = array[temp].video;
-            appNewItem.cat = array[temp].cat;
-            appNewItem.id = index;
+            newItem.icon = array[temp].icon;
+            newItem.title = array[temp].title;
+            newItem.link = array[temp].link;
+            newItem.descr = array[temp].descr;
+            newItem.video = array[temp].video;
+            newItem.cat = array[temp].cat;
+            newItem.id = index;
             if (index > temp) {
-              array = this.addAfter(array, index + 1, appNewItem);
+              array = this.addAfter(array, index + 1, newItem);
               for (let i = (index + 1); i < array.length; i++) {
                 (array[i].id)++;
               }
@@ -1148,10 +1151,10 @@ class Main extends React.Component {
                 (array[i].id)--;
               }
               var noAddArray = [...array];
-              this.setState({ appItems: array });
-              spData.appItems = noAddArray;
+              this.setState({ items: array });
+              spData.items = noAddArray;
             } else {
-              array = this.addAfter(array, index, appNewItem);
+              array = this.addAfter(array, index, newItem);
               for (let i = (index + 1); i < array.length; i++) {
                 (array[i].id)++;
               }
@@ -1161,8 +1164,8 @@ class Main extends React.Component {
                 (array[i].id)--;
               }
               var noAddArray = [...array];
-              this.setState({ appItems: array });
-              spData.appItems = noAddArray;
+              this.setState({ items: array });
+              spData.items = noAddArray;
             }
           }
           inPos = "";
@@ -1174,7 +1177,7 @@ class Main extends React.Component {
           temp4 = "";
           temp5 = tempCatTitle;
           temp6 = "";
-          appNewItem = {
+          newItem = {
             "title": "",
             "link": "",
             "icon": "",
@@ -1183,33 +1186,34 @@ class Main extends React.Component {
             "cat": "",
             "id": 0
           };
-          this.setState({ upShow: false });
-          this.setState({ alShow: true });
-          this.setState({ alErrShow: false });
+          this.showAlert("ok");
+          // this.setState({ upShow: false });
+          // this.setState({ okShow: true });
+          // this.setState({ errShow: false });
           // console.log("Edit Icon correctly Uploaded!");
           this.saveFile(spData, "./api/img-upload.php", "config");
         } else if (url === "icon" && op === "add") {
-          appNewItem.icon = "./appicons/" + nome;
-          appNewItem.title = temp2;
-          appNewItem.link = temp3;
-          appNewItem.descr = temp6;
-          appNewItem.video = temp4;
-          appNewItem.cat = temp5;
+          newItem.icon = "./itemicons/" + nome;
+          newItem.title = temp2;
+          newItem.link = temp3;
+          newItem.descr = temp6;
+          newItem.video = temp4;
+          newItem.cat = temp5;
           let index = 0;
           // console.log("Insert pos=", (inPos));
           if (tempCatTitle !== "Root") {
-            index = this.state.catAppItems[inPos].id;
+            index = this.state.catItems[inPos].id;
           } else {
-            index = this.state.rootAppItems[inPos].id;
+            index = this.state.rootItems[inPos].id;
           }
-          appNewItem.id = index;
+          newItem.id = index;
           tempIcon = "";
-          arrayAdd = this.addAfter(array, index, appNewItem);
+          arrayAdd = this.addAfter(array, index, newItem);
           for (let i = (index + 1); i < arrayAdd.length; i++) {
             (arrayAdd[i].id)++;
           }
-          this.setState({ appItems: arrayAdd });
-          spData.appItems = arrayAdd;
+          this.setState({ items: arrayAdd });
+          spData.items = arrayAdd;
           arrayAdd = [];
           arrayLength++;
           inPos = "";
@@ -1219,7 +1223,7 @@ class Main extends React.Component {
           temp4 = "";
           temp5 = tempCatTitle;
           temp6 = "";
-          appNewItem = {
+          newItem = {
             "title": "",
             "link": "",
             "icon": "",
@@ -1228,28 +1232,29 @@ class Main extends React.Component {
             "cat": "",
             "id": 0
           };
-          this.setState({ upShow: false });
-          this.setState({ alShow: true });
-          this.setState({ alErrShow: false });
+          this.showAlert("ok");
+          // this.setState({ upShow: false });
+          // this.setState({ okShow: true });
+          // this.setState({ errShow: false });
           // console.log("Add Icon correctly Uploaded!");
           this.saveFile(spData, "./api/img-upload.php", "config");
         } else if (url === "icon" && op === "addlast") {
-          appNewItem.icon = "./appicons/" + nome;
-          appNewItem.title = temp2;
-          appNewItem.link = temp3;
-          appNewItem.descr = temp6;
-          appNewItem.video = temp4;
-          appNewItem.cat = temp5;
-          appNewItem.id = arrayLength;
+          newItem.icon = "./itemicons/" + nome;
+          newItem.title = temp2;
+          newItem.link = temp3;
+          newItem.descr = temp6;
+          newItem.video = temp4;
+          newItem.cat = temp5;
+          newItem.id = arrayLength;
           inPos = arrayLength;
           // console.log("Pos: ", inPos);
           tempIcon = "";
-          arrayAdd = this.addAfter(array, inPos, appNewItem);
-          this.setState({ appItems: arrayAdd });
-          spData.appItems = arrayAdd;
+          arrayAdd = this.addAfter(array, inPos, newItem);
+          this.setState({ items: arrayAdd });
+          spData.items = arrayAdd;
           // console.log("Array: ", array);
           // console.log("ArrayAdd: ", arrayAdd);
-          // console.log("CatItems: ", spData.appItems);
+          // console.log("CatItems: ", spData.items);
           arrayAdd = [];
           arrayLength = arrayLength + 1;
           inPos = "";
@@ -1259,7 +1264,7 @@ class Main extends React.Component {
           temp4 = "";
           temp5 = tempCatTitle;
           temp6 = "";
-          appNewItem = {
+          newItem = {
             "title": "",
             "link": "",
             "icon": "",
@@ -1268,20 +1273,21 @@ class Main extends React.Component {
             "cat": "",
             "id": 0
           };
-          this.setState({ upShow: false });
-          this.setState({ alShow: true });
-          this.setState({ alErrShow: false });
+          this.showAlert("ok");
+          // this.setState({ upShow: false });
+          // this.setState({ okShow: true });
+          // this.setState({ errShow: false });
           // console.log("Add Last Icon correctly Uploaded!");
           this.saveFile(spData, "./api/img-upload.php", "config");
         } else if (url === "cat" && op === "edit") {
           if (fileImg !== null) {
             // console.log("Cat edit!");
-            array[currPos].icon = "./appicons/" + nome;
+            array[currPos].icon = "./itemicons/" + nome;
           }
           // console.log("temp2: ", temp2);
           if (temp2 !== "") {
             array[currPos].title = temp2;
-            this.state.appItems.forEach(element => {
+            this.state.items.forEach(element => {
               if (element.cat === tempCatTitle) {
                 element.cat = temp2;
               }
@@ -1296,14 +1302,14 @@ class Main extends React.Component {
               arrayAdd = this.addAfter(array, inPos + 1, catNewItem);
               tempIcon = "";
               arrayAdd.splice(currPos, 1);
-              this.setState({ catItems: arrayAdd });
-              spData.catItems = arrayAdd;
+              this.setState({ cats: arrayAdd });
+              spData.cats = arrayAdd;
             } else {
               arrayAdd = this.addAfter(array, inPos, catNewItem);
               tempIcon = "";
               arrayAdd.splice(currPos + 1, 1);
-              this.setState({ catItems: arrayAdd });
-              spData.catItems = arrayAdd;
+              this.setState({ cats: arrayAdd });
+              spData.cats = arrayAdd;
             }
           }
           arrayAdd = [];
@@ -1313,20 +1319,21 @@ class Main extends React.Component {
             "title": "",
             "icon": ""
           };
-          this.setState({ upShow: false });
-          this.setState({ alShow: true });
-          this.setState({ alErrShow: false });
+          this.showAlert("ok");
+          // this.setState({ upShow: false });
+          // this.setState({ okShow: true });
+          // this.setState({ errShow: false });
           // console.log("Edit Cat correctly Uploaded!");
           this.saveFile(spData, "./api/img-upload.php", "config");
         } else if (url === "cat" && op === "add") {
           // console.log("CatAdd in Pos: ", inPos);
-          catNewItem.icon = "./appicons/" + nome;
+          catNewItem.icon = "./itemicons/" + nome;
           catNewItem.title = temp2;
           tempIcon = "";
           arrayAdd = this.addAfter(array, inPos, catNewItem);
           // console.log("Insert pos=", (inPos));
-          this.setState({ catItems: arrayAdd });
-          spData.catItems = arrayAdd;
+          this.setState({ cats: arrayAdd });
+          spData.cats = arrayAdd;
           arrayAdd = [];
           temp2 = "";
           temp = "";
@@ -1334,34 +1341,36 @@ class Main extends React.Component {
             "title": "",
             "icon": ""
           };
-          this.setState({ upShow: false });
-          this.setState({ alShow: true });
-          this.setState({ alErrShow: false });
+          this.showAlert("ok");
+          // this.setState({ upShow: false });
+          // this.setState({ okShow: true });
+          // this.setState({ errShow: false });
           // console.log("Add Icon correctly Uploaded!");
           this.saveFile(spData, "./api/img-upload.php", "config");
         } else if (url === "cat" && op === "addlast") {
           // console.log("CatAddLast...");
-          catNewItem.icon = "./appicons/" + nome;
+          catNewItem.icon = "./itemicons/" + nome;
           catNewItem.title = temp2;
           // console.log("CatNewItem: ", catNewItem);
           inPos = arrayLength;
           // console.log("Pos: ", inPos);
           tempIcon = "";
           arrayAdd = this.addAfter(array, inPos, catNewItem);
-          this.setState({ catItems: arrayAdd });
-          spData.catItems = arrayAdd;
+          this.setState({ cats: arrayAdd });
+          spData.cats = arrayAdd;
           // console.log("Array: ", array);
           // console.log("ArrayAdd: ", arrayAdd);
-          // console.log("CatItems: ", spData.catItems);
+          // console.log("CatItems: ", spData.cats);
           arrayAdd = [];
           temp2 = "";
           catNewItem = {
             "title": "",
             "icon": ""
           };
-          this.setState({ upShow: false });
-          this.setState({ alShow: true });
-          this.setState({ alErrShow: false });
+          this.showAlert("ok");
+          // this.setState({ upShow: false });
+          // this.setState({ okShow: true });
+          // this.setState({ errShow: false });
           // console.log("Add Last Icon correctly Uploaded!");
           this.saveFile(spData, "./api/img-upload.php", "config");
         } else if (url === "back" && op === "edit") {
@@ -1377,9 +1386,10 @@ class Main extends React.Component {
               backgroundAttachment: "fixed"
             }
           });
-          this.setState({ upShow: false });
-          this.setState({ alShow: true });
-          this.setState({ alErrShow: false });
+          this.showAlert("ok");
+          // this.setState({ upShow: false });
+          // this.setState({ okShow: true });
+          // this.setState({ errShow: false });
           // console.log("File correctly Uploaded!");
           this.setState({
             activityChanged: false
@@ -1398,9 +1408,10 @@ class Main extends React.Component {
               backgroundAttachment: "fixed"
             }
           });
-          this.setState({ upShow: false });
-          this.setState({ alShow: true });
-          this.setState({ alErrShow: false });
+          this.showAlert("ok");
+          // this.setState({ upShow: false });
+          // this.setState({ okShow: true });
+          // this.setState({ errShow: false });
           // console.log("File correctly Uploaded!");
           this.setState({
             activityChanged: false
@@ -1486,9 +1497,10 @@ class Main extends React.Component {
         "link": "",
         "descr": ""
       };
-      this.setState({ upShow: false });
-      this.setState({ alShow: true });
-      this.setState({ alErrShow: false });
+      this.showAlert("ok");
+      // this.setState({ upShow: false });
+      // this.setState({ okShow: true });
+      // this.setState({ errShow: false });
     }
     this.saveFile(spData, "./api/img-upload.php", "config");
   }
@@ -1526,36 +1538,63 @@ class Main extends React.Component {
     }
     blockHide = "none";
     temp = "";
-    this.setState({ alShow: true });
-    this.setState({ alErrShow: false });
+    this.showAlert("ok");
+    // this.setState({ okShow: true });
+    // this.setState({ errShow: false });
     this.saveFile(spData, "./api/img-upload.php", "config");
 
   }
 
-  appSearchReset = () => {
-    this.setState({ alShow: false });
-    this.setState({ alErrShow: false });
+  itemSearchReset = () => {
+    this.showAlert("all");
+    // this.setState({ okShow: false });
+    // this.setState({ errShow: false });
     document.getElementById('searchForm').reset();
-    this.setState({ resAppItems: [] });
+    this.setState({ resItems: [] });
     temp = "";
   }
-
-  appSearch = () => {
+  showAlert(id) {
+    switch (id) {
+      case "ok":
+        this.setState({ okShow: true });
+        this.setState({ errShow: false });
+        this.setState({ upShow: false });
+        setTimeout(() => this.setState({ okShow: false }), 2000);
+        break;
+      case "err":
+        this.setState({ errShow: true });
+        this.setState({ okShow: false });
+        this.setState({ upShow: false });
+        setTimeout(() => this.setState({ errShow: false }), 2000);
+        break;
+      case "up":
+        this.setState({ errShow: false });
+        this.setState({ okShow: false });
+        this.setState({ upShow: true });
+        break;
+      case "all":
+        this.setState({ errShow: false });
+        this.setState({ okShow: false });
+        this.setState({ upShow: false });
+        break;
+    }
+  }
+  itemSearch = () => {
     if (temp !== "") {
       let count = 0;
-      for (let i = 0; i < this.state.appItems.length; i++) {
-        if (this.state.appItems[i].title.toLowerCase().includes(temp.toLowerCase()) ||
-          this.state.appItems[i].descr.toLowerCase().includes(temp.toLowerCase())) {
-          appNewItem.icon = this.state.appItems[i].icon;
-          appNewItem.title = this.state.appItems[i].title;
-          appNewItem.link = this.state.appItems[i].link;
-          appNewItem.descr = this.state.appItems[i].descr;
-          appNewItem.video = this.state.appItems[i].video;
-          appNewItem.cat = this.state.appItems[i].cat;
-          appNewItem.id = this.state.appItems[i].id;
-          arrayAdd = this.addAfter(arrayAdd, count, appNewItem);
+      for (let i = 0; i < this.state.items.length; i++) {
+        if (this.state.items[i].title.toLowerCase().includes(temp.toLowerCase()) ||
+          this.state.items[i].descr.toLowerCase().includes(temp.toLowerCase())) {
+          newItem.icon = this.state.items[i].icon;
+          newItem.title = this.state.items[i].title;
+          newItem.link = this.state.items[i].link;
+          newItem.descr = this.state.items[i].descr;
+          newItem.video = this.state.items[i].video;
+          newItem.cat = this.state.items[i].cat;
+          newItem.id = this.state.items[i].id;
+          arrayAdd = this.addAfter(arrayAdd, count, newItem);
           count++;
-          appNewItem = {
+          newItem = {
             "title": "",
             "link": "",
             "icon": "",
@@ -1568,9 +1607,9 @@ class Main extends React.Component {
       }
       count = 0;
       // console.log("Insert pos=", (inPos));
-      this.setState({ resAppItems: arrayAdd });
+      this.setState({ resItems: arrayAdd });
       arrayAdd = [];
-      appNewItem = {
+      newItem = {
         "title": "",
         "link": "",
         "icon": "",
@@ -1579,15 +1618,16 @@ class Main extends React.Component {
         "cat": "",
         "id": 0
       };
-      this.setState({ alShow: true });
-      this.setState({ alErrShow: false });
+      this.showAlert("ok");
+      // this.setState({ okShow: true });
+      // this.setState({ errShow: false });
+      // setTimeout(() => this.setState({ okShow: false }), 2000);
     } else {
-      this.setState({ alErrShow: true });
-      this.setState({ alShow: false });
+      this.showAlert("err");
     }
   }
 
-  appCatSearch = (cat, items) => {
+  itemCatSearch = (cat, items) => {
     if (items.length > 0) {
       // console.log("AppCatSearch...", items.length);
       let count = 0;
@@ -1595,18 +1635,18 @@ class Main extends React.Component {
         // console.log("Analyzing App Pos: ", i, " - Title: ", items[i].title);
         if (items[i].cat.toLowerCase().includes(cat.toLowerCase())) {
           // console.log("App Pos: ", i, " - Title: ", items[i].title, " is in Cat: ", cat, " CatPos: ", count);
-          appNewItem.icon = items[i].icon;
-          appNewItem.title = items[i].title;
-          appNewItem.link = items[i].link;
-          appNewItem.descr = items[i].descr;
-          appNewItem.video = items[i].video;
-          appNewItem.cat = items[i].cat;
-          appNewItem.id = items[i].id;
+          newItem.icon = items[i].icon;
+          newItem.title = items[i].title;
+          newItem.link = items[i].link;
+          newItem.descr = items[i].descr;
+          newItem.video = items[i].video;
+          newItem.cat = items[i].cat;
+          newItem.id = items[i].id;
           // console.log("App Pos: ", count, " - Title: ", items[i].title);
-          arrayAdd = this.addAfter(arrayAdd, count, appNewItem);
+          arrayAdd = this.addAfter(arrayAdd, count, newItem);
           // console.log("ArrayAdd: ", arrayAdd);
           count++;
-          appNewItem = {
+          newItem = {
             "title": "",
             "link": "",
             "icon": "",
@@ -1620,12 +1660,12 @@ class Main extends React.Component {
       count = 0;
       // console.log("Insert pos=", (inPos));
       if (cat === "Root") {
-        this.setState({ rootAppItems: arrayAdd });
+        this.setState({ rootItems: arrayAdd });
       } else {
-        this.setState({ catAppItems: arrayAdd });
+        this.setState({ catItems: arrayAdd });
       }
       arrayAdd = [];
-      appNewItem = {
+      newItem = {
         "title": "",
         "link": "",
         "icon": "",
@@ -1647,8 +1687,9 @@ class Main extends React.Component {
       spData.clockShow = blockHide;
     }
     blockHide = "none";
-    this.setState({ alShow: true });
-    this.setState({ alErrShow: false });
+    this.showAlert("ok");
+    // this.setState({ okShow: true });
+    // this.setState({ errShow: false });
     this.saveFile(spData, "./api/img-upload.php", "config");
   }
 
@@ -1670,8 +1711,9 @@ class Main extends React.Component {
       spData.menuShow = blockHide;
     }
 
-    this.setState({ alShow: true });
-    this.setState({ alErrShow: false });
+    this.showAlert("ok");
+    // this.setState({ okShow: true });
+    // this.setState({ errShow: false });
     this.saveFile(spData, "./api/img-upload.php", "config");
     temp = "";
     temp2 = "";
@@ -1713,34 +1755,35 @@ class Main extends React.Component {
     disable1 = "none";
     disable2 = "none";
     disable3 = "none";
-    this.setState({ alShow: true });
+    this.showAlert("ok");
+    // this.setState({ okShow: true });
     this.saveFile(spData, "./api/img-upload.php", "config");
   }
 
   saveCredit = () => {
     if (disable1 !== "none") {
-      spData.noFootCreditiTitle = disable1;
+      spData.noFootAddTitle = disable1;
     }
     if (temp !== "") {
-      spData.footCreditiTitle = temp;
+      spData.footAddTitle = temp;
     }
     if (disable2 !== "none") {
-      spData.noFootCreditiSubtitle = disable2;
+      spData.noFootAddSubtitle = disable2;
     }
     if (temp2 !== "") {
-      spData.footCreditiSubtitle = temp2;
+      spData.footAddSubtitle = temp2;
     }
     if (disable3 !== "none") {
-      spData.noFootCreditiSubtitle2 = disable3;
+      spData.noFootAddSubtitle2 = disable3;
     }
     if (temp3 !== "") {
-      spData.footCreditiSubtitle2 = temp3;
+      spData.footAddSubtitle2 = temp3;
     }
 
-    spData.footCreditColor = this.hexToRgb(tempColor) + ", " + tempOpacity + ")";
-    spData.footCreditOpacity = parseFloat(tempOpacity.replace(/,/g, "."));
-    spData.footCreditTextColor = this.hexToRgb(tempTextColor) + ", 1)";
-    spData.footCreditColW = tempColW;
+    spData.footAddColor = this.hexToRgb(tempColor) + ", " + tempOpacity + ")";
+    spData.footAddOpacity = parseFloat(tempOpacity.replace(/,/g, "."));
+    spData.footAddTextColor = this.hexToRgb(tempTextColor) + ", 1)";
+    spData.footAddColW = tempColW;
     if (blockHide !== "none") {
       spData.addInfoShow = blockHide;
     }
@@ -1751,31 +1794,33 @@ class Main extends React.Component {
     disable1 = "none";
     disable2 = "none";
     disable3 = "none";
-    this.setState({ alShow: true });
+    this.showAlert("ok");
+    // this.setState({ okShow: true });
     this.saveFile(spData, "./api/img-upload.php", "config");
   }
 
-  applyAppEdit = () => {
-    array = [...this.state.appItems];
+  applyItemEdit = () => {
+    array = [...this.state.items];
     // console.log("FileImg: ", fileImg);
     // console.log("cgPos: ", cgPos);
     // console.log("Temp2: ", temp2);
     // console.log("Temp3: ", temp3);
-    // console.log("Temp4: ", temp4, " ", tempAppVideo);
+    // console.log("Temp4: ", temp4, " ", tempItemVideo);
     // console.log("Temp5: ", temp5, " ", tempCatTitle);
-    // console.log("Temp6: ", temp6, " ", tempAppDescr);
+    // console.log("Temp6: ", temp6, " ", tempItemDescr);
     if (noDescr === true) {
       temp6 = "";
     }
-    if (fileImg !== null || temp2 !== "" || temp3 !== "" || temp4 !== tempAppVideo || temp5 !== tempCatTitle || temp6 !== tempAppDescr || cgPos !== "") {
+    if (fileImg !== null || temp2 !== "" || temp3 !== "" || temp4 !== tempItemVideo || temp5 !== tempCatTitle || temp6 !== tempItemDescr || cgPos !== "") {
       if (cgPos !== "") {
         inPos = parseInt(cgPos) - 1;
         // console.log("Edit inPos: ", inPos, " currPos: ", currPos);
         if (inPos < arrayLength && inPos >= 0 && inPos !== currPos) {
           this.saveImgFile(fileImg, "icon", "edit");
         } else {
-          this.setState({ alShow: false });
-          this.setState({ alErrShow: true });
+          this.showAlert("err");
+          // this.setState({ okShow: false });
+          // this.setState({ errShow: true });
         }
       } else {
         // console.log("cgPos === \"\"");
@@ -1783,13 +1828,14 @@ class Main extends React.Component {
       }
     } else {
       // console.log("fileImg - temp2 - temp3 are Null!!!");
-      this.setState({ alShow: false });
-      this.setState({ alErrShow: true });
+      this.showAlert("err");
+      // this.setState({ okShow: false });
+      // this.setState({ errShow: true });
     }
   }
 
-  applyAppAdd = () => {
-    array = [...this.state.appItems];
+  applyItemAdd = () => {
+    array = [...this.state.items];
     // console.log("Image: ", fileImg);
     // console.log("Name: ", temp2);
     // console.log("Link: ", temp3);
@@ -1805,22 +1851,24 @@ class Main extends React.Component {
         if (inPos < arrayLength) {
           this.saveImgFile(fileImg, "icon", "add");
         } else {
-          this.setState({ alShow: false });
-          this.setState({ alErrShow: true });
+          this.showAlert("err");
+          // this.setState({ okShow: false });
+          // this.setState({ errShow: true });
         }
       } else {
         this.saveImgFile(fileImg, "icon", "addlast");
       }
     } else {
-      this.setState({ alShow: false });
-      this.setState({ alErrShow: true });
+      this.showAlert("err");
+      // this.setState({ okShow: false });
+      // this.setState({ errShow: true });
     }
   }
 
-  applyAppDel = () => {
-    var array = [...this.state.appItems];
+  applyItemDel = () => {
+    var array = [...this.state.items];
     var index = temp;
-    // console.log("AppDel ID: ", temp);
+    // console.log("itemDel ID: ", temp);
     if (index !== -1) {
       fetchDelPHP(tempIcon, "./api/img-upload.php", "icon");
       tempIcon = "";
@@ -1829,13 +1877,14 @@ class Main extends React.Component {
         (array[i].id)--;
       }
       var noAddArray = [...array];
-      this.setState({ appItems: array });
-      spData.appItems = noAddArray;
+      this.setState({ items: array });
+      spData.items = noAddArray;
     }
     temp = "";
     temp2 = "";
     temp3 = "";
-    this.setState({ alShow: true });
+    this.showAlert("ok");
+    // this.setState({ okShow: true });
     this.saveFile(spData, "./api/img-upload.php", "config");
     this.setState({
       activityChanged: true
@@ -1865,26 +1914,29 @@ class Main extends React.Component {
         if (inPos < arrayLength && inPos >= 0 && inPos !== currPos && !dup) {
           this.saveImgFile(fileImg, "cat", "edit");
         } else {
-          this.setState({ alShow: false });
-          this.setState({ alErrShow: true });
+          this.showAlert("err");
+          // this.setState({ okShow: false });
+          // this.setState({ errShow: true });
         }
       } else {
         if (!dup) {
           this.saveImgFile(fileImg, "cat", "edit");
         } else {
-          this.setState({ alShow: false });
-          this.setState({ alErrShow: true });
+          this.showAlert("err");
+          // this.setState({ okShow: false });
+          // this.setState({ errShow: true });
         }
       }
     } else {
       // console.log("fileImg - temp2 - temp are \"\"");
-      this.setState({ alShow: false });
-      this.setState({ alErrShow: true });
+      this.showAlert("err");
+      // this.setState({ okShow: false });
+      // this.setState({ errShow: true });
     }
   }
 
   applyCatAdd = () => {
-    array = [...this.state.catItems];
+    array = [...this.state.cats];
     // console.log("Image: ", fileImg);
     // console.log("Name: ", temp2);
     // console.log("Link: ", temp3);
@@ -1904,25 +1956,28 @@ class Main extends React.Component {
         if (inPos < arrayLength && !dup) {
           this.saveImgFile(fileImg, "cat", "add");
         } else {
-          this.setState({ alShow: false });
-          this.setState({ alErrShow: true });
+          this.showAlert("err");
+          // this.setState({ okShow: false });
+          // this.setState({ errShow: true });
         }
       } else {
         if (!dup) {
           this.saveImgFile(fileImg, "cat", "addlast");
         } else {
-          this.setState({ alShow: false });
-          this.setState({ alErrShow: true });
+          this.showAlert("err");
+          // this.setState({ okShow: false });
+          // this.setState({ errShow: true });
         }
       }
     } else {
-      this.setState({ alShow: false });
-      this.setState({ alErrShow: true });
+      this.showAlert("err");
+      // this.setState({ okShow: false });
+      // this.setState({ errShow: true });
     }
   }
 
   applyCatDel = () => {
-    var array = [...this.state.catItems];
+    var array = [...this.state.cats];
     var index = currPos;
     // console.log("Index: ", temp);
     if (index !== -1) {
@@ -1930,10 +1985,10 @@ class Main extends React.Component {
       tempIcon = "";
       array.splice(index, 1);
       var noAddArray = [...array];
-      this.setState({ catItems: array });
-      spData.catItems = noAddArray;
+      this.setState({ cats: array });
+      spData.cats = noAddArray;
     }
-    this.state.appItems.forEach(element => {
+    this.state.items.forEach(element => {
       if (element.cat === tempCatTitle) {
         element.cat = "Root";
       }
@@ -1941,7 +1996,8 @@ class Main extends React.Component {
     currPos = "";
     temp2 = "";
     temp3 = "";
-    this.setState({ alShow: true });
+    this.showAlert("ok");
+    // this.setState({ okShow: true });
     this.saveFile(spData, "./api/img-upload.php", "config");
     this.setState({
       activityChanged: true
@@ -1955,21 +2011,25 @@ class Main extends React.Component {
         // console.log("InPos: ", inPos);
         if (inPos < arrayLength && inPos >= 0 && inPos !== currPos) {
           this.saveCrs("crs", "edit");
-          this.setState({ alShow: true });
-          this.setState({ alErrShow: false });
+          this.showAlert("ok");
+          // this.setState({ okShow: true });
+          // this.setState({ errShow: false });
         } else {
-          this.setState({ alShow: false });
-          this.setState({ alErrShow: true });
+          this.showAlert("err");
+          // this.setState({ okShow: false });
+          // this.setState({ errShow: true });
         }
       } else {
         this.saveCrs("crs", "edit");
-        this.setState({ alShow: true });
-        this.setState({ alErrShow: false });
+        this.showAlert("ok");
+        // this.setState({ okShow: true });
+        // this.setState({ errShow: false });
       }
     } else {
       // console.log("fileImg - temp2 - temp are \"\"");
-      this.setState({ alShow: false });
-      this.setState({ alErrShow: true });
+      this.showAlert("err");
+      // this.setState({ okShow: false });
+      // this.setState({ errShow: true });
     }
   }
 
@@ -1986,20 +2046,24 @@ class Main extends React.Component {
         // console.log("InPos: ", inPos);
         if (inPos < arrayLength/*  && !dup */) {
           this.saveCrs("crs", "add");
-          this.setState({ alShow: true });
-          this.setState({ alErrShow: false });
+          this.showAlert("ok");
+          // this.setState({ okShow: true });
+          // this.setState({ errShow: false });
         } else {
-          this.setState({ alShow: false });
-          this.setState({ alErrShow: true });
+          this.showAlert("err");
+          // this.setState({ okShow: false });
+          // this.setState({ errShow: true });
         }
       } else {
         this.saveCrs("crs", "addlast");
-        this.setState({ alShow: true });
-        this.setState({ alErrShow: false });
+        this.showAlert("ok");
+        // this.setState({ okShow: true });
+        // this.setState({ errShow: false });
       }
     } else {
-      this.setState({ alShow: false });
-      this.setState({ alErrShow: true });
+      this.showAlert("err");
+      // this.setState({ okShow: false });
+      // this.setState({ errShow: true });
     }
   }
 
@@ -2017,7 +2081,8 @@ class Main extends React.Component {
     temp2 = "";
     temp3 = "";
     temp4 = "";
-    this.setState({ alShow: true });
+    this.showAlert("ok");
+    // this.setState({ okShow: true });
     this.saveFile(spData, "./api/img-upload.php", "config");
     this.setState({
       activityChanged: true
@@ -2026,7 +2091,7 @@ class Main extends React.Component {
 
   saveBack = () => {
     // console.log("NoImage:", spData.noBackImage);
-    // console.log("disField:", this.state.disField);
+    // console.log("disFieldT:", this.state.disFieldT);
     if (fileImg !== null) {
       tempIcon = spData.backgroundImage;
       this.saveImgFile(fileImg, "back", "edit");
@@ -2059,9 +2124,10 @@ class Main extends React.Component {
           }
         });
       }
-      this.setState({ upShow: false });
-      this.setState({ alShow: true });
-      this.setState({ alErrShow: false });
+      this.showAlert("ok");
+      // this.setState({ upShow: false });
+      // this.setState({ okShow: true });
+      // this.setState({ errShow: false });
       this.saveFile(spData, "./api/img-upload.php", "config");
     }
 
@@ -2097,9 +2163,10 @@ class Main extends React.Component {
           }
         });
       }
-      this.setState({ upShow: false });
-      this.setState({ alShow: true });
-      this.setState({ alErrShow: false });
+      this.showAlert("ok");
+      // this.setState({ upShow: false });
+      // this.setState({ okShow: true });
+      // this.setState({ errShow: false });
       this.saveFile(spData, "./api/img-upload.php", "config");
     }
   }
@@ -2123,9 +2190,10 @@ class Main extends React.Component {
         spData.logoShow = blockHide;
       }
       blockHide = "none";
-      this.setState({ upShow: false });
-      this.setState({ alShow: true });
-      this.setState({ alErrShow: false });
+      this.showAlert("ok");
+      // this.setState({ upShow: false });
+      // this.setState({ okShow: true });
+      // this.setState({ errShow: false });
       this.saveFile(spData, "./api/img-upload.php", "config");
       this.hideModal("logo");
     }
@@ -2167,7 +2235,8 @@ class Main extends React.Component {
               // if (!pass) {
               // console.log("WRONG Psw: " + temp2)
               // }
-              this.setState({ alShow: true });
+              this.showAlert("ok");
+              // this.setState({ okShow: true });
               login = false;
             }
           })
@@ -2193,16 +2262,18 @@ class Main extends React.Component {
           this.saveFile(credentials, "./api/img-upload.php", "credentials");
           temp = "";
           temp2 = "";
-          this.setState({ alShow: true });
-          this.setState({ alErrShow: false });
+          this.showAlert("ok");
+          // this.setState({ okShow: true });
+          // this.setState({ errShow: false });
         })
         .catch(err => {
           console.log(err)
         })
 
     } else {
-      this.setState({ alShow: false });
-      this.setState({ alErrShow: true });
+      this.showAlert("err");
+      // this.setState({ okShow: false });
+      // this.setState({ errShow: true });
     }
   }
 
@@ -2316,8 +2387,8 @@ class Main extends React.Component {
         this.setState({ infoDiaShow: true });
         break;
       case "credit":
-        tempColW = spData.footCreditColW;
-        switch (spData.footCreditColW) {
+        tempColW = spData.footAddColW;
+        switch (spData.footAddColW) {
           case "col-md":
             radiobtn = document.getElementById("creditColAuto");
             radiobtn.checked = true;
@@ -2342,20 +2413,20 @@ class Main extends React.Component {
             radiobtn = document.getElementById("creditCol5");
             radiobtn.checked = true;
         }
-        tempColor = this.rgbToHex(spData.footCreditColor);
-        tempOpacity = spData.footCreditOpacity.toString();
-        tempTextColor = this.rgbToHex(spData.footCreditTextColor);
-        this.setState({ creditDiaShow: true });
+        tempColor = this.rgbToHex(spData.footAddColor);
+        tempOpacity = spData.footAddOpacity.toString();
+        tempTextColor = this.rgbToHex(spData.footAddTextColor);
+        this.setState({ addInfoDiaShow: true });
         break;
-      case "appEdit":
+      case "itemEdit":
         // console.log("CurrPos ", currPos);
-        this.setState({ appEditDiaShow: true });
+        this.setState({ itemEditDiaShow: true });
         break;
-      case "appDel":
-        this.setState({ appDelDiaShow: true });
+      case "itemDel":
+        this.setState({ itemDelDiaShow: true });
         break;
-      case "appAdd":
-        this.setState({ appAddDiaShow: true });
+      case "itemAdd":
+        this.setState({ itemAddDiaShow: true });
         break;
       case "catEdit":
         this.setState({ catEditDiaShow: true });
@@ -2381,10 +2452,10 @@ class Main extends React.Component {
       case "exCrs":
         this.setState({ crsDiaShow: true });
         break;
-      case "appOrCatAdd":
-        this.setState({ aocDiaShow: true });
+      case "itemOrCatAdd":
+        this.setState({ iocDiaShow: true });
         break;
-      case "appVideo":
+      case "itemVideo":
         this.setState({ itemVideoDiaShow: true });
         break;
       case "search":
@@ -2464,13 +2535,13 @@ class Main extends React.Component {
         break;
       case "info":
         this.setState({
-          disField: spData.noFootTitle
+          disFieldT: spData.noFootTitle
         });
         this.setState({
-          disField2: spData.noFootSubtitle
+          disFieldT2: spData.noFootSubtitle
         });
         this.setState({
-          disField3: spData.noFootSubtitle2
+          disFieldT3: spData.noFootSubtitle2
         });
         disable1 = "none";
         disable2 = "none";
@@ -2480,33 +2551,33 @@ class Main extends React.Component {
         break;
       case "credit":
         this.setState({
-          disFieldC: spData.noFootCreditiTitle
+          disFieldC: spData.noFootAddTitle
         });
         this.setState({
-          disFieldC2: spData.noFootCreditiSubtitle
+          disFieldC2: spData.noFootAddSubtitle
         });
         this.setState({
-          disFieldC3: spData.noFootCreditiSubtitle2
+          disFieldC3: spData.noFootAddSubtitle2
         });
         disable1 = "none";
         disable2 = "none";
         disable3 = "none";
-        this.setState({ creditDiaShow: false });
+        this.setState({ addInfoDiaShow: false });
         document.getElementById('creditForm').reset();
         break;
-      case "appedit":
-        this.setState({ appEditDiaShow: false });
+      case "itemEdit":
+        this.setState({ itemEditDiaShow: false });
         temp = "";
-        document.getElementById('appEditForm').reset();
+        document.getElementById('itemEditForm').reset();
         break;
-      case "appdel":
-        this.setState({ appDelDiaShow: false });
+      case "itemDel":
+        this.setState({ itemDelDiaShow: false });
         break;
-      case "appAdd":
-        this.setState({ appAddDiaShow: false });
+      case "itemAdd":
+        this.setState({ itemAddDiaShow: false });
         temp5 = tempCatTitle;
-        this.setState({ disFieldAA: true });
-        document.getElementById('appAddForm').reset();
+        this.setState({ disFieldIA: true });
+        document.getElementById('itemAddForm').reset();
         break;
       case "catedit":
         this.setState({ catEditDiaShow: false });
@@ -2526,7 +2597,7 @@ class Main extends React.Component {
         this.setState({
           catSel: tempCatTitle
         })
-        this.setState({ catAppItems: [] });
+        this.setState({ catItems: [] });
         // console.log("Current Cat: ", this.state.catSel);
         break;
       case "crsedit":
@@ -2547,8 +2618,8 @@ class Main extends React.Component {
         this.setState({ itemVideoDiaShow: false });
         this.stopVideos();
         break;
-      case "apporcat":
-        this.setState({ aocDiaShow: false });
+      case "itemorcat":
+        this.setState({ iocDiaShow: false });
         break;
       case "back":
         this.setState({ backEditDiaShow: false });
@@ -2561,13 +2632,16 @@ class Main extends React.Component {
       case "search":
         this.setState({ searchDiaShow: false });
         document.getElementById('searchForm').reset();
-        this.setState({ resAppItems: [] });
-        this.setState({ alShow: false });
-        this.setState({ alErrShow: false });
+        this.setState({ resItems: [] });
+        this.showAlert("false");
+        this.showAlert("all");
+        // this.setState({ okShow: false });
+        // this.setState({ errShow: false });
         temp = "";
     }
-    this.setState({ alShow: false });
-    this.setState({ alErrShow: false });
+    this.showAlert("all");
+    // this.setState({ okShow: false });
+    // this.setState({ errShow: false });
     tempColor = "";
     tempTextColor = "";
     tempColW = "";
@@ -2577,7 +2651,7 @@ class Main extends React.Component {
     });
   };
 
-  appsButtonShow(id) {
+  itemsButtonShow(id) {
     if (this.state.itemsBtnShow !== id) {
       this.setState({
         itemsBtnShow: id
@@ -2611,25 +2685,25 @@ class Main extends React.Component {
       this.setState({ infoShow: spData.infoShow });
       this.setState({ addInfoShow: spData.addInfoShow });
       login = false;
-      var array = [...this.state.appItems];
+      var array = [...this.state.items];
       if (this.state.itemsBtnShow !== false) {
         this.setState({
           itemsBtnShow: false
         })
       }
-      spData.appItems = array;
+      spData.items = array;
       window.location.reload();
     }
   }
 
-  appOrCatItem() {
-    this.showModal("appOrCatAdd");
+  itemOrCat() {
+    this.showModal("itemOrCatAdd");
   }
 
   catEditDel(op, pos) {
     currPos = pos;
     // console.log(op, " for ", pos);
-    array = [...this.state.catItems];
+    array = [...this.state.cats];
     arrayLength = (array.length);
     tempCatTitle = array[pos].title;
     tempIcon = array[pos].icon;
@@ -2643,8 +2717,8 @@ class Main extends React.Component {
   }
 
   catAddItem() {
-    this.hideModal("apporcat");
-    array = [...this.state.catItems];
+    this.hideModal("itemorcat");
+    array = [...this.state.cats];
     arrayLength = (array.length);
     temp4 = false;
     document.getElementById('clearcatpos').value = "";
@@ -2680,52 +2754,52 @@ class Main extends React.Component {
     }
   }
 
-  appAddItem(id, pos) {
-    this.hideModal("apporcat");
+  addItem(id, pos) {
+    this.hideModal("itemorcat");
     noDescr = true;
-    array = [...this.state.appItems];
+    array = [...this.state.items];
     arrayLength = (array.length);
-    tempAppVideo = false;
+    tempItemVideo = false;
     temp4 = false;
     // console.log("AppAdd Temp5: ", temp5);
     this.setState({
       catSel: temp5
     })
     tempCatTitle = temp5;
-    document.getElementById('clearapppos').value = "";
-    // document.getElementById('clearappswitchpos').value = "";
-    document.getElementById('clearappdescr').value = "";
-    document.getElementById('clearapptitle').value = "";
-    document.getElementById('clearapplink').value = "";
-    this.showModal("appAdd");
+    document.getElementById('clearitempos').value = "";
+    // document.getElementById('clearitemswitchpos').value = "";
+    document.getElementById('clearitemdescr').value = "";
+    document.getElementById('clearitemtitle').value = "";
+    document.getElementById('clearitemlink').value = "";
+    this.showModal("itemAdd");
     // console.log("APPAdding IT!");
   }
 
-  appEditDel(op, id, pos) {
+  itemEditDel(op, id, pos) {
     temp = id;
     currPos = pos;
     // console.log(op, " for ", id, "pos ", currPos);
-    array = [...this.state.appItems];
+    array = [...this.state.items];
     arrayLength = (array.length);
     for (let i = 0; i < array.length; i++) {
       if (array[i].id === id) {
-        tempAppTitle = array[i].title;
-        // console.log("App name: ", tempAppTitle);
-        tempAppLink = array[i].link;
-        tempAppDescr = array[i].descr;
-        if (tempAppDescr === "") {
+        tempItemTitle = array[i].title;
+        // console.log("App name: ", tempItemTitle);
+        tempItemLink = array[i].link;
+        tempItemDescr = array[i].descr;
+        if (tempItemDescr === "") {
           noDescr = true;
           this.setState({
-            disFieldAE: true
+            disFieldIE: true
           });
         } else {
           noDescr = false;
           this.setState({
-            disFieldAE: false
+            disFieldIE: false
           });
         }
-        // console.log(" App descr.: ", tempAppDescr);
-        tempAppVideo = array[i].video;
+        // console.log(" App descr.: ", tempItemDescr);
+        tempItemVideo = array[i].video;
         temp4 = array[i].video;
         temp5 = array[i].cat;
         temp6 = array[i].descr;
@@ -2739,70 +2813,70 @@ class Main extends React.Component {
       }
     }
     // console.log(id, " for ", pos);
-    document.getElementById('clearappswitchpos').value = "";
-    if (op === "AppEdit") {
-      this.showModal("appEdit");
+    document.getElementById('clearitemswitchpos').value = "";
+    if (op === "itemEdit") {
+      this.showModal("itemEdit");
     } else {
-      this.showModal("appDel");
+      this.showModal("itemDel");
     }
   }
 
-  appVideo(name, id) {
+  itemVideo(name, id) {
     temp3 = id;
-    array = [...this.state.appItems];
+    array = [...this.state.items];
     for (let i = 0; i < array.length; i++) {
       if (array[i].id === id) {
-        tempAppTitle = array[i].title;
+        tempItemTitle = array[i].title;
         this.setState({
           videoLink: array[i].link
         })
       }
     }
     // console.log(id, " for ", pos);
-    this.showModal("appVideo");
+    this.showModal("itemVideo");
   }
 
   catCont(id, pos) {
-    array = [...this.state.catItems];
+    array = [...this.state.cats];
     // console.log("Cat Array: ", array);
     tempCatTitle = array[pos].title;
     temp5 = tempCatTitle;
     // console.log("Current Cat In: ", tempCatTitle);
-    this.appCatSearch(array[pos].title, this.state.appItems);
+    this.itemCatSearch(array[pos].title, this.state.items);
     this.showModal("cat");
   }
 
-  resAppVideo(name, id) {
+  resItemVideo(name, id) {
     temp3 = id;
-    array = [...this.state.resAppItems];
+    array = [...this.state.resItems];
     for (let i = 0; i < array.length; i++) {
       if (array[i].id === id) {
-        tempAppTitle = array[i].title;
+        tempItemTitle = array[i].title;
         this.setState({
           videoLink: array[i].link
         })
       }
     }
     // console.log(id, " for ", pos);
-    this.showModal("appVideo");
+    this.showModal("itemVideo");
   }
 
-  catAppVideo(name, id) {
+  catItemVideo(name, id) {
     temp3 = id;
-    array = [...this.state.catAppItems];
+    array = [...this.state.catItems];
     for (let i = 0; i < array.length; i++) {
       if (array[i].id === id) {
-        tempAppTitle = array[i].title;
+        tempItemTitle = array[i].title;
         this.setState({
           videoLink: array[i].link
         })
       }
     }
     // console.log(id, " for ", pos);
-    this.showModal("appVideo");
+    this.showModal("itemVideo");
   }
 
-  exCrsShow() {
+  crsShow() {
     this.showModal("exCrs");
   }
 
@@ -2836,33 +2910,33 @@ class Main extends React.Component {
     const { mainBtn: mainBtn } = this.state;
     const { disFieldB: disFieldB } = this.state;
     const { disFieldBC: disFieldBC } = this.state;
-    const { disField: disField } = this.state;
-    const { disField2: disField2 } = this.state;
-    const { disField3: disField3 } = this.state;
+    const { disFieldT: disFieldT } = this.state;
+    const { disFieldT2: disFieldT2 } = this.state;
+    const { disFieldT3: disFieldT3 } = this.state;
     const { disFieldC: disFieldC } = this.state;
     const { disFieldC2: disFieldC2 } = this.state;
     const { disFieldC3: disFieldC3 } = this.state;
-    const { disFieldAA: disFieldAA } = this.state;
-    const { disFieldAE: disFieldAE } = this.state;
+    const { disFieldIA: disFieldIA } = this.state;
+    const { disFieldIE: disFieldIE } = this.state;
     const { disFieldMS: disFieldMS } = this.state;
     const { disFieldMC: disFieldMC } = this.state;
 
     const showHideFootTitle = spData.noFootTitle ? "d-none" : "d-block";
     const showHideFootSub = spData.noFootSubtitle ? "d-none" : "d-block";
     const showHideFootSub2 = spData.noFootSubtitle2 ? "d-none" : "d-block";
-    const showHideCrTitle = spData.noFootCreditiTitle ? "d-none" : "d-block";
-    const showHideCrSub = spData.noFootCreditiSubtitle ? "d-none" : "d-block";
-    const showHideCrSub2 = spData.noFootCreditiSubtitle2 ? "d-none" : "d-block";
+    const showHideCrTitle = spData.noFootAddTitle ? "d-none" : "d-block";
+    const showHideCrSub = spData.noFootAddSubtitle ? "d-none" : "d-block";
+    const showHideCrSub2 = spData.noFootAddSubtitle2 ? "d-none" : "d-block";
     let buttons = "";
 
     let menuButtons = (
       <>
-        <Dropdown search={this.search} exCrsShow={this.exCrsShow} />
+        <Dropdown search={this.search} crsShow={this.crsShow} />
       </>
     );
 
     let catMenuButtons = (
-      <DropdownCat items={this.state.catItems} catName={this.state.catSel} setCat={this.setCat} />
+      <DropdownCat items={this.state.cats} catName={this.state.catSel} setCat={this.setCat} />
     )
 
     let head = (
@@ -2928,7 +3002,7 @@ class Main extends React.Component {
         <>
           <div className="row">
             <button className="col button solidindaco m-1"
-              onClick={() => this.appsButtonShow("ShowItemBtn")}>
+              onClick={() => this.itemsButtonShow("ShowItemBtn")}>
               <SettingsGear></SettingsGear>
             </button>
             <button className="col button solidbrick m-1"
@@ -2960,9 +3034,9 @@ class Main extends React.Component {
             {/* CREDITI */}
             <AddInfo addInfoShow={this.state.addInfoShow} infoShow={this.state.infoShow} mainBtn={this.state.mainBtn}>
               <div>
-                <p className={showHideCrTitle + " smallfont"}>{spData.footCreditiTitle}</p>
-                <p className={showHideCrSub + " smallfont"}><i>{spData.footCreditiSubtitle}</i></p>
-                <p className={showHideCrSub2 + " verysmallfont"}>{spData.footCreditiSubtitle2}</p>
+                <p className={showHideCrTitle + " smallfont"}>{spData.footAddTitle}</p>
+                <p className={showHideCrSub + " smallfont"}><i>{spData.footAddSubtitle}</i></p>
+                <p className={showHideCrSub2 + " verysmallfont"}>{spData.footAddSubtitle2}</p>
               </div>
               <EditAddInfo editAddInfoShow={this.state.mainBtn} hidden={spData.addInfoShow}>
                 <button className="col flexbutton brick m-1" onClick={() => this.showModal("credit")}>
@@ -3022,7 +3096,7 @@ class Main extends React.Component {
                           </div>
                         </div>
 
-                        <Conferma alShow={this.state.alShow}>
+                        <Ok okShow={this.state.okShow}>
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
@@ -3034,7 +3108,7 @@ class Main extends React.Component {
                               </div>
                             </div>
                           </div>
-                        </Conferma>
+                        </Ok>
                       </form>
                     </div>
                   </div>
@@ -3078,7 +3152,7 @@ class Main extends React.Component {
                           </div>
                         </div>
 
-                        <Conferma alShow={this.state.alShow}>
+                        <Ok okShow={this.state.okShow}>
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
@@ -3090,20 +3164,20 @@ class Main extends React.Component {
                               </div>
                             </div>
                           </div>
-                        </Conferma>
-                        <Errore alErrShow={this.state.alErrShow}>
+                        </Ok>
+                        <Error errShow={this.state.errShow}>
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
                                 <section className="col pt-2 contenitore brick latowhite d-flex justify-content-center align-items-center ">
                                   <div>
-                                    <p className="norfont">Error! Fill in at least one field.</p>
+                                    <p className="norfont">Fill in at least one field.</p>
                                   </div>
                                 </section>
                               </div>
                             </div>
                           </div>
-                        </Errore>
+                        </Error>
                       </form>
                     </div>
                   </div>
@@ -3239,7 +3313,7 @@ class Main extends React.Component {
                           </div>
                         </div>
 
-                        <Conferma alShow={this.state.alShow}>
+                        <Ok okShow={this.state.okShow}>
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
@@ -3251,20 +3325,20 @@ class Main extends React.Component {
                               </div>
                             </div>
                           </div>
-                        </Conferma>
-                        <Errore alErrShow={this.state.alErrShow}>
+                        </Ok>
+                        <Error errShow={this.state.errShow}>
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
                                 <section className="col pt-2 contenitore brick latowhite d-flex justify-content-center align-items-center ">
                                   <div>
-                                    <p className="norfont">Error! Enter at least one character.</p>
+                                    <p className="norfont">Enter at least one character.</p>
                                   </div>
                                 </section>
                               </div>
                             </div>
                           </div>
-                        </Errore>
+                        </Error>
                       </form>
                     </div>
                   </div>
@@ -3394,7 +3468,7 @@ class Main extends React.Component {
                           </div>
                         </div>
 
-                        <Conferma alShow={this.state.alShow}>
+                        <Ok okShow={this.state.okShow}>
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
@@ -3406,20 +3480,20 @@ class Main extends React.Component {
                               </div>
                             </div>
                           </div>
-                        </Conferma>
-                        <Errore alErrShow={this.state.alErrShow}>
+                        </Ok>
+                        <Error errShow={this.state.errShow}>
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
                                 <section className="col pt-2 contenitore brick latowhite d-flex justify-content-center align-items-center ">
                                   <div>
-                                    <p className="norfont">Error! Enter at least one character.</p>
+                                    <p className="norfont">Enter at least one character.</p>
                                   </div>
                                 </section>
                               </div>
                             </div>
                           </div>
-                        </Errore>
+                        </Error>
                       </form>
                     </div>
                   </div>
@@ -3536,7 +3610,7 @@ class Main extends React.Component {
                           </div>
                         </div>
 
-                        <Conferma alShow={this.state.alShow}>
+                        <Ok okShow={this.state.okShow}>
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
@@ -3548,20 +3622,20 @@ class Main extends React.Component {
                               </div>
                             </div>
                           </div>
-                        </Conferma>
-                        <Errore alErrShow={this.state.alErrShow}>
+                        </Ok>
+                        <Error errShow={this.state.errShow}>
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
                                 <section className="col pt-2 contenitore brick latowhite d-flex justify-content-center align-items-center ">
                                   <div>
-                                    <p className="norfont">Error! Enter at least one character.</p>
+                                    <p className="norfont">Enter at least one character.</p>
                                   </div>
                                 </section>
                               </div>
                             </div>
                           </div>
-                        </Errore>
+                        </Error>
                       </form>
                     </div>
                   </div>
@@ -3677,7 +3751,7 @@ class Main extends React.Component {
                           </div>
                         </div>
 
-                        <Conferma alShow={this.state.alShow}>
+                        <Ok okShow={this.state.okShow}>
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
@@ -3689,7 +3763,7 @@ class Main extends React.Component {
                               </div>
                             </div>
                           </div>
-                        </Conferma>
+                        </Ok>
                         <Upload upShow={this.state.upShow}>
                           <div className="row text-center pt-2">
                             <div className="col">
@@ -3723,19 +3797,19 @@ class Main extends React.Component {
                                   <label>Info</label>
                                 </div>
                                 <div className="col d-flex flex-column justify-content-center align-items-center">
-                                  <input type="text" disabled={disField} className="form-control border-0" defaultValue={spData.footTitle} onChange={e => temp = e.target.value} />
+                                  <input type="text" disabled={disFieldT} className="form-control border-0" defaultValue={spData.footTitle} onChange={e => temp = e.target.value} />
                                 </div>
                                 <div className="col-2 border d-flex flex-column justify-content-center align-items-center">
                                   <label className="switch">
                                     <input type="checkbox" className="form-control" defaultChecked={spData.noFootTitle} onClick={e => {
-                                      if (this.state.disField === false) {
+                                      if (this.state.disFieldT === false) {
                                         this.setState({
-                                          disField: true
+                                          disFieldT: true
                                         });
                                         disable1 = true;
                                       } else {
                                         this.setState({
-                                          disField: false
+                                          disFieldT: false
                                         });
                                         disable1 = false;
                                       }
@@ -3756,19 +3830,19 @@ class Main extends React.Component {
                                   <label>Info #2</label>
                                 </div>
                                 <div className="col d-flex flex-column justify-content-center align-items-center">
-                                  <input type="text" disabled={disField2} className="form-control border-0" defaultValue={spData.footSubtitle} onChange={e => temp2 = e.target.value} /*placeholder={spData.footSubtitle}*/ />
+                                  <input type="text" disabled={disFieldT2} className="form-control border-0" defaultValue={spData.footSubtitle} onChange={e => temp2 = e.target.value} /*placeholder={spData.footSubtitle}*/ />
                                 </div>
                                 <div className="col-2 border d-flex flex-column justify-content-center align-items-center">
                                   <label class="switch">
                                     <input type="checkbox" className="form-control" defaultChecked={spData.noFootSubtitle} onClick={e => {
-                                      if (this.state.disField2 === false) {
+                                      if (this.state.disFieldT2 === false) {
                                         this.setState({
-                                          disField2: true
+                                          disFieldT2: true
                                         });
                                         disable2 = true;
                                       } else {
                                         this.setState({
-                                          disField2: false
+                                          disFieldT2: false
                                         });
                                         disable2 = false;
                                       }
@@ -3790,19 +3864,19 @@ class Main extends React.Component {
                                 </div>
 
                                 <div className="col d-flex flex-column justify-content-center align-items-center">
-                                  <input type="text" disabled={disField3} className="form-control border-0" defaultValue={spData.footSubtitle2} onChange={e => temp3 = e.target.value} /*placeholder={spData.footSubtitle2}*/ />
+                                  <input type="text" disabled={disFieldT3} className="form-control border-0" defaultValue={spData.footSubtitle2} onChange={e => temp3 = e.target.value} /*placeholder={spData.footSubtitle2}*/ />
                                 </div>
                                 <div className="col-2 border d-flex flex-column justify-content-center align-items-center">
                                   <label class="switch">
                                     <input type="checkbox" className="form-control" defaultChecked={spData.noFootSubtitle2} onClick={e => {
-                                      if (this.state.disField3 === false) {
+                                      if (this.state.disFieldT3 === false) {
                                         this.setState({
-                                          disField3: true
+                                          disFieldT3: true
                                         });
                                         disable3 = true;
                                       } else {
                                         this.setState({
-                                          disField3: false
+                                          disFieldT3: false
                                         });
                                         disable3 = false;
                                       }
@@ -3917,7 +3991,7 @@ class Main extends React.Component {
                           </div>
                         </div>
 
-                        <Conferma alShow={this.state.alShow}>
+                        <Ok okShow={this.state.okShow}>
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
@@ -3929,12 +4003,12 @@ class Main extends React.Component {
                               </div>
                             </div>
                           </div>
-                        </Conferma>
+                        </Ok>
                       </form>
                     </div>
                   </div>
                 </InfoDialog>
-                <CreditDialog creditDiaShow={this.state.creditDiaShow} handleClose={() => this.hideModal("credit")} handleSave={this.saveCredit}>
+                <AddInfoDialog addInfoDiaShow={this.state.addInfoDiaShow} handleClose={() => this.hideModal("credit")} handleSave={this.saveCredit}>
                   <div className="modal-content noborder">
                     <div className="modal-header">
                       <h5 className="modal-title" >Edit Foot additional Info</h5>
@@ -3951,11 +4025,11 @@ class Main extends React.Component {
                                 </div>
 
                                 <div className="col d-flex flex-column justify-content-center align-items-center">
-                                  <input type="text" disabled={disFieldC} className="form-control border-0" defaultValue={spData.footCreditiTitle} onChange={e => temp = e.target.value} /*placeholder={spData.footCreditiTitle}*/ />
+                                  <input type="text" disabled={disFieldC} className="form-control border-0" defaultValue={spData.footAddTitle} onChange={e => temp = e.target.value} />
                                 </div>
                                 <div className="col-2 border d-flex flex-column justify-content-center align-items-center">
                                   <label class="switch">
-                                    <input type="checkbox" className="form-control" defaultChecked={spData.noFootCreditiTitle} onClick={e => {
+                                    <input type="checkbox" className="form-control" defaultChecked={spData.noFootAddTitle} onClick={e => {
                                       if (this.state.disFieldC === false) {
                                         this.setState({
                                           disFieldC: true
@@ -3985,11 +4059,11 @@ class Main extends React.Component {
                                 </div>
 
                                 <div className="col d-flex flex-column justify-content-center align-items-center">
-                                  <input type="text" disabled={disFieldC2} className="form-control border-0" defaultValue={spData.footCreditiSubtitle} onChange={e => temp2 = e.target.value} />
+                                  <input type="text" disabled={disFieldC2} className="form-control border-0" defaultValue={spData.footAddSubtitle} onChange={e => temp2 = e.target.value} />
                                 </div>
                                 <div className="col-2 border d-flex flex-column justify-content-center align-items-center">
                                   <label class="switch">
-                                    <input type="checkbox" className="form-control" defaultChecked={spData.noFootCreditiSubtitle} onClick={e => {
+                                    <input type="checkbox" className="form-control" defaultChecked={spData.noFootAddSubtitle} onClick={e => {
                                       if (this.state.disFieldC2 === false) {
                                         this.setState({
                                           disFieldC2: true
@@ -4019,11 +4093,11 @@ class Main extends React.Component {
                                 </div>
 
                                 <div className="col d-flex flex-column justify-content-center align-items-center">
-                                  <input type="text" disabled={disFieldC3} className="form-control border-0" defaultValue={spData.footCreditiSubtitle2} onChange={e => temp3 = e.target.value} />
+                                  <input type="text" disabled={disFieldC3} className="form-control border-0" defaultValue={spData.footAddSubtitle2} onChange={e => temp3 = e.target.value} />
                                 </div>
                                 <div className="col-2 border d-flex flex-column justify-content-center align-items-center">
                                   <label class="switch">
-                                    <input type="checkbox" className="form-control" defaultChecked={spData.noFootCreditiSubtitle2} onClick={e => {
+                                    <input type="checkbox" className="form-control" defaultChecked={spData.noFootAddSubtitle2} onClick={e => {
                                       if (this.state.disFieldC3 === false) {
                                         this.setState({
                                           disFieldC3: true
@@ -4086,7 +4160,7 @@ class Main extends React.Component {
                                   <label>Back color</label>
                                 </div>
                                 <div className="col d-flex flex-column justify-content-center align-items-center">
-                                  <input type="color" className="form-control border-0 p-0" defaultValue={this.rgbToHex(spData.footCreditColor)} onChange={e => tempColor = e.target.value} />
+                                  <input type="color" className="form-control border-0 p-0" defaultValue={this.rgbToHex(spData.footAddColor)} onChange={e => tempColor = e.target.value} />
                                 </div>
                               </div>
                             </div>
@@ -4097,7 +4171,7 @@ class Main extends React.Component {
                                   <label>Text color</label>
                                 </div>
                                 <div className="col d-flex flex-column justify-content-center align-items-center">
-                                  <input type="color" className="form-control border-0 p-0" defaultValue={this.rgbToHex(spData.footCreditTextColor)} onChange={e => tempTextColor = e.target.value} />
+                                  <input type="color" className="form-control border-0 p-0" defaultValue={this.rgbToHex(spData.footAddTextColor)} onChange={e => tempTextColor = e.target.value} />
                                 </div>
                               </div>
                             </div>
@@ -4112,7 +4186,7 @@ class Main extends React.Component {
                                   <label>Opacity</label>
                                 </div>
                                 <div className="col d-flex flex-column justify-content-center align-items-center">
-                                  <input type="range" class="form-range border-0 p-0" min="0" max="1" step="0.1" defaultValue={spData.footCreditOpacity} id="creditOpRange" onChange={e => tempOpacity = e.target.value} ></input>
+                                  <input type="range" class="form-range border-0 p-0" min="0" max="1" step="0.1" defaultValue={spData.footAddOpacity} id="creditOpRange" onChange={e => tempOpacity = e.target.value} ></input>
                                 </div>
                               </div>
                             </div>
@@ -4146,7 +4220,7 @@ class Main extends React.Component {
                             </div>
                           </div>
                         </div>
-                        <Conferma alShow={this.state.alShow}>
+                        <Ok okShow={this.state.okShow}>
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
@@ -4158,11 +4232,11 @@ class Main extends React.Component {
                               </div>
                             </div>
                           </div>
-                        </Conferma>
+                        </Ok>
                       </form>
                     </div>
                   </div>
-                </CreditDialog>
+                </AddInfoDialog>
                 <BackEditDialog backEditDiaShow={this.state.backEditDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("back")} handleSave={this.saveBack}>
                   <div className="modal-content noborder">
                     <div className="modal-header">
@@ -4302,7 +4376,7 @@ class Main extends React.Component {
                           </div>
                         </div>
 
-                        <Conferma alShow={this.state.alShow}>
+                        <Ok okShow={this.state.okShow}>
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
@@ -4314,7 +4388,7 @@ class Main extends React.Component {
                               </div>
                             </div>
                           </div>
-                        </Conferma>
+                        </Ok>
                         <Upload upShow={this.state.upShow}>
                           <div className="row text-center pt-2">
                             <div className="col">
@@ -4340,26 +4414,26 @@ class Main extends React.Component {
                     <div style={this.state.catStyle} className="modal-body-dark">
                       <div className="textcenter">
                         {
-                          this.state.catAppItems.map(({ id, title, link, descr, icon, video }, i) => {
+                          this.state.catItems.map(({ id, title, link, descr, icon, video }, i) => {
                             return (
                               <Item showItemsBtn={this.state.itemsBtnShow} key={i} pos={i} id={id}
                                 title={title} link={link} descr={descr} icon={icon} video={video}
-                                appVideo={this.catAppVideo} appEditDel={this.appEditDel} />
+                                itemVideo={this.catItemVideo} itemEditDel={this.itemEditDel} />
                             )
                           })
                         }
-                        <ItemAdd showItemsBtn={this.state.itemsBtnShow} addItem={this.appAddItem} />
+                        <ItemAdd showItemsBtn={this.state.itemsBtnShow} addItem={this.addItem} />
                       </div>
                     </div>
                   </div>
                 </CatDialog>
-                <AppEditDialog appEditDiaShow={this.state.appEditDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("appedit")} handleSave={this.applyAppEdit}>
+                <ItemEditDialog itemEditDiaShow={this.state.itemEditDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("itemEdit")} handleSave={this.applyItemEdit}>
                   <div className="modal-content noborder">
                     <div className="modal-header">
                       <h5 className="modal-title" >Edit Item</h5>
                     </div>
                     <div className="modal-body">
-                      <form id="appEditForm">
+                      <form id="itemEditForm">
 
                         <div className="form-group">
                           <div className="row text-center mb-1 m-auto">
@@ -4381,7 +4455,7 @@ class Main extends React.Component {
                                   <label>Pos</label>
                                 </div>
                                 <div className="col d-flex flex-column justify-content-center align-items-center">
-                                  <input type="text" className="form-control border-0" placeholder={currPos + 1} id="clearappswitchpos" /* onChange={e => cgPos = e.target.value} /> */
+                                  <input type="text" className="form-control border-0" placeholder={currPos + 1} id="clearitemswitchpos"
                                     onChange={e => {
                                       cgPos = e.target.value;
                                     }
@@ -4400,7 +4474,7 @@ class Main extends React.Component {
                                   <label>Title</label>
                                 </div>
                                 <div className="col d-flex flex-column justify-content-center align-items-center">
-                                  <input type="text" className="form-control border-0" defaultValue={tempAppTitle} onChange={e => temp2 = e.target.value} /*placeholder={tempAppTitle}*/ />
+                                  <input type="text" className="form-control border-0" defaultValue={tempItemTitle} onChange={e => temp2 = e.target.value} />
                                 </div>
                               </div>
                             </div>
@@ -4415,7 +4489,7 @@ class Main extends React.Component {
                                   <label>Link</label>
                                 </div>
                                 <div className="col d-flex flex-column justify-content-center align-items-center">
-                                  <input type="text" className="form-control border-0" defaultValue={tempAppLink} onChange={e => temp3 = e.target.value} /*placeholder={tempAppLink}*/ />
+                                  <input type="text" className="form-control border-0" defaultValue={tempItemLink} onChange={e => temp3 = e.target.value} />
                                 </div>
                               </div>
                             </div>
@@ -4431,19 +4505,19 @@ class Main extends React.Component {
                                 </div>
 
                                 <div className="col d-flex flex-column justify-content-center align-items-center">
-                                  <input type="text" disabled={disFieldAE} className="form-control border-0" defaultValue={tempAppDescr} onChange={e => temp6 = e.target.value} />
+                                  <input type="text" disabled={disFieldIE} className="form-control border-0" defaultValue={tempItemDescr} onChange={e => temp6 = e.target.value} />
                                 </div>
                                 <div className="col-2 border d-flex flex-column justify-content-center align-items-center">
                                   <label class="switch">
                                     <input type="checkbox" className="form-control" defaultChecked={noDescr} onClick={e => {
-                                      if (this.state.disFieldAE === false) {
+                                      if (this.state.disFieldIE === false) {
                                         this.setState({
-                                          disFieldAE: true
+                                          disFieldIE: true
                                         });
                                         noDescr = true;
                                       } else {
                                         this.setState({
-                                          disFieldAE: false
+                                          disFieldIE: false
                                         });
                                         noDescr = false;
                                       }
@@ -4452,9 +4526,6 @@ class Main extends React.Component {
                                   </label>
                                 </div>
 
-                                {/* <div className="col d-flex flex-column justify-content-center align-items-center">
-                                  <input type="text" className="form-control border-0" defaultValue={tempAppDescr} onChange={e => temp6 = e.target.value} />
-                                </div> */}
                               </div>
                             </div>
                           </div>
@@ -4469,8 +4540,8 @@ class Main extends React.Component {
                                 </div>
                                 <div className="col d-flex flex-column justify-content-center align-items-center">
                                   <label class="switch">
-                                    <input type="checkbox" className="form-control" defaultChecked={tempAppVideo} onClick={e => {
-                                      if (tempAppVideo === false) {
+                                    <input type="checkbox" className="form-control" defaultChecked={tempItemVideo} onClick={e => {
+                                      if (tempItemVideo === false) {
                                         temp4 = true;
                                       } else {
                                         temp4 = false;
@@ -4505,7 +4576,7 @@ class Main extends React.Component {
                           </div>
                         </div>
 
-                        <Conferma alShow={this.state.alShow}>
+                        <Ok okShow={this.state.okShow}>
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
@@ -4517,8 +4588,8 @@ class Main extends React.Component {
                               </div>
                             </div>
                           </div>
-                        </Conferma>
-                        <Upload upShow={this.state.upShow} /* handleClose={this.hideAlert} */>
+                        </Ok>
+                        <Upload upShow={this.state.upShow}>
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
@@ -4531,7 +4602,7 @@ class Main extends React.Component {
                             </div>
                           </div>
                         </Upload>
-                        <Errore alErrShow={this.state.alErrShow} /* handleClose={this.hideAlert} */>
+                        <Error errShow={this.state.errShow} >
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
@@ -4543,18 +4614,18 @@ class Main extends React.Component {
                               </div>
                             </div>
                           </div>
-                        </Errore>
+                        </Error>
                       </form>
                     </div>
                   </div>
-                </AppEditDialog>
-                <AppAddDialog appAddDiaShow={this.state.appAddDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("appAdd")} handleSave={this.applyAppAdd}>
+                </ItemEditDialog>
+                <ItemAddDialog itemAddDiaShow={this.state.itemAddDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("itemAdd")} handleSave={this.applyItemAdd}>
                   <div className="modal-content noborder">
                     <div className="modal-header">
                       <h5 className="modal-title" >Add Item</h5>
                     </div>
                     <div className="modal-body">
-                      <form id="appAddForm">
+                      <form id="itemAddForm">
 
                         <div className="form-group">
                           <div className="row text-center mb-1 m-auto">
@@ -4576,7 +4647,7 @@ class Main extends React.Component {
                                   <label>Pos</label>
                                 </div>
                                 <div className="col d-flex flex-column justify-content-center align-items-center">
-                                  <input type="text" placeholder="Leave blank for last..." id="clearapppos" className="form-control border-0"
+                                  <input type="text" placeholder="Leave blank for last..." id="clearitempos" className="form-control border-0"
                                     onChange={e => {
                                       temp = e.target.value;
                                     }
@@ -4595,7 +4666,7 @@ class Main extends React.Component {
                                   <label>Title</label>
                                 </div>
                                 <div className="col d-flex flex-column justify-content-center align-items-center">
-                                  <input type="text" className="form-control border-0" id="clearapptitle" onChange={e => temp2 = e.target.value} />
+                                  <input type="text" className="form-control border-0" id="clearitemtitle" onChange={e => temp2 = e.target.value} />
                                 </div>
                               </div>
                             </div>
@@ -4610,7 +4681,7 @@ class Main extends React.Component {
                                   <label>Link</label>
                                 </div>
                                 <div className="col d-flex flex-column justify-content-center align-items-center">
-                                  <input type="text" className="form-control border-0" id="clearapplink" onChange={e => temp3 = e.target.value} />
+                                  <input type="text" className="form-control border-0" id="clearitemlink" onChange={e => temp3 = e.target.value} />
                                 </div>
                               </div>
                             </div>
@@ -4626,19 +4697,19 @@ class Main extends React.Component {
                                 </div>
 
                                 <div className="col d-flex flex-column justify-content-center align-items-center">
-                                  <input type="text" disabled={disFieldAA} className="form-control border-0" defaultValue={tempAppDescr} id="clearappdescr" onChange={e => temp6 = e.target.value} />
+                                  <input type="text" disabled={disFieldIA} className="form-control border-0" defaultValue={tempItemDescr} id="clearitemdescr" onChange={e => temp6 = e.target.value} />
                                 </div>
                                 <div className="col-2 border d-flex flex-column justify-content-center align-items-center">
                                   <label class="switch">
                                     <input type="checkbox" className="form-control" defaultChecked={noDescr} onClick={e => {
-                                      if (this.state.disFieldAA === false) {
+                                      if (this.state.disFieldIA === false) {
                                         this.setState({
-                                          disFieldAA: true
+                                          disFieldIA: true
                                         });
                                         noDescr = true;
                                       } else {
                                         this.setState({
-                                          disFieldAA: false
+                                          disFieldIA: false
                                         });
                                         noDescr = false;
                                       }
@@ -4660,7 +4731,7 @@ class Main extends React.Component {
                                   <label>Descr.</label>
                                 </div>
                                 <div className="col d-flex flex-column justify-content-center align-items-center">
-                                  <input type="text" className="form-control border-0" placeholder="Description..." id="clearappdescr" onChange={e => temp6 = e.target.value} />
+                                  <input type="text" className="form-control border-0" placeholder="Description..." id="clearitemdescr" onChange={e => temp6 = e.target.value} />
                                 </div>
                               </div>
                             </div>
@@ -4676,8 +4747,8 @@ class Main extends React.Component {
                                 </div>
                                 <div className="col d-flex flex-column justify-content-center align-items-center">
                                   <label class="switch">
-                                    <input type="checkbox" className="form-control" defaultChecked={tempAppVideo} onClick={e => {
-                                      if (tempAppVideo === false) {
+                                    <input type="checkbox" className="form-control" defaultChecked={tempItemVideo} onClick={e => {
+                                      if (tempItemVideo === false) {
                                         temp4 = true;
                                       } else {
                                         temp4 = false;
@@ -4712,7 +4783,7 @@ class Main extends React.Component {
                           </div>
                         </div>
 
-                        <Conferma alShow={this.state.alShow}>
+                        <Ok okShow={this.state.okShow}>
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
@@ -4724,8 +4795,8 @@ class Main extends React.Component {
                               </div>
                             </div>
                           </div>
-                        </Conferma>
-                        <Upload upShow={this.state.upShow} /* handleClose={this.hideAlert} */>
+                        </Ok>
+                        <Upload upShow={this.state.upShow} >
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
@@ -4738,30 +4809,30 @@ class Main extends React.Component {
                             </div>
                           </div>
                         </Upload>
-                        <Errore alErrShow={this.state.alErrShow} /* handleClose={this.hideAlert} */>
+                        <Error errShow={this.state.errShow} >
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
                                 <section className="col pt-2 contenitore brick latowhite d-flex justify-content-center align-items-center ">
                                   <div>
-                                    <p className="norfont">Error! Fill in all fields / Check position.</p>
+                                    <p className="norfont">Fill in all fields / Check position.</p>
                                   </div>
                                 </section>
                               </div>
                             </div>
                           </div>
-                        </Errore>
+                        </Error>
                       </form>
                     </div>
                   </div>
-                </AppAddDialog>
-                <AppDelDialog appDelDiaShow={this.state.appDelDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("appdel")} handleSave={this.applyAppDel}>
+                </ItemAddDialog>
+                <ItemDelDialog itemDelDiaShow={this.state.itemDelDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("itemDel")} handleSave={this.applyItemDel}>
                   <div className="modal-content noborder">
                     <div className="modal-header">
-                      <h5 className="modal-title" >Permanently delete {tempAppTitle} item?</h5>
+                      <h5 className="modal-title" >Permanently delete {tempItemTitle} item?</h5>
                     </div>
                     <div className="modal-body">
-                      <Conferma alShow={this.state.alShow}>
+                      <Ok okShow={this.state.okShow}>
                         <div className="row text-center pt-2">
                           <div className="col">
                             <div className="row">
@@ -4773,10 +4844,10 @@ class Main extends React.Component {
                             </div>
                           </div>
                         </div>
-                      </Conferma>
+                      </Ok>
                     </div>
                   </div>
-                </AppDelDialog>
+                </ItemDelDialog>
                 <CatEditDialog catEditDiaShow={this.state.catEditDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("catedit")} handleSave={this.applyCatEdit}>
                   <div className="modal-content noborder">
                     <div className="modal-header">
@@ -4824,14 +4895,14 @@ class Main extends React.Component {
                                   <label>Title</label>
                                 </div>
                                 <div className="col d-flex flex-column justify-content-center align-items-center">
-                                  <input type="text" className="form-control border-0" defaultValue={tempCatTitle} onChange={e => temp2 = e.target.value} /*placeholder={tempAppTitle}*/ />
+                                  <input type="text" className="form-control border-0" defaultValue={tempCatTitle} onChange={e => temp2 = e.target.value} />
                                 </div>
                               </div>
                             </div>
                           </div>
                         </div>
 
-                        <Conferma alShow={this.state.alShow}>
+                        <Ok okShow={this.state.okShow}>
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
@@ -4843,8 +4914,8 @@ class Main extends React.Component {
                               </div>
                             </div>
                           </div>
-                        </Conferma>
-                        <Upload upShow={this.state.upShow} /* handleClose={this.hideAlert} */>
+                        </Ok>
+                        <Upload upShow={this.state.upShow}>
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
@@ -4857,7 +4928,7 @@ class Main extends React.Component {
                             </div>
                           </div>
                         </Upload>
-                        <Errore alErrShow={this.state.alErrShow} /* handleClose={this.hideAlert} */>
+                        <Error errShow={this.state.errShow} >
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
@@ -4869,7 +4940,7 @@ class Main extends React.Component {
                               </div>
                             </div>
                           </div>
-                        </Errore>
+                        </Error>
                       </form>
                     </div>
                   </div>
@@ -4928,7 +4999,7 @@ class Main extends React.Component {
                           </div>
                         </div>
 
-                        <Conferma alShow={this.state.alShow}>
+                        <Ok okShow={this.state.okShow}>
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
@@ -4940,8 +5011,8 @@ class Main extends React.Component {
                               </div>
                             </div>
                           </div>
-                        </Conferma>
-                        <Upload upShow={this.state.upShow} /* handleClose={this.hideAlert} */>
+                        </Ok>
+                        <Upload upShow={this.state.upShow} >
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
@@ -4954,7 +5025,7 @@ class Main extends React.Component {
                             </div>
                           </div>
                         </Upload>
-                        <Errore alErrShow={this.state.alErrShow} /* handleClose={this.hideAlert} */>
+                        <Error errShow={this.state.errShow} >
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
@@ -4966,7 +5037,7 @@ class Main extends React.Component {
                               </div>
                             </div>
                           </div>
-                        </Errore>
+                        </Error>
                       </form>
                     </div>
                   </div>
@@ -4977,7 +5048,7 @@ class Main extends React.Component {
                       <h5 className="modal-title" >Permanently delete {tempCatTitle} category?</h5>
                     </div>
                     <div className="modal-body">
-                      <Conferma alShow={this.state.alShow}>
+                      <Ok okShow={this.state.okShow}>
                         <div className="row text-center pt-2">
                           <div className="col">
                             <div className="row">
@@ -4989,19 +5060,19 @@ class Main extends React.Component {
                             </div>
                           </div>
                         </div>
-                      </Conferma>
+                      </Ok>
                     </div>
                   </div>
                 </CatDelDialog>
-                <AppOrCatDialog aocDiaShow={this.state.aocDiaShow} activityChanged={this.state.activityChanged} handleApp={this.appAddItem} handleCat={this.catAddItem} handleClose={() => this.hideModal("apporcat")}>
+                <ItemOrCatDialog iocDiaShow={this.state.iocDiaShow} activityChanged={this.state.activityChanged} handleItem={this.addItem} handleCat={this.catAddItem} handleClose={() => this.hideModal("itemorcat")}>
                   <div className="modal-content noborder">
                     <div className="modal-header">
                       <h5 className="modal-title" >Add Item or Category?</h5>
                     </div>
                   </div>
-                </AppOrCatDialog>
+                </ItemOrCatDialog>
 
-                <CrsDialog crsDiaShow={this.state.crsDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("excrs")} handleSave={this.applyAppEdit}>
+                <CrsDialog crsDiaShow={this.state.crsDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("excrs")} handleSave={this.applyItemEdit}>
                   <div className="modal-content noBG">
                     <div className="modal-header darkBG">
                       <h5 className="modal-title latowhite" >{spData.menuCreditsLabel}</h5>
@@ -5095,20 +5166,20 @@ class Main extends React.Component {
                           </div>
                         </div>
 
-                        <Conferma alShow={this.state.alShow}>
+                        <Ok okShow={this.state.okShow}>
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
                                 <section className="col pt-2 contenitore solidgreen latowhite d-flex justify-content-center align-items-center ">
                                   <div>
-                                    <p className="norfont">Cat added!</p>
+                                    <p className="norfont">Credit added!</p>
                                   </div>
                                 </section>
                               </div>
                             </div>
                           </div>
-                        </Conferma>
-                        <Upload upShow={this.state.upShow} /* handleClose={this.hideAlert} */>
+                        </Ok>
+                        <Upload upShow={this.state.upShow} >
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
@@ -5121,19 +5192,19 @@ class Main extends React.Component {
                             </div>
                           </div>
                         </Upload>
-                        <Errore alErrShow={this.state.alErrShow} /* handleClose={this.hideAlert} */>
+                        <Error errShow={this.state.errShow} >
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
                                 <section className="col pt-2 contenitore brick latowhite d-flex justify-content-center align-items-center ">
                                   <div>
-                                    <p className="norfont">Fill in all fields or CAT name duplicated!</p>
+                                    <p className="norfont">Fill in all fields!</p>
                                   </div>
                                 </section>
                               </div>
                             </div>
                           </div>
-                        </Errore>
+                        </Error>
                       </form>
                     </div>
                   </div>
@@ -5173,7 +5244,7 @@ class Main extends React.Component {
                                   <label>Title</label>
                                 </div>
                                 <div className="col d-flex flex-column justify-content-center align-items-center">
-                                  <input type="text" className="form-control border-0" defaultValue={tempCrsTitle} onChange={e => temp2 = e.target.value} /*placeholder={tempAppTitle}*/ />
+                                  <input type="text" className="form-control border-0" defaultValue={tempCrsTitle} onChange={e => temp2 = e.target.value} />
                                 </div>
                               </div>
                             </div>
@@ -5188,7 +5259,7 @@ class Main extends React.Component {
                                   <label>Link</label>
                                 </div>
                                 <div className="col d-flex flex-column justify-content-center align-items-center">
-                                  <input type="text" className="form-control border-0" defaultValue={tempCrsLink} onChange={e => temp3 = e.target.value} /*placeholder={tempAppLink}*/ />
+                                  <input type="text" className="form-control border-0" defaultValue={tempCrsLink} onChange={e => temp3 = e.target.value} />
                                 </div>
                               </div>
                             </div>
@@ -5203,14 +5274,14 @@ class Main extends React.Component {
                                   <label>Descr.</label>
                                 </div>
                                 <div className="col d-flex flex-column justify-content-center align-items-center">
-                                  <input type="text" className="form-control border-0" defaultValue={tempCrsDescr} onChange={e => temp4 = e.target.value} /*placeholder={tempAppTitle}*/ />
+                                  <input type="text" className="form-control border-0" defaultValue={tempCrsDescr} onChange={e => temp4 = e.target.value} />
                                 </div>
                               </div>
                             </div>
                           </div>
                         </div>
 
-                        <Conferma alShow={this.state.alShow}>
+                        <Ok okShow={this.state.okShow}>
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
@@ -5222,8 +5293,8 @@ class Main extends React.Component {
                               </div>
                             </div>
                           </div>
-                        </Conferma>
-                        <Upload upShow={this.state.upShow} /* handleClose={this.hideAlert} */>
+                        </Ok>
+                        <Upload upShow={this.state.upShow} >
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
@@ -5236,7 +5307,7 @@ class Main extends React.Component {
                             </div>
                           </div>
                         </Upload>
-                        <Errore alErrShow={this.state.alErrShow} /* handleClose={this.hideAlert} */>
+                        <Error errShow={this.state.errShow} >
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
@@ -5248,7 +5319,7 @@ class Main extends React.Component {
                               </div>
                             </div>
                           </div>
-                        </Errore>
+                        </Error>
                       </form>
                     </div>
                   </div>
@@ -5259,7 +5330,7 @@ class Main extends React.Component {
                       <h5 className="modal-title" >Permanently delete {tempCrsTitle} credit?</h5>
                     </div>
                     <div className="modal-body">
-                      <Conferma alShow={this.state.alShow}>
+                      <Ok okShow={this.state.okShow}>
                         <div className="row text-center pt-2">
                           <div className="col">
                             <div className="row">
@@ -5271,12 +5342,12 @@ class Main extends React.Component {
                             </div>
                           </div>
                         </div>
-                      </Conferma>
+                      </Ok>
                     </div>
                   </div>
                 </CrsDelDialog>
 
-                <SearchDialog searchDiaShow={this.state.searchDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("search")} handleSave={this.appSearch} handleReset={this.appSearchReset}>
+                <SearchDialog searchDiaShow={this.state.searchDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("search")} handleSave={this.itemSearch} handleReset={this.itemSearchReset}>
                   <div className="modal-content noborder">
                     <div className="modal-header-dark">
                       <h5 className="modal-title-dark" >Search</h5>
@@ -5286,7 +5357,7 @@ class Main extends React.Component {
                         <div className="form-group">
                           <input type="text" className="form-control contenitore pt-2" ref={(input) => { this.searchInput = input; }} onChange={e => temp = e.target.value} placeholder={"Search..."} />
                         </div>
-                        <Conferma alShow={this.state.alShow}>
+                        <Ok okShow={this.state.okShow} display={this.state.display}>
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
@@ -5298,28 +5369,28 @@ class Main extends React.Component {
                               </div>
                             </div>
                           </div>
-                        </Conferma>
-                        <Errore alErrShow={this.state.alErrShow} /* handleClose={this.hideAlert} */>
+                        </Ok>
+                        <Error errShow={this.state.errShow} >
                           <div className="row text-center pt-2">
                             <div className="col">
                               <div className="row">
                                 <section className="col pt-2 contenitore brick latowhite d-flex justify-content-center align-items-center ">
                                   <div>
-                                    <p className="norfont">Error! Enter at least one character.</p>
+                                    <p className="norfont">Enter at least one character.</p>
                                   </div>
                                 </section>
                               </div>
                             </div>
                           </div>
-                        </Errore>
+                        </Error>
                         {/* RESITEMS */}
                         <div className="textcenter">
                           {
-                            this.state.resAppItems.map(({ id, title, link, descr, icon, video }, i) => {
+                            this.state.resItems.map(({ id, title, link, descr, icon, video }, i) => {
                               return (
                                 <ItemSearchRes key={i} pos={i} id={id}
                                   title={title} link={link} descr={descr} icon={icon} video={video}
-                                  appVideo={this.resAppVideo} /* appDescr={this.appDescr} */ />
+                                  itemVideo={this.resItemVideo}/>
                               )
                             })
                           }
@@ -5328,7 +5399,7 @@ class Main extends React.Component {
                     </div>
                   </div>
                 </SearchDialog>
-                <ItemVideoDialog itemVideoDiaShow={this.state.itemVideoDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("video")} handleSave={this.applyAppEdit}>
+                <ItemVideoDialog itemVideoDiaShow={this.state.itemVideoDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("video")} handleSave={this.applyItemEdit}>
                   <div className="modal-content darkBG">
 
                     <div className="row mb-1 m-1 modal-header-dark">
@@ -5338,7 +5409,7 @@ class Main extends React.Component {
                             <OverlayImg></OverlayImg>
                           </div>
                           <div className="col-md latotitle d-flex flex-column justify-content-center align-items-center">
-                            <center>"{tempAppTitle}"</center>
+                            <center>"{tempItemTitle}"</center>
                           </div>
                           <div className="col-md-3">
                           </div>
@@ -5362,7 +5433,7 @@ class Main extends React.Component {
                 <div className="textcenter">
                   {/* CATEGORIES */}
                   {
-                    this.state.catItems.map(({ id, title, icon }, i) => {
+                    this.state.cats.map(({ id, title, icon }, i) => {
                       return (
                         <Cat showItemsBtn={this.state.itemsBtnShow} key={i} pos={i}
                           title={title} icon={icon} catEditDel={this.catEditDel}
@@ -5372,15 +5443,15 @@ class Main extends React.Component {
                   }
                   {/* APPS */}
                   {
-                    this.state.rootAppItems.map(({ id, title, link, descr, icon, video }, i) => {
+                    this.state.rootItems.map(({ id, title, link, descr, icon, video }, i) => {
                       return (
                         <Item showItemsBtn={this.state.itemsBtnShow} key={i} pos={i} id={id}
                           title={title} link={link} descr={descr} icon={icon} video={video}
-                          appEditDel={this.appEditDel} /* addItem={this.appOrCatItem} */ appVideo={this.appVideo} /* appDescr={this.appDescr} */ />
+                          itemEditDel={this.itemEditDel} /* addItem={this.itemOrCat} */ itemVideo={this.itemVideo} />
                       )
                     })
                   }
-                  <ItemAdd showItemsBtn={this.state.itemsBtnShow} /* title={title} link={link} icon={icon} */ addItem={this.appOrCatItem} />
+                  <ItemAdd showItemsBtn={this.state.itemsBtnShow} /* title={title} link={link} icon={icon} */ addItem={this.itemOrCat} />
                   {/* FOOTER */}
                   {foot}
                 </div>
@@ -5473,15 +5544,15 @@ class LogoImg extends React.Component {
 
 //     const linkOrVideo = this.props.video
 //       ?
-//       (<a title={this.props.title} onClick={() => this.props.appVideo("AppVideo", this.props.id)}>
-//         <img className="apps" title={this.props.title} alt={this.props.title} src={this.props.icon} />
+//       (<a title={this.props.title} onClick={() => this.props.itemVideo("itemVideo", this.props.id)}>
+//         <img className="items" title={this.props.title} alt={this.props.title} src={this.props.icon} />
 //       </a>)
 //       :
 //       (< a title={this.props.title} href={this.props.link} target="_blank" >
-//         <img className="apps" title={this.props.title} alt={this.props.title} src={this.props.icon} />
+//         <img className="items" title={this.props.title} alt={this.props.title} src={this.props.icon} />
 //       </a>);
 
-//     let appBtn = "";
+//     let itemBtn = "";
 //     let descrButton = "";
 //     if (this.props.descr !== "") {
 //       descrButton = (
@@ -5511,27 +5582,27 @@ class LogoImg extends React.Component {
 //       );
 //     };
 //     if (this.props.showItemsBtn === "ShowItemBtn") {
-//       appBtn = (
-//         <div className="appcontainer">
+//       itemBtn = (
+//         <div className="itemcontainer">
 //           {linkOrVideo}
 //           {descrButton}
 //           {/* <h4><p className="lato"><b>{this.props.title}</b></p></h4> */}
 //           <div className="row btncontainer">
-//             <button className="col appbutton solidgreen m-1" onClick={() => this.props.appEditDel("AppEdit", this.props.id, this.props.pos)}>
+//             <button className="col itembutton solidgreen m-1" onClick={() => this.props.itemEditDel("itemEdit", this.props.id, this.props.pos)}>
 //               Edit
 //             </button>
-//             <button className="col-1 appbutton black m-1 pad01">
+//             <button className="col-1 itembutton black m-1 pad01">
 //               {this.props.pos + 1} {/* {this.props.id} */}
 //             </button>
-//             <button className="col appbutton solidbrick m-1" onClick={() => this.props.appEditDel("AppDel", this.props.id)}>
+//             <button className="col itembutton solidbrick m-1" onClick={() => this.props.itemEditDel("itemDel", this.props.id)}>
 //               Remove
 //             </button>
 //           </div>
 //         </div>
 //       )
 //     } else {
-//       appBtn = (
-//         <div className="appcontainer">
+//       itemBtn = (
+//         <div className="itemcontainer">
 //           {linkOrVideo}
 //           {descrButton}
 //           {/* <h4><p className="lato"><b>{this.props.title}</b></p></h4> */}
@@ -5540,7 +5611,7 @@ class LogoImg extends React.Component {
 //     }
 //     return (
 //       <>
-//         {appBtn}
+//         {itemBtn}
 //       </>
 //     );
 //   }
@@ -5551,12 +5622,12 @@ class ItemAdd extends React.Component {
     super(props);
   }
   render() {
-    let appBtn = ""
+    let itemBtn = ""
     if (this.props.showItemsBtn === "ShowItemBtn") {
-      appBtn = (
-        <div className="appcontainer">
+      itemBtn = (
+        <div className="itemcontainer">
           < a title="Add Item" onClick={() => this.props.addItem()} >
-            <img className="apps" title="Add Item" alt="Add Item" src="./appicons/ac_add.svg" />
+            <img className="items" title="Add Item" alt="Add Item" src="./itemicons/ac_add.svg" />
           </a>
           <h4><p className="lato"><b>Add Item</b></p></h4>
           <div className="row btncontainer">
@@ -5567,11 +5638,11 @@ class ItemAdd extends React.Component {
         </div>
       )
     } else {
-      appBtn = "";
+      itemBtn = "";
     }
     return (
       <>
-        {appBtn}
+        {itemBtn}
       </>
     );
   }
@@ -5590,8 +5661,8 @@ class CrsAdd extends React.Component {
           <button className="col extcredits solidgreen m-1"
             onClick={() => this.props.addItem()}>
             {/* <b><h2><font color="white"> */}
-              <img className="plus mt-2 mb-1" title="Add Item" alt="Add Item" src="./appicons/plus.svg" />
-              {/* + */}
+            <img className="plus mt-2 mb-1" title="Add Item" alt="Add Item" src="./itemicons/plus.svg" />
+            {/* + */}
             {/* </font></h2></b> */}
             <h5><font color="Chartreuse">Add Item</font></h5>
           </button>
@@ -5619,19 +5690,19 @@ class Cat extends React.Component {
     let catBtn = ""
     if (this.props.showItemsBtn === "ShowItemBtn") {
       catBtn = (
-        <div className="appcontainer">
+        <div className="itemcontainer">
           <a title={this.props.title} onClick={() => this.props.catCont("catCont", this.props.pos)}>
-            <img className="apps" title={this.props.title} alt={this.props.title} src={this.props.icon} />
+            <img className="items" title={this.props.title} alt={this.props.title} src={this.props.icon} />
           </a>
           <h4><p className="lato"><b>{this.props.title}</b></p></h4>
           <div className="row btncontainer">
-            <button className="col appbutton solidgreen m-1" onClick={() => this.props.catEditDel("CatEdit", this.props.pos)}>
+            <button className="col itembutton solidgreen m-1" onClick={() => this.props.catEditDel("CatEdit", this.props.pos)}>
               Edit
             </button>
-            <button className="col-1 appbutton black m-1 pad01">
+            <button className="col-1 itembutton black m-1 pad01">
               {this.props.pos + 1}
             </button>
-            <button className="col appbutton solidbrick m-1" onClick={() => this.props.catEditDel("CatDel", this.props.pos)}>
+            <button className="col itembutton solidbrick m-1" onClick={() => this.props.catEditDel("CatDel", this.props.pos)}>
               Remove
             </button>
           </div>
@@ -5639,9 +5710,9 @@ class Cat extends React.Component {
       )
     } else {
       catBtn = (
-        <div className="appcontainer">
+        <div className="itemcontainer">
           <a title={this.props.title} onClick={() => this.props.catCont("catCont", this.props.pos)}>
-            <img className="apps" title={this.props.title} alt={this.props.title} src={this.props.icon} />
+            <img className="items" title={this.props.title} alt={this.props.title} src={this.props.icon} />
           </a>
           <h4><p className="lato"><b>{this.props.title}</b></p></h4>
         </div>
@@ -5677,13 +5748,13 @@ class Credit extends React.Component {
             </button>
           </div>
           <div className="row btncontainer">
-            <button className="col appbutton solidgreen m-1" onClick={() => this.props.crsEditDel("CrsEdit", this.props.pos)}>
+            <button className="col itembutton solidgreen m-1" onClick={() => this.props.crsEditDel("CrsEdit", this.props.pos)}>
               Edit
             </button>
-            <button className="col-1 appbutton black m-1 pad01">
+            <button className="col-1 itembutton black m-1 pad01">
               {this.props.pos + 1}
             </button>
-            <button className="col appbutton solidbrick m-1" onClick={() => this.props.crsEditDel("CrsDel", this.props.pos)}>
+            <button className="col itembutton solidbrick m-1" onClick={() => this.props.crsEditDel("CrsDel", this.props.pos)}>
               Remove
             </button>
           </div>
@@ -5751,7 +5822,7 @@ class Dropdown extends React.Component {
           <button className={showHideCredits + " col menuItem blue m-1"}
             onClick={() => {
               // window.location = "./credits.html";
-              this.props.exCrsShow();
+              this.props.crsShow();
             }}>
             {spData.menuCreditsLabel}
           </button>

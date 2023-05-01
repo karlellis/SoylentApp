@@ -31,16 +31,16 @@
     "footInfoOpacity": 0.7,
     "footInfoTextColor": "rgba(255, 255, 255, 1)",
     "footInfoColW": "col",
-    "footCreditiTitle": "Credits",
-    "noFootCreditiTitle": false,
-    "footCreditiSubtitle": "Designed by Karl Ellis",
-    "noFootCreditiSubtitle": false,
-    "footCreditiSubtitle2": "Powered by React JS & Bootstrap",
-    "noFootCreditiSubtitle2": false,
-    "footCreditColor": "rgba(0, 177, 64, 0.95)",
-    "footCreditOpacity": 0.95,
-    "footCreditTextColor": "rgba(255, 255, 255, 1)",
-    "footCreditColW": "col-md",
+    "footAddTitle": "Credits",
+    "noFootAddTitle": false,
+    "footAddSubtitle": "Designed by Karl Ellis",
+    "noFootAddSubtitle": false,
+    "footAddSubtitle2": "Powered by React JS & Bootstrap",
+    "noFootAddSubtitle2": false,
+    "footAddColor": "rgba(0, 177, 64, 0.95)",
+    "footAddOpacity": 0.95,
+    "footAddTextColor": "rgba(255, 255, 255, 1)",
+    "footAddColW": "col-md",
     "backgroundColor": "rgb(213, 164, 17, 1)",
     "backgroundOpacity": 1,
     "catColor": "rgb(0, 0, 0, 1)",
@@ -62,12 +62,12 @@
     "videoOverlay": "./img/soytv.gif",
     "noBackImage": false,
     "noCatImage": false,
-    "appItems": [],
-    "catItems": [],
+    "items": [],
+    "cats": [],
     "creditsItems": [],
-    "appAdd": {
+    "itemAdd": {
         "title": "Add Item",
         "link": "https://Add_Item",
-        "icon": "./appicons/ac_add.svg"
+        "icon": "./itemicons/ac_add.svg"
     }
 }

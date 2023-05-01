@@ -31,16 +31,16 @@
   "footInfoOpacity": 0.7,
   "footInfoTextColor": "rgba(255, 255, 255, 1)",
   "footInfoColW": "col",
-  "footCreditiTitle": "",
-  "noFootCreditiTitle": false,
-  "footCreditiSubtitle": "",
-  "noFootCreditiSubtitle": false,
-  "footCreditiSubtitle2": "",
-  "noFootCreditiSubtitle2": false,
-  "footCreditColor": "rgba(0, 177, 64, 0.95)",
-  "footCreditOpacity": 0.95,
-  "footCreditTextColor": "rgba(255, 255, 255, 1)",
-  "footCreditColW": "col-md",
+  "footAddTitle": "",
+  "noFootAddTitle": false,
+  "footAddSubtitle": "",
+  "noFootAddSubtitle": false,
+  "footAddSubtitle2": "",
+  "noFootAddSubtitle2": false,
+  "footAddColor": "rgba(0, 177, 64, 0.95)",
+  "footAddOpacity": 0.95,
+  "footAddTextColor": "rgba(255, 255, 255, 1)",
+  "footAddColW": "col-md",
   "backgroundColor": "rgba(255, 238, 204, 1)",
   "backgroundOpacity": 1,
   "catColor": "rgba(255, 238, 204, 1)",
@@ -58,13 +58,13 @@
   "videoOverlay": "",
   "noBackImage": false,
   "noCatImage": false,
-  "appItems": [],
-  "catItems": [],
-  "appAdd": [
+  "items": [],
+  "cats": [],
+  "itemAdd": [
     {
       "title": "Add Item",
       "link": "https://Add_Item",
-      "icon": "./appicons/ac_add.svg"
+      "icon": "./itemicons/ac_add.svg"
     }
   ]
 }
