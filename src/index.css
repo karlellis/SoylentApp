@@ -171,7 +171,7 @@ td {
 .itemcontainer {
 	display: inline-block;
 	max-width: 277px;
-	margin: auto;
+	margin: 2px;
 	box-sizing: border-box;
 }
 
@@ -694,7 +694,7 @@ label {
 	scrollbar-width: none;
 	overflow-x: hidden;
 	text-shadow: 2px 2px 0px #000000;
-	width: 95%
+	/* width: 100% */
 }
 
 .box img {
@@ -707,8 +707,8 @@ label {
 }
 
 .box .descr-shown {
-    width: 95%;
-    height: 95%;
+    width: 100%;
+    height: 100%;
 }
 
 .box2 .descr-shown {
