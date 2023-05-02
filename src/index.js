@@ -80,64 +80,90 @@ const Item = ({ showItemsBtn, pos, id, title, link, descr, icon, video, itemEdit
   // </a>);
 
   let itemBtn = "";
-  let descrButton = "";
+  let descrTxt = "";
+  let titleTxt = "";
 
   if (descr !== "") {
-    descrButton = (
-      <>
-        {/* isActive && */
-          // <div className="row medfonts descr fade-in-image lato text-center m-auto mt-5 mb-5"
-          <div className={`${isActive ? 'descr-shown row medfonts lato text-center m-auto' : 'descr-hidden'}`}
-            // <div className={`row medfonts descr lato text-center m-auto mt-5 mb-5 ${isActive ? 'alert-shown' : 'alert-hidden'}`}
-            style={{
-              backgroundImage: "url(" + icon + ")",
-              backgroundPosition: 'center',
-              backgroundRepeat: 'no-repeat',
-              // backgroundAttachment: "fixed",
-            }}>
-            <b style={{ backgroundColor: "rgba(0, 0, 0, 0.7)" }}>{descr}</b>
-          </div>
-        }
-        <h4>
-          <div className="row lato text-center m-1">
-            <div className="col">
-              <div className="row">
-                <div className="col d-flex flex-column justify-content-center align-items-center">
-                  <b>{title}</b>
-                </div>
-                <div className="col-2 borderleft pointer d-flex flex-column justify-content-center align-items-center"
-                  onClick={() => setIsActive(!isActive)}>
-                  <b>{isActive ? '-' : '+'}</b>
-                </div>
+    descrTxt = (
+      // <>
+      // { isActive && 
+      // <div className="row medfonts descr fade-in-image lato text-center m-auto mt-5 mb-5"
+      <div className={`${isActive ? 'descr-shown row medfonts lato text-center m-auto' : 'descr-hidden'}`}
+        // <div className={`row medfonts descr lato text-center m-auto mt-5 mb-5 ${isActive ? 'alert-shown' : 'alert-hidden'}`}
+        style={{
+          backgroundImage: "url(" + icon + ")",
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          // backgroundAttachment: "fixed",
+        }}>
+        <b style={{ backgroundColor: "rgba(0, 0, 0, 0.7)" }}>{descr}</b>
+      </div>
+      // }
+    )
+    titleTxt = (
+      <h4>
+        <div className="row lato text-center m-1">
+          <div className="col">
+            <div className="row">
+              <div className="col d-flex flex-column justify-content-center align-items-center">
+                <b>{title}</b>
+              </div>
+              <div className="col-2 borderleft pointer d-flex flex-column justify-content-center align-items-center"
+                onClick={() => setIsActive(!isActive)}>
+                <b>{isActive ? '-' : '+'}</b>
               </div>
             </div>
           </div>
-        </h4>
-      </>
+        </div>
+      </h4>
     )
+    {/* </> */ }
+
   } else {
-    descrButton = (
-      <h4><p className="lato"><b>{title}</b></p></h4>
+    descrTxt = "";
+    titleTxt = (
+      <h4>
+        <div className="row lato text-center m-1">
+          <div className="col">
+            <div className="row">
+              <div className="col d-flex flex-column justify-content-center align-items-center">
+                <b>{title}</b>
+              </div>
+              {/* <div className="col-2 borderleft pointer d-flex flex-column justify-content-center align-items-center"
+                  onClick={() => setIsActive(!isActive)}>
+                  <b>{isActive ? '-' : '+'}</b>
+                </div> */}
+            </div>
+          </div>
+        </div>
+      </h4>
+      // <h4><p className="lato"><b>{title}</b></p></h4>
     );
   };
+
   if (showItemsBtn === "ShowItemBtn") {
     itemBtn = (
       <div className="itemcontainer">
+
         <div className="iconcontainer box box2">
           {!isActive && linkOrVideo}
-          {descrButton}
-          <div className="row btncontainer">
-            <button className="col itembutton solidgreen m-1" onClick={() => itemEditDel("itemEdit", id, pos)}>
-              Edit
-            </button>
-            <button className="col-1 itembutton black m-1 pad01">
-              {pos + 1} {/* {this.props.id} */}
-            </button>
-            <button className="col itembutton solidbrick m-1" onClick={() => itemEditDel("itemDel", id)}>
-              Remove
-            </button>
-          </div>
+          {descrTxt}
         </div>
+
+        {titleTxt}
+
+        <div className="row btncontainer">
+          <button className="col itembutton solidgreen m-1" onClick={() => itemEditDel("itemEdit", id, pos)}>
+            Edit
+          </button>
+          <button className="col-1 itembutton black m-1 pad01">
+            {pos + 1} {/* {this.props.id} */}
+          </button>
+          <button className="col itembutton solidbrick m-1" onClick={() => itemEditDel("itemDel", id)}>
+            Remove
+          </button>
+        </div>
+        {/* </div> */}
       </div>
     )
   } else {
@@ -145,8 +171,10 @@ const Item = ({ showItemsBtn, pos, id, title, link, descr, icon, video, itemEdit
       <div className="itemcontainer">
         <div className="iconcontainer box box2">
           {!isActive && linkOrVideo}
-          {descrButton}
+          {descrTxt}
         </div>
+        {titleTxt}
+        {/* </div> */}
       </div>
     )
   }
@@ -161,13 +189,15 @@ const ItemSearchRes = ({ id, title, link, descr, icon, video, itemVideo }) => {
   const [isActive, setIsActive] = useState(false);
   const linkOrVideo = video
     ?
-    (<a title={title} onClick={() => itemVideo("itemVideo", id)}>
-      <img className="items" title={title} alt={title} src={icon} />
-    </a>)
+    // (<a title={title} onClick={() => itemVideo("itemVideo", id)}>
+    <img className="items" title={title} alt={title} src={icon}
+      onClick={() => itemVideo("itemVideo", id)} />
+    // </a>)
     :
-    (< a title={title} href={link} target="_blank" >
-      <img className="items" title={title} alt={title} src={icon} />
-    </a>);
+    // (< a title={title} href={link} target="_blank" >
+    <img className="items" title={title} alt={title} src={icon}
+      href={link} target="_blank" />
+  // </a>);
   let itemBtn = "";
   let descrButton = "";
 
@@ -175,7 +205,8 @@ const ItemSearchRes = ({ id, title, link, descr, icon, video, itemVideo }) => {
     descrButton = (
       <>
         {isActive &&
-          <div className="row medfonts descr fade-in-image lato text-center m-auto mt-5 mb-5"
+          // <div className="row medfonts descr fade-in-image lato text-center m-auto mt-5 mb-5"
+          <div className={`${isActive ? 'descr-shown row medfonts lato text-center m-auto' : 'descr-hidden'}`}
             style={{
               backgroundImage: "url(" + icon + ")",
               backgroundPosition: 'center',
@@ -205,14 +236,33 @@ const ItemSearchRes = ({ id, title, link, descr, icon, video, itemVideo }) => {
     )
   } else {
     descrButton = (
-      <h4><p className="lato"><b>{title}</b></p></h4>
+
+      <h4>
+        <div className="row lato text-center m-1">
+          <div className="col">
+            <div className="row">
+              <div className="col d-flex flex-column justify-content-center align-items-center">
+                <b>{title}</b>
+              </div>
+              {/* <div className="col-2 borderleft pointer d-flex flex-column justify-content-center align-items-center"
+                onClick={() => setIsActive(!isActive)}>
+                <b>{isActive ? '-' : '+'}</b>
+              </div> */}
+            </div>
+          </div>
+        </div>
+      </h4>
+
+      // <h4><p className="lato"><b>{title}</b></p></h4>
     );
   };
 
   itemBtn = (
     <div className="itemcontainer">
-      {!isActive && linkOrVideo}
-      {descrButton}
+      <div className="iconcontainer box box2">
+        {!isActive && linkOrVideo}
+        {descrButton}
+      </div>
     </div>
   )
   return (
@@ -5637,7 +5687,25 @@ class ItemAdd extends React.Component {
             <img className="items" title="Add Item" alt="Add Item" src="./itemicons/ac_add.svg"
               onClick={() => this.props.addItem()} />
             {/* </a> */}
-            <h4><p className="lato"><b>Add Item</b></p></h4>
+
+            <h4>
+              <div className="row lato text-center m-1">
+                <div className="col">
+                  <div className="row">
+                    <div className="col d-flex flex-column justify-content-center align-items-center">
+                      <b>Add Item</b>
+                    </div>
+                    {/* <div className="col-2 borderleft pointer d-flex flex-column justify-content-center align-items-center"
+                      onClick={() => setIsActive(!isActive)}>
+                      <b>{isActive ? '-' : '+'}</b>
+                    </div> */}
+                  </div>
+                </div>
+              </div>
+            </h4>
+
+            {/* <h4><p className="lato"><b>Add Item</b></p></h4> */}
+
             <div className="row btncontainer">
               <button className="col addbutton solidgreen m-1" onClick={() => this.props.addItem()}>
                 Add Item
@@ -5705,7 +5773,25 @@ class Cat extends React.Component {
             <img className="items" title={this.props.title} alt={this.props.title} src={this.props.icon}
               onClick={() => this.props.catCont("catCont", this.props.pos)} />
             {/* </a> */}
-            <h4><p className="lato"><b>{this.props.title}</b></p></h4>
+
+            <h4>
+              <div className="row lato text-center m-1">
+                <div className="col">
+                  <div className="row">
+                    <div className="col d-flex flex-column justify-content-center align-items-center">
+                      <b>{this.props.title}</b>
+                    </div>
+                    {/* <div className="col-2 borderleft pointer d-flex flex-column justify-content-center align-items-center"
+                      onClick={() => setIsActive(!isActive)}>
+                      <b>{isActive ? '-' : '+'}</b>
+                    </div> */}
+                  </div>
+                </div>
+              </div>
+            </h4>
+
+            {/* <h4><p className="lato"><b>{this.props.title}</b></p></h4> */}
+
             <div className="row btncontainer">
               <button className="col itembutton solidgreen m-1" onClick={() => this.props.catEditDel("CatEdit", this.props.pos)}>
                 Edit
@@ -5725,10 +5811,28 @@ class Cat extends React.Component {
         <div className="itemcontainer">
           <div className="iconcontainer box box2">
             {/* <a title={this.props.title} onClick={() => this.props.catCont("catCont", this.props.pos)}> */}
-              <img className="items" title={this.props.title} alt={this.props.title} src={this.props.icon}
-                onClick={() => this.props.catCont("catCont", this.props.pos)} />
+            <img className="items" title={this.props.title} alt={this.props.title} src={this.props.icon}
+              onClick={() => this.props.catCont("catCont", this.props.pos)} />
             {/* </a> */}
-            <h4><p className="lato"><b>{this.props.title}</b></p></h4>
+
+            <h4>
+              <div className="row lato text-center m-1">
+                <div className="col">
+                  <div className="row">
+                    <div className="col d-flex flex-column justify-content-center align-items-center">
+                      <b>{this.props.title}</b>
+                    </div>
+                    {/* <div className="col-2 borderleft pointer d-flex flex-column justify-content-center align-items-center"
+                      onClick={() => setIsActive(!isActive)}>
+                      <b>{isActive ? '-' : '+'}</b>
+                    </div> */}
+                  </div>
+                </div>
+              </div>
+            </h4>
+
+            {/* <h4><p className="lato"><b>{this.props.title}</b></p></h4> */}
+
           </div>
         </div>
       )
