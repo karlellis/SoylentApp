@@ -69,13 +69,15 @@ const Item = ({ showItemsBtn, pos, id, title, link, descr, icon, video, itemEdit
 
   const linkOrVideo = video
     ?
-    (<a title={title} onClick={() => itemVideo("itemVideo", id)}>
-      <img className="items" title={title} alt={title} src={icon} />
-    </a>)
+    // (<a title={title} onClick={() => itemVideo("itemVideo", id)}>
+    (<img className="items" title={title} alt={title} src={icon}
+      onClick={() => itemVideo("itemVideo", id)} />)
+    //  </a>) 
     :
-    (< a title={title} href={link} target="_blank" >
-      <img className="items" title={title} alt={title} src={icon} />
-    </a>);
+    // (< a title={title} href={link} target="_blank" >
+    (<img className="items" title={title} href={link} target="_blank"
+      alt={title} src={icon} />)
+  // </a>);
 
   let itemBtn = "";
   let descrButton = "";
@@ -83,15 +85,15 @@ const Item = ({ showItemsBtn, pos, id, title, link, descr, icon, video, itemEdit
   if (descr !== "") {
     descrButton = (
       <>
-        {isActive &&
-          <div className="row medfonts descr fade-in-image lato text-center m-auto mt-5 mb-5"
-          // <div className={`row medfonts descr lato text-center m-auto mt-5 mb-5 ${isActive ? 'alert-shown' : 'alert-hidden'}`}
+        {/* isActive && */
+          // <div className="row medfonts descr fade-in-image lato text-center m-auto mt-5 mb-5"
+          <div className={`${isActive ? 'descr-shown row medfonts lato text-center m-auto' : 'descr-hidden'}`}
+            // <div className={`row medfonts descr lato text-center m-auto mt-5 mb-5 ${isActive ? 'alert-shown' : 'alert-hidden'}`}
             style={{
               backgroundImage: "url(" + icon + ")",
               backgroundPosition: 'center',
               backgroundRepeat: 'no-repeat',
               // backgroundAttachment: "fixed",
-              width: "16em"
             }}>
             <b style={{ backgroundColor: "rgba(0, 0, 0, 0.7)" }}>{descr}</b>
           </div>
@@ -121,26 +123,30 @@ const Item = ({ showItemsBtn, pos, id, title, link, descr, icon, video, itemEdit
   if (showItemsBtn === "ShowItemBtn") {
     itemBtn = (
       <div className="itemcontainer">
-        {!isActive && linkOrVideo}
-        {descrButton}
-        <div className="row btncontainer">
-          <button className="col itembutton solidgreen m-1" onClick={() => itemEditDel("itemEdit", id, pos)}>
-            Edit
-          </button>
-          <button className="col-1 itembutton black m-1 pad01">
-            {pos + 1} {/* {this.props.id} */}
-          </button>
-          <button className="col itembutton solidbrick m-1" onClick={() => itemEditDel("itemDel", id)}>
-            Remove
-          </button>
+        <div className="iconcontainer box box2">
+          {!isActive && linkOrVideo}
+          {descrButton}
+          <div className="row btncontainer">
+            <button className="col itembutton solidgreen m-1" onClick={() => itemEditDel("itemEdit", id, pos)}>
+              Edit
+            </button>
+            <button className="col-1 itembutton black m-1 pad01">
+              {pos + 1} {/* {this.props.id} */}
+            </button>
+            <button className="col itembutton solidbrick m-1" onClick={() => itemEditDel("itemDel", id)}>
+              Remove
+            </button>
+          </div>
         </div>
       </div>
     )
   } else {
     itemBtn = (
       <div className="itemcontainer">
-        {!isActive && linkOrVideo}
-        {descrButton}
+        <div className="iconcontainer box box2">
+          {!isActive && linkOrVideo}
+          {descrButton}
+        </div>
       </div>
     )
   }
@@ -377,7 +383,7 @@ const Ok = ({ okShow, children }) => {
   // );
 
   return (
-    <div className={`${okShow ? 'alert-shown' : 'alert-hidden'}`} >
+    <div className={`mb-2 ${okShow ? 'alert-shown' : 'alert-hidden'}`} >
       {children}
     </div>
   );
@@ -393,7 +399,7 @@ const Upload = ({ upShow, children }) => {
   // );
 
   return (
-    <div className={`${upShow ? 'alert-shown' : 'alert-hidden'}`} >
+    <div className={`mb-2 ${upShow ? 'alert-shown' : 'alert-hidden'}`} >
       {children}
     </div>
   );
@@ -407,7 +413,7 @@ const Error = ({ errShow, children }) => {
   // );
 
   return (
-    <div className={`${errShow ? 'alert-shown' : 'alert-hidden'}`} >
+    <div className={`mb-2 ${errShow ? 'alert-shown' : 'alert-hidden'}`} >
       {children}
     </div>
   );
@@ -5390,7 +5396,7 @@ class Main extends React.Component {
                               return (
                                 <ItemSearchRes key={i} pos={i} id={id}
                                   title={title} link={link} descr={descr} icon={icon} video={video}
-                                  itemVideo={this.resItemVideo}/>
+                                  itemVideo={this.resItemVideo} />
                               )
                             })
                           }
@@ -5626,14 +5632,17 @@ class ItemAdd extends React.Component {
     if (this.props.showItemsBtn === "ShowItemBtn") {
       itemBtn = (
         <div className="itemcontainer">
-          < a title="Add Item" onClick={() => this.props.addItem()} >
-            <img className="items" title="Add Item" alt="Add Item" src="./itemicons/ac_add.svg" />
-          </a>
-          <h4><p className="lato"><b>Add Item</b></p></h4>
-          <div className="row btncontainer">
-            <button className="col addbutton solidgreen m-1" onClick={() => this.props.addItem()}>
-              Add Item
-            </button>
+          <div className="iconcontainer box box2">
+            {/* < a title="Add Item" onClick={() => this.props.addItem()} > */}
+            <img className="items" title="Add Item" alt="Add Item" src="./itemicons/ac_add.svg"
+              onClick={() => this.props.addItem()} />
+            {/* </a> */}
+            <h4><p className="lato"><b>Add Item</b></p></h4>
+            <div className="row btncontainer">
+              <button className="col addbutton solidgreen m-1" onClick={() => this.props.addItem()}>
+                Add Item
+              </button>
+            </div>
           </div>
         </div>
       )
@@ -5691,30 +5700,36 @@ class Cat extends React.Component {
     if (this.props.showItemsBtn === "ShowItemBtn") {
       catBtn = (
         <div className="itemcontainer">
-          <a title={this.props.title} onClick={() => this.props.catCont("catCont", this.props.pos)}>
-            <img className="items" title={this.props.title} alt={this.props.title} src={this.props.icon} />
-          </a>
-          <h4><p className="lato"><b>{this.props.title}</b></p></h4>
-          <div className="row btncontainer">
-            <button className="col itembutton solidgreen m-1" onClick={() => this.props.catEditDel("CatEdit", this.props.pos)}>
-              Edit
-            </button>
-            <button className="col-1 itembutton black m-1 pad01">
-              {this.props.pos + 1}
-            </button>
-            <button className="col itembutton solidbrick m-1" onClick={() => this.props.catEditDel("CatDel", this.props.pos)}>
-              Remove
-            </button>
+          <div className="iconcontainer box box2">
+            {/* <a title={this.props.title} onClick={() => this.props.catCont("catCont", this.props.pos)}> */}
+            <img className="items" title={this.props.title} alt={this.props.title} src={this.props.icon}
+              onClick={() => this.props.catCont("catCont", this.props.pos)} />
+            {/* </a> */}
+            <h4><p className="lato"><b>{this.props.title}</b></p></h4>
+            <div className="row btncontainer">
+              <button className="col itembutton solidgreen m-1" onClick={() => this.props.catEditDel("CatEdit", this.props.pos)}>
+                Edit
+              </button>
+              <button className="col-1 itembutton black m-1 pad01">
+                {this.props.pos + 1}
+              </button>
+              <button className="col itembutton solidbrick m-1" onClick={() => this.props.catEditDel("CatDel", this.props.pos)}>
+                Remove
+              </button>
+            </div>
           </div>
         </div>
       )
     } else {
       catBtn = (
         <div className="itemcontainer">
-          <a title={this.props.title} onClick={() => this.props.catCont("catCont", this.props.pos)}>
-            <img className="items" title={this.props.title} alt={this.props.title} src={this.props.icon} />
-          </a>
-          <h4><p className="lato"><b>{this.props.title}</b></p></h4>
+          <div className="iconcontainer box box2">
+            {/* <a title={this.props.title} onClick={() => this.props.catCont("catCont", this.props.pos)}> */}
+              <img className="items" title={this.props.title} alt={this.props.title} src={this.props.icon}
+                onClick={() => this.props.catCont("catCont", this.props.pos)} />
+            {/* </a> */}
+            <h4><p className="lato"><b>{this.props.title}</b></p></h4>
+          </div>
         </div>
       )
     }
