@@ -1988,7 +1988,7 @@ class Main extends React.Component {
   }
 
   applyItemDel = () => {
-    var array = [...this.state.items.slice()];
+    var array = [...this.state.items];
     var index = temp;
     console.log("itemDel ID: ", temp);
     console.log("item array before: ", array);
@@ -2941,7 +2941,7 @@ class Main extends React.Component {
       }
     }
     // console.log(id, " for ", pos);
-    
+
     if (op === "itemEdit") {
       document.getElementById('clearitemswitchpos').value = "";
       this.showModal("itemEdit");
