@@ -170,7 +170,7 @@ td {
 
 .itemcontainer {
 	display: inline-block;
-	max-width: 277px;
+	width: 277px;
 	margin: 2px;
 	box-sizing: border-box;
 }
@@ -178,10 +178,10 @@ td {
 .iconcontainer {
 	display: inline-block;
 	height: 300px;
-	max-width: 277px;
+	max-width: 260px;
 	margin: auto;
 	box-sizing: border-box;
-	border: red solid 5px;
+	/* border: red solid 5px; */
 }
 
 .btncontainer {
@@ -721,7 +721,6 @@ label {
 	max-height: 0;
 	/* transition: max-height 250ms ease-out; */
 	overflow: hidden;
-	width: 95%
 }
 
 .latotitle {

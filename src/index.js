@@ -160,7 +160,7 @@ const Item = ({ showItemsBtn, pos, id, title, link, descr, icon, video, itemEdit
           <button className="col-1 itembutton black m-1 pad01">
             {pos + 1} {/* {this.props.id} */}
           </button>
-          <button className="col itembutton solidbrick m-1" onClick={() => itemEditDel("itemDel", id)}>
+          <button className="col itembutton solidbrick m-1" onClick={() => itemEditDel("itemDel", id, pos)}>
             Remove
           </button>
         </div>
@@ -338,7 +338,7 @@ const Menu = ({ menuShow, children, mainBtn }) => {
   const showHideClassName = menuShow ? "d-block" : "d-none";
   const justifyCenterEnd = mainBtn ? "justify-content-end" : "justify-content-center";
   return (
-    <section id="HeadMenu" style={{ backgroundColor: spData.menuColor, color: spData.menuTextColor }} className={showHideClassName + " " + justifyCenterEnd + " col-md-1 d-flex flex-column align-items-center"}>
+    <section id="HeadMenu" style={{ backgroundColor: spData.menuColor, color: spData.menuTextColor, zIndex: 1 }} className={showHideClassName + " " + justifyCenterEnd + " col-md-1 d-flex flex-column align-items-center"}>
       {children}
     </section>
   );
@@ -874,7 +874,7 @@ const LogoDialog = ({ handleUpload, handleClose, logoDiaShow, children, activity
       <section className="modal-main">
         {children}
         <div className="modal-footer">
-          <button type="button" disabled={(activityChanged) ? true : false} className="btn btn-primary" onClick={handleUpload}>Apply & Close</button>
+          <button type="button" disabled={(activityChanged) ? true : false} className="btn btn-primary" onClick={handleUpload}>Apply</button>
           <button type="button" /* disabled={(activityChanged) ? true : false} */ className="btn btn-secondary" data-dismiss="modal" onClick={handleClose}>Close</button>
         </div>
       </section>
@@ -1226,7 +1226,7 @@ class Main extends React.Component {
             activityChanged: false
           });
           this.saveFile(spData, "./api/img-upload.php", "config");
-          this.hideModal("logo");
+          // this.hideModal("logo");
         } else if (url === "icon" && op === "edit") {
           if (fileImg !== null) {
             // console.log("Icon edit!");
@@ -1319,10 +1319,12 @@ class Main extends React.Component {
           newItem.cat = temp5;
           let index = 0;
           // console.log("Insert pos=", (inPos));
-          if (tempCatTitle !== "Root") {
-            index = this.state.catItems[inPos].id;
-          } else {
-            index = this.state.rootItems[inPos].id;
+          if (arrayLength !== 0) {
+            if (tempCatTitle !== "Root") {
+              index = this.state.catItems[inPos].id;
+            } else {
+              index = this.state.rootItems[inPos].id;
+            }
           }
           newItem.id = index;
           tempIcon = "";
@@ -1965,8 +1967,10 @@ class Main extends React.Component {
     if (fileImg !== null && temp2 !== "" && temp3 !== "") {
       if (temp !== "") {
         inPos = parseInt(temp) - 1;
+
         // console.log("InPos: ", inPos);
-        if (inPos < arrayLength) {
+        // console.log("ArrayLength: ", arrayLength);
+        if (inPos <= (arrayLength) && inPos >= 0) {
           this.saveImgFile(fileImg, "icon", "add");
         } else {
           this.showAlert("err");
@@ -1984,9 +1988,12 @@ class Main extends React.Component {
   }
 
   applyItemDel = () => {
-    var array = [...this.state.items];
+    var array = [...this.state.items.slice()];
     var index = temp;
-    // console.log("itemDel ID: ", temp);
+    console.log("itemDel ID: ", temp);
+    console.log("item array before: ", array);
+    console.log("State items: ", this.state.items);
+    console.log("Array lenght: ", array.length);
     if (index !== -1) {
       fetchDelPHP(tempIcon, "./api/img-upload.php", "icon");
       tempIcon = "";
@@ -1995,6 +2002,7 @@ class Main extends React.Component {
         (array[i].id)--;
       }
       var noAddArray = [...array];
+      console.log("item array after: ", array);
       this.setState({ items: array });
       spData.items = noAddArray;
     }
@@ -2071,7 +2079,7 @@ class Main extends React.Component {
       if (temp !== "") {
         inPos = parseInt(temp) - 1;
         // console.log("InPos: ", inPos);
-        if (inPos < arrayLength && !dup) {
+        if (inPos <= arrayLength && !dup && inPos >= 0) {
           this.saveImgFile(fileImg, "cat", "add");
         } else {
           this.showAlert("err");
@@ -2313,7 +2321,7 @@ class Main extends React.Component {
       // this.setState({ okShow: true });
       // this.setState({ errShow: false });
       this.saveFile(spData, "./api/img-upload.php", "config");
-      this.hideModal("logo");
+      // this.hideModal("logo");
     }
   }
 
@@ -2898,11 +2906,13 @@ class Main extends React.Component {
     currPos = pos;
     // console.log(op, " for ", id, "pos ", currPos);
     array = [...this.state.items];
+    console.log("Array dialog before : ", array);
     arrayLength = (array.length);
+    console.log("Array dialog lenght: ", arrayLength);
     for (let i = 0; i < array.length; i++) {
       if (array[i].id === id) {
         tempItemTitle = array[i].title;
-        // console.log("App name: ", tempItemTitle);
+        console.log("App name: ", tempItemTitle);
         tempItemLink = array[i].link;
         tempItemDescr = array[i].descr;
         if (tempItemDescr === "") {
@@ -2931,10 +2941,12 @@ class Main extends React.Component {
       }
     }
     // console.log(id, " for ", pos);
-    document.getElementById('clearitemswitchpos').value = "";
+    
     if (op === "itemEdit") {
+      document.getElementById('clearitemswitchpos').value = "";
       this.showModal("itemEdit");
     } else {
+      // console.log("Array dialog after : ", array);
       this.showModal("itemDel");
     }
   }
