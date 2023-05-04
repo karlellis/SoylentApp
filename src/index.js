@@ -1989,11 +1989,11 @@ class Main extends React.Component {
 
   applyItemDel = () => {
     var array = [...this.state.items];
-    var index = temp;
-    console.log("itemDel ID: ", temp);
-    console.log("item array before: ", array);
-    console.log("State items: ", this.state.items);
-    console.log("Array lenght: ", array.length);
+    var index = parseInt(temp);
+    // console.log("itemDel ID: ", index);
+    // console.log("item array before: ", array);
+    // console.log("State items: ", this.state.items);
+    // console.log("Array lenght: ", array.length);
     if (index !== -1) {
       fetchDelPHP(tempIcon, "./api/img-upload.php", "icon");
       tempIcon = "";
@@ -2002,8 +2002,13 @@ class Main extends React.Component {
         (array[i].id)--;
       }
       var noAddArray = [...array];
-      console.log("item array after: ", array);
+      // console.log("item array after: ", array);
       this.setState({ items: array });
+      if (tempCatTitle !== "Root") {
+        this.setState({ catItems: array });
+      } else {
+        this.setState({ rootItems: array });
+      }
       spData.items = noAddArray;
     }
     temp = "";
@@ -2105,7 +2110,8 @@ class Main extends React.Component {
   applyCatDel = () => {
     var array = [...this.state.cats];
     var index = currPos;
-    // console.log("Index: ", temp);
+    // console.log("item array before: ", array);
+    // console.log("State items: ", this.state.cats);
     if (index !== -1) {
       fetchDelPHP(tempIcon, "./api/img-upload.php", "icon");
       tempIcon = "";
@@ -2123,11 +2129,11 @@ class Main extends React.Component {
     temp2 = "";
     temp3 = "";
     this.showAlert("ok");
-    // this.setState({ okShow: true });
     this.saveFile(spData, "./api/img-upload.php", "config");
     this.setState({
       activityChanged: true
     });
+    // console.log("item array after: ", array);
   }
 
   applyCrsEdit = () => {
