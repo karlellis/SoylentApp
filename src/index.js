@@ -1110,7 +1110,8 @@ class Main extends React.Component {
         } else {
           this.setState({
             backStyle: {
-              backgroundImage: "linear-gradient(rgba(255,255,255," + (1 - spData.backgroundOpacity).toString() + "), rgba(255,255,255," + (1 - spData.backgroundOpacity).toString() + ")), url(" + spData.backgroundImage + ")",
+              // backgroundImage: "linear-gradient(rgba(255,255,255," + (1 - spData.backgroundOpacity).toString() + "), rgba(255,255,255," + (1 - spData.backgroundOpacity).toString() + ")), url(" + spData.backgroundImage + ")",
+              backgroundImage: "linear-gradient(rgba(0,0,0," + (1 - spData.backgroundOpacity).toString() + "), rgba(0,0,0," + (1 - spData.backgroundOpacity).toString() + ")), url(" + spData.backgroundImage + ")",
               backgroundColor: spData.backgroundColor,
               backgroundPosition: 'center',
               backgroundSize: 'cover',
@@ -1207,9 +1208,6 @@ class Main extends React.Component {
     tempIcon = "";
     tempCatIcon = "";
     this.showAlert("up");
-    // this.setState({ errShow: false });
-    // this.setState({ upShow: true });
-    // this.setState({ okShow: false });
     this.setState({
       activityChanged: true
     })
@@ -1498,7 +1496,8 @@ class Main extends React.Component {
           spData.backgroundColor = this.hexToRgb(tempColor) + ", 1)";
           this.setState({
             backStyle: {
-              backgroundImage: "linear-gradient(rgba(255,255,255," + (1 - spData.backgroundOpacity).toString() + "), rgba(255,255,255," + (1 - spData.backgroundOpacity).toString() + ")), url(" + spData.backgroundImage + ")",
+              // backgroundImage: "linear-gradient(rgba(255,255,255," + (1 - spData.backgroundOpacity).toString() + "), rgba(255,255,255," + (1 - spData.backgroundOpacity).toString() + ")), url(" + spData.backgroundImage + ")",
+              backgroundImage: "linear-gradient(rgba(0,0,0," + (1 - spData.backgroundOpacity).toString() + "), rgba(0,0,0," + (1 - spData.backgroundOpacity).toString() + ")), url(" + spData.backgroundImage + ")",
               backgroundColor: spData.backgroundColor,
               backgroundPosition: 'center',
               backgroundSize: 'cover',
@@ -1939,8 +1938,6 @@ class Main extends React.Component {
           this.saveImgFile(fileImg, "icon", "edit");
         } else {
           this.showAlert("err");
-          // this.setState({ okShow: false });
-          // this.setState({ errShow: true });
         }
       } else {
         // console.log("cgPos === \"\"");
@@ -1949,8 +1946,6 @@ class Main extends React.Component {
     } else {
       // console.log("fileImg - temp2 - temp3 are Null!!!");
       this.showAlert("err");
-      // this.setState({ okShow: false });
-      // this.setState({ errShow: true });
     }
   }
 
@@ -1974,16 +1969,12 @@ class Main extends React.Component {
           this.saveImgFile(fileImg, "icon", "add");
         } else {
           this.showAlert("err");
-          // this.setState({ okShow: false });
-          // this.setState({ errShow: true });
         }
       } else {
         this.saveImgFile(fileImg, "icon", "addlast");
       }
     } else {
       this.showAlert("err");
-      // this.setState({ okShow: false });
-      // this.setState({ errShow: true });
     }
   }
 
@@ -2247,7 +2238,8 @@ class Main extends React.Component {
       } else {
         this.setState({
           backStyle: {
-            backgroundImage: "linear-gradient(rgba(255,255,255," + (1 - spData.backgroundOpacity).toString() + "), rgba(255,255,255," + (1 - spData.backgroundOpacity).toString() + ")), url(" + spData.backgroundImage + ")",
+            // backgroundImage: "linear-gradient(rgba(255,255,255," + (1 - spData.backgroundOpacity).toString() + "), rgba(255,255,255," + (1 - spData.backgroundOpacity).toString() + ")), url(" + spData.backgroundImage + ")",
+            backgroundImage: "linear-gradient(rgba(0,0,0," + (1 - spData.backgroundOpacity).toString() + "), rgba(0,0,0," + (1 - spData.backgroundOpacity).toString() + ")), url(" + spData.backgroundImage + ")",
             backgroundColor: spData.backgroundColor,
             backgroundPosition: 'center',
             backgroundSize: 'cover',
