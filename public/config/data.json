@@ -42,7 +42,7 @@
     "footAddTextColor": "rgba(255, 255, 255, 1)",
     "footAddColW": "col-md",
     "backgroundColor": "rgb(213, 164, 17, 1)",
-    "backgroundOpacity": 1,
+    "backgroundOpacity": 100,
     "catColor": "rgb(0, 0, 0, 1)",
     "catOpacity": 1,
     "headShow": false,

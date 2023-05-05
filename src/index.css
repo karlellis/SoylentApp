@@ -10,7 +10,8 @@
 } */
 
 body {
-	background-color: black;
+	background-color: transparent;
+	/* background-color: black; */
 }
 
 a,
@@ -38,6 +39,10 @@ td {
 
 .ontop {
 	z-index: 999;
+}
+
+.zindex1 {
+	z-index: 1;
 }
 
 .ontopabsolute {
