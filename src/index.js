@@ -1358,9 +1358,6 @@ class Main extends React.Component {
             "id": 0
           };
           this.showAlert("ok");
-          // this.setState({ upShow: false });
-          // this.setState({ okShow: true });
-          // this.setState({ errShow: false });
           // console.log("Edit Icon correctly Uploaded!");
           this.saveFile(spData, "./api/img-upload.php", "config");
         } else if (url === "icon" && op === "add") {
@@ -1406,9 +1403,6 @@ class Main extends React.Component {
             "id": 0
           };
           this.showAlert("ok");
-          // this.setState({ upShow: false });
-          // this.setState({ okShow: true });
-          // this.setState({ errShow: false });
           // console.log("Add Icon correctly Uploaded!");
           this.saveFile(spData, "./api/img-upload.php", "config");
         } else if (url === "icon" && op === "addlast") {
@@ -1745,6 +1739,7 @@ class Main extends React.Component {
     this.setState({ resItems: [] });
     temp = "";
   }
+
   showAlert(id) {
     switch (id) {
       case "ok":
@@ -1771,6 +1766,7 @@ class Main extends React.Component {
         break;
     }
   }
+
   itemSearch = () => {
     if (temp !== "") {
       let count = 0;
@@ -1902,10 +1898,7 @@ class Main extends React.Component {
     if (blockHide !== "none") {
       spData.menuShow = blockHide;
     }
-
     this.showAlert("ok");
-    // this.setState({ okShow: true });
-    // this.setState({ errShow: false });
     this.saveFile(spData, "./api/img-upload.php", "config");
     temp = "";
     temp2 = "";
@@ -2288,6 +2281,12 @@ class Main extends React.Component {
   saveBack = () => {
     // console.log("NoImage:", spData.noBackImage);
     // console.log("disFieldT:", this.state.disFieldT);
+    if (disable1 !== "none") {
+      spData.noBackImage = disable1;
+    }
+    if (disable2 !== "none") {
+      spData.noCatImage = disable2;
+    }
     if (fileImg !== null) {
       tempIcon = spData.backgroundImage;
       this.saveImgFile(fileImg, "back", "edit");
@@ -2340,9 +2339,6 @@ class Main extends React.Component {
         });
       }
       this.showAlert("ok");
-      // this.setState({ upShow: false });
-      // this.setState({ okShow: true });
-      // this.setState({ errShow: false });
       this.saveFile(spData, "./api/img-upload.php", "config");
     }
 
@@ -2398,9 +2394,6 @@ class Main extends React.Component {
         });
       }
       this.showAlert("ok");
-      // this.setState({ upShow: false });
-      // this.setState({ okShow: true });
-      // this.setState({ errShow: false });
       this.saveFile(spData, "./api/img-upload.php", "config");
     }
   }
@@ -2425,9 +2418,6 @@ class Main extends React.Component {
       }
       blockHide = "none";
       this.showAlert("ok");
-      // this.setState({ upShow: false });
-      // this.setState({ okShow: true });
-      // this.setState({ errShow: false });
       this.saveFile(spData, "./api/img-upload.php", "config");
       // this.hideModal("logo");
     }
@@ -2497,8 +2487,6 @@ class Main extends React.Component {
           temp = "";
           temp2 = "";
           this.showAlert("ok");
-          // this.setState({ okShow: true });
-          // this.setState({ errShow: false });
         })
         .catch(err => {
           console.log(err)
@@ -2506,8 +2494,6 @@ class Main extends React.Component {
 
     } else {
       this.showAlert("err");
-      // this.setState({ okShow: false });
-      // this.setState({ errShow: true });
     }
   }
 
@@ -2856,6 +2842,14 @@ class Main extends React.Component {
         this.setState({ iocDiaShow: false });
         break;
       case "back":
+        this.setState({
+          disFieldB: spData.noBackImage
+        });
+        this.setState({
+          disFieldBC: spData.noCatImage
+        });
+        disable1 = "none";
+        disable2 = "none";
         this.setState({ backEditDiaShow: false });
         document.getElementById('backEditForm').reset();
         break;
@@ -2874,8 +2868,6 @@ class Main extends React.Component {
         temp = "";
     }
     this.showAlert("all");
-    // this.setState({ okShow: false });
-    // this.setState({ errShow: false });
     tempColor = "";
     tempTextColor = "";
     tempColW = "";
@@ -4019,6 +4011,7 @@ class Main extends React.Component {
                 </div>
               </div>
             </LogoDialog>
+
             <InfoDialog infoDiaShow={this.state.infoDiaShow} handleClose={() => this.hideModal("info")} handleSave={this.saveInfo}>
               <div className="modal-content noborder">
                 <div className="modal-header">
@@ -4475,6 +4468,7 @@ class Main extends React.Component {
                 </div>
               </div>
             </AddInfoDialog>
+
             <BackEditDialog backEditDiaShow={this.state.backEditDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("back")} handleSave={this.saveBack}>
               <div className="modal-content noborder">
                 <div className="modal-header">
@@ -4501,12 +4495,12 @@ class Main extends React.Component {
                                     this.setState({
                                       disFieldB: true
                                     });
-                                    spData.noBackImage = true;
+                                    disable1 = true;
                                   } else {
                                     this.setState({
                                       disFieldB: false
                                     });
-                                    spData.noBackImage = false;
+                                    disable1 = false;
                                   }
                                 }} />
                                 <span class="slider round" title="No image"></span>
@@ -4536,12 +4530,12 @@ class Main extends React.Component {
                                     this.setState({
                                       disFieldBC: true
                                     });
-                                    spData.noCatImage = true;
+                                    disable2 = true;
                                   } else {
                                     this.setState({
                                       disFieldBC: false
                                     });
-                                    spData.noCatImage = false;
+                                    disable2 = false;
                                   }
                                 }} />
                                 <span class="slider round" title="No image"></span>
@@ -4576,16 +4570,69 @@ class Main extends React.Component {
                               <label>Brightness</label>
                             </div>
                             <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="range" class="form-range border-0 p-0" min="0" max="200" step="10" defaultValue={spData.backgroundOpacity} id="backOpRange" onChange={e => tempOpacity = e.target.value} ></input>
+                              <div className="row">
+                                <div className="col d-flex flex-column justify-content-center align-items-center">
+                                  0%
+                                </div>
+                                <div className="col d-flex flex-column justify-content-center align-items-center">
+                                  <input type="range" class="form-range border-0 p-0" min="0" max="200" step="10" list="tickmarks" defaultValue={spData.backgroundOpacity} id="backOpRange" onChange={e => tempOpacity = e.target.value} ></input>
+                                  <datalist id="tickmarks">
+                                    <option className="tick" value={"0"}></option>
+                                    <option className="tick" value={"50"}></option>
+                                    <option className="tick" value={"100"}></option>
+                                    <option className="tick" value={"150"}></option>
+                                    <option className="tick" value={"200"}></option>
+                                  </datalist>
+                                </div>
+                                <div className="col d-flex flex-column justify-content-center align-items-center">
+                                  200%
+                                </div>
+                                {/* <datalist id="tickmarks">
+                                <option className="tick" value={"0"} ></option>
+                                <option className="tick" value={"50"} ></option>
+                                <option value={"100"} label="100%"></option>
+                                <option className="tick" value={"150"}></option>
+                                <option className="tick" value={"200"}></option>
+                              </datalist> */}
 
-                              <div style={{ width: "100%", display: "inline-block", paddingLeft: "5px" }}>
-                                <div style={{ width: "22%", display: "inline-block", float: "left" }}>0%</div>
-                                <div style={{ width: "22%", display: "inline-block", float: "left" }}>50%</div>
-                                <div style={{ width: "22%", display: "inline-block", float: "left" }}>100%</div>
-                                <div style={{ width: "22%", display: "inline-block", float: "left" }}>150%</div>
-                                <div style={{ display: "inline-block", float: "left" }}>200%</div>
+                                {/* <datalist id="tickmarks">
+                                <option value="0" label="0%"></option>
+                                <option value="10"></option>
+                                <option value="20"></option>
+                                <option value="30"></option>
+                                <option value="40"></option>
+                                <option value="50" label="|"></option>
+                                <option value="60"></option>
+                                <option value="70"></option>
+                                <option value="80"></option>
+                                <option value="90"></option>
+                                <option value="100" label="100%"></option>
+                                <option value="110"></option>
+                                <option value="120"></option>
+                                <option value="130"></option>
+                                <option value="140"></option>
+                                <option value="150" label="|"></option>
+                                <option value="160"></option>
+                                <option value="170"></option>
+                                <option value="180"></option>
+                                <option value="190"></option>
+                                <option value="200" label="200%"></option>
+                              </datalist> */}
+
+                                {/* <div className="row" style={{ width: "100%" }}>
+                                <div className="col d-flex flex-column align-items-start">-</div>
+                                <div className="col d-flex flex-column align-items-center">100%</div>
+                                <div className="col d-flex flex-column align-items-end">+</div>
+                              </div> */}
+
+                                {/* <div style={{ width: "100%", display: "inline-block", paddingLeft: "5px", fontSize: "10px" }}>
+                                <div style={{ width: "24%", display: "inline-block", float: "left" }}>-</div>
+                                <div style={{ width: "24%", display: "inline-block", float: "left" }}>|</div>
+                                <div style={{ width: "24%", display: "inline-block", float: "left" }}>100%</div>
+                                <div style={{ width: "24%", display: "inline-block", float: "left" }}>|</div>
+                                <div style={{ display: "inline-block", float: "left" }}>+</div>
+                              </div> */}
                               </div>
-
                             </div>
                           </div>
                         </div>
@@ -4653,6 +4700,7 @@ class Main extends React.Component {
                 </div>
               </div>
             </BackEditDialog>
+
             <CatDialog catDiaShow={this.state.catDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("cat")}>
               <div className="modal-content noBG">
                 <div className="modal-header darkBG">
@@ -4675,6 +4723,7 @@ class Main extends React.Component {
                 </div>
               </div>
             </CatDialog>
+
             <ItemEditDialog itemEditDiaShow={this.state.itemEditDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("itemEdit")} handleSave={this.applyItemEdit}>
               <div className="modal-content noborder">
                 <div className="modal-header">
@@ -5096,6 +5145,7 @@ class Main extends React.Component {
                 </div>
               </div>
             </ItemDelDialog>
+
             <CatEditDialog catEditDiaShow={this.state.catEditDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("catedit")} handleSave={this.applyCatEdit}>
               <div className="modal-content noborder">
                 <div className="modal-header">
@@ -5312,6 +5362,7 @@ class Main extends React.Component {
                 </div>
               </div>
             </CatDelDialog>
+
             <ItemOrCatDialog iocDiaShow={this.state.iocDiaShow} activityChanged={this.state.activityChanged} handleItem={this.addItem} handleCat={this.catAddItem} handleClose={() => this.hideModal("itemorcat")}>
               <div className="modal-content noborder">
                 <div className="modal-header">
