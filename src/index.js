@@ -1746,13 +1746,13 @@ class Main extends React.Component {
         this.setState({ okShow: true });
         this.setState({ errShow: false });
         this.setState({ upShow: false });
-        setTimeout(() => this.setState({ okShow: false }), 2000);
+        setTimeout(() => this.setState({ okShow: false }), 1000);
         break;
       case "err":
         this.setState({ errShow: true });
         this.setState({ okShow: false });
         this.setState({ upShow: false });
-        setTimeout(() => this.setState({ errShow: false }), 2000);
+        setTimeout(() => this.setState({ errShow: false }), 1000);
         break;
       case "up":
         this.setState({ errShow: false });
@@ -4566,26 +4566,26 @@ class Main extends React.Component {
                       <div className="row mb-1 m-auto">
                         <div className="col">
                           <div className="row border">
-                            <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
+                            <div className="col pt-1 pb-1 p-0 latomenu d-flex flex-column justify-content-center align-items-center">
                               <label>Brightness</label>
                             </div>
-                            <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <div className="row">
-                                <div className="col d-flex flex-column justify-content-center align-items-center">
-                                  0%
+                            <div className="col d-flex flex-column justify-content-center align-items-center p-0">
+                              <div className="row" style={{ width: "100%" }}>
+                                <div className="col-1 d-flex flex-column justify-content-center align-items-center">
+                                  <img className="plusminus" title="+" alt="+" src="./itemicons/rangeMinus.svg" />
                                 </div>
-                                <div className="col d-flex flex-column justify-content-center align-items-center">
-                                  <input type="range" class="form-range border-0 p-0" min="0" max="200" step="10" list="tickmarks" defaultValue={spData.backgroundOpacity} id="backOpRange" onChange={e => tempOpacity = e.target.value} ></input>
+                                <div className="col d-flex flex-column justify-content-center align-items-center p-0">
+                                  <input type="range" className="form-range border-0 p-0" min="0" max="200" step="10" list="tickmarks" defaultValue={spData.backgroundOpacity} id="backOpRange" onChange={e => tempOpacity = e.target.value} ></input>
                                   <datalist id="tickmarks">
-                                    <option className="tick" value={"0"}></option>
-                                    <option className="tick" value={"50"}></option>
+                                    <option value={"0"}></option>
+                                    <option value={"50"}></option>
                                     <option className="tick" value={"100"}></option>
-                                    <option className="tick" value={"150"}></option>
-                                    <option className="tick" value={"200"}></option>
+                                    <option value={"150"}></option>
+                                    <option value={"200"}></option>
                                   </datalist>
                                 </div>
-                                <div className="col d-flex flex-column justify-content-center align-items-center">
-                                  200%
+                                <div className="col-1 d-flex flex-column justify-content-center align-items-center">
+                                  <img className="plusminus" title="+" alt="+" src="./itemicons/rangePlus.svg" />
                                 </div>
                                 {/* <datalist id="tickmarks">
                                 <option className="tick" value={"0"} ></option>

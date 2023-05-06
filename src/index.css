@@ -318,6 +318,14 @@ input:checked+.slider:before {
     box-sizing: unset; */
 }
 
+.plusminus {
+	width: 1em;
+	/* height: 6em !important; 
+	position: sticky;
+	cursor: pointer;
+    box-sizing: unset; */
+}
+
 .stretch {
 	align-self: stretch;
 }
@@ -870,6 +878,7 @@ datalist {
 	height: 20%;
 	overflow: hidden;
 }
+
 .tick {
 	/* position: relative;
 	display: flex;
