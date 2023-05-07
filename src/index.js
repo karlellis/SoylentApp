@@ -1271,9 +1271,6 @@ class Main extends React.Component {
         if (url === "logo" && op === "edit") {
           spData.LogoIcon = "./img/" + nome;
           this.showAlert("ok");
-          // this.setState({ upShow: false });
-          // this.setState({ okShow: true });
-          // this.setState({ errShow: false });
           // console.log("File correctly Uploaded!");
           this.setState({
             activityChanged: false
@@ -1441,9 +1438,6 @@ class Main extends React.Component {
             "id": 0
           };
           this.showAlert("ok");
-          // this.setState({ upShow: false });
-          // this.setState({ okShow: true });
-          // this.setState({ errShow: false });
           // console.log("Add Last Icon correctly Uploaded!");
           this.saveFile(spData, "./api/img-upload.php", "config");
         } else if (url === "cat" && op === "edit") {
@@ -1482,14 +1476,12 @@ class Main extends React.Component {
           arrayAdd = [];
           temp2 = "";
           temp = "";
+          fileImg = null;
           catNewItem = {
             "title": "",
             "icon": ""
           };
           this.showAlert("ok");
-          // this.setState({ upShow: false });
-          // this.setState({ okShow: true });
-          // this.setState({ errShow: false });
           // console.log("Edit Cat correctly Uploaded!");
           this.saveFile(spData, "./api/img-upload.php", "config");
         } else if (url === "cat" && op === "add") {
@@ -1509,9 +1501,6 @@ class Main extends React.Component {
             "icon": ""
           };
           this.showAlert("ok");
-          // this.setState({ upShow: false });
-          // this.setState({ okShow: true });
-          // this.setState({ errShow: false });
           // console.log("Add Icon correctly Uploaded!");
           this.saveFile(spData, "./api/img-upload.php", "config");
         } else if (url === "cat" && op === "addlast") {
@@ -1535,9 +1524,6 @@ class Main extends React.Component {
             "icon": ""
           };
           this.showAlert("ok");
-          // this.setState({ upShow: false });
-          // this.setState({ okShow: true });
-          // this.setState({ errShow: false });
           // console.log("Add Last Icon correctly Uploaded!");
           this.saveFile(spData, "./api/img-upload.php", "config");
         } else if (url === "back" && op === "edit") {
@@ -1564,13 +1550,11 @@ class Main extends React.Component {
             }
           });
           this.showAlert("ok");
-          // this.setState({ upShow: false });
-          // this.setState({ okShow: true });
-          // this.setState({ errShow: false });
           // console.log("File correctly Uploaded!");
           this.setState({
             activityChanged: false
           });
+          // fileImg = null;
         } else if (url === "backcat" && op === "edit") {
           spData.catImage = "./img/" + nome;
           spData.catColor = this.hexToRgb(tempCatColor) + ", 1)";
@@ -1595,15 +1579,13 @@ class Main extends React.Component {
             }
           });
           this.showAlert("ok");
-          // this.setState({ upShow: false });
-          // this.setState({ okShow: true });
-          // this.setState({ errShow: false });
           // console.log("File correctly Uploaded!");
           this.setState({
             activityChanged: false
           });
         }
-        this.saveFile(spData, "./api/img-upload.php", "config");
+        // this.saveFile(spData, "./api/img-upload.php", "config");
+        fileCatImg = null;
         fileImg = null;
         // console.log("Result=", user);
       });
@@ -2279,18 +2261,28 @@ class Main extends React.Component {
   }
 
   saveBack = () => {
+    var changes = false;
     // console.log("NoImage:", spData.noBackImage);
     // console.log("disFieldT:", this.state.disFieldT);
-    if (disable1 !== "none") {
-      spData.noBackImage = disable1;
-    }
-    if (disable2 !== "none") {
-      spData.noCatImage = disable2;
-    }
+    // if (disable1 !== "none") {
+    //   spData.noBackImage = disable1;
+    //   changes = true;
+    // }
+    // if (disable2 !== "none") {
+    //   spData.noCatImage = disable2;
+    //   changes = true;
+    // }
     if (fileImg !== null) {
       tempIcon = spData.backgroundImage;
       this.saveImgFile(fileImg, "back", "edit");
-    } else {
+      changes = true;
+    }
+
+    if (tempColor !== this.rgbToHex(spData.backgroundColor)
+      || tempOpacity !== spData.backgroundOpacity.toString() || disable1 !== "none") {
+      if (disable1 !== "none") {
+        spData.noBackImage = disable1;
+      }
       spData.backgroundColor = this.hexToRgb(tempColor) + ", " + tempOpacity + ")";
       spData.backgroundOpacity = parseFloat(tempOpacity.replace(/,/g, "."));
       this.setState({
@@ -2338,14 +2330,22 @@ class Main extends React.Component {
           }
         });
       }
-      this.showAlert("ok");
-      this.saveFile(spData, "./api/img-upload.php", "config");
+      // this.showAlert("ok");
+      // this.saveFile(spData, "./api/img-upload.php", "config");
+      changes = true;
     }
 
     if (fileCatImg !== null) {
       tempCatIcon = spData.catImage;
       this.saveImgFile(fileCatImg, "backcat", "edit");
-    } else {
+      changes = true;
+    }
+
+    if (tempCatColor !== this.rgbToHex(spData.catColor)
+      || tempOpacity1 !== spData.catOpacity.toString() || disable2 !== "none") {
+      if (disable2 !== "none") {
+        spData.noCatImage = disable2;
+      }
       spData.catColor = this.hexToRgb(tempCatColor) + ", " + tempOpacity1 + ")";
       spData.catOpacity = parseFloat(tempOpacity1.replace(/,/g, "."));
       this.setState({
@@ -2393,6 +2393,14 @@ class Main extends React.Component {
           }
         });
       }
+      // this.showAlert("ok");
+      // this.saveFile(spData, "./api/img-upload.php", "config");
+      changes = true;
+    }
+
+    if (!changes) {
+      this.showAlert("err");
+    } else {
       this.showAlert("ok");
       this.saveFile(spData, "./api/img-upload.php", "config");
     }
@@ -3439,12 +3447,36 @@ class Main extends React.Component {
                       <div className="row mb-1 m-auto">
                         <div className="col">
                           <div className="row border">
-                            <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
+                            <div className="col pt-1 pb-1 p-0 latomenu d-flex flex-column justify-content-center align-items-center">
                               <label>Opacity</label>
                             </div>
-                            <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="range" class="form-range border-0 p-0" min="0" max="1" step="0.1" defaultValue={spData.menuOpacity} id="menuOpRange" onChange={e => tempOpacity = e.target.value} ></input>
+
+                            <div className="col d-flex flex-column justify-content-center align-items-center p-0">
+                              <div className="row" style={{ width: "100%" }}>
+
+                                <div className="col-1 d-flex flex-column justify-content-center align-items-center">
+                                  <img className="plusminus" title="+" alt="+" src="./itemicons/rangeZero.svg" />
+                                </div>
+                                <div className="col d-flex flex-column justify-content-center align-items-center">
+                                  <input type="range" class="form-range border-0 p-0" min="0" max="1" step="0.1" list="optickmarks" defaultValue={spData.menuOpacity} id="menuOpRange" onChange={e => tempOpacity = e.target.value} ></input>
+                                  <datalist id="optickmarks">
+                                    <option value={"0"}></option>
+                                    <option value={"0.25"}></option>
+                                    <option className="tick" value={"0.5"}></option>
+                                    <option value={"0.75"}></option>
+                                    <option value={"1"}></option>
+                                  </datalist>
+                                </div>
+                                <div className="col-1 d-flex flex-column justify-content-center align-items-center">
+                                  <img className="plusminus" title="+" alt="+" src="./itemicons/rangeOne.svg" />
+                                </div>
+
+                              </div>
                             </div>
+
+                            {/* <div className="col d-flex flex-column justify-content-center align-items-center">
+                              <input type="range" class="form-range border-0 p-0" min="0" max="1" step="0.1" defaultValue={spData.menuOpacity} id="menuOpRange" onChange={e => tempOpacity = e.target.value} ></input>
+                            </div> */}
                           </div>
                         </div>
                       </div>
@@ -3660,12 +3692,36 @@ class Main extends React.Component {
                       <div className="row mb-1 m-auto">
                         <div className="col">
                           <div className="row border">
-                            <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
+                            <div className="col pt-1 pb-1 p-0 latomenu d-flex flex-column justify-content-center align-items-center">
                               <label>Opacity</label>
                             </div>
-                            <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="range" class="form-range border-0 p-0" min="0" max="1" step="0.1" defaultValue={spData.headOpacity} id="titleOpRange" onChange={e => tempOpacity = e.target.value} ></input>
+
+                            <div className="col d-flex flex-column justify-content-center align-items-center p-0">
+                              <div className="row" style={{ width: "100%" }}>
+
+                                <div className="col-1 d-flex flex-column justify-content-center align-items-center">
+                                  <img className="plusminus" title="+" alt="+" src="./itemicons/rangeZero.svg" />
+                                </div>
+                                <div className="col d-flex flex-column justify-content-center align-items-center">
+                                  <input type="range" class="form-range border-0 p-0" min="0" max="1" step="0.1" list="optickmarks" defaultValue={spData.headOpacity} id="titleOpRange" onChange={e => tempOpacity = e.target.value} ></input>
+                                  <datalist id="optickmarks">
+                                    <option value={"0"}></option>
+                                    <option value={"0.25"}></option>
+                                    <option className="tick" value={"0.5"}></option>
+                                    <option value={"0.75"}></option>
+                                    <option value={"1"}></option>
+                                  </datalist>
+                                </div>
+                                <div className="col-1 d-flex flex-column justify-content-center align-items-center">
+                                  <img className="plusminus" title="+" alt="+" src="./itemicons/rangeOne.svg" />
+                                </div>
+
+                              </div>
                             </div>
+
+                            {/* <div className="col d-flex flex-column justify-content-center align-items-center">
+                              <input type="range" class="form-range border-0 p-0" min="0" max="1" step="0.1" defaultValue={spData.headOpacity} id="titleOpRange" onChange={e => tempOpacity = e.target.value} ></input>
+                            </div> */}
                           </div>
                         </div>
                       </div>
@@ -3802,12 +3858,36 @@ class Main extends React.Component {
                       <div className="row mb-1 m-auto">
                         <div className="col">
                           <div className="row border">
-                            <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
+                            <div className="col pt-1 pb-1 p-0 latomenu d-flex flex-column justify-content-center align-items-center">
                               <label>Opacity</label>
                             </div>
-                            <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="range" class="form-range border-0 p-0" min="0" max="1" step="0.1" defaultValue={spData.clockOpacity} id="clockOpRange" onChange={e => tempOpacity = e.target.value} ></input>
+
+                            <div className="col d-flex flex-column justify-content-center align-items-center p-0">
+                              <div className="row" style={{ width: "100%" }}>
+
+                                <div className="col-1 d-flex flex-column justify-content-center align-items-center">
+                                  <img className="plusminus" title="+" alt="+" src="./itemicons/rangeZero.svg" />
+                                </div>
+                                <div className="col d-flex flex-column justify-content-center align-items-center">
+                                  <input type="range" class="form-range border-0 p-0" min="0" max="1" step="0.1" list="optickmarks" defaultValue={spData.clockOpacity} id="clockOpRange" onChange={e => tempOpacity = e.target.value} ></input>
+                                  <datalist id="optickmarks">
+                                    <option value={"0"}></option>
+                                    <option value={"0.25"}></option>
+                                    <option className="tick" value={"0.5"}></option>
+                                    <option value={"0.75"}></option>
+                                    <option value={"1"}></option>
+                                  </datalist>
+                                </div>
+                                <div className="col-1 d-flex flex-column justify-content-center align-items-center">
+                                  <img className="plusminus" title="+" alt="+" src="./itemicons/rangeOne.svg" />
+                                </div>
+
+                              </div>
                             </div>
+
+                            {/* <div className="col d-flex flex-column justify-content-center align-items-center">
+                              <input type="range" class="form-range border-0 p-0" min="0" max="1" step="0.1" defaultValue={spData.clockOpacity} id="clockOpRange" onChange={e => tempOpacity = e.target.value} ></input>
+                            </div> */}
                           </div>
                         </div>
                       </div>
@@ -3943,12 +4023,36 @@ class Main extends React.Component {
                       <div className="row mb-1 m-auto">
                         <div className="col">
                           <div className="row border">
-                            <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
+                            <div className="col pt-1 pb-1 p-0 latomenu d-flex flex-column justify-content-center align-items-center">
                               <label>Opacity</label>
                             </div>
-                            <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="range" class="form-range border-0 p-0" min="0" max="1" step="0.1" defaultValue={spData.logoOpacity} id="logoOpRange" onChange={e => tempOpacity = e.target.value} ></input>
+
+                            <div className="col d-flex flex-column justify-content-center align-items-center p-0">
+                              <div className="row" style={{ width: "100%" }}>
+
+                                <div className="col-1 d-flex flex-column justify-content-center align-items-center">
+                                  <img className="plusminus" title="+" alt="+" src="./itemicons/rangeZero.svg" />
+                                </div>
+                                <div className="col d-flex flex-column justify-content-center align-items-center">
+                                  <input type="range" class="form-range border-0 p-0" min="0" max="1" step="0.1" list="optickmarks" defaultValue={spData.logoOpacity} id="logoOpRange" onChange={e => tempOpacity = e.target.value} ></input>
+                                  <datalist id="optickmarks">
+                                    <option value={"0"}></option>
+                                    <option value={"0.25"}></option>
+                                    <option className="tick" value={"0.5"}></option>
+                                    <option value={"0.75"}></option>
+                                    <option value={"1"}></option>
+                                  </datalist>
+                                </div>
+                                <div className="col-1 d-flex flex-column justify-content-center align-items-center">
+                                  <img className="plusminus" title="+" alt="+" src="./itemicons/rangeOne.svg" />
+                                </div>
+
+                              </div>
                             </div>
+
+                            {/* <div className="col d-flex flex-column justify-content-center align-items-center">
+                              <input type="range" class="form-range border-0 p-0" min="0" max="1" step="0.1" defaultValue={spData.logoOpacity} id="logoOpRange" onChange={e => tempOpacity = e.target.value} ></input>
+                            </div> */}
                           </div>
                         </div>
                       </div>
@@ -4184,12 +4288,36 @@ class Main extends React.Component {
                       <div className="row mb-1 m-auto">
                         <div className="col">
                           <div className="row border">
-                            <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
+                            <div className="col pt-1 pb-1 p-0 latomenu d-flex flex-column justify-content-center align-items-center">
                               <label>Opacity</label>
                             </div>
-                            <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="range" class="form-range border-0 p-0" min="0" max="1" step="0.1" defaultValue={spData.footInfoOpacity} id="infoOpRange" onChange={e => tempOpacity = e.target.value} ></input>
+
+                            <div className="col d-flex flex-column justify-content-center align-items-center p-0">
+                              <div className="row" style={{ width: "100%" }}>
+
+                                <div className="col-1 d-flex flex-column justify-content-center align-items-center">
+                                  <img className="plusminus" title="+" alt="+" src="./itemicons/rangeZero.svg" />
+                                </div>
+                                <div className="col d-flex flex-column justify-content-center align-items-center">
+                                  <input type="range" class="form-range border-0 p-0" min="0" max="1" step="0.1" list="optickmarks" defaultValue={spData.footInfoOpacity} id="infoOpRange" onChange={e => tempOpacity = e.target.value} ></input>
+                                  <datalist id="optickmarks">
+                                    <option value={"0"}></option>
+                                    <option value={"0.25"}></option>
+                                    <option className="tick" value={"0.5"}></option>
+                                    <option value={"0.75"}></option>
+                                    <option value={"1"}></option>
+                                  </datalist>
+                                </div>
+                                <div className="col-1 d-flex flex-column justify-content-center align-items-center">
+                                  <img className="plusminus" title="+" alt="+" src="./itemicons/rangeOne.svg" />
+                                </div>
+
+                              </div>
                             </div>
+
+                            {/* <div className="col d-flex flex-column justify-content-center align-items-center">
+                              <input type="range" class="form-range border-0 p-0" min="0" max="1" step="0.1" defaultValue={spData.footInfoOpacity} id="infoOpRange" onChange={e => tempOpacity = e.target.value} ></input>
+                            </div> */}
                           </div>
                         </div>
                       </div>
@@ -4413,12 +4541,36 @@ class Main extends React.Component {
                       <div className="row mb-1 m-auto">
                         <div className="col">
                           <div className="row border">
-                            <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
+                            <div className="col pt-1 pb-1 p-0 latomenu d-flex flex-column justify-content-center align-items-center">
                               <label>Opacity</label>
                             </div>
-                            <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="range" class="form-range border-0 p-0" min="0" max="1" step="0.1" defaultValue={spData.footAddOpacity} id="creditOpRange" onChange={e => tempOpacity = e.target.value} ></input>
+
+                            <div className="col d-flex flex-column justify-content-center align-items-center p-0">
+                              <div className="row" style={{ width: "100%" }}>
+
+                                <div className="col-1 d-flex flex-column justify-content-center align-items-center">
+                                  <img className="plusminus" title="+" alt="+" src="./itemicons/rangeZero.svg" />
+                                </div>
+                                <div className="col d-flex flex-column justify-content-center align-items-center">
+                                  <input type="range" class="form-range border-0 p-0" min="0" max="1" step="0.1" list="optickmarks" defaultValue={spData.footAddOpacity} id="addInfoOpRange" onChange={e => tempOpacity = e.target.value} ></input>
+                                  <datalist id="optickmarks">
+                                    <option value={"0"}></option>
+                                    <option value={"0.25"}></option>
+                                    <option className="tick" value={"0.5"}></option>
+                                    <option value={"0.75"}></option>
+                                    <option value={"1"}></option>
+                                  </datalist>
+                                </div>
+                                <div className="col-1 d-flex flex-column justify-content-center align-items-center">
+                                  <img className="plusminus" title="+" alt="+" src="./itemicons/rangeOne.svg" />
+                                </div>
+
+                              </div>
                             </div>
+
+                            {/* <div className="col d-flex flex-column justify-content-center align-items-center">
+                              <input type="range" class="form-range border-0 p-0" min="0" max="1" step="0.1" defaultValue={spData.footAddOpacity} id="addInfoOpRange" onChange={e => tempOpacity = e.target.value} ></input>
+                            </div> */}
                           </div>
                         </div>
                       </div>
@@ -4569,8 +4721,10 @@ class Main extends React.Component {
                             <div className="col pt-1 pb-1 p-0 latomenu d-flex flex-column justify-content-center align-items-center">
                               <label>Brightness</label>
                             </div>
+
                             <div className="col d-flex flex-column justify-content-center align-items-center p-0">
                               <div className="row" style={{ width: "100%" }}>
+
                                 <div className="col-1 d-flex flex-column justify-content-center align-items-center">
                                   <img className="plusminus" title="+" alt="+" src="./itemicons/rangeMinus.svg" />
                                 </div>
@@ -4587,53 +4741,10 @@ class Main extends React.Component {
                                 <div className="col-1 d-flex flex-column justify-content-center align-items-center">
                                   <img className="plusminus" title="+" alt="+" src="./itemicons/rangePlus.svg" />
                                 </div>
-                                {/* <datalist id="tickmarks">
-                                <option className="tick" value={"0"} ></option>
-                                <option className="tick" value={"50"} ></option>
-                                <option value={"100"} label="100%"></option>
-                                <option className="tick" value={"150"}></option>
-                                <option className="tick" value={"200"}></option>
-                              </datalist> */}
 
-                                {/* <datalist id="tickmarks">
-                                <option value="0" label="0%"></option>
-                                <option value="10"></option>
-                                <option value="20"></option>
-                                <option value="30"></option>
-                                <option value="40"></option>
-                                <option value="50" label="|"></option>
-                                <option value="60"></option>
-                                <option value="70"></option>
-                                <option value="80"></option>
-                                <option value="90"></option>
-                                <option value="100" label="100%"></option>
-                                <option value="110"></option>
-                                <option value="120"></option>
-                                <option value="130"></option>
-                                <option value="140"></option>
-                                <option value="150" label="|"></option>
-                                <option value="160"></option>
-                                <option value="170"></option>
-                                <option value="180"></option>
-                                <option value="190"></option>
-                                <option value="200" label="200%"></option>
-                              </datalist> */}
-
-                                {/* <div className="row" style={{ width: "100%" }}>
-                                <div className="col d-flex flex-column align-items-start">-</div>
-                                <div className="col d-flex flex-column align-items-center">100%</div>
-                                <div className="col d-flex flex-column align-items-end">+</div>
-                              </div> */}
-
-                                {/* <div style={{ width: "100%", display: "inline-block", paddingLeft: "5px", fontSize: "10px" }}>
-                                <div style={{ width: "24%", display: "inline-block", float: "left" }}>-</div>
-                                <div style={{ width: "24%", display: "inline-block", float: "left" }}>|</div>
-                                <div style={{ width: "24%", display: "inline-block", float: "left" }}>100%</div>
-                                <div style={{ width: "24%", display: "inline-block", float: "left" }}>|</div>
-                                <div style={{ display: "inline-block", float: "left" }}>+</div>
-                              </div> */}
                               </div>
                             </div>
+
                           </div>
                         </div>
                       </div>
@@ -4658,12 +4769,36 @@ class Main extends React.Component {
                       <div className="row mb-1 m-auto">
                         <div className="col">
                           <div className="row border">
-                            <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
+                            <div className="col pt-1 pb-1 p-0 latomenu d-flex flex-column justify-content-center align-items-center">
                               <label>Opacity</label>
                             </div>
-                            <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="range" class="form-range border-0 p-0" min="0" max="1" step="0.1" defaultValue={spData.catOpacity} id="catOpRange" onChange={e => tempOpacity1 = e.target.value} ></input>
+
+                            <div className="col d-flex flex-column justify-content-center align-items-center p-0">
+                              <div className="row" style={{ width: "100%" }}>
+
+                                <div className="col-1 d-flex flex-column justify-content-center align-items-center">
+                                  <img className="plusminus" title="+" alt="+" src="./itemicons/rangeZero.svg" />
+                                </div>
+                                <div className="col d-flex flex-column justify-content-center align-items-center">
+                                  <input type="range" class="form-range border-0 p-0" min="0" max="1" step="0.1"  list="optickmarks" defaultValue={spData.catOpacity} id="catOpRange" onChange={e => tempOpacity1 = e.target.value} ></input>
+                                  <datalist id="optickmarks">
+                                    <option value={"0"}></option>
+                                    <option value={"0.25"}></option>
+                                    <option className="tick" value={"0.5"}></option>
+                                    <option value={"0.75"}></option>
+                                    <option value={"1"}></option>
+                                  </datalist>
+                                </div>
+                                <div className="col-1 d-flex flex-column justify-content-center align-items-center">
+                                  <img className="plusminus" title="+" alt="+" src="./itemicons/rangeOne.svg" />
+                                </div>
+
+                              </div>
                             </div>
+
+                            {/* <div className="col d-flex flex-column justify-content-center align-items-center">
+                              <input type="range" class="form-range border-0 p-0" min="0" max="1" step="0.1" defaultValue={spData.catOpacity} id="catOpRange" onChange={e => tempOpacity1 = e.target.value} ></input>
+                            </div> */}
                           </div>
                         </div>
 
@@ -4696,6 +4831,19 @@ class Main extends React.Component {
                         </div>
                       </div>
                     </Upload>
+                    <Error errShow={this.state.errShow} >
+                      <div className="row text-center pt-2">
+                        <div className="col">
+                          <div className="row">
+                            <section className="col pt-2 contenitore solidblue latowhite d-flex justify-content-center align-items-center ">
+                              <div>
+                                <p className="norfont">No changes made!</p>
+                              </div>
+                            </section>
+                          </div>
+                        </div>
+                      </div>
+                    </Error>
                   </form>
                 </div>
               </div>
