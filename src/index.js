@@ -69,15 +69,12 @@ const Item = ({ showItemsBtn, pos, id, title, link, descr, icon, video, itemEdit
 
   const linkOrVideo = video
     ?
-    // (<a title={title} onClick={() => itemVideo("itemVideo", id)}>
     (<img className="items" title={title} alt={title} src={icon}
-      onClick={() => itemVideo("itemVideo", id)} />)
-    //  </a>) 
+      onClick={() => itemVideo(id)} />)
     :
     (< a title={title} href={link} target="_blank" >
-      <img className="items" title={title} /* href={link} target="_blank" */
+      <img className="items" title={title}
         alt={title} src={icon} />
-      {/* // onClick={() => window.location.href = link}/>) */}
     </a>);
 
   let itemBtn = "";
@@ -86,20 +83,14 @@ const Item = ({ showItemsBtn, pos, id, title, link, descr, icon, video, itemEdit
 
   if (descr !== "") {
     descrTxt = (
-      // <>
-      // { isActive && 
-      // <div className="row medfonts descr fade-in-image lato text-center m-auto mt-5 mb-5"
       <div className={`${isActive ? 'descr-shown row medfonts lato text-center m-auto' : 'descr-hidden'}`}
-        // <div className={`row medfonts descr lato text-center m-auto mt-5 mb-5 ${isActive ? 'alert-shown' : 'alert-hidden'}`}
         style={{
           backgroundImage: "url(" + icon + ")",
           backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-          // backgroundAttachment: "fixed",
+          backgroundRepeat: 'no-repeat'
         }}>
         <b style={{ backgroundColor: "rgba(0, 0, 0, 0.7)" }}>{descr}</b>
       </div>
-      // }
     )
     titleTxt = (
       <h4>
@@ -111,6 +102,7 @@ const Item = ({ showItemsBtn, pos, id, title, link, descr, icon, video, itemEdit
               </div>
               <div className="col-2 borderleft pointer d-flex flex-column justify-content-center align-items-center"
                 onClick={() => setIsActive(!isActive)}>
+                {/* {isActive ? <img className="plusminus" title="-" alt="-" src="./itemicons/rangeWhiteMinus.svg" /> : <img className="plusminus" title="+" alt="+" src="./itemicons/rangeWhitePlus.svg" />} */}
                 <b>{isActive ? '-' : '+'}</b>
               </div>
             </div>
@@ -118,8 +110,6 @@ const Item = ({ showItemsBtn, pos, id, title, link, descr, icon, video, itemEdit
         </div>
       </h4>
     )
-    {/* </> */ }
-
   } else {
     descrTxt = "";
     titleTxt = (
@@ -130,29 +120,21 @@ const Item = ({ showItemsBtn, pos, id, title, link, descr, icon, video, itemEdit
               <div className="col d-flex flex-column justify-content-center align-items-center">
                 <b>{title}</b>
               </div>
-              {/* <div className="col-2 borderleft pointer d-flex flex-column justify-content-center align-items-center"
-                  onClick={() => setIsActive(!isActive)}>
-                  <b>{isActive ? '-' : '+'}</b>
-                </div> */}
             </div>
           </div>
         </div>
       </h4>
-      // <h4><p className="lato"><b>{title}</b></p></h4>
     );
   };
 
   if (showItemsBtn === "ShowItemBtn") {
     itemBtn = (
       <div className="itemcontainer">
-
         <div className="iconcontainer box box2">
           {!isActive && linkOrVideo}
           {descrTxt}
         </div>
-
         {titleTxt}
-
         <div className="row btncontainer">
           <button className="col itembutton solidgreen m-1" onClick={() => itemEditDel("itemEdit", id, pos)}>
             Edit
@@ -164,7 +146,6 @@ const Item = ({ showItemsBtn, pos, id, title, link, descr, icon, video, itemEdit
             Remove
           </button>
         </div>
-        {/* </div> */}
       </div>
     )
   } else {
@@ -175,7 +156,6 @@ const Item = ({ showItemsBtn, pos, id, title, link, descr, icon, video, itemEdit
           {descrTxt}
         </div>
         {titleTxt}
-        {/* </div> */}
       </div>
     )
   }
@@ -190,10 +170,8 @@ const ItemSearchRes = ({ id, title, link, descr, icon, video, itemVideo }) => {
   const [isActive, setIsActive] = useState(false);
   const linkOrVideo = video
     ?
-    // (<a title={title} onClick={() => itemVideo("itemVideo", id)}>
     (<img className="items" title={title} alt={title} src={icon}
-      onClick={() => itemVideo("itemVideo", id)} />)
-    // </a>)
+      onClick={() => itemVideo(id)} />)
     :
     (< a title={title} href={link} target="_blank" >
       <img className="items" title={title} alt={title} src={icon} />
@@ -204,20 +182,14 @@ const ItemSearchRes = ({ id, title, link, descr, icon, video, itemVideo }) => {
 
   if (descr !== "") {
     descrTxt = (
-      // <>
-      // { isActive && 
-      // <div className="row medfonts descr fade-in-image lato text-center m-auto mt-5 mb-5"
       <div className={`${isActive ? 'descr-shown row medfonts lato text-center m-auto' : 'descr-hidden'}`}
-        // <div className={`row medfonts descr lato text-center m-auto mt-5 mb-5 ${isActive ? 'alert-shown' : 'alert-hidden'}`}
         style={{
           backgroundImage: "url(" + icon + ")",
           backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-          // backgroundAttachment: "fixed",
+          backgroundRepeat: 'no-repeat'
         }}>
         <b style={{ backgroundColor: "rgba(0, 0, 0, 0.7)" }}>{descr}</b>
       </div>
-      // }
     )
     titleTxt = (
       <h4>
@@ -229,6 +201,7 @@ const ItemSearchRes = ({ id, title, link, descr, icon, video, itemVideo }) => {
               </div>
               <div className="col-2 borderleft pointer d-flex flex-column justify-content-center align-items-center"
                 onClick={() => setIsActive(!isActive)}>
+                {/* {isActive ? <img className="plusminus" title="-" alt="-" src="./itemicons/rangeWhiteMinus.svg" /> : <img className="plusminus" title="+" alt="+" src="./itemicons/rangeWhitePlus.svg" />} */}
                 <b>{isActive ? '-' : '+'}</b>
               </div>
             </div>
@@ -236,37 +209,6 @@ const ItemSearchRes = ({ id, title, link, descr, icon, video, itemVideo }) => {
         </div>
       </h4>
     )
-    {/* </> */ }
-    // <>
-    //   {isActive &&
-    //     // <div className="row medfonts descr fade-in-image lato text-center m-auto mt-5 mb-5"
-    //     <div className={`${isActive ? 'descr-shown row medfonts lato text-center m-auto' : 'descr-hidden'}`}
-    //       style={{
-    //         backgroundImage: "url(" + icon + ")",
-    //         backgroundPosition: 'center',
-    //         backgroundRepeat: 'no-repeat',
-    //         // backgroundAttachment: "fixed",
-    //         width: "16em"
-    //       }}>
-    //       <b style={{ backgroundColor: "rgba(0, 0, 0, 0.7)" }}>{descr}</b>
-    //     </div>
-    //   }
-    //   <h4>
-    //     <div className="row lato text-center m-1">
-    //       <div className="col">
-    //         <div className="row">
-    //           <div className="col d-flex flex-column justify-content-center align-items-center">
-    //             <b>{title}</b>
-    //           </div>
-    //           <div className="col-2 borderleft pointer d-flex flex-column justify-content-center align-items-center"
-    //             onClick={() => setIsActive(!isActive)}>
-    //             <b>{isActive ? '-' : '+'}</b>
-    //           </div>
-    //         </div>
-    //       </div>
-    //     </div>
-    //   </h4>
-    // </>
   } else {
     descrTxt = "";
     titleTxt = (
@@ -277,36 +219,11 @@ const ItemSearchRes = ({ id, title, link, descr, icon, video, itemVideo }) => {
               <div className="col d-flex flex-column justify-content-center align-items-center">
                 <b>{title}</b>
               </div>
-              {/* <div className="col-2 borderleft pointer d-flex flex-column justify-content-center align-items-center"
-                  onClick={() => setIsActive(!isActive)}>
-                  <b>{isActive ? '-' : '+'}</b>
-                </div> */}
             </div>
           </div>
         </div>
       </h4>
-      // <h4><p className="lato"><b>{title}</b></p></h4>
     );
-    // descrTxt = (
-
-    //   <h4>
-    //     <div className="row lato text-center m-1">
-    //       <div className="col">
-    //         <div className="row">
-    //           <div className="col d-flex flex-column justify-content-center align-items-center">
-    //             <b>{title}</b>
-    //           </div>
-    //           {/* <div className="col-2 borderleft pointer d-flex flex-column justify-content-center align-items-center"
-    //             onClick={() => setIsActive(!isActive)}>
-    //             <b>{isActive ? '-' : '+'}</b>
-    //           </div> */}
-    //         </div>
-    //       </div>
-    //     </div>
-    //   </h4>
-
-    //   // <h4><p className="lato"><b>{title}</b></p></h4>
-    // );
   };
 
   itemBtn = (
@@ -316,17 +233,8 @@ const ItemSearchRes = ({ id, title, link, descr, icon, video, itemVideo }) => {
         {descrTxt}
       </div>
       {titleTxt}
-      {/* </div> */}
     </div>
   )
-  // itemBtn = (
-  //   <div className="itemcontainer">
-  //     <div className="iconcontainer box box2">
-  //       {!isActive && linkOrVideo}
-  //       {descrTxt}
-  //     </div>
-  //   </div>
-  // )
   return (
     <>
       {itemBtn}
@@ -472,28 +380,7 @@ const EditSet = ({ editSetShow, children }) => {
   );
 };
 
-// const Ok = ({ okShow, display, children }) => {
-//   const showHideClassName = okShow ? "dispaly-block fade-in-image" : "fade-out-image";
-//   const displayClassName = display ? "" : " display-none";
-//   return (
-//     <div className={showHideClassName + displayClassName}>
-//       {children}
-//     </div>
-//   );
-// };
-
 const Ok = ({ okShow, children }) => {
-  // const showHideClassName = okShow ? "dispaly-block fade-in-image" : "fade-out-image";
-  // const displayClassName = display ? "" : " display-none";
-  // const setShowingAlert = React.useState(false);
-  // const [isShowingAlert, setShowingAlert] = React.useState(false);
-
-  // return (
-  //   <div className={`ontopabsolute ${okShow ? 'alert-shown' : 'alert-hidden'}`} >
-  //     {children}
-  //   </div>
-  // );
-
   return (
     <div className={`mb-2 ${okShow ? 'alert-shown' : 'alert-hidden'}`} >
       {children}
@@ -503,13 +390,6 @@ const Ok = ({ okShow, children }) => {
 };
 
 const Upload = ({ upShow, children }) => {
-  // const showHideClassName = upShow ? "display-block" : "display-none";
-  // return (
-  //   <div className={showHideClassName}>
-  //     {children}
-  //   </div>
-  // );
-
   return (
     <div className={`mb-2 ${upShow ? 'alert-shown' : 'alert-hidden'}`} >
       {children}
@@ -518,24 +398,11 @@ const Upload = ({ upShow, children }) => {
 };
 
 const Error = ({ errShow, children }) => {
-  // return (
-  //   <div className={`ontopabsolute ${errShow ? 'alert-shown' : 'alert-hidden'}`} >
-  //     {children}
-  //   </div>
-  // );
-
   return (
     <div className={`mb-2 ${errShow ? 'alert-shown' : 'alert-hidden'}`} >
       {children}
     </div>
   );
-
-  // const showHideClassName = errShow ? "display-block" : "display-none";
-  // return (
-  //   <div className={showHideClassName}>
-  //     {children}
-  //   </div>
-  // );
 };
 
 const MenuDialog = ({ handleSave, handleClose, menuDiaShow, children }) => {
@@ -720,7 +587,7 @@ const ItemDelDialog = ({ handleSave, handleClose, itemDelDiaShow, children, acti
 const ItemAddDialog = ({ handleSave, handleClose, itemAddDiaShow, children, activityChanged }) => {
   const showHideClassName = itemAddDiaShow ? "modal display-block" : "modal display-none";
   return (
-    <div className={showHideClassName /* + " ontop" */}>
+    <div className={showHideClassName}>
       <section className="modal-main">
         {children}
         <div className="modal-footer">
@@ -992,8 +859,6 @@ class Main extends React.Component {
       crsDiaShow: false,
       searchDiaShow: false,
       catDiaShow: false,
-      // appDescrDiaShow: false,
-      // creditsDiaShow: false,
       iocDiaShow: false,
       videoLink: tempItemLink,
       okShow: false,
@@ -1058,7 +923,6 @@ class Main extends React.Component {
     this.crsEditDel = this.crsEditDel.bind(this);
     this.crsAddItem = this.crsAddItem.bind(this);
     this.itemVideo = this.itemVideo.bind(this);
-    // this.appDescr = this.appDescr.bind(this);
     this.catCont = this.catCont.bind(this);
     this.resItemVideo = this.resItemVideo.bind(this);
     this.catItemVideo = this.catItemVideo.bind(this);
@@ -1066,14 +930,10 @@ class Main extends React.Component {
     this.search = this.search.bind(this);
     this.setCat = this.setCat.bind(this);
     this.showMainButtons = this.showMainButtons.bind(this);
-    // this.headLogoEdit = this.headLogoEdit.bind(this);
     this.showModal = this.showModal.bind(this);
     this.hideModal = this.hideModal.bind(this);
     this.loginSession = this.loginSession.bind(this);
     this.loginEditSession = this.loginEditSession.bind(this);
-    // this.saveTitle = this.saveTitle.bind(this);
-    // this.loginCheck = this.loginCheck.bind(this);
-    // this.loginEditCheck = this.loginEditCheck.bind(this);
   }
 
   componentDidMount() {
@@ -1103,7 +963,6 @@ class Main extends React.Component {
           disFieldC3: spData.noFootAddSubtitle2,
           disFieldMS: spData.noMenuSearch,
           disFieldMC: spData.noMenuCredits
-
         });
         document.title = spData.headTitle;
         if (!spData.noFootTitle) {
@@ -1137,7 +996,6 @@ class Main extends React.Component {
         } else {
           this.setState({
             backStyle: {
-              // backgroundImage: "linear-gradient(rgba(255,255,255," + (1 - spData.backgroundOpacity).toString() + "), rgba(255,255,255," + (1 - spData.backgroundOpacity).toString() + ")), url(" + spData.backgroundImage + ")",
               backgroundImage: "url(" + spData.backgroundImage + ")",
               backgroundColor: spData.backgroundColor,
               backgroundPosition: 'center',
@@ -1180,7 +1038,6 @@ class Main extends React.Component {
         } else {
           this.setState({
             catStyle: {
-              // backgroundImage: "linear-gradient(rgba(255,255,255," + (1 - spData.catOpacity).toString() + "), rgba(255,255,255," + (1 - spData.catOpacity).toString() + ")), url(" + spData.catImage + ")",
               backgroundImage: "url(" + spData.catImage + ")",
               backgroundColor: spData.catColor,
               backgroundPosition: 'center',
@@ -1218,8 +1075,8 @@ class Main extends React.Component {
         document.getElementById('clockForm').reset();
         document.getElementById('searchForm').reset();
         this.itemCatSearch("Root", spData.items);
-        // console.log("Apps: ", this.state.items);
-        // console.log("Root Apps: ", this.state.rootItems);
+        // console.log("Items: ", this.state.items);
+        // console.log("Root Items: ", this.state.rootItems);
         // console.log("Check password: ", comparePassword("admin", password));
         // console.log("Hashed first password: ", hashPassword(password));
       })
@@ -1276,7 +1133,6 @@ class Main extends React.Component {
             activityChanged: false
           });
           this.saveFile(spData, "./api/img-upload.php", "config");
-          // this.hideModal("logo");
         } else if (url === "icon" && op === "edit") {
           if (fileImg !== null) {
             // console.log("Icon edit!");
@@ -1531,7 +1387,6 @@ class Main extends React.Component {
           spData.backgroundColor = this.hexToRgb(tempColor) + ", 1)";
           this.setState({
             backStyle: {
-              // backgroundImage: "linear-gradient(rgba(255,255,255," + (1 - spData.backgroundOpacity).toString() + "), rgba(255,255,255," + (1 - spData.backgroundOpacity).toString() + ")), url(" + spData.backgroundImage + ")",
               backgroundImage: "url(" + spData.backgroundImage + ")",
               backgroundColor: spData.backgroundColor,
               backgroundPosition: 'center',
@@ -1554,13 +1409,11 @@ class Main extends React.Component {
           this.setState({
             activityChanged: false
           });
-          // fileImg = null;
         } else if (url === "backcat" && op === "edit") {
           spData.catImage = "./img/" + nome;
           spData.catColor = this.hexToRgb(tempCatColor) + ", 1)";
           this.setState({
             catStyle: {
-              // backgroundImage: "linear-gradient(rgba(255,255,255," + (1 - spData.catOpacity).toString() + "), rgba(255,255,255," + (1 - spData.catOpacity).toString() + ")), url(" + spData.catImage + ")",
               backgroundImage: "url(" + spData.catImage + ")",
               backgroundColor: spData.catColor,
               backgroundPosition: 'center',
@@ -1707,16 +1560,11 @@ class Main extends React.Component {
     blockHide = "none";
     temp = "";
     this.showAlert("ok");
-    // this.setState({ okShow: true });
-    // this.setState({ errShow: false });
     this.saveFile(spData, "./api/img-upload.php", "config");
-
   }
 
   itemSearchReset = () => {
     this.showAlert("all");
-    // this.setState({ okShow: false });
-    // this.setState({ errShow: false });
     document.getElementById('searchForm').reset();
     this.setState({ resItems: [] });
     temp = "";
@@ -1789,9 +1637,6 @@ class Main extends React.Component {
         "id": 0
       };
       this.showAlert("ok");
-      // this.setState({ okShow: true });
-      // this.setState({ errShow: false });
-      // setTimeout(() => this.setState({ okShow: false }), 2000);
     } else {
       this.showAlert("err");
     }
@@ -1858,8 +1703,6 @@ class Main extends React.Component {
     }
     blockHide = "none";
     this.showAlert("ok");
-    // this.setState({ okShow: true });
-    // this.setState({ errShow: false });
     this.saveFile(spData, "./api/img-upload.php", "config");
   }
 
@@ -1923,7 +1766,6 @@ class Main extends React.Component {
     disable2 = "none";
     disable3 = "none";
     this.showAlert("ok");
-    // this.setState({ okShow: true });
     this.saveFile(spData, "./api/img-upload.php", "config");
   }
 
@@ -1962,19 +1804,11 @@ class Main extends React.Component {
     disable2 = "none";
     disable3 = "none";
     this.showAlert("ok");
-    // this.setState({ okShow: true });
     this.saveFile(spData, "./api/img-upload.php", "config");
   }
 
   applyItemEdit = () => {
     array = [...this.state.items];
-    // console.log("FileImg: ", fileImg);
-    // console.log("cgPos: ", cgPos);
-    // console.log("Temp2: ", temp2);
-    // console.log("Temp3: ", temp3);
-    // console.log("Temp4: ", temp4, " ", tempItemVideo);
-    // console.log("Temp5: ", temp5, " ", tempCatTitle);
-    // console.log("Temp6: ", temp6, " ", tempItemDescr);
     if (noDescr === true) {
       temp6 = "";
     }
@@ -1999,10 +1833,6 @@ class Main extends React.Component {
 
   applyItemAdd = () => {
     array = [...this.state.items];
-    // console.log("Image: ", fileImg);
-    // console.log("Name: ", temp2);
-    // console.log("Link: ", temp3);
-    // console.log("Pos: ", temp);
     tempIcon = "";
     if (noDescr === true) {
       temp6 = "";
@@ -2029,10 +1859,6 @@ class Main extends React.Component {
   applyItemDel = () => {
     var array = [...this.state.items];
     var index = parseInt(temp);
-    // console.log("itemDel ID: ", index);
-    // console.log("item array before: ", array);
-    // console.log("State items: ", this.state.items);
-    // console.log("Array lenght: ", array.length);
     if (index !== -1) {
       fetchDelPHP(tempIcon, "./api/img-upload.php", "icon");
       tempIcon = "";
@@ -2054,7 +1880,6 @@ class Main extends React.Component {
     temp2 = "";
     temp3 = "";
     this.showAlert("ok");
-    // this.setState({ okShow: true });
     this.saveFile(spData, "./api/img-upload.php", "config");
     this.setState({
       activityChanged: true
@@ -2085,32 +1910,22 @@ class Main extends React.Component {
           this.saveImgFile(fileImg, "cat", "edit");
         } else {
           this.showAlert("err");
-          // this.setState({ okShow: false });
-          // this.setState({ errShow: true });
         }
       } else {
         if (!dup) {
           this.saveImgFile(fileImg, "cat", "edit");
         } else {
           this.showAlert("err");
-          // this.setState({ okShow: false });
-          // this.setState({ errShow: true });
         }
       }
     } else {
       // console.log("fileImg - temp2 - temp are \"\"");
       this.showAlert("err");
-      // this.setState({ okShow: false });
-      // this.setState({ errShow: true });
     }
   }
 
   applyCatAdd = () => {
     array = [...this.state.cats];
-    // console.log("Image: ", fileImg);
-    // console.log("Name: ", temp2);
-    // console.log("Link: ", temp3);
-    // console.log("Pos: ", temp);
     tempIcon = "";
     if (fileImg !== null && temp2 !== "") {
       let dup = false;
@@ -2127,30 +1942,22 @@ class Main extends React.Component {
           this.saveImgFile(fileImg, "cat", "add");
         } else {
           this.showAlert("err");
-          // this.setState({ okShow: false });
-          // this.setState({ errShow: true });
         }
       } else {
         if (!dup) {
           this.saveImgFile(fileImg, "cat", "addlast");
         } else {
           this.showAlert("err");
-          // this.setState({ okShow: false });
-          // this.setState({ errShow: true });
         }
       }
     } else {
       this.showAlert("err");
-      // this.setState({ okShow: false });
-      // this.setState({ errShow: true });
     }
   }
 
   applyCatDel = () => {
     var array = [...this.state.cats];
     var index = currPos;
-    // console.log("item array before: ", array);
-    // console.log("State items: ", this.state.cats);
     if (index !== -1) {
       fetchDelPHP(tempIcon, "./api/img-upload.php", "icon");
       tempIcon = "";
@@ -2172,7 +1979,6 @@ class Main extends React.Component {
     this.setState({
       activityChanged: true
     });
-    // console.log("item array after: ", array);
   }
 
   applyCrsEdit = () => {
@@ -2183,34 +1989,22 @@ class Main extends React.Component {
         if (inPos < arrayLength && inPos >= 0 && inPos !== currPos) {
           this.saveCrs("crs", "edit");
           this.showAlert("ok");
-          // this.setState({ okShow: true });
-          // this.setState({ errShow: false });
         } else {
           this.showAlert("err");
-          // this.setState({ okShow: false });
-          // this.setState({ errShow: true });
         }
       } else {
         this.saveCrs("crs", "edit");
         this.showAlert("ok");
-        // this.setState({ okShow: true });
-        // this.setState({ errShow: false });
+
       }
     } else {
       // console.log("fileImg - temp2 - temp are \"\"");
       this.showAlert("err");
-      // this.setState({ okShow: false });
-      // this.setState({ errShow: true });
     }
   }
 
   applyCrsAdd = () => {
     array = [...this.state.creditsItems];
-    // console.log("Name: ", temp2);
-    // console.log("Link: ", temp3);
-    // console.log("Descr: ", temp4);
-    // console.log("Pos: ", temp);
-    // tempIcon = "";
     if (temp2 !== "" && temp3 !== "" && temp4 !== "") {
       if (temp !== "") {
         inPos = parseInt(temp) - 1;
@@ -2218,23 +2012,15 @@ class Main extends React.Component {
         if (inPos < arrayLength/*  && !dup */) {
           this.saveCrs("crs", "add");
           this.showAlert("ok");
-          // this.setState({ okShow: true });
-          // this.setState({ errShow: false });
         } else {
           this.showAlert("err");
-          // this.setState({ okShow: false });
-          // this.setState({ errShow: true });
         }
       } else {
         this.saveCrs("crs", "addlast");
         this.showAlert("ok");
-        // this.setState({ okShow: true });
-        // this.setState({ errShow: false });
       }
     } else {
       this.showAlert("err");
-      // this.setState({ okShow: false });
-      // this.setState({ errShow: true });
     }
   }
 
@@ -2253,7 +2039,6 @@ class Main extends React.Component {
     temp3 = "";
     temp4 = "";
     this.showAlert("ok");
-    // this.setState({ okShow: true });
     this.saveFile(spData, "./api/img-upload.php", "config");
     this.setState({
       activityChanged: true
@@ -2262,16 +2047,6 @@ class Main extends React.Component {
 
   saveBack = () => {
     var changes = false;
-    // console.log("NoImage:", spData.noBackImage);
-    // console.log("disFieldT:", this.state.disFieldT);
-    // if (disable1 !== "none") {
-    //   spData.noBackImage = disable1;
-    //   changes = true;
-    // }
-    // if (disable2 !== "none") {
-    //   spData.noCatImage = disable2;
-    //   changes = true;
-    // }
     if (fileImg !== null) {
       tempIcon = spData.backgroundImage;
       this.saveImgFile(fileImg, "back", "edit");
@@ -2311,7 +2086,6 @@ class Main extends React.Component {
       } else {
         this.setState({
           backStyle: {
-            // backgroundImage: "linear-gradient(rgba(255,255,255," + (1 - spData.backgroundOpacity).toString() + "), rgba(255,255,255," + (1 - spData.backgroundOpacity).toString() + ")), url(" + spData.backgroundImage + ")",
             backgroundImage: "url(" + spData.backgroundImage + ")",
             backgroundColor: spData.backgroundColor,
             backgroundPosition: 'center',
@@ -2374,7 +2148,6 @@ class Main extends React.Component {
       } else {
         this.setState({
           catStyle: {
-            // backgroundImage: "linear-gradient(rgba(255,255,255," + (1 - spData.catOpacity).toString() + "), rgba(255,255,255," + (1 - spData.catOpacity).toString() + ")), url(" + spData.catImage + ")",
             backgroundImage: "url(" + spData.catImage + ")",
             backgroundColor: spData.catColor,
             backgroundPosition: 'center',
@@ -2731,7 +2504,7 @@ class Main extends React.Component {
     }
   };
 
-  hideModal(id, e) {
+  hideModal(id) {
     switch (id) {
       case "title":
         this.setState({ titleDiaShow: false });
@@ -2869,10 +2642,8 @@ class Main extends React.Component {
         this.setState({ searchDiaShow: false });
         document.getElementById('searchForm').reset();
         this.setState({ resItems: [] });
-        this.showAlert("false");
-        this.showAlert("all");
-        // this.setState({ okShow: false });
-        // this.setState({ errShow: false });
+        // this.showAlert("false");
+        // this.showAlert("all");
         temp = "";
     }
     this.showAlert("all");
@@ -2958,7 +2729,6 @@ class Main extends React.Component {
     document.getElementById('clearcatpos').value = "";
     document.getElementById('clearcattitle').value = "";
     this.showModal("catAdd");
-    // console.log("CATAdding IT!");
   }
 
   crsAddItem() {
@@ -2988,7 +2758,7 @@ class Main extends React.Component {
     }
   }
 
-  addItem(id, pos) {
+  addItem() {
     this.hideModal("itemorcat");
     noDescr = true;
     array = [...this.state.items];
@@ -3006,7 +2776,6 @@ class Main extends React.Component {
     document.getElementById('clearitemtitle').value = "";
     document.getElementById('clearitemlink').value = "";
     this.showModal("itemAdd");
-    // console.log("APPAdding IT!");
   }
 
   itemEditDel(op, id, pos) {
@@ -3014,13 +2783,13 @@ class Main extends React.Component {
     currPos = pos;
     // console.log(op, " for ", id, "pos ", currPos);
     array = [...this.state.items];
-    console.log("Array dialog before : ", array);
+    // console.log("Array dialog before : ", array);
     arrayLength = (array.length);
-    console.log("Array dialog lenght: ", arrayLength);
+    // console.log("Array dialog lenght: ", arrayLength);
     for (let i = 0; i < array.length; i++) {
       if (array[i].id === id) {
         tempItemTitle = array[i].title;
-        console.log("App name: ", tempItemTitle);
+        // console.log("App name: ", tempItemTitle);
         tempItemLink = array[i].link;
         tempItemDescr = array[i].descr;
         if (tempItemDescr === "") {
@@ -3054,12 +2823,11 @@ class Main extends React.Component {
       document.getElementById('clearitemswitchpos').value = "";
       this.showModal("itemEdit");
     } else {
-      // console.log("Array dialog after : ", array);
       this.showModal("itemDel");
     }
   }
 
-  itemVideo(name, id) {
+  itemVideo(id) {
     temp3 = id;
     array = [...this.state.items];
     for (let i = 0; i < array.length; i++) {
@@ -3074,7 +2842,7 @@ class Main extends React.Component {
     this.showModal("itemVideo");
   }
 
-  catCont(id, pos) {
+  catCont(pos) {
     array = [...this.state.cats];
     // console.log("Cat Array: ", array);
     tempCatTitle = array[pos].title;
@@ -3084,7 +2852,7 @@ class Main extends React.Component {
     this.showModal("cat");
   }
 
-  resItemVideo(name, id) {
+  resItemVideo(id) {
     temp3 = id;
     array = [...this.state.resItems];
     for (let i = 0; i < array.length; i++) {
@@ -3099,7 +2867,7 @@ class Main extends React.Component {
     this.showModal("itemVideo");
   }
 
-  catItemVideo(name, id) {
+  catItemVideo(id) {
     temp3 = id;
     array = [...this.state.catItems];
     for (let i = 0; i < array.length; i++) {
@@ -3291,7 +3059,6 @@ class Main extends React.Component {
       // TITOLO, OROLOGIO E BUTTONS
       <body>
         <noscript>You need to enable JavaScript to run this app.</noscript>
-        {/* <div class="whiteback"> */}
         <div style={this.state.backStyle}></div>
         <div class="contenitore">
           <section>
@@ -3455,7 +3222,7 @@ class Main extends React.Component {
                               <div className="row" style={{ width: "100%" }}>
 
                                 <div className="col-1 d-flex flex-column justify-content-center align-items-center">
-                                  <img className="plusminus" title="+" alt="+" src="./itemicons/rangeZero.svg" />
+                                  <img className="plusminus" title="0" alt="0" src="./itemicons/rangeZero.svg" />
                                 </div>
                                 <div className="col d-flex flex-column justify-content-center align-items-center">
                                   <input type="range" class="form-range border-0 p-0" min="0" max="1" step="0.1" list="optickmarks" defaultValue={spData.menuOpacity} id="menuOpRange" onChange={e => tempOpacity = e.target.value} ></input>
@@ -3468,15 +3235,12 @@ class Main extends React.Component {
                                   </datalist>
                                 </div>
                                 <div className="col-1 d-flex flex-column justify-content-center align-items-center">
-                                  <img className="plusminus" title="+" alt="+" src="./itemicons/rangeOne.svg" />
+                                  <img className="plusminus" title="1" alt="1" src="./itemicons/rangeOne.svg" />
                                 </div>
 
                               </div>
                             </div>
 
-                            {/* <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="range" class="form-range border-0 p-0" min="0" max="1" step="0.1" defaultValue={spData.menuOpacity} id="menuOpRange" onChange={e => tempOpacity = e.target.value} ></input>
-                            </div> */}
                           </div>
                         </div>
                       </div>
@@ -3700,7 +3464,7 @@ class Main extends React.Component {
                               <div className="row" style={{ width: "100%" }}>
 
                                 <div className="col-1 d-flex flex-column justify-content-center align-items-center">
-                                  <img className="plusminus" title="+" alt="+" src="./itemicons/rangeZero.svg" />
+                                  <img className="plusminus" title="0" alt="0" src="./itemicons/rangeZero.svg" />
                                 </div>
                                 <div className="col d-flex flex-column justify-content-center align-items-center">
                                   <input type="range" class="form-range border-0 p-0" min="0" max="1" step="0.1" list="optickmarks" defaultValue={spData.headOpacity} id="titleOpRange" onChange={e => tempOpacity = e.target.value} ></input>
@@ -3713,15 +3477,12 @@ class Main extends React.Component {
                                   </datalist>
                                 </div>
                                 <div className="col-1 d-flex flex-column justify-content-center align-items-center">
-                                  <img className="plusminus" title="+" alt="+" src="./itemicons/rangeOne.svg" />
+                                  <img className="plusminus" title="1" alt="1" src="./itemicons/rangeOne.svg" />
                                 </div>
 
                               </div>
                             </div>
 
-                            {/* <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="range" class="form-range border-0 p-0" min="0" max="1" step="0.1" defaultValue={spData.headOpacity} id="titleOpRange" onChange={e => tempOpacity = e.target.value} ></input>
-                            </div> */}
                           </div>
                         </div>
                       </div>
@@ -3866,7 +3627,7 @@ class Main extends React.Component {
                               <div className="row" style={{ width: "100%" }}>
 
                                 <div className="col-1 d-flex flex-column justify-content-center align-items-center">
-                                  <img className="plusminus" title="+" alt="+" src="./itemicons/rangeZero.svg" />
+                                  <img className="plusminus" title="0" alt="0" src="./itemicons/rangeZero.svg" />
                                 </div>
                                 <div className="col d-flex flex-column justify-content-center align-items-center">
                                   <input type="range" class="form-range border-0 p-0" min="0" max="1" step="0.1" list="optickmarks" defaultValue={spData.clockOpacity} id="clockOpRange" onChange={e => tempOpacity = e.target.value} ></input>
@@ -3879,15 +3640,12 @@ class Main extends React.Component {
                                   </datalist>
                                 </div>
                                 <div className="col-1 d-flex flex-column justify-content-center align-items-center">
-                                  <img className="plusminus" title="+" alt="+" src="./itemicons/rangeOne.svg" />
+                                  <img className="plusminus" title="1" alt="1" src="./itemicons/rangeOne.svg" />
                                 </div>
 
                               </div>
                             </div>
 
-                            {/* <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="range" class="form-range border-0 p-0" min="0" max="1" step="0.1" defaultValue={spData.clockOpacity} id="clockOpRange" onChange={e => tempOpacity = e.target.value} ></input>
-                            </div> */}
                           </div>
                         </div>
                       </div>
@@ -4031,7 +3789,7 @@ class Main extends React.Component {
                               <div className="row" style={{ width: "100%" }}>
 
                                 <div className="col-1 d-flex flex-column justify-content-center align-items-center">
-                                  <img className="plusminus" title="+" alt="+" src="./itemicons/rangeZero.svg" />
+                                  <img className="plusminus" title="0" alt="0" src="./itemicons/rangeZero.svg" />
                                 </div>
                                 <div className="col d-flex flex-column justify-content-center align-items-center">
                                   <input type="range" class="form-range border-0 p-0" min="0" max="1" step="0.1" list="optickmarks" defaultValue={spData.logoOpacity} id="logoOpRange" onChange={e => tempOpacity = e.target.value} ></input>
@@ -4044,15 +3802,12 @@ class Main extends React.Component {
                                   </datalist>
                                 </div>
                                 <div className="col-1 d-flex flex-column justify-content-center align-items-center">
-                                  <img className="plusminus" title="+" alt="+" src="./itemicons/rangeOne.svg" />
+                                  <img className="plusminus" title="1" alt="1" src="./itemicons/rangeOne.svg" />
                                 </div>
 
                               </div>
                             </div>
 
-                            {/* <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="range" class="form-range border-0 p-0" min="0" max="1" step="0.1" defaultValue={spData.logoOpacity} id="logoOpRange" onChange={e => tempOpacity = e.target.value} ></input>
-                            </div> */}
                           </div>
                         </div>
                       </div>
@@ -4296,7 +4051,7 @@ class Main extends React.Component {
                               <div className="row" style={{ width: "100%" }}>
 
                                 <div className="col-1 d-flex flex-column justify-content-center align-items-center">
-                                  <img className="plusminus" title="+" alt="+" src="./itemicons/rangeZero.svg" />
+                                  <img className="plusminus" title="0" alt="0" src="./itemicons/rangeZero.svg" />
                                 </div>
                                 <div className="col d-flex flex-column justify-content-center align-items-center">
                                   <input type="range" class="form-range border-0 p-0" min="0" max="1" step="0.1" list="optickmarks" defaultValue={spData.footInfoOpacity} id="infoOpRange" onChange={e => tempOpacity = e.target.value} ></input>
@@ -4309,15 +4064,11 @@ class Main extends React.Component {
                                   </datalist>
                                 </div>
                                 <div className="col-1 d-flex flex-column justify-content-center align-items-center">
-                                  <img className="plusminus" title="+" alt="+" src="./itemicons/rangeOne.svg" />
+                                  <img className="plusminus" title="1" alt="1" src="./itemicons/rangeOne.svg" />
                                 </div>
 
                               </div>
                             </div>
-
-                            {/* <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="range" class="form-range border-0 p-0" min="0" max="1" step="0.1" defaultValue={spData.footInfoOpacity} id="infoOpRange" onChange={e => tempOpacity = e.target.value} ></input>
-                            </div> */}
                           </div>
                         </div>
                       </div>
@@ -4549,7 +4300,7 @@ class Main extends React.Component {
                               <div className="row" style={{ width: "100%" }}>
 
                                 <div className="col-1 d-flex flex-column justify-content-center align-items-center">
-                                  <img className="plusminus" title="+" alt="+" src="./itemicons/rangeZero.svg" />
+                                  <img className="plusminus" title="0" alt="0" src="./itemicons/rangeZero.svg" />
                                 </div>
                                 <div className="col d-flex flex-column justify-content-center align-items-center">
                                   <input type="range" class="form-range border-0 p-0" min="0" max="1" step="0.1" list="optickmarks" defaultValue={spData.footAddOpacity} id="addInfoOpRange" onChange={e => tempOpacity = e.target.value} ></input>
@@ -4562,15 +4313,12 @@ class Main extends React.Component {
                                   </datalist>
                                 </div>
                                 <div className="col-1 d-flex flex-column justify-content-center align-items-center">
-                                  <img className="plusminus" title="+" alt="+" src="./itemicons/rangeOne.svg" />
+                                  <img className="plusminus" title="1" alt="1" src="./itemicons/rangeOne.svg" />
                                 </div>
 
                               </div>
                             </div>
 
-                            {/* <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="range" class="form-range border-0 p-0" min="0" max="1" step="0.1" defaultValue={spData.footAddOpacity} id="addInfoOpRange" onChange={e => tempOpacity = e.target.value} ></input>
-                            </div> */}
                           </div>
                         </div>
                       </div>
@@ -4726,7 +4474,7 @@ class Main extends React.Component {
                               <div className="row" style={{ width: "100%" }}>
 
                                 <div className="col-1 d-flex flex-column justify-content-center align-items-center">
-                                  <img className="plusminus" title="+" alt="+" src="./itemicons/rangeMinus.svg" />
+                                  <img className="plusminus" title="-" alt="-" src="./itemicons/rangeMinus.svg" />
                                 </div>
                                 <div className="col d-flex flex-column justify-content-center align-items-center p-0">
                                   <input type="range" className="form-range border-0 p-0" min="0" max="200" step="10" list="tickmarks" defaultValue={spData.backgroundOpacity} id="backOpRange" onChange={e => tempOpacity = e.target.value} ></input>
@@ -4777,10 +4525,10 @@ class Main extends React.Component {
                               <div className="row" style={{ width: "100%" }}>
 
                                 <div className="col-1 d-flex flex-column justify-content-center align-items-center">
-                                  <img className="plusminus" title="+" alt="+" src="./itemicons/rangeZero.svg" />
+                                  <img className="plusminus" title="0" alt="0" src="./itemicons/rangeZero.svg" />
                                 </div>
                                 <div className="col d-flex flex-column justify-content-center align-items-center">
-                                  <input type="range" class="form-range border-0 p-0" min="0" max="1" step="0.1"  list="optickmarks" defaultValue={spData.catOpacity} id="catOpRange" onChange={e => tempOpacity1 = e.target.value} ></input>
+                                  <input type="range" class="form-range border-0 p-0" min="0" max="1" step="0.1" list="optickmarks" defaultValue={spData.catOpacity} id="catOpRange" onChange={e => tempOpacity1 = e.target.value} ></input>
                                   <datalist id="optickmarks">
                                     <option value={"0"}></option>
                                     <option value={"0.25"}></option>
@@ -4790,15 +4538,12 @@ class Main extends React.Component {
                                   </datalist>
                                 </div>
                                 <div className="col-1 d-flex flex-column justify-content-center align-items-center">
-                                  <img className="plusminus" title="+" alt="+" src="./itemicons/rangeOne.svg" />
+                                  <img className="plusminus" title="1" alt="1" src="./itemicons/rangeOne.svg" />
                                 </div>
 
                               </div>
                             </div>
 
-                            {/* <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="range" class="form-range border-0 p-0" min="0" max="1" step="0.1" defaultValue={spData.catOpacity} id="catOpRange" onChange={e => tempOpacity1 = e.target.value} ></input>
-                            </div> */}
                           </div>
                         </div>
 
@@ -5167,21 +4912,6 @@ class Main extends React.Component {
                         </div>
                       </div>
                     </div>
-
-                    {/* <div className="form-group">
-                          <div className="row text-center mb-1 m-auto">
-                            <div className="col">
-                              <div className="row border">
-                                <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
-                                  <label>Descr.</label>
-                                </div>
-                                <div className="col d-flex flex-column justify-content-center align-items-center">
-                                  <input type="text" className="form-control border-0" placeholder="Description..." id="clearitemdescr" onChange={e => temp6 = e.target.value} />
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div> */}
 
                     <div className="form-group">
                       <div className="row mb-1 m-auto">
@@ -5885,7 +5615,7 @@ class Main extends React.Component {
                   return (
                     <Cat showItemsBtn={this.state.itemsBtnShow} key={i} pos={i}
                       title={title} icon={icon} catEditDel={this.catEditDel}
-                          /* catAddItem={this.catAddItem} */ catCont={this.catCont} />
+                      catCont={this.catCont} />
                   )
                 })
               }
@@ -5895,18 +5625,17 @@ class Main extends React.Component {
                   return (
                     <Item showItemsBtn={this.state.itemsBtnShow} key={i} pos={i} id={id}
                       title={title} link={link} descr={descr} icon={icon} video={video}
-                      itemEditDel={this.itemEditDel} /* addItem={this.itemOrCat} */ itemVideo={this.itemVideo} />
+                      itemEditDel={this.itemEditDel} itemVideo={this.itemVideo} />
                   )
                 })
               }
-              <ItemAdd showItemsBtn={this.state.itemsBtnShow} /* title={title} link={link} icon={icon} */ addItem={this.itemOrCat} />
+              <ItemAdd showItemsBtn={this.state.itemsBtnShow} addItem={this.itemOrCat} />
               {/* FOOTER */}
               {foot}
             </div>
           </section>
         </div>
-        {/* </div> */}
-        {/* Bootstrap JS */}
+        {/* BOOTSTRAP JS */}
         <script src="./bootstrap/js/bootstrap.bundle.min.js"
           integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
         </script>
@@ -5935,30 +5664,22 @@ class SettingsGear extends React.Component {
     super(props);
   }
   render() {
-    // const gearClick = () => {
-    //   this.props.handleShowButtons(true);
-    // }
     return (
-      <img className="gear mt-2 mb-2" alt="Settings" title="Settings" src="./img/gear.svg" /* onClick={() => gearClick()} */ />
+      <img className="gear mt-2 mb-2" alt="Settings" title="Settings" src="./img/gear.svg" />
     );
   }
 }
 
 class OverlayImg extends React.Component {
-  // constructor(props) {
-  //   super(props);
-  // }
+
   render() {
     return (
-      <img className="overlay" alt="Overlay" src={spData.LogoIcon} /* onClick={() => gearClick()}  */ />
+      <img className="overlay" alt="Overlay" src={spData.LogoIcon} />
     );
   }
 }
 
 class RedPoint extends React.Component {
-  // constructor(props) {
-  //   super(props);
-  // }
   render() {
     return (
       <img className="gear mt-2 mb-2" title="Hidden" alt="Hidden" src="./img/point.svg" />
@@ -6074,10 +5795,8 @@ class ItemAdd extends React.Component {
       itemBtn = (
         <div className="itemcontainer">
           <div className="iconcontainer box box2">
-            {/* < a title="Add Item" onClick={() => this.props.addItem()} > */}
             <img className="items" title="Add Item" alt="Add Item" src="./itemicons/ac_add.svg"
               onClick={() => this.props.addItem()} />
-            {/* </a> */}
           </div>
           <h4>
             <div className="row lato text-center m-1">
@@ -6086,17 +5805,10 @@ class ItemAdd extends React.Component {
                   <div className="col d-flex flex-column justify-content-center align-items-center">
                     <b>Add Item</b>
                   </div>
-                  {/* <div className="col-2 borderleft pointer d-flex flex-column justify-content-center align-items-center"
-                      onClick={() => setIsActive(!isActive)}>
-                      <b>{isActive ? '-' : '+'}</b>
-                    </div> */}
                 </div>
               </div>
             </div>
           </h4>
-
-          {/* <h4><p className="lato"><b>Add Item</b></p></h4> */}
-
           <div className="row btncontainer">
             <button className="col addbutton solidgreen m-1" onClick={() => this.props.addItem()}>
               Add Item
@@ -6127,10 +5839,7 @@ class CrsAdd extends React.Component {
         <div className="row">
           <button className="col extcredits solidgreen m-1"
             onClick={() => this.props.addItem()}>
-            {/* <b><h2><font color="white"> */}
             <img className="plus mt-2 mb-1" title="Add Item" alt="Add Item" src="./itemicons/plus.svg" />
-            {/* + */}
-            {/* </font></h2></b> */}
             <h5><font color="Chartreuse">Add Item</font></h5>
           </button>
         </div>
@@ -6159,10 +5868,8 @@ class Cat extends React.Component {
       catBtn = (
         <div className="itemcontainer">
           <div className="iconcontainer box box2">
-            {/* <a title={this.props.title} onClick={() => this.props.catCont("catCont", this.props.pos)}> */}
             <img className="items" title={this.props.title} alt={this.props.title} src={this.props.icon}
-              onClick={() => this.props.catCont("catCont", this.props.pos)} />
-            {/* </a> */}
+              onClick={() => this.props.catCont(this.props.pos)} />
           </div>
           <h4>
             <div className="row lato text-center m-1">
@@ -6171,17 +5878,10 @@ class Cat extends React.Component {
                   <div className="col d-flex flex-column justify-content-center align-items-center">
                     <b>{this.props.title}</b>
                   </div>
-                  {/* <div className="col-2 borderleft pointer d-flex flex-column justify-content-center align-items-center"
-                      onClick={() => setIsActive(!isActive)}>
-                      <b>{isActive ? '-' : '+'}</b>
-                    </div> */}
                 </div>
               </div>
             </div>
           </h4>
-
-          {/* <h4><p className="lato"><b>{this.props.title}</b></p></h4> */}
-
           <div className="row btncontainer">
             <button className="col itembutton solidgreen m-1" onClick={() => this.props.catEditDel("CatEdit", this.props.pos)}>
               Edit
@@ -6200,10 +5900,8 @@ class Cat extends React.Component {
       catBtn = (
         <div className="itemcontainer">
           <div className="iconcontainer box box2">
-            {/* <a title={this.props.title} onClick={() => this.props.catCont("catCont", this.props.pos)}> */}
             <img className="items" title={this.props.title} alt={this.props.title} src={this.props.icon}
-              onClick={() => this.props.catCont("catCont", this.props.pos)} />
-            {/* </a> */}
+              onClick={() => this.props.catCont(this.props.pos)} />
           </div>
           <h4>
             <div className="row lato text-center m-1">
@@ -6212,18 +5910,10 @@ class Cat extends React.Component {
                   <div className="col d-flex flex-column justify-content-center align-items-center">
                     <b>{this.props.title}</b>
                   </div>
-                  {/* <div className="col-2 borderleft pointer d-flex flex-column justify-content-center align-items-center"
-                      onClick={() => setIsActive(!isActive)}>
-                      <b>{isActive ? '-' : '+'}</b>
-                    </div> */}
                 </div>
               </div>
             </div>
           </h4>
-
-          {/* <h4><p className="lato"><b>{this.props.title}</b></p></h4> */}
-
-
         </div>
       )
     }
@@ -6304,8 +5994,8 @@ class Dropdown extends React.Component {
   toggleOpen = () => this.setState({ isOpen: !this.state.isOpen });
 
   render() {
-    const showHideSearch = /* this.props.menuSearch */ spData.noMenuSearch ? "d-none" : "d-block";
-    const showHideCredits = /* this.props.menuCredits */ spData.noMenuCredits ? "d-none" : "d-block";
+    const showHideSearch = spData.noMenuSearch ? "d-none" : "d-block";
+    const showHideCredits = spData.noMenuCredits ? "d-none" : "d-block";
     const menuClass = `dropdown-menu${this.state.isOpen ? " show d-flex flex-column justify-content-center align-items-center" : " disNone"}`;
     return (
       <div className="dropdown" onClick={this.toggleOpen}>
@@ -6313,24 +6003,21 @@ class Dropdown extends React.Component {
         <button
           className="button indaco m-1 dropdown-toggle"
           type="button"
-          // id="dropdownMenuButton"
           data-toggle="dropdown"
           aria-haspopup="true"
         >
           Menu
         </button>
-        <div className={menuClass + " menuBG"} /* aria-labelledby="dropdownMenuButton" */>
+        <div className={menuClass + " menuBG"} >
 
           <button className={showHideSearch + " col menuItem green m-1"}
             onClick={() => {
-              // window.location = "./searching.php";
               this.props.search();
             }}>
             {spData.menuSearchLabel}
           </button>
           <button className={showHideCredits + " col menuItem blue m-1"}
             onClick={() => {
-              // window.location = "./credits.html";
               this.props.crsShow();
             }}>
             {spData.menuCreditsLabel}
@@ -6342,10 +6029,6 @@ class Dropdown extends React.Component {
 }
 
 class DropdownCat extends React.Component {
-  // constructor(props) {
-  //   super(props);
-  // }
-
   state = {
     isOpen: false
   };
@@ -6365,16 +6048,14 @@ class DropdownCat extends React.Component {
         <button
           className="button indaco m-1 dropdown-toggle"
           type="button"
-          // id="dropdownMenuButton"
           data-toggle="dropdown"
           aria-haspopup="true"
         >
           {this.props.catName}
         </button>
-        <div className={menuClass + " menuBG"} /* aria-labelledby="dropdownMenuButton" */>
+        <div className={menuClass + " menuBG"}>
           <button className="col menuItem green m-1"
             onClick={(e) => {
-              // window.location = "./searching.php";
               this.changeText("Root")
               this.props.setCat("Root", e);
             }}>
@@ -6386,7 +6067,6 @@ class DropdownCat extends React.Component {
               return (
                 <button className="col menuItem green m-1"
                   onClick={(e) => {
-                    // window.location = "./searching.php";
                     this.changeText(title)
                     this.props.setCat(title, e);
                   }}>
