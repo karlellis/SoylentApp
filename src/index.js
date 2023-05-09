@@ -64,13 +64,13 @@ var nome = "";
 var credentials = require("./initSec.json");
 var spData = require("./initData.json");
 
-const Item = ({ showItemsBtn, pos, id, title, link, descr, icon, video, itemEditDel, itemVideo }) => {
+const Item = ({ showItemsBtn, pos, id, title, link, descr, icon, video, cat, itemEditDel, itemVideo }) => {
   const [isActive, setIsActive] = useState(false);
 
   const linkOrVideo = video
     ?
     (<img className="items" title={title} alt={title} src={icon}
-      onClick={() => itemVideo(id)} />)
+      onClick={() => itemVideo(id, cat)} />)
     :
     (< a title={title} href={link} target="_blank" >
       <img className="items" title={title}
@@ -102,7 +102,6 @@ const Item = ({ showItemsBtn, pos, id, title, link, descr, icon, video, itemEdit
               </div>
               <div className="col-2 borderleft pointer d-flex flex-column justify-content-center align-items-center"
                 onClick={() => setIsActive(!isActive)}>
-                {/* {isActive ? <img className="plusminus" title="-" alt="-" src="./itemicons/rangeWhiteMinus.svg" /> : <img className="plusminus" title="+" alt="+" src="./itemicons/rangeWhitePlus.svg" />} */}
                 <b>{isActive ? '-' : '+'}</b>
               </div>
             </div>
@@ -166,81 +165,80 @@ const Item = ({ showItemsBtn, pos, id, title, link, descr, icon, video, itemEdit
   );
 }
 
-const ItemSearchRes = ({ id, title, link, descr, icon, video, itemVideo }) => {
-  const [isActive, setIsActive] = useState(false);
-  const linkOrVideo = video
-    ?
-    (<img className="items" title={title} alt={title} src={icon}
-      onClick={() => itemVideo(id)} />)
-    :
-    (< a title={title} href={link} target="_blank" >
-      <img className="items" title={title} alt={title} src={icon} />
-    </a>);
-  let itemBtn = "";
-  let descrTxt = "";
-  let titleTxt = "";
+// const ItemSearchRes = ({ id, title, link, descr, icon, cat, video, itemVideo }) => {
+//   const [isActive, setIsActive] = useState(false);
+//   const linkOrVideo = video
+//     ?
+//     (<img className="items" title={title} alt={title} src={icon}
+//       onClick={() => itemVideo(id, cat)} />)
+//     :
+//     (< a title={title} href={link} target="_blank" >
+//       <img className="items" title={title} alt={title} src={icon} />
+//     </a>);
+//   let itemBtn = "";
+//   let descrTxt = "";
+//   let titleTxt = "";
 
-  if (descr !== "") {
-    descrTxt = (
-      <div className={`${isActive ? 'descr-shown row medfonts lato text-center m-auto' : 'descr-hidden'}`}
-        style={{
-          backgroundImage: "url(" + icon + ")",
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat'
-        }}>
-        <b style={{ backgroundColor: "rgba(0, 0, 0, 0.7)" }}>{descr}</b>
-      </div>
-    )
-    titleTxt = (
-      <h4>
-        <div className="row lato text-center m-1">
-          <div className="col">
-            <div className="row">
-              <div className="col d-flex flex-column justify-content-center align-items-center">
-                <b>{title}</b>
-              </div>
-              <div className="col-2 borderleft pointer d-flex flex-column justify-content-center align-items-center"
-                onClick={() => setIsActive(!isActive)}>
-                {/* {isActive ? <img className="plusminus" title="-" alt="-" src="./itemicons/rangeWhiteMinus.svg" /> : <img className="plusminus" title="+" alt="+" src="./itemicons/rangeWhitePlus.svg" />} */}
-                <b>{isActive ? '-' : '+'}</b>
-              </div>
-            </div>
-          </div>
-        </div>
-      </h4>
-    )
-  } else {
-    descrTxt = "";
-    titleTxt = (
-      <h4>
-        <div className="row lato text-center m-1">
-          <div className="col">
-            <div className="row">
-              <div className="col d-flex flex-column justify-content-center align-items-center">
-                <b>{title}</b>
-              </div>
-            </div>
-          </div>
-        </div>
-      </h4>
-    );
-  };
+//   if (descr !== "") {
+//     descrTxt = (
+//       <div className={`${isActive ? 'descr-shown row medfonts lato text-center m-auto' : 'descr-hidden'}`}
+//         style={{
+//           backgroundImage: "url(" + icon + ")",
+//           backgroundPosition: 'center',
+//           backgroundRepeat: 'no-repeat'
+//         }}>
+//         <b style={{ backgroundColor: "rgba(0, 0, 0, 0.7)" }}>{descr}</b>
+//       </div>
+//     )
+//     titleTxt = (
+//       <h4>
+//         <div className="row lato text-center m-1">
+//           <div className="col">
+//             <div className="row">
+//               <div className="col d-flex flex-column justify-content-center align-items-center">
+//                 <b>{title}</b>
+//               </div>
+//               <div className="col-2 borderleft pointer d-flex flex-column justify-content-center align-items-center"
+//                 onClick={() => setIsActive(!isActive)}>
+//                 <b>{isActive ? '-' : '+'}</b>
+//               </div>
+//             </div>
+//           </div>
+//         </div>
+//       </h4>
+//     )
+//   } else {
+//     descrTxt = "";
+//     titleTxt = (
+//       <h4>
+//         <div className="row lato text-center m-1">
+//           <div className="col">
+//             <div className="row">
+//               <div className="col d-flex flex-column justify-content-center align-items-center">
+//                 <b>{title}</b>
+//               </div>
+//             </div>
+//           </div>
+//         </div>
+//       </h4>
+//     );
+//   };
 
-  itemBtn = (
-    <div className="itemcontainer">
-      <div className="iconcontainer box box2">
-        {!isActive && linkOrVideo}
-        {descrTxt}
-      </div>
-      {titleTxt}
-    </div>
-  )
-  return (
-    <>
-      {itemBtn}
-    </>
-  );
-}
+//   itemBtn = (
+//     <div className="itemcontainer">
+//       <div className="iconcontainer box box2">
+//         {!isActive && linkOrVideo}
+//         {descrTxt}
+//       </div>
+//       {titleTxt}
+//     </div>
+//   )
+//   return (
+//     <>
+//       {itemBtn}
+//     </>
+//   );
+// }
 
 const Menu = ({ menuShow, children, mainBtn }) => {
   const showHideClassName = menuShow ? "d-block" : "d-none";
@@ -652,7 +650,7 @@ const CrsEditDialog = ({ handleSave, handleClose, crsEditDiaShow, children, acti
         {children}
         <div className="modal-footer">
           <button type="button" disabled={(activityChanged) ? true : false} className="btn btn-primary" onClick={handleSave}>Apply</button>
-          <button type="button" disabled={(activityChanged) ? true : false} className="btn btn-secondary" data-dismiss="modal" onClick={handleClose}>Close</button>
+          <button type="button" /* disabled={(activityChanged) ? true : false} */ className="btn btn-secondary" data-dismiss="modal" onClick={handleClose}>Close</button>
         </div>
       </section>
     </div>
@@ -682,7 +680,7 @@ const CrsAddDialog = ({ handleSave, handleClose, crsAddDiaShow, children, activi
         {children}
         <div className="modal-footer">
           <button type="button" disabled={(activityChanged) ? true : false} className="btn btn-primary" onClick={handleSave}>Add</button>
-          <button type="button" disabled={(activityChanged) ? true : false} className="btn btn-secondary" data-dismiss="modal" onClick={handleClose}>Close</button>
+          <button type="button" /* disabled={(activityChanged) ? true : false} */ className="btn btn-secondary" data-dismiss="modal" onClick={handleClose}>Close</button>
         </div>
       </section>
     </div>
@@ -924,8 +922,8 @@ class Main extends React.Component {
     this.crsAddItem = this.crsAddItem.bind(this);
     this.itemVideo = this.itemVideo.bind(this);
     this.catCont = this.catCont.bind(this);
-    this.resItemVideo = this.resItemVideo.bind(this);
-    this.catItemVideo = this.catItemVideo.bind(this);
+    // this.resItemVideo = this.resItemVideo.bind(this);
+    // this.catItemVideo = this.catItemVideo.bind(this);
     this.crsShow = this.crsShow.bind(this);
     this.search = this.search.bind(this);
     this.setCat = this.setCat.bind(this);
@@ -1074,7 +1072,7 @@ class Main extends React.Component {
         document.getElementById('backEditForm').reset();
         document.getElementById('clockForm').reset();
         document.getElementById('searchForm').reset();
-        this.itemCatSearch("Root", spData.items);
+        this.itemCatSel("Root", spData.items);
         // console.log("Items: ", this.state.items);
         // console.log("Root Items: ", this.state.rootItems);
         // console.log("Check password: ", comparePassword("admin", password));
@@ -1093,8 +1091,8 @@ class Main extends React.Component {
     fetchUpConfig(file, url, key)
       .then(res => {
         console.log("Config Saved!");
-        this.itemCatSearch(tempCatTitle, spData.items);
-        this.itemCatSearch("Root", spData.items);
+        this.itemCatSel(tempCatTitle, spData.items);
+        this.itemCatSel("Root", spData.items);
         // console.log("Save Conf. result=", res);
         // console.log("TempCat= ", tempCatTitle);
       });;
@@ -1642,14 +1640,11 @@ class Main extends React.Component {
     }
   }
 
-  itemCatSearch = (cat, items) => {
+  itemCatSel = (cat, items) => {
     if (items.length > 0) {
-      // console.log("AppCatSearch...", items.length);
       let count = 0;
       for (let i = 0; i < items.length; i++) {
-        // console.log("Analyzing App Pos: ", i, " - Title: ", items[i].title);
         if (items[i].cat.toLowerCase().includes(cat.toLowerCase())) {
-          // console.log("App Pos: ", i, " - Title: ", items[i].title, " is in Cat: ", cat, " CatPos: ", count);
           newItem.icon = items[i].icon;
           newItem.title = items[i].title;
           newItem.link = items[i].link;
@@ -1657,9 +1652,7 @@ class Main extends React.Component {
           newItem.video = items[i].video;
           newItem.cat = items[i].cat;
           newItem.id = items[i].id;
-          // console.log("App Pos: ", count, " - Title: ", items[i].title);
           arrayAdd = this.addAfter(arrayAdd, count, newItem);
-          // console.log("ArrayAdd: ", arrayAdd);
           count++;
           newItem = {
             "title": "",
@@ -1673,7 +1666,6 @@ class Main extends React.Component {
         }
       }
       count = 0;
-      // console.log("Insert pos=", (inPos));
       if (cat === "Root") {
         this.setState({ rootItems: arrayAdd });
       } else {
@@ -1989,13 +1981,18 @@ class Main extends React.Component {
         if (inPos < arrayLength && inPos >= 0 && inPos !== currPos) {
           this.saveCrs("crs", "edit");
           this.showAlert("ok");
+          this.setState({
+            activityChanged: true
+          });
         } else {
           this.showAlert("err");
         }
       } else {
         this.saveCrs("crs", "edit");
         this.showAlert("ok");
-
+        this.setState({
+          activityChanged: true
+        });
       }
     } else {
       // console.log("fileImg - temp2 - temp are \"\"");
@@ -2012,12 +2009,18 @@ class Main extends React.Component {
         if (inPos < arrayLength/*  && !dup */) {
           this.saveCrs("crs", "add");
           this.showAlert("ok");
+          this.setState({
+            activityChanged: true
+          });
         } else {
           this.showAlert("err");
         }
       } else {
         this.saveCrs("crs", "addlast");
         this.showAlert("ok");
+        this.setState({
+          activityChanged: true
+        });
       }
     } else {
       this.showAlert("err");
@@ -2725,7 +2728,7 @@ class Main extends React.Component {
     this.hideModal("itemorcat");
     array = [...this.state.cats];
     arrayLength = (array.length);
-    temp4 = false;
+    // temp4 = false;
     document.getElementById('clearcatpos').value = "";
     document.getElementById('clearcattitle').value = "";
     this.showModal("catAdd");
@@ -2734,7 +2737,7 @@ class Main extends React.Component {
   crsAddItem() {
     array = [...this.state.creditsItems];
     arrayLength = (array.length);
-    temp4 = false;
+    // temp4 = false;
     document.getElementById('clearcrspos').value = "";
     document.getElementById('clearcrstitle').value = "";
     document.getElementById('clearcrslink').value = "";
@@ -2764,7 +2767,7 @@ class Main extends React.Component {
     array = [...this.state.items];
     arrayLength = (array.length);
     tempItemVideo = false;
-    temp4 = false;
+    // temp4 = false;
     // console.log("AppAdd Temp5: ", temp5);
     this.setState({
       catSel: temp5
@@ -2805,7 +2808,7 @@ class Main extends React.Component {
         }
         // console.log(" App descr.: ", tempItemDescr);
         tempItemVideo = array[i].video;
-        temp4 = array[i].video;
+        // temp4 = array[i].video;
         temp5 = array[i].cat;
         temp6 = array[i].descr;
         this.setState({
@@ -2827,34 +2830,25 @@ class Main extends React.Component {
     }
   }
 
-  itemVideo(id) {
-    temp3 = id;
-    array = [...this.state.items];
-    for (let i = 0; i < array.length; i++) {
-      if (array[i].id === id) {
-        tempItemTitle = array[i].title;
-        this.setState({
-          videoLink: array[i].link
-        })
-      }
-    }
-    // console.log(id, " for ", pos);
-    this.showModal("itemVideo");
-  }
-
   catCont(pos) {
     array = [...this.state.cats];
     // console.log("Cat Array: ", array);
     tempCatTitle = array[pos].title;
     temp5 = tempCatTitle;
     // console.log("Current Cat In: ", tempCatTitle);
-    this.itemCatSearch(array[pos].title, this.state.items);
+    this.itemCatSel(array[pos].title, this.state.items);
     this.showModal("cat");
   }
 
-  resItemVideo(id) {
+  itemVideo(id, cat) {
     temp3 = id;
-    array = [...this.state.resItems];
+    if (cat === "Root") {
+      array = [...this.state.items];
+    } else if (cat === "Search") {
+      array = [...this.state.resItems];
+    } else {
+      array = [...this.state.catItems];
+    }
     for (let i = 0; i < array.length; i++) {
       if (array[i].id === id) {
         tempItemTitle = array[i].title;
@@ -2867,20 +2861,33 @@ class Main extends React.Component {
     this.showModal("itemVideo");
   }
 
-  catItemVideo(id) {
-    temp3 = id;
-    array = [...this.state.catItems];
-    for (let i = 0; i < array.length; i++) {
-      if (array[i].id === id) {
-        tempItemTitle = array[i].title;
-        this.setState({
-          videoLink: array[i].link
-        })
-      }
-    }
-    // console.log(id, " for ", pos);
-    this.showModal("itemVideo");
-  }
+  // resItemVideo(id) {
+  //   temp3 = id;
+  //   array = [...this.state.resItems];
+  //   for (let i = 0; i < array.length; i++) {
+  //     if (array[i].id === id) {
+  //       tempItemTitle = array[i].title;
+  //       this.setState({
+  //         videoLink: array[i].link
+  //       })
+  //     }
+  //   }
+  //   this.showModal("itemVideo");
+  // }
+
+  // catItemVideo(id) {
+  //   temp3 = id;
+  //   array = [...this.state.catItems];
+  //   for (let i = 0; i < array.length; i++) {
+  //     if (array[i].id === id) {
+  //       tempItemTitle = array[i].title;
+  //       this.setState({
+  //         videoLink: array[i].link
+  //       })
+  //     }
+  //   }
+  //   this.showModal("itemVideo");
+  // }
 
   crsShow() {
     this.showModal("exCrs");
@@ -4603,11 +4610,11 @@ class Main extends React.Component {
                 <div className="modal-body-dark">
                   <div className="textcenter">
                     {
-                      this.state.catItems.map(({ id, title, link, descr, icon, video }, i) => {
+                      this.state.catItems.map(({ id, title, link, descr, cat, icon, video }, i) => {
                         return (
                           <Item showItemsBtn={this.state.itemsBtnShow} key={i} pos={i} id={id}
-                            title={title} link={link} descr={descr} icon={icon} video={video}
-                            itemVideo={this.catItemVideo} itemEditDel={this.itemEditDel} />
+                            title={title} link={link} descr={descr} cat={cat} icon={icon} video={video}
+                            itemVideo={this.itemVideo} itemEditDel={this.itemEditDel} />
                         )
                       })
                     }
@@ -5566,9 +5573,10 @@ class Main extends React.Component {
                       {
                         this.state.resItems.map(({ id, title, link, descr, icon, video }, i) => {
                           return (
-                            <ItemSearchRes key={i} pos={i} id={id}
-                              title={title} link={link} descr={descr} icon={icon} video={video}
-                              itemVideo={this.resItemVideo} />
+                            // <ItemSearchRes key={i} pos={i} id={id}
+                            <Item key={i} pos={i} id={id}
+                              title={title} link={link} descr={descr} cat={"Search"} icon={icon} video={video}
+                              itemVideo={this.itemVideo} />
                           )
                         })
                       }
@@ -5621,10 +5629,10 @@ class Main extends React.Component {
               }
               {/* APPS */}
               {
-                this.state.rootItems.map(({ id, title, link, descr, icon, video }, i) => {
+                this.state.rootItems.map(({ id, title, link, descr, cat, icon, video }, i) => {
                   return (
                     <Item showItemsBtn={this.state.itemsBtnShow} key={i} pos={i} id={id}
-                      title={title} link={link} descr={descr} icon={icon} video={video}
+                      title={title} link={link} descr={descr} cat={cat} icon={icon} video={video}
                       itemEditDel={this.itemEditDel} itemVideo={this.itemVideo} />
                   )
                 })

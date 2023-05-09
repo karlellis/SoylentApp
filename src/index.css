@@ -793,9 +793,6 @@ label {
 }
 
 .overlay {
-	/* position: absolute;
-	top: 50px;
-	left: 25px; */
 	max-width: 20ch;
 	max-height: 5rem;
 }
