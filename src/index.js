@@ -559,7 +559,7 @@ const ItemEditDialog = ({ handleSave, handleClose, itemEditDiaShow, children, ac
       <section className="modal-main">
         {children}
         <div className="modal-footer">
-          <button type="button" disabled={(activityChanged) ? true : false} className="btn btn-primary" onClick={handleSave}>Apply</button>
+          <button type="button" disabled={(activityChanged) ? true : false} className="btn btn-primary" onClick={handleSave}>Edit</button>
           <button type="button" /* disabled={(activityChanged) ? true : false} */ className="btn btn-secondary" data-dismiss="modal" onClick={handleClose}>Close</button>
         </div>
       </section>
@@ -649,7 +649,7 @@ const CrsEditDialog = ({ handleSave, handleClose, crsEditDiaShow, children, acti
       <section className="modal-main">
         {children}
         <div className="modal-footer">
-          <button type="button" disabled={(activityChanged) ? true : false} className="btn btn-primary" onClick={handleSave}>Apply</button>
+          <button type="button" disabled={(activityChanged) ? true : false} className="btn btn-primary" onClick={handleSave}>Edit</button>
           <button type="button" /* disabled={(activityChanged) ? true : false} */ className="btn btn-secondary" data-dismiss="modal" onClick={handleClose}>Close</button>
         </div>
       </section>
