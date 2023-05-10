@@ -89,7 +89,7 @@ const Item = ({ showItemsBtn, pos, id, title, link, descr, icon, video, cat, ite
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat'
         }}>
-        <b style={{ backgroundColor: "rgba(0, 0, 0, 0.7)" }}>{descr}</b>
+        <p style={{ backgroundColor: "rgba(0, 0, 0, 0.7)", margin: ".5rem", flexShrink: "inherit" }}>{descr}</p>
       </div>
     )
     titleTxt = (
@@ -368,6 +368,13 @@ const Set = ({ children, mainBtn }) => {
     </section>
   );
 };
+
+const SettingsGear = ({ showItemsBtn }) => {
+  const whiteOrCol = showItemsBtn ? "./img/colGear.svg" : "./img/gear.svg"
+  return (
+    <img className="gear mt-2 mb-2" alt="Settings" title="Settings" src={whiteOrCol} />
+  );
+}
 
 const EditSet = ({ editSetShow, children }) => {
   const showHideClassName = editSetShow ? "d-block" : "d-none";
@@ -3016,7 +3023,7 @@ class Main extends React.Component {
           <div className="row">
             <button className="col button solidindaco m-1"
               onClick={() => this.itemsButtonShow("ShowItemBtn")}>
-              <SettingsGear></SettingsGear>
+              <SettingsGear showItemsBtn={this.state.itemsBtnShow} />
             </button>
             <button className="col button solidbrick m-1"
               onClick={() => this.showModal("back")}>
@@ -5663,17 +5670,6 @@ class LoginGear extends React.Component {
     }
     return (
       <img className="gear mt-2 mb-2" alt="Login" src="./img/gears.svg" onClick={() => gearClick()} />
-    );
-  }
-}
-
-class SettingsGear extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-  render() {
-    return (
-      <img className="gear mt-2 mb-2" alt="Settings" title="Settings" src="./img/gear.svg" />
     );
   }
 }
