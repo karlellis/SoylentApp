@@ -1768,7 +1768,7 @@ class Main extends React.Component {
     this.saveFile(spData, "./api/img-upload.php", "config");
   }
 
-  saveCredit = () => {
+  saveAddInfo = () => {
     if (disable1 !== "none") {
       spData.noFootAddTitle = disable1;
     }
@@ -2661,6 +2661,7 @@ class Main extends React.Component {
     tempTextColor = "";
     tempColW = "";
     temp3 = "";
+    temp4 = "";
     this.setState({
       activityChanged: false
     });
@@ -2774,7 +2775,7 @@ class Main extends React.Component {
     array = [...this.state.items];
     arrayLength = (array.length);
     tempItemVideo = false;
-    // temp4 = false;
+    temp4 = false;
     // console.log("AppAdd Temp5: ", temp5);
     this.setState({
       catSel: temp5
@@ -2815,7 +2816,7 @@ class Main extends React.Component {
         }
         // console.log(" App descr.: ", tempItemDescr);
         tempItemVideo = array[i].video;
-        // temp4 = array[i].video;
+        temp4 = array[i].video;
         temp5 = array[i].cat;
         temp6 = array[i].descr;
         this.setState({
@@ -4132,7 +4133,7 @@ class Main extends React.Component {
                 </div>
               </div>
             </InfoDialog>
-            <AddInfoDialog addInfoDiaShow={this.state.addInfoDiaShow} handleClose={() => this.hideModal("credit")} handleSave={this.saveCredit}>
+            <AddInfoDialog addInfoDiaShow={this.state.addInfoDiaShow} handleClose={() => this.hideModal("credit")} handleSave={this.saveAddInfo}>
               <div className="modal-content noborder">
                 <div className="modal-header">
                   <h5 className="modal-title" >Edit Foot additional Info</h5>
