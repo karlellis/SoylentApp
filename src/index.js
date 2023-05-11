@@ -1140,7 +1140,7 @@ class Main extends React.Component {
           this.saveFile(spData, "./api/img-upload.php", "config");
         } else if (url === "icon" && op === "edit") {
           if (fileImg !== null) {
-            // console.log("Icon edit!");
+            // console.log("Icon edit TEMP4: ", temp4);
             array[temp].icon = "./itemicons/" + nome;
           }
           if (temp2 !== "") {
@@ -1219,6 +1219,7 @@ class Main extends React.Component {
           // console.log("Edit Icon correctly Uploaded!");
           this.saveFile(spData, "./api/img-upload.php", "config");
         } else if (url === "icon" && op === "add") {
+          // console.log("Icon add TEMP4: ", temp4);
           newItem.icon = "./itemicons/" + nome;
           newItem.title = temp2;
           newItem.link = temp3;
@@ -1264,6 +1265,7 @@ class Main extends React.Component {
           // console.log("Add Icon correctly Uploaded!");
           this.saveFile(spData, "./api/img-upload.php", "config");
         } else if (url === "icon" && op === "addlast") {
+          // console.log("Icon addLast TEMP4: ", temp4);
           newItem.icon = "./itemicons/" + nome;
           newItem.title = temp2;
           newItem.link = temp3;
@@ -1981,7 +1983,7 @@ class Main extends React.Component {
   }
 
   applyCrsEdit = () => {
-    if (temp2 !== "" || temp3 !== "" || temp4 !== "" || temp !== "") {
+    if (temp2 !== tempCrsTitle || temp3 !== tempCrsLink || temp4 !== tempCrsDescr || temp !== "") {
       if (temp !== "") {
         inPos = parseInt(temp) - 1;
         // console.log("InPos: ", inPos);
