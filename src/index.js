@@ -4148,7 +4148,7 @@ class Main extends React.Component {
                         <div className="col">
                           <div className="row border">
                             <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
-                              <label>Credit</label>
+                              <label>Add Info</label>
                             </div>
 
                             <div className="col d-flex flex-column justify-content-center align-items-center">
@@ -4182,7 +4182,7 @@ class Main extends React.Component {
                         <div className="col">
                           <div className="row border">
                             <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
-                              <label>Credit #2</label>
+                              <label>Add Info #2</label>
                             </div>
 
                             <div className="col d-flex flex-column justify-content-center align-items-center">
@@ -4216,7 +4216,7 @@ class Main extends React.Component {
                         <div className="col">
                           <div className="row border">
                             <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
-                              <label>Credit #3</label>
+                              <label>Add Info #3</label>
                             </div>
 
                             <div className="col d-flex flex-column justify-content-center align-items-center">
