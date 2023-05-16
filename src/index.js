@@ -1416,6 +1416,7 @@ class Main extends React.Component {
           this.setState({
             activityChanged: false
           });
+          this.saveFile(spData, "./api/img-upload.php", "config");
         } else if (url === "backcat" && op === "edit") {
           spData.catImage = "./img/" + nome;
           spData.catColor = this.hexToRgb(tempCatColor) + ", 1)";
@@ -1443,6 +1444,7 @@ class Main extends React.Component {
           this.setState({
             activityChanged: false
           });
+          this.saveFile(spData, "./api/img-upload.php", "config");
         }
         // this.saveFile(spData, "./api/img-upload.php", "config");
         fileCatImg = null;
