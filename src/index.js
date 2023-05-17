@@ -363,7 +363,7 @@ const EditClock = ({ editClockShow, children, hidden }) => {
 const Set = ({ children, mainBtn }) => {
   const justifyCenterEnd = mainBtn ? "justify-content-end" : "justify-content-center";
   return (
-    <section id="HeadSettings" className={justifyCenterEnd + " col-md-1 indaco d-flex flex-column align-items-center"}>
+    <section id="HeadSettings" style={{ backgroundColor: spData.loginColor }} className={justifyCenterEnd + " col-md-1 indaco d-flex flex-column align-items-center"}>
       {children}
     </section>
   );
@@ -388,6 +388,15 @@ const EditSet = ({ editSetShow, children }) => {
 const Ok = ({ okShow, children }) => {
   return (
     <div className={`mb-2 ${okShow ? 'alert-shown' : 'alert-hidden'}`} >
+      {children}
+    </div>
+  );
+
+};
+
+const AltOk = ({ altOkShow, children }) => {
+  return (
+    <div className={`mb-2 ${altOkShow ? 'alert-shown' : 'alert-hidden'}`} >
       {children}
     </div>
   );
@@ -867,6 +876,7 @@ class Main extends React.Component {
       iocDiaShow: false,
       videoLink: tempItemLink,
       okShow: false,
+      altOkShow:false,
       display: false,
       errShow: false,
       upShow: false,
@@ -1084,6 +1094,7 @@ class Main extends React.Component {
         // console.log("Root Items: ", this.state.rootItems);
         // console.log("Check password: ", comparePassword("admin", password));
         // console.log("Hashed first password: ", hashPassword(password));
+        // console.log("loginColor: ", spData.loginColor);
       })
     })
   }
@@ -1137,7 +1148,7 @@ class Main extends React.Component {
           this.setState({
             activityChanged: false
           });
-          this.saveFile(spData, "./api/img-upload.php", "config");
+          // this.saveFile(spData, "./api/img-upload.php", "config");
         } else if (url === "icon" && op === "edit") {
           if (fileImg !== null) {
             // console.log("Icon edit TEMP4: ", temp4);
@@ -1217,7 +1228,7 @@ class Main extends React.Component {
           };
           this.showAlert("ok");
           // console.log("Edit Icon correctly Uploaded!");
-          this.saveFile(spData, "./api/img-upload.php", "config");
+          // this.saveFile(spData, "./api/img-upload.php", "config");
         } else if (url === "icon" && op === "add") {
           // console.log("Icon add TEMP4: ", temp4);
           newItem.icon = "./itemicons/" + nome;
@@ -1263,7 +1274,7 @@ class Main extends React.Component {
           };
           this.showAlert("ok");
           // console.log("Add Icon correctly Uploaded!");
-          this.saveFile(spData, "./api/img-upload.php", "config");
+          // this.saveFile(spData, "./api/img-upload.php", "config");
         } else if (url === "icon" && op === "addlast") {
           // console.log("Icon addLast TEMP4: ", temp4);
           newItem.icon = "./itemicons/" + nome;
@@ -1302,7 +1313,7 @@ class Main extends React.Component {
           };
           this.showAlert("ok");
           // console.log("Add Last Icon correctly Uploaded!");
-          this.saveFile(spData, "./api/img-upload.php", "config");
+          // this.saveFile(spData, "./api/img-upload.php", "config");
         } else if (url === "cat" && op === "edit") {
           if (fileImg !== null) {
             // console.log("Cat edit!");
@@ -1346,7 +1357,7 @@ class Main extends React.Component {
           };
           this.showAlert("ok");
           // console.log("Edit Cat correctly Uploaded!");
-          this.saveFile(spData, "./api/img-upload.php", "config");
+          // this.saveFile(spData, "./api/img-upload.php", "config");
         } else if (url === "cat" && op === "add") {
           // console.log("CatAdd in Pos: ", inPos);
           catNewItem.icon = "./itemicons/" + nome;
@@ -1365,7 +1376,7 @@ class Main extends React.Component {
           };
           this.showAlert("ok");
           // console.log("Add Icon correctly Uploaded!");
-          this.saveFile(spData, "./api/img-upload.php", "config");
+          // this.saveFile(spData, "./api/img-upload.php", "config");
         } else if (url === "cat" && op === "addlast") {
           // console.log("CatAddLast...");
           catNewItem.icon = "./itemicons/" + nome;
@@ -1388,7 +1399,7 @@ class Main extends React.Component {
           };
           this.showAlert("ok");
           // console.log("Add Last Icon correctly Uploaded!");
-          this.saveFile(spData, "./api/img-upload.php", "config");
+          // this.saveFile(spData, "./api/img-upload.php", "config");
         } else if (url === "back" && op === "edit") {
           spData.backgroundImage = "./img/" + nome;
           spData.backgroundColor = this.hexToRgb(tempColor) + ", 1)";
@@ -1416,7 +1427,7 @@ class Main extends React.Component {
           this.setState({
             activityChanged: false
           });
-          this.saveFile(spData, "./api/img-upload.php", "config");
+          // this.saveFile(spData, "./api/img-upload.php", "config");
         } else if (url === "backcat" && op === "edit") {
           spData.catImage = "./img/" + nome;
           spData.catColor = this.hexToRgb(tempCatColor) + ", 1)";
@@ -1444,9 +1455,9 @@ class Main extends React.Component {
           this.setState({
             activityChanged: false
           });
-          this.saveFile(spData, "./api/img-upload.php", "config");
+          // this.saveFile(spData, "./api/img-upload.php", "config");
         }
-        // this.saveFile(spData, "./api/img-upload.php", "config");
+        this.saveFile(spData, "./api/img-upload.php", "config");
         fileCatImg = null;
         fileImg = null;
         // console.log("Result=", user);
@@ -1528,9 +1539,6 @@ class Main extends React.Component {
         "descr": ""
       };
       this.showAlert("ok");
-      // this.setState({ upShow: false });
-      // this.setState({ okShow: true });
-      // this.setState({ errShow: false });
     }
     this.saveFile(spData, "./api/img-upload.php", "config");
   }
@@ -1546,6 +1554,9 @@ class Main extends React.Component {
   }
 
   rgbToHex(rgb) {
+    // console.log("spData: ", spData);
+    // console.log("loginColor: ", spData.loginColor);
+    // console.log("logoColor: ", spData.logoColor);
     rgb = rgb.replace(/[^\d,]/g, '').split(',');
     var r = parseInt(rgb[0]);
     var g = parseInt(rgb[1]);
@@ -1582,23 +1593,34 @@ class Main extends React.Component {
   showAlert(id) {
     switch (id) {
       case "ok":
+        this.setState({ altOkShow: false });
         this.setState({ okShow: true });
         this.setState({ errShow: false });
         this.setState({ upShow: false });
         setTimeout(() => this.setState({ okShow: false }), 1000);
         break;
+      case "altok":
+        this.setState({ altOkShow: true });
+        this.setState({ okShow: false });
+        this.setState({ errShow: false });
+        this.setState({ upShow: false });
+        setTimeout(() => this.setState({ altOkShow: false }), 1000);
+        break;
       case "err":
+        this.setState({ altOkShow: false });
         this.setState({ errShow: true });
         this.setState({ okShow: false });
         this.setState({ upShow: false });
         setTimeout(() => this.setState({ errShow: false }), 1000);
         break;
       case "up":
+        this.setState({ altOkShow: false });
         this.setState({ errShow: false });
         this.setState({ okShow: false });
         this.setState({ upShow: true });
         break;
       case "all":
+        this.setState({ altOkShow: false });
         this.setState({ errShow: false });
         this.setState({ okShow: false });
         this.setState({ upShow: false });
@@ -2254,8 +2276,7 @@ class Main extends React.Component {
               // if (!pass) {
               // console.log("WRONG Psw: " + temp2)
               // }
-              this.showAlert("ok");
-              // this.setState({ okShow: true });
+              this.showAlert("err");
               login = false;
             }
           })
@@ -2269,6 +2290,8 @@ class Main extends React.Component {
     if (temp !== "" || temp2 !== "") {
       // console.log("User: " + temp)
       // console.log("Psw: " + temp2)
+      spData.loginColor = this.hexToRgb(tempColor) + ", " + tempOpacity + ")";
+      spData.loginOpacity = parseFloat(tempOpacity.replace(/,/g, "."));
       hashUsrPsw(temp, temp2)
         .then(result => {
           // console.log(result)
@@ -2281,14 +2304,17 @@ class Main extends React.Component {
           this.saveFile(credentials, "./api/img-upload.php", "credentials");
           temp = "";
           temp2 = "";
+          this.saveFile(spData, "./api/img-upload.php", "config");
           this.showAlert("ok");
         })
         .catch(err => {
           console.log(err)
         })
-
     } else {
-      this.showAlert("err");
+      spData.loginColor = this.hexToRgb(tempColor) + ", " + tempOpacity + ")";
+      spData.loginOpacity = parseFloat(tempOpacity.replace(/,/g, "."));
+      this.saveFile(spData, "./api/img-upload.php", "config");
+      this.showAlert("altok");
     }
   }
 
@@ -2331,6 +2357,8 @@ class Main extends React.Component {
         this.setState({ loginDiaShow: true });
         break;
       case "loginEdit":
+        tempColor = this.rgbToHex(spData.loginColor);
+        tempOpacity = spData.loginOpacity.toString();
         this.setState({ loginEditDiaShow: true });
         break;
       case "menu":
@@ -3007,7 +3035,7 @@ class Main extends React.Component {
               </EditClock>
             </Clock>
             {/* SETTINGS */}
-            <Set clockShow={this.state.clockShow} mainBtn={this.state.mainBtn}>
+            <Set mainBtn={this.state.mainBtn}>
               <LoginGear handleShowButtons={this.loginSession} />
               <EditSet editSetShow={this.state.mainBtn}>
                 <button className="col latowhite flexbutton solidgreen m-1" onClick={() => this.loginEditSession("LoginEdit")}>
@@ -3120,7 +3148,7 @@ class Main extends React.Component {
                       </div>
                     </div>
 
-                    <Ok okShow={this.state.okShow}>
+                    <Error errShow={this.state.errShow}>
                       <div className="row text-center pt-2">
                         <div className="col">
                           <div className="row">
@@ -3132,7 +3160,8 @@ class Main extends React.Component {
                           </div>
                         </div>
                       </div>
-                    </Ok>
+                    </Error>
+                    
                   </form>
                 </div>
               </div>
@@ -3176,6 +3205,53 @@ class Main extends React.Component {
                       </div>
                     </div>
 
+                    <div className="form-group">
+                      <div className="row mb-1 m-auto">
+                        <div className="col">
+                          <div className="row border">
+                            <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
+                              <label>Back color</label>
+                            </div>
+                            <div className="col d-flex flex-column justify-content-center align-items-center">
+                              <input type="color" className="form-control border-0 p-0" defaultValue={this.rgbToHex(spData.loginColor)} onChange={e => tempColor = e.target.value} />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="form-group">
+                      <div className="row mb-1 m-auto">
+                        <div className="col">
+                          <div className="row border">
+                            <div className="col pt-1 pb-1 p-0 latomenu d-flex flex-column justify-content-center align-items-center">
+                              <label>Opacity</label>
+                            </div>
+                            <div className="col d-flex flex-column justify-content-center align-items-center p-0">
+                              <div className="row" style={{ width: "100%" }}>
+                                <div className="col-1 d-flex flex-column justify-content-center align-items-center">
+                                  <img className="plusminus" title="0" alt="0" src="./itemicons/rangeZero.svg" />
+                                </div>
+                                <div className="col d-flex flex-column justify-content-center align-items-center">
+                                  <input type="range" class="form-range border-0 p-0" min="0" max="1" step="0.1" list="optickmarks" defaultValue={spData.loginOpacity} id="loginOpRange" onChange={e => tempOpacity = e.target.value} ></input>
+                                  <datalist id="optickmarks">
+                                    <option value={"0"}></option>
+                                    <option value={"0.25"}></option>
+                                    <option className="tick" value={"0.5"}></option>
+                                    <option value={"0.75"}></option>
+                                    <option value={"1"}></option>
+                                  </datalist>
+                                </div>
+                                <div className="col-1 d-flex flex-column justify-content-center align-items-center">
+                                  <img className="plusminus" title="1" alt="1" src="./itemicons/rangeOne.svg" />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
                     <Ok okShow={this.state.okShow}>
                       <div className="row text-center pt-2">
                         <div className="col">
@@ -3189,6 +3265,19 @@ class Main extends React.Component {
                         </div>
                       </div>
                     </Ok>
+                    <AltOk altOkShow={this.state.altOkShow}>
+                      <div className="row text-center pt-2">
+                        <div className="col">
+                          <div className="row">
+                            <section className="col pt-2 contenitore solidgreen latowhite d-flex justify-content-center align-items-center ">
+                              <div>
+                                <p className="norfont">Changes Made!</p>
+                              </div>
+                            </section>
+                          </div>
+                        </div>
+                      </div>
+                    </AltOk>
                     <Error errShow={this.state.errShow}>
                       <div className="row text-center pt-2">
                         <div className="col">
