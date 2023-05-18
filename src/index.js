@@ -69,7 +69,7 @@ const Item = ({ showItemsBtn, pos, id, title, link, descr, icon, video, cat, ite
 
   const linkOrVideo = video
     ?
-    (<img className="items" title={title} alt={title} src={icon}
+    (<img className="items pointer" title={title} alt={title} src={icon}
       onClick={() => itemVideo(id, cat)} />)
     :
     (< a title={title} href={link} target="_blank" >
@@ -5893,7 +5893,7 @@ class ItemAdd extends React.Component {
       itemBtn = (
         <div className="itemcontainer">
           <div className="iconcontainer box box2">
-            <img className="items" title="Add Item" alt="Add Item" src="./itemicons/ac_add.svg"
+            <img className="items pointer" title="Add Item" alt="Add Item" src="./itemicons/ac_add.svg"
               onClick={() => this.props.addItem()} />
           </div>
           <h4>
@@ -5966,7 +5966,7 @@ class Cat extends React.Component {
       catBtn = (
         <div className="itemcontainer">
           <div className="iconcontainer box box2">
-            <img className="items" title={this.props.title} alt={this.props.title} src={this.props.icon}
+            <img className="items pointer" title={this.props.title} alt={this.props.title} src={this.props.icon}
               onClick={() => this.props.catCont(this.props.pos)} />
           </div>
           <h4>
@@ -5998,7 +5998,7 @@ class Cat extends React.Component {
       catBtn = (
         <div className="itemcontainer">
           <div className="iconcontainer box box2">
-            <img className="items" title={this.props.title} alt={this.props.title} src={this.props.icon}
+            <img className="items pointer" title={this.props.title} alt={this.props.title} src={this.props.icon}
               onClick={() => this.props.catCont(this.props.pos)} />
           </div>
           <h4>
