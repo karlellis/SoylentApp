@@ -42,6 +42,7 @@ var array = [];
 var arrayAdd = [];
 var inPos = "";
 var blockHide = "none";
+var categoryFirst = "none";
 var newItem = {
   "title": "",
   "link": "",
@@ -842,6 +843,7 @@ class Main extends React.Component {
       infoShow: false,
       addInfoShow: false,
       mainBtn: false,
+      catFirst: true,
       itemsBtnShow: "null",
       items: [],
       rootItems: [],
@@ -876,7 +878,7 @@ class Main extends React.Component {
       iocDiaShow: false,
       videoLink: tempItemLink,
       okShow: false,
-      altOkShow:false,
+      altOkShow: false,
       display: false,
       errShow: false,
       upShow: false,
@@ -960,6 +962,7 @@ class Main extends React.Component {
           infoShow: spData.infoShow,
           addInfoShow: spData.addInfoShow,
           mainBtn: spData.mainBtn,
+          catFirst: spData.catFirst,
           itemsBtnShow: spData.itemsBtnShow,
           menuShow: spData.menuShow,
           titleShow: spData.titleShow,
@@ -1748,11 +1751,13 @@ class Main extends React.Component {
     if (blockHide !== "none") {
       spData.menuShow = blockHide;
     }
+
     this.showAlert("ok");
     this.saveFile(spData, "./api/img-upload.php", "config");
     temp = "";
     temp2 = "";
     blockHide = "none";
+    
     disable1 = "none";
     disable2 = "none";
   }
@@ -2083,6 +2088,7 @@ class Main extends React.Component {
 
   saveBack = () => {
     var changes = false;
+
     if (fileImg !== null) {
       tempIcon = spData.backgroundImage;
       this.saveImgFile(fileImg, "back", "edit");
@@ -2099,6 +2105,7 @@ class Main extends React.Component {
       this.setState({
         activityChanged: true
       })
+
       if (spData.noBackImage) {
         this.setState({
           backStyle: {
@@ -2205,6 +2212,10 @@ class Main extends React.Component {
       // this.showAlert("ok");
       // this.saveFile(spData, "./api/img-upload.php", "config");
       changes = true;
+    }
+
+    if (categoryFirst !== "none") {
+      spData.catFirst = categoryFirst;
     }
 
     if (!changes) {
@@ -2961,6 +2972,7 @@ class Main extends React.Component {
 
   render() {
     const { mainBtn: mainBtn } = this.state;
+    const { catFirst: catFirst } = this.state;
     const { disFieldB: disFieldB } = this.state;
     const { disFieldBC: disFieldBC } = this.state;
     const { disFieldT: disFieldT } = this.state;
@@ -2981,6 +2993,7 @@ class Main extends React.Component {
     const showHideCrSub = spData.noFootAddSubtitle ? "d-none" : "d-block";
     const showHideCrSub2 = spData.noFootAddSubtitle2 ? "d-none" : "d-block";
     let buttons = "";
+    let pageBody = "";
 
     let menuButtons = (
       <>
@@ -3066,6 +3079,60 @@ class Main extends React.Component {
         </>
       )
     }
+
+    if (catFirst === true) {
+      pageBody = (
+        <>
+          {/* CATEGORIES */}
+          {
+            this.state.cats.map(({ id, title, icon }, i) => {
+              return (
+                <Cat showItemsBtn={this.state.itemsBtnShow} key={i} pos={i}
+                  title={title} icon={icon} catEditDel={this.catEditDel}
+                  catCont={this.catCont} />
+              )
+            })
+          }
+          {/* APPS */}
+          {
+            this.state.rootItems.map(({ id, title, link, descr, cat, icon, video }, i) => {
+              return (
+                <Item showItemsBtn={this.state.itemsBtnShow} key={i} pos={i} id={id}
+                  title={title} link={link} descr={descr} cat={cat} icon={icon} video={video}
+                  itemEditDel={this.itemEditDel} itemVideo={this.itemVideo} />
+              )
+            })
+          }
+        </>
+      )
+    } else {
+      pageBody = (
+        <>
+          {/* APPS */}
+          {
+            this.state.rootItems.map(({ id, title, link, descr, cat, icon, video }, i) => {
+              return (
+                <Item showItemsBtn={this.state.itemsBtnShow} key={i} pos={i} id={id}
+                  title={title} link={link} descr={descr} cat={cat} icon={icon} video={video}
+                  itemEditDel={this.itemEditDel} itemVideo={this.itemVideo} />
+              )
+            })
+          }
+          {/* CATEGORIES */}
+          {
+            this.state.cats.map(({ id, title, icon }, i) => {
+              return (
+                <Cat showItemsBtn={this.state.itemsBtnShow} key={i} pos={i}
+                  title={title} icon={icon} catEditDel={this.catEditDel}
+                  catCont={this.catCont} />
+              )
+            })
+          }
+        </>
+      )
+    }
+
+
 
     let foot = (
       <div className="row mt-2 mb-2 zindex1">
@@ -3161,7 +3228,7 @@ class Main extends React.Component {
                         </div>
                       </div>
                     </Error>
-                    
+
                   </form>
                 </div>
               </div>
@@ -4658,6 +4725,33 @@ class Main extends React.Component {
                       </div>
                     </div>
 
+                    <div className="form-group">
+                      <div className="row mb-1 m-auto">
+                        <div className="col">
+                          <div className="row border">
+                            <div className="col col pt-1 pb-1 padlr latomenu d-flex flex-column justify-content-center align-items-center">
+                              <label>Category first?</label>
+                            </div>
+                            <div className="col d-flex flex-column justify-content-center align-items-center">
+                              <label class="switch">
+                                <input type="checkbox" className="form-control" defaultChecked={!spData.catFirst} onClick={e => {
+                                  if (spData.catFirst === false) {
+                                    categoryFirst = true;
+                                  } else {
+                                    categoryFirst = false;
+                                  }
+                                }} />
+                                <span class="slider round"></span>
+                              </label>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="col-1"></div>
+                        <div className="col">
+                        </div>
+                      </div>
+                    </div>
+
                     <Ok okShow={this.state.okShow}>
                       <div className="row text-center pt-2">
                         <div className="col">
@@ -5718,8 +5812,9 @@ class Main extends React.Component {
             </div>
             {/* BODY */}
             <div className="textcenter">
+              {pageBody}
               {/* CATEGORIES */}
-              {
+              {/* {
                 this.state.cats.map(({ id, title, icon }, i) => {
                   return (
                     <Cat showItemsBtn={this.state.itemsBtnShow} key={i} pos={i}
@@ -5727,9 +5822,9 @@ class Main extends React.Component {
                       catCont={this.catCont} />
                   )
                 })
-              }
+              } */}
               {/* APPS */}
-              {
+              {/* {
                 this.state.rootItems.map(({ id, title, link, descr, cat, icon, video }, i) => {
                   return (
                     <Item showItemsBtn={this.state.itemsBtnShow} key={i} pos={i} id={id}
@@ -5737,7 +5832,7 @@ class Main extends React.Component {
                       itemEditDel={this.itemEditDel} itemVideo={this.itemVideo} />
                   )
                 })
-              }
+              } */}
               <ItemAdd showItemsBtn={this.state.itemsBtnShow} addItem={this.itemOrCat} />
               {/* FOOTER */}
               {foot}

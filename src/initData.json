@@ -52,6 +52,7 @@
   "infoShow": true,
   "addInfoShow": true,
   "mainBtn": false,
+  "catFirst": true,
   "itemsBtnShow": false,
   "GearIcon": "./img/gear.svg",
   "LogoIcon": "",
