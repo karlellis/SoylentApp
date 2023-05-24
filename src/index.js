@@ -2216,6 +2216,7 @@ class Main extends React.Component {
 
     if (categoryFirst !== "none") {
       spData.catFirst = categoryFirst;
+      changes = true;
     }
 
     if (!changes) {
@@ -2684,6 +2685,7 @@ class Main extends React.Component {
         });
         disable1 = "none";
         disable2 = "none";
+        categoryFirst = "none";
         this.setState({ backEditDiaShow: false });
         document.getElementById('backEditForm').reset();
         break;
@@ -4734,7 +4736,7 @@ class Main extends React.Component {
                             </div>
                             <div className="col d-flex flex-column justify-content-center align-items-center">
                               <label class="switch">
-                                <input type="checkbox" className="form-control" defaultChecked={!spData.catFirst} onClick={e => {
+                                <input type="checkbox" className="form-control" defaultChecked={spData.catFirst} onClick={e => {
                                   if (spData.catFirst === false) {
                                     categoryFirst = true;
                                   } else {
