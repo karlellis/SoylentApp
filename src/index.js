@@ -2216,6 +2216,9 @@ class Main extends React.Component {
 
     if (categoryFirst !== "none") {
       spData.catFirst = categoryFirst;
+      this.setState({
+        catFirst: categoryFirst
+      })
       changes = true;
     }
 
@@ -3075,7 +3078,7 @@ class Main extends React.Component {
             </button>
             <button className="col button solidbrick m-1"
               onClick={() => this.showModal("back")}>
-              Background
+              Preferences
             </button>
           </div>
         </>
@@ -3083,6 +3086,7 @@ class Main extends React.Component {
     }
 
     if (catFirst === true) {
+      // console.log("CateFirst= ", catFirst)
       pageBody = (
         <>
           {/* CATEGORIES */}
@@ -3108,6 +3112,7 @@ class Main extends React.Component {
         </>
       )
     } else {
+      // console.log("CateFirst Else= ", catFirst)
       pageBody = (
         <>
           {/* APPS */}
@@ -4549,7 +4554,7 @@ class Main extends React.Component {
             <BackEditDialog backEditDiaShow={this.state.backEditDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("back")} handleSave={this.saveBack}>
               <div className="modal-content noborder">
                 <div className="modal-header">
-                  <h5 className="modal-title" >Edit Backgrounds</h5>
+                  <h5 className="modal-title" >Edit Preferences</h5>
                 </div>
                 <div className="modal-body">
                   <form id="backEditForm">
@@ -4559,7 +4564,7 @@ class Main extends React.Component {
                         <div className="col">
                           <div className="row border">
                             <div className="col borderight pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
-                              <label>Main</label>
+                              <label>Main pic</label>
                             </div>
                             <div className="col d-flex flex-column justify-content-center align-items-center">
                               <input type="file" disabled={disFieldB} id="files" className="form-control boxs border-0" name="icon" onChange={e => fileImg = e.target.files[0]} />
@@ -4594,7 +4599,7 @@ class Main extends React.Component {
                         <div className="col">
                           <div className="row border">
                             <div className="col borderight pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
-                              <label>Cats/Credit</label>
+                              <label>Cats/Credit pic</label>
                             </div>
                             <div className="col d-flex flex-column justify-content-center align-items-center">
                               <input type="file" disabled={disFieldBC} id="catfiles" className="form-control boxs border-0" name="icon" onChange={e => fileCatImg = e.target.files[0]} />
@@ -4732,7 +4737,7 @@ class Main extends React.Component {
                         <div className="col">
                           <div className="row border">
                             <div className="col col pt-1 pb-1 padlr latomenu d-flex flex-column justify-content-center align-items-center">
-                              <label>Category first?</label>
+                              <label>Category before Items</label>
                             </div>
                             <div className="col d-flex flex-column justify-content-center align-items-center">
                               <label class="switch">
