@@ -31,6 +31,7 @@ var tempItemDescr = "...";
 var tempItemLink = "";
 var tempItemVideo = false;
 var tempCatTitle = "";
+var tempItemHide = false;
 var tempCrsTitle = "";
 var tempCrsLink = "";
 var tempCrsDescr = "";
@@ -50,11 +51,13 @@ var newItem = {
   "descr": "",
   "video": false,
   "cat": "Root",
-  "id": 0
+  "id": 0,
+  "hidden": false
 };
 var catNewItem = {
   "title": "",
-  "icon": ""
+  "icon": "",
+  "hidden": false
 };
 var CrsNewItem = {
   "title": "",
@@ -65,9 +68,9 @@ var nome = "";
 var credentials = require("./initSec.json");
 var spData = require("./initData.json");
 
-const Item = ({ showItemsBtn, pos, id, title, link, descr, icon, video, cat, itemEditDel, itemVideo }) => {
+const Item = ({ showItemsBtn, pos, id, title, link, descr, icon, video, cat, itemEditDel, itemVideo, itemHide }) => {
   const [isActive, setIsActive] = useState(false);
-
+  // const hideIt = itemHide;
   const linkOrVideo = video
     ?
     (<img className="items pointer" title={title} alt={title} src={icon}
@@ -126,7 +129,10 @@ const Item = ({ showItemsBtn, pos, id, title, link, descr, icon, video, cat, ite
       </h4>
     );
   };
-
+  console.log(title, " ItemHide: ", itemHide);
+  // if (itemHide === true && showItemsBtn !== "ShowItemBtn") {
+  //   itemBtn = "";
+  // } else {
   if (showItemsBtn === "ShowItemBtn") {
     itemBtn = (
       <div className="itemcontainer">
@@ -159,9 +165,10 @@ const Item = ({ showItemsBtn, pos, id, title, link, descr, icon, video, cat, ite
       </div>
     )
   }
+  // }
   return (
     <>
-      {itemBtn}
+      {(!itemHide || showItemsBtn === "ShowItemBtn") && itemBtn}
     </>
   );
 }
@@ -1166,6 +1173,9 @@ class Main extends React.Component {
           array[temp].video = temp4;
           array[temp].cat = temp5;
           array[temp].descr = temp6;
+          if (blockHide !== "none") {
+            array[temp].hidden = blockHide;
+          }
           if (inPos !== "") {
             let index = 0;
             if (tempCatTitle !== "Root") {
@@ -1182,6 +1192,7 @@ class Main extends React.Component {
             newItem.video = array[temp].video;
             newItem.cat = array[temp].cat;
             newItem.id = index;
+            newItem.hidden = array[temp].hidden;
             if (index > temp) {
               array = this.addAfter(array, index + 1, newItem);
               for (let i = (index + 1); i < array.length; i++) {
@@ -1220,6 +1231,7 @@ class Main extends React.Component {
           temp4 = "";
           temp5 = tempCatTitle;
           temp6 = "";
+          blockHide = "none";
           newItem = {
             "title": "",
             "link": "",
@@ -1227,7 +1239,8 @@ class Main extends React.Component {
             "descr": "",
             "video": false,
             "cat": "",
-            "id": 0
+            "id": 0,
+            "hidden": false
           };
           this.showAlert("ok");
           // console.log("Edit Icon correctly Uploaded!");
@@ -1240,6 +1253,11 @@ class Main extends React.Component {
           newItem.descr = temp6;
           newItem.video = temp4;
           newItem.cat = temp5;
+          if (blockHide !== "none") {
+            newItem.hidden = blockHide;
+          } else {
+            newItem.hidden = false;
+          }
           let index = 0;
           // console.log("Insert pos=", (inPos));
           if (arrayLength !== 0) {
@@ -1266,6 +1284,7 @@ class Main extends React.Component {
           temp4 = "";
           temp5 = tempCatTitle;
           temp6 = "";
+          blockHide = "none";
           newItem = {
             "title": "",
             "link": "",
@@ -1273,7 +1292,8 @@ class Main extends React.Component {
             "descr": "",
             "video": false,
             "cat": "",
-            "id": 0
+            "id": 0,
+            "hidden": false
           };
           this.showAlert("ok");
           // console.log("Add Icon correctly Uploaded!");
@@ -1286,6 +1306,11 @@ class Main extends React.Component {
           newItem.descr = temp6;
           newItem.video = temp4;
           newItem.cat = temp5;
+          if (blockHide !== "none") {
+            newItem.hidden = blockHide;
+          } else {
+            newItem.hidden = false;
+          }
           newItem.id = arrayLength;
           inPos = arrayLength;
           // console.log("Pos: ", inPos);
@@ -1305,6 +1330,7 @@ class Main extends React.Component {
           temp4 = "";
           temp5 = tempCatTitle;
           temp6 = "";
+          blockHide = "none";
           newItem = {
             "title": "",
             "link": "",
@@ -1312,7 +1338,8 @@ class Main extends React.Component {
             "descr": "",
             "video": false,
             "cat": "",
-            "id": 0
+            "id": 0,
+            "hidden": false
           };
           this.showAlert("ok");
           // console.log("Add Last Icon correctly Uploaded!");
@@ -1331,11 +1358,15 @@ class Main extends React.Component {
               }
             })
           }
+          if (blockHide !== "null") {
+            array[currPos].hidden = blockHide;
+          }
           if (temp !== "") {
             // console.log("CurrPos: ", currPos);
             // console.log("InPos: ", inPos);
             catNewItem.icon = array[currPos].icon;
             catNewItem.title = array[currPos].title;
+            catNewItem.hidden = array[currPos].hidden;
             if (inPos > currPos) {
               arrayAdd = this.addAfter(array, inPos + 1, catNewItem);
               tempIcon = "";
@@ -1354,9 +1385,11 @@ class Main extends React.Component {
           temp2 = "";
           temp = "";
           fileImg = null;
+          blockHide = "null";
           catNewItem = {
             "title": "",
-            "icon": ""
+            "icon": "",
+            "hidden": false
           };
           this.showAlert("ok");
           // console.log("Edit Cat correctly Uploaded!");
@@ -1365,6 +1398,11 @@ class Main extends React.Component {
           // console.log("CatAdd in Pos: ", inPos);
           catNewItem.icon = "./itemicons/" + nome;
           catNewItem.title = temp2;
+          if (blockHide !== "none") {
+            catNewItem.hidden = blockHide;
+          } else {
+            catNewItem.hidden = false;
+          }
           tempIcon = "";
           arrayAdd = this.addAfter(array, inPos, catNewItem);
           // console.log("Insert pos=", (inPos));
@@ -1373,9 +1411,11 @@ class Main extends React.Component {
           arrayAdd = [];
           temp2 = "";
           temp = "";
+          blockHide = "null";
           catNewItem = {
             "title": "",
-            "icon": ""
+            "icon": "",
+            "hidden": false
           };
           this.showAlert("ok");
           // console.log("Add Icon correctly Uploaded!");
@@ -1384,6 +1424,11 @@ class Main extends React.Component {
           // console.log("CatAddLast...");
           catNewItem.icon = "./itemicons/" + nome;
           catNewItem.title = temp2;
+          if (blockHide !== "none") {
+            catNewItem.hidden = blockHide;
+          } else {
+            catNewItem.hidden = false;
+          }
           // console.log("CatNewItem: ", catNewItem);
           inPos = arrayLength;
           // console.log("Pos: ", inPos);
@@ -1396,9 +1441,11 @@ class Main extends React.Component {
           // console.log("CatItems: ", spData.cats);
           arrayAdd = [];
           temp2 = "";
+          blockHide = "null";
           catNewItem = {
             "title": "",
-            "icon": ""
+            "icon": "",
+            "hidden": false
           };
           this.showAlert("ok");
           // console.log("Add Last Icon correctly Uploaded!");
@@ -1644,6 +1691,7 @@ class Main extends React.Component {
           newItem.video = this.state.items[i].video;
           newItem.cat = this.state.items[i].cat;
           newItem.id = this.state.items[i].id;
+          newItem.hidden = this.state.items[i].hidden;
           arrayAdd = this.addAfter(arrayAdd, count, newItem);
           count++;
           newItem = {
@@ -1653,7 +1701,8 @@ class Main extends React.Component {
             "descr": "",
             "video": false,
             "cat": "",
-            "id": 0
+            "id": 0,
+            "hidden": false
           };
         }
       }
@@ -1668,7 +1717,8 @@ class Main extends React.Component {
         "descr": "",
         "video": false,
         "cat": "",
-        "id": 0
+        "id": 0,
+        "hidden": false
       };
       this.showAlert("ok");
     } else {
@@ -1688,6 +1738,7 @@ class Main extends React.Component {
           newItem.video = items[i].video;
           newItem.cat = items[i].cat;
           newItem.id = items[i].id;
+          newItem.hidden = items[i].hidden;
           arrayAdd = this.addAfter(arrayAdd, count, newItem);
           count++;
           newItem = {
@@ -1697,7 +1748,8 @@ class Main extends React.Component {
             "descr": "",
             "video": false,
             "cat": "Root",
-            "id": 0
+            "id": 0,
+            "hidden": false
           };
         }
       }
@@ -1715,7 +1767,8 @@ class Main extends React.Component {
         "descr": "",
         "video": false,
         "cat": "Root",
-        "cat": ""
+        "id": 0,
+        "hidden": false
       };
     }
   }
@@ -1757,7 +1810,7 @@ class Main extends React.Component {
     temp = "";
     temp2 = "";
     blockHide = "none";
-    
+
     disable1 = "none";
     disable2 = "none";
   }
@@ -1842,7 +1895,8 @@ class Main extends React.Component {
     if (noDescr === true) {
       temp6 = "";
     }
-    if (fileImg !== null || temp2 !== "" || temp3 !== "" || temp4 !== tempItemVideo || temp5 !== tempCatTitle || temp6 !== tempItemDescr || cgPos !== "") {
+    if (fileImg !== null || temp2 !== "" || temp3 !== "" || temp4 !== tempItemVideo || temp5 !== tempCatTitle || temp6 !== tempItemDescr || cgPos !== "" ||
+      blockHide !== tempItemHide) {
       if (cgPos !== "") {
         inPos = parseInt(cgPos) - 1;
         // console.log("Edit inPos: ", inPos, " currPos: ", currPos);
@@ -1925,7 +1979,7 @@ class Main extends React.Component {
   }
 
   applyCatEdit = () => {
-    if (fileImg !== null || temp2 !== "" || temp !== "") {
+    if (fileImg !== null || temp2 !== "" || temp !== "" || blockHide !== tempItemHide) {
       let dup = false;
       for (let i = 0; i < arrayLength; i++) {
         if (array[i].title.toLowerCase() === temp2.toLowerCase()) {
@@ -2771,6 +2825,7 @@ class Main extends React.Component {
     arrayLength = (array.length);
     tempCatTitle = array[pos].title;
     tempIcon = array[pos].icon;
+    tempItemHide = array[pos].hidden;
     // console.log("Cat name: ", tempCatTitle);
     document.getElementById('clearcatswitchpos').value = "";
     if (op === "CatEdit") {
@@ -2784,6 +2839,7 @@ class Main extends React.Component {
     this.hideModal("itemorcat");
     array = [...this.state.cats];
     arrayLength = (array.length);
+    tempItemHide = false;
     // temp4 = false;
     document.getElementById('clearcatpos').value = "";
     document.getElementById('clearcattitle').value = "";
@@ -2829,6 +2885,7 @@ class Main extends React.Component {
       catSel: temp5
     })
     tempCatTitle = temp5;
+    tempItemHide = false;
     document.getElementById('clearitempos').value = "";
     // document.getElementById('clearitemswitchpos').value = "";
     document.getElementById('clearitemdescr').value = "";
@@ -2851,6 +2908,7 @@ class Main extends React.Component {
         // console.log("App name: ", tempItemTitle);
         tempItemLink = array[i].link;
         tempItemDescr = array[i].descr;
+        tempItemHide = array[i].hidden;
         if (tempItemDescr === "") {
           noDescr = true;
           this.setState({
@@ -3091,21 +3149,21 @@ class Main extends React.Component {
         <>
           {/* CATEGORIES */}
           {
-            this.state.cats.map(({ id, title, icon }, i) => {
+            this.state.cats.map(({ id, title, icon, hidden }, i) => {
               return (
                 <Cat showItemsBtn={this.state.itemsBtnShow} key={i} pos={i}
                   title={title} icon={icon} catEditDel={this.catEditDel}
-                  catCont={this.catCont} />
+                  catCont={this.catCont} itemHide={hidden} />
               )
             })
           }
           {/* APPS */}
           {
-            this.state.rootItems.map(({ id, title, link, descr, cat, icon, video }, i) => {
+            this.state.rootItems.map(({ id, title, link, descr, cat, icon, video, hidden }, i) => {
               return (
                 <Item showItemsBtn={this.state.itemsBtnShow} key={i} pos={i} id={id}
                   title={title} link={link} descr={descr} cat={cat} icon={icon} video={video}
-                  itemEditDel={this.itemEditDel} itemVideo={this.itemVideo} />
+                  itemEditDel={this.itemEditDel} itemVideo={this.itemVideo} itemHide={hidden} />
               )
             })
           }
@@ -3117,21 +3175,21 @@ class Main extends React.Component {
         <>
           {/* APPS */}
           {
-            this.state.rootItems.map(({ id, title, link, descr, cat, icon, video }, i) => {
+            this.state.rootItems.map(({ id, title, link, descr, cat, icon, video, hidden }, i) => {
               return (
                 <Item showItemsBtn={this.state.itemsBtnShow} key={i} pos={i} id={id}
                   title={title} link={link} descr={descr} cat={cat} icon={icon} video={video}
-                  itemEditDel={this.itemEditDel} itemVideo={this.itemVideo} />
+                  itemEditDel={this.itemEditDel} itemVideo={this.itemVideo} itemHide={hidden} />
               )
             })
           }
           {/* CATEGORIES */}
           {
-            this.state.cats.map(({ id, title, icon }, i) => {
+            this.state.cats.map(({ id, title, icon, hidden }, i) => {
               return (
                 <Cat showItemsBtn={this.state.itemsBtnShow} key={i} pos={i}
                   title={title} icon={icon} catEditDel={this.catEditDel}
-                  catCont={this.catCont} />
+                  catCont={this.catCont} itemHide={hidden} />
               )
             })
           }
@@ -4812,11 +4870,11 @@ class Main extends React.Component {
                 <div className="modal-body-dark">
                   <div className="textcenter">
                     {
-                      this.state.catItems.map(({ id, title, link, descr, cat, icon, video }, i) => {
+                      this.state.catItems.map(({ id, title, link, descr, cat, icon, video, hidden }, i) => {
                         return (
                           <Item showItemsBtn={this.state.itemsBtnShow} key={i} pos={i} id={id}
                             title={title} link={link} descr={descr} cat={cat} icon={icon} video={video}
-                            itemVideo={this.itemVideo} itemEditDel={this.itemEditDel} />
+                            itemVideo={this.itemVideo} itemEditDel={this.itemEditDel} itemHide={hidden} />
                         )
                       })
                     }
@@ -4947,6 +5005,33 @@ class Main extends React.Component {
                                   }
                                 }} />
                                 <span class="slider round" title="Video Player"></span>
+                              </label>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="col-1"></div>
+                        <div className="col">
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="form-group">
+                      <div className="row mb-1 m-auto">
+                        <div className="col">
+                          <div className="row border">
+                            <div className="col col pt-1 pb-1 padlr latomenu d-flex flex-column justify-content-center align-items-center">
+                              <label>Hide</label>
+                            </div>
+                            <div className="col d-flex flex-column justify-content-center align-items-center">
+                              <label class="switch">
+                                <input type="checkbox" className="form-control" defaultChecked={tempItemHide} onClick={e => {
+                                  if (tempItemHide === false) {
+                                    blockHide = true;
+                                  } else {
+                                    blockHide = false;
+                                  }
+                                }} />
+                                <span class="slider round"></span>
                               </label>
                             </div>
                           </div>
@@ -5153,6 +5238,33 @@ class Main extends React.Component {
                       <div className="row mb-1 m-auto">
                         <div className="col">
                           <div className="row border">
+                            <div className="col col pt-1 pb-1 padlr latomenu d-flex flex-column justify-content-center align-items-center">
+                              <label>Hide</label>
+                            </div>
+                            <div className="col d-flex flex-column justify-content-center align-items-center">
+                              <label class="switch">
+                                <input type="checkbox" className="form-control" defaultChecked={tempItemHide} onClick={e => {
+                                  if (tempItemHide === false) {
+                                    blockHide = true;
+                                  } else {
+                                    blockHide = false;
+                                  }
+                                }} />
+                                <span class="slider round"></span>
+                              </label>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="col-1"></div>
+                        <div className="col">
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="form-group">
+                      <div className="row mb-1 m-auto">
+                        <div className="col">
+                          <div className="row border">
                             <div className="col pt-1 pb-1 padlr latomenu d-flex flex-column justify-content-center align-items-center">
                               <label>Category</label>
                             </div>
@@ -5287,6 +5399,33 @@ class Main extends React.Component {
                       </div>
                     </div>
 
+                    <div className="form-group">
+                      <div className="row mb-1 m-auto">
+                        <div className="col">
+                          <div className="row border">
+                            <div className="col col pt-1 pb-1 padlr latomenu d-flex flex-column justify-content-center align-items-center">
+                              <label>Hide</label>
+                            </div>
+                            <div className="col d-flex flex-column justify-content-center align-items-center">
+                              <label class="switch">
+                                <input type="checkbox" className="form-control" defaultChecked={tempItemHide} onClick={e => {
+                                  if (tempItemHide === false) {
+                                    blockHide = true;
+                                  } else {
+                                    blockHide = false;
+                                  }
+                                }} />
+                                <span class="slider round"></span>
+                              </label>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="col-1"></div>
+                        <div className="col">
+                        </div>
+                      </div>
+                    </div>
+
                     <Ok okShow={this.state.okShow}>
                       <div className="row text-center pt-2">
                         <div className="col">
@@ -5380,6 +5519,33 @@ class Main extends React.Component {
                               <input type="text" className="form-control border-0" id="clearcattitle" onChange={e => temp2 = e.target.value} />
                             </div>
                           </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="form-group">
+                      <div className="row mb-1 m-auto">
+                        <div className="col">
+                          <div className="row border">
+                            <div className="col col pt-1 pb-1 padlr latomenu d-flex flex-column justify-content-center align-items-center">
+                              <label>Hide</label>
+                            </div>
+                            <div className="col d-flex flex-column justify-content-center align-items-center">
+                              <label class="switch">
+                                <input type="checkbox" className="form-control" defaultChecked={tempItemHide} onClick={e => {
+                                  if (tempItemHide === false) {
+                                    blockHide = true;
+                                  } else {
+                                    blockHide = false;
+                                  }
+                                }} />
+                                <span class="slider round"></span>
+                              </label>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="col-1"></div>
+                        <div className="col">
                         </div>
                       </div>
                     </div>
@@ -5773,12 +5939,12 @@ class Main extends React.Component {
                     {/* RESITEMS */}
                     <div className="textcenter">
                       {
-                        this.state.resItems.map(({ id, title, link, descr, icon, video }, i) => {
+                        this.state.resItems.map(({ id, title, link, descr, icon, video, hidden }, i) => {
                           return (
                             // <ItemSearchRes key={i} pos={i} id={id}
                             <Item key={i} pos={i} id={id}
                               title={title} link={link} descr={descr} cat={"Search"} icon={icon} video={video}
-                              itemVideo={this.itemVideo} />
+                              itemVideo={this.itemVideo} itemHide={hidden} />
                           )
                         })
                       }
@@ -6119,7 +6285,8 @@ class Cat extends React.Component {
     }
     return (
       <>
-        {catBtn}
+        {(!this.props.itemHide || this.props.showItemsBtn === "ShowItemBtn") && catBtn}
+        {/* {catBtn} */}
       </>
     );
   }
