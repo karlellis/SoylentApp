@@ -129,7 +129,7 @@ const Item = ({ showItemsBtn, pos, id, title, link, descr, icon, video, cat, ite
       </h4>
     );
   };
-  console.log(title, " ItemHide: ", itemHide);
+  // console.log(title, " ItemHide: ", itemHide);
   // if (itemHide === true && showItemsBtn !== "ShowItemBtn") {
   //   itemBtn = "";
   // } else {
@@ -1358,7 +1358,7 @@ class Main extends React.Component {
               }
             })
           }
-          if (blockHide !== "null") {
+          if (blockHide !== "none") {
             array[currPos].hidden = blockHide;
           }
           if (temp !== "") {
@@ -1385,7 +1385,7 @@ class Main extends React.Component {
           temp2 = "";
           temp = "";
           fileImg = null;
-          blockHide = "null";
+          blockHide = "none";
           catNewItem = {
             "title": "",
             "icon": "",
@@ -1411,7 +1411,7 @@ class Main extends React.Component {
           arrayAdd = [];
           temp2 = "";
           temp = "";
-          blockHide = "null";
+          blockHide = "none";
           catNewItem = {
             "title": "",
             "icon": "",
@@ -1441,7 +1441,7 @@ class Main extends React.Component {
           // console.log("CatItems: ", spData.cats);
           arrayAdd = [];
           temp2 = "";
-          blockHide = "null";
+          blockHide = "none";
           catNewItem = {
             "title": "",
             "icon": "",
@@ -2826,7 +2826,8 @@ class Main extends React.Component {
     tempCatTitle = array[pos].title;
     tempIcon = array[pos].icon;
     tempItemHide = array[pos].hidden;
-    // console.log("Cat name: ", tempCatTitle);
+    // console.log("Cat Hide : ", tempItemHide);
+    // console.log("HideBlock : ", blockHide);
     document.getElementById('clearcatswitchpos').value = "";
     if (op === "CatEdit") {
       this.showModal("catEdit");
@@ -2909,6 +2910,8 @@ class Main extends React.Component {
         tempItemLink = array[i].link;
         tempItemDescr = array[i].descr;
         tempItemHide = array[i].hidden;
+        // console.log("Item Hide: ", tempItemHide);
+        // console.log("HideBlock: ", blockHide);
         if (tempItemDescr === "") {
           noDescr = true;
           this.setState({
