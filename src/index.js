@@ -3435,58 +3435,7 @@ class Main extends React.Component {
                 <div className="modal-body">
                   <form id="menuForm">
 
-                    <div className="form-group">
-                      <div className="row mb-1 m-auto">
-                        <div className="col">
-                          <div className="row border">
-                            <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
-                              <label>Back color</label>
-                            </div>
-                            <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="color" className="form-control border-0 p-0" defaultValue={this.rgbToHex(spData.menuColor)} onChange={e => tempColor = e.target.value} />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="form-group">
-                      <div className="row mb-1 m-auto">
-                        <div className="col">
-                          <div className="row border">
-                            <div className="col pt-1 pb-1 p-0 latomenu d-flex flex-column justify-content-center align-items-center">
-                              <label>Opacity</label>
-                            </div>
-
-                            <div className="col d-flex flex-column justify-content-center align-items-center p-0">
-                              <div className="row" style={{ width: "100%" }}>
-
-                                <div className="col-1 d-flex flex-column justify-content-center align-items-center">
-                                  <img className="plusminus" title="0" alt="0" src="./itemicons/rangeZero.svg" />
-                                </div>
-                                <div className="col d-flex flex-column justify-content-center align-items-center">
-                                  <input type="range" class="form-range border-0 p-0" min="0" max="1" step="0.1" list="optickmarks" defaultValue={spData.menuOpacity} id="menuOpRange" onChange={e => tempOpacity = e.target.value} ></input>
-                                  <datalist id="optickmarks">
-                                    <option value={"0"}></option>
-                                    <option value={"0.25"}></option>
-                                    <option className="tick" value={"0.5"}></option>
-                                    <option value={"0.75"}></option>
-                                    <option value={"1"}></option>
-                                  </datalist>
-                                </div>
-                                <div className="col-1 d-flex flex-column justify-content-center align-items-center">
-                                  <img className="plusminus" title="1" alt="1" src="./itemicons/rangeOne.svg" />
-                                </div>
-
-                              </div>
-                            </div>
-
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="form-group">
+                  <div className="form-group">
                       <div className="row text-center mb-1 m-auto">
                         <div className="col">
                           <div className="row border">
@@ -3547,6 +3496,57 @@ class Main extends React.Component {
                                 <span class="slider round" title="Hide"></span>
                               </label>
                             </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="form-group">
+                      <div className="row mb-1 m-auto">
+                        <div className="col">
+                          <div className="row border">
+                            <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
+                              <label>Back color</label>
+                            </div>
+                            <div className="col d-flex flex-column justify-content-center align-items-center">
+                              <input type="color" className="form-control border-0 p-0" defaultValue={this.rgbToHex(spData.menuColor)} onChange={e => tempColor = e.target.value} />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="form-group">
+                      <div className="row mb-1 m-auto">
+                        <div className="col">
+                          <div className="row border">
+                            <div className="col pt-1 pb-1 p-0 latomenu d-flex flex-column justify-content-center align-items-center">
+                              <label>Opacity</label>
+                            </div>
+
+                            <div className="col d-flex flex-column justify-content-center align-items-center p-0">
+                              <div className="row" style={{ width: "100%" }}>
+
+                                <div className="col-1 d-flex flex-column justify-content-center align-items-center">
+                                  <img className="plusminus" title="0" alt="0" src="./itemicons/rangeZero.svg" />
+                                </div>
+                                <div className="col d-flex flex-column justify-content-center align-items-center">
+                                  <input type="range" class="form-range border-0 p-0" min="0" max="1" step="0.1" list="optickmarks" defaultValue={spData.menuOpacity} id="menuOpRange" onChange={e => tempOpacity = e.target.value} ></input>
+                                  <datalist id="optickmarks">
+                                    <option value={"0"}></option>
+                                    <option value={"0.25"}></option>
+                                    <option className="tick" value={"0.5"}></option>
+                                    <option value={"0.75"}></option>
+                                    <option value={"1"}></option>
+                                  </datalist>
+                                </div>
+                                <div className="col-1 d-flex flex-column justify-content-center align-items-center">
+                                  <img className="plusminus" title="1" alt="1" src="./itemicons/rangeOne.svg" />
+                                </div>
+
+                              </div>
+                            </div>
+
                           </div>
                         </div>
                       </div>
