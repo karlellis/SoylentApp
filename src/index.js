@@ -3137,6 +3137,10 @@ class Main extends React.Component {
               onClick={() => this.itemsButtonShow("ShowItemBtn")}>
               <SettingsGear showItemsBtn={this.state.itemsBtnShow} />
             </button>
+
+            <ItmAdd showItemsBtn={this.state.itemsBtnShow} addItem={this.itemOrCat} />
+
+            {/* <ItemAdd className="col" showItemsBtn={this.state.itemsBtnShow} addItem={this.itemOrCat} /> */}
             <button className="col button solidbrick m-1"
               onClick={() => this.showModal("back")}>
               Preferences
@@ -3438,7 +3442,7 @@ class Main extends React.Component {
                 <div className="modal-body">
                   <form id="menuForm">
 
-                  <div className="form-group">
+                    <div className="form-group">
                       <div className="row text-center mb-1 m-auto">
                         <div className="col">
                           <div className="row border">
@@ -4872,6 +4876,8 @@ class Main extends React.Component {
                 <div style={this.state.catStyle}></div>
                 <div className="modal-body-dark">
                   <div className="textcenter">
+                    <CrsAdd showItemsBtn={this.state.itemsBtnShow} addItem={this.addItem} />
+                    {/* <ItmAdd showItemsBtn={this.state.itemsBtnShow} addItem={this.addItem} /> */}
                     {
                       this.state.catItems.map(({ id, title, link, descr, cat, icon, video, hidden }, i) => {
                         return (
@@ -4881,7 +4887,6 @@ class Main extends React.Component {
                         )
                       })
                     }
-                    <ItemAdd showItemsBtn={this.state.itemsBtnShow} addItem={this.addItem} />
                   </div>
                 </div>
               </div>
@@ -5635,6 +5640,7 @@ class Main extends React.Component {
                 <div style={this.state.catStyle}></div>
                 <div className="modal-body-dark">
                   <div className="textcenter">
+                    <CrsAdd showItemsBtn={this.state.itemsBtnShow} addItem={this.crsAddItem} />
                     {
                       this.state.creditsItems.map(({ id, title, link, descr, }, i) => {
                         return (
@@ -5644,7 +5650,6 @@ class Main extends React.Component {
                         )
                       })
                     }
-                    <CrsAdd showItemsBtn={this.state.itemsBtnShow} /* title={title} link={link} icon={icon} */ addItem={this.crsAddItem} />
                   </div>
                 </div>
               </div>
@@ -5989,27 +5994,7 @@ class Main extends React.Component {
             {/* BODY */}
             <div className="textcenter">
               {pageBody}
-              {/* CATEGORIES */}
-              {/* {
-                this.state.cats.map(({ id, title, icon }, i) => {
-                  return (
-                    <Cat showItemsBtn={this.state.itemsBtnShow} key={i} pos={i}
-                      title={title} icon={icon} catEditDel={this.catEditDel}
-                      catCont={this.catCont} />
-                  )
-                })
-              } */}
-              {/* APPS */}
-              {/* {
-                this.state.rootItems.map(({ id, title, link, descr, cat, icon, video }, i) => {
-                  return (
-                    <Item showItemsBtn={this.state.itemsBtnShow} key={i} pos={i} id={id}
-                      title={title} link={link} descr={descr} cat={cat} icon={icon} video={video}
-                      itemEditDel={this.itemEditDel} itemVideo={this.itemVideo} />
-                  )
-                })
-              } */}
-              <ItemAdd showItemsBtn={this.state.itemsBtnShow} addItem={this.itemOrCat} />
+              {/* <ItemAdd showItemsBtn={this.state.itemsBtnShow} addItem={this.itemOrCat} /> */}
               {/* FOOTER */}
               {foot}
             </div>
@@ -6154,47 +6139,47 @@ class LogoImg extends React.Component {
 //   }
 // }
 
-class ItemAdd extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-  render() {
-    let itemBtn = ""
-    if (this.props.showItemsBtn === "ShowItemBtn") {
-      itemBtn = (
-        <div className="itemcontainer">
-          <div className="iconcontainer box box2">
-            <img className="items pointer" title="Add Item" alt="Add Item" src="./itemicons/ac_add.svg"
-              onClick={() => this.props.addItem()} />
-          </div>
-          <h4>
-            <div className="row lato text-center m-1">
-              <div className="col">
-                <div className="row">
-                  <div className="col d-flex flex-column justify-content-center align-items-center">
-                    <b>Add Item</b>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </h4>
-          <div className="row btncontainer">
-            <button className="col addbutton solidgreen m-1" onClick={() => this.props.addItem()}>
-              Add Item
-            </button>
-          </div>
-        </div>
-      )
-    } else {
-      itemBtn = "";
-    }
-    return (
-      <>
-        {itemBtn}
-      </>
-    );
-  }
-}
+// class ItemAdd extends React.Component {
+//   constructor(props) {
+//     super(props);
+//   }
+//   render() {
+//     let itemBtn = ""
+//     if (this.props.showItemsBtn === "ShowItemBtn") {
+//       itemBtn = (
+//         <div className="itemcontainer">
+//           <div className="iconcontainer box box2">
+//             <img className="items pointer" title="Add Item" alt="Add Item" src="./itemicons/ac_add.svg"
+//               onClick={() => this.props.addItem()} />
+//           </div>
+//           <h4>
+//             <div className="row lato text-center m-1">
+//               <div className="col">
+//                 <div className="row">
+//                   <div className="col d-flex flex-column justify-content-center align-items-center">
+//                     <b>Add Item</b>
+//                   </div>
+//                 </div>
+//               </div>
+//             </div>
+//           </h4>
+//           <div className="row btncontainer">
+//             <button className="col addbutton solidgreen m-1" onClick={() => this.props.addItem()}>
+//               Add Item
+//             </button>
+//           </div>
+//         </div>
+//       )
+//     } else {
+//       itemBtn = "";
+//     }
+//     return (
+//       <>
+//         {itemBtn}
+//       </>
+//     );
+//   }
+// }
 
 class CrsAdd extends React.Component {
   constructor(props) {
@@ -6205,11 +6190,12 @@ class CrsAdd extends React.Component {
     if (this.props.showItemsBtn === "ShowItemBtn") {
       crsBtn = (
 
-        <div className="row">
+        <div className="row stickydivtop">
           <button className="col extcredits solidgreen m-1"
             onClick={() => this.props.addItem()}>
-            <img className="plus mt-2 mb-1" title="Add Item" alt="Add Item" src="./itemicons/plus.svg" />
-            <h5><font color="Chartreuse">Add Item</font></h5>
+            <img className="gear mt-2 mb-1" title="Add Item" alt="Add Item" src="./itemicons/plus.svg" />
+            {/* <img className="plus mt-2 mb-1" title="Add Item" alt="Add Item" src="./itemicons/plus.svg" /> */}
+            {/* <h5><font color="Chartreuse">Add Item</font></h5> */}
           </button>
         </div>
 
@@ -6220,6 +6206,30 @@ class CrsAdd extends React.Component {
     return (
       <>
         {crsBtn}
+      </>
+    );
+  }
+}
+
+class ItmAdd extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+  render() {
+    let itmBtn = ""
+    if (this.props.showItemsBtn === "ShowItemBtn") {
+      itmBtn = (
+        <button className="col button solidgreen m-1"
+          onClick={() => this.props.addItem()}>
+          <img className="gear mt-2 mb-2" title="Add Item" alt="Add Item" src="./itemicons/plus.svg" />
+        </button>
+      )
+    } else {
+      itmBtn = "";
+    }
+    return (
+      <>
+        {itmBtn}
       </>
     );
   }
