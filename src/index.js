@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react';
 import ReactDOM from "react-dom/client";
 import "./index.css";
 // import "./bootstrap/js/bootstrap.bundle.min.js"
-// import { ReactComponent as GearIcon } from "./srcimg/gear.svg";
 const bcrypt = require("bcryptjs")
 var fileImg = null;
 var fileCatImg = null;
@@ -70,7 +69,6 @@ var spData = require("./initData.json");
 
 const Item = ({ showItemsBtn, pos, id, title, link, descr, icon, video, cat, itemEditDel, itemVideo, itemHide }) => {
   const [isActive, setIsActive] = useState(false);
-  // const hideIt = itemHide;
   const linkOrVideo = video
     ?
     (<img className="items pointer" title={title} alt={title} src={icon}
@@ -129,10 +127,6 @@ const Item = ({ showItemsBtn, pos, id, title, link, descr, icon, video, cat, ite
       </h4>
     );
   };
-  // console.log(title, " ItemHide: ", itemHide);
-  // if (itemHide === true && showItemsBtn !== "ShowItemBtn") {
-  //   itemBtn = "";
-  // } else {
   if (showItemsBtn === "ShowItemBtn") {
     itemBtn = (
       <div className="itemcontainer">
@@ -172,81 +166,6 @@ const Item = ({ showItemsBtn, pos, id, title, link, descr, icon, video, cat, ite
     </>
   );
 }
-
-// const ItemSearchRes = ({ id, title, link, descr, icon, cat, video, itemVideo }) => {
-//   const [isActive, setIsActive] = useState(false);
-//   const linkOrVideo = video
-//     ?
-//     (<img className="items" title={title} alt={title} src={icon}
-//       onClick={() => itemVideo(id, cat)} />)
-//     :
-//     (< a title={title} href={link} target="_blank" >
-//       <img className="items" title={title} alt={title} src={icon} />
-//     </a>);
-//   let itemBtn = "";
-//   let descrTxt = "";
-//   let titleTxt = "";
-
-//   if (descr !== "") {
-//     descrTxt = (
-//       <div className={`${isActive ? 'descr-shown row medfonts lato text-center m-auto' : 'descr-hidden'}`}
-//         style={{
-//           backgroundImage: "url(" + icon + ")",
-//           backgroundPosition: 'center',
-//           backgroundRepeat: 'no-repeat'
-//         }}>
-//         <b style={{ backgroundColor: "rgba(0, 0, 0, 0.7)" }}>{descr}</b>
-//       </div>
-//     )
-//     titleTxt = (
-//       <h4>
-//         <div className="row lato text-center m-1">
-//           <div className="col">
-//             <div className="row">
-//               <div className="col d-flex flex-column justify-content-center align-items-center">
-//                 <b>{title}</b>
-//               </div>
-//               <div className="col-2 borderleft pointer d-flex flex-column justify-content-center align-items-center"
-//                 onClick={() => setIsActive(!isActive)}>
-//                 <b>{isActive ? '-' : '+'}</b>
-//               </div>
-//             </div>
-//           </div>
-//         </div>
-//       </h4>
-//     )
-//   } else {
-//     descrTxt = "";
-//     titleTxt = (
-//       <h4>
-//         <div className="row lato text-center m-1">
-//           <div className="col">
-//             <div className="row">
-//               <div className="col d-flex flex-column justify-content-center align-items-center">
-//                 <b>{title}</b>
-//               </div>
-//             </div>
-//           </div>
-//         </div>
-//       </h4>
-//     );
-//   };
-
-//   itemBtn = (
-//     <div className="itemcontainer">
-//       <div className="iconcontainer box box2">
-//         {!isActive && linkOrVideo}
-//         {descrTxt}
-//       </div>
-//       {titleTxt}
-//     </div>
-//   )
-//   return (
-//     <>
-//       {itemBtn}
-//     </>
-//   );
-// }
 
 const Menu = ({ menuShow, children, mainBtn }) => {
   const showHideClassName = menuShow ? "d-block" : "d-none";
@@ -948,8 +867,6 @@ class Main extends React.Component {
     this.crsAddItem = this.crsAddItem.bind(this);
     this.itemVideo = this.itemVideo.bind(this);
     this.catCont = this.catCont.bind(this);
-    // this.resItemVideo = this.resItemVideo.bind(this);
-    // this.catItemVideo = this.catItemVideo.bind(this);
     this.crsShow = this.crsShow.bind(this);
     this.search = this.search.bind(this);
     this.setCat = this.setCat.bind(this);
@@ -1154,11 +1071,9 @@ class Main extends React.Component {
         if (url === "logo" && op === "edit") {
           spData.LogoIcon = "./img/" + nome;
           this.showAlert("ok");
-          // console.log("File correctly Uploaded!");
           this.setState({
             activityChanged: false
           });
-          // this.saveFile(spData, "./api/img-upload.php", "config");
         } else if (url === "icon" && op === "edit") {
           if (fileImg !== null) {
             // console.log("Icon edit TEMP4: ", temp4);
@@ -1243,8 +1158,6 @@ class Main extends React.Component {
             "hidden": false
           };
           this.showAlert("ok");
-          // console.log("Edit Icon correctly Uploaded!");
-          // this.saveFile(spData, "./api/img-upload.php", "config");
         } else if (url === "icon" && op === "add") {
           // console.log("Icon add TEMP4: ", temp4);
           newItem.icon = "./itemicons/" + nome;
@@ -1296,8 +1209,6 @@ class Main extends React.Component {
             "hidden": false
           };
           this.showAlert("ok");
-          // console.log("Add Icon correctly Uploaded!");
-          // this.saveFile(spData, "./api/img-upload.php", "config");
         } else if (url === "icon" && op === "addlast") {
           // console.log("Icon addLast TEMP4: ", temp4);
           newItem.icon = "./itemicons/" + nome;
@@ -1342,8 +1253,6 @@ class Main extends React.Component {
             "hidden": false
           };
           this.showAlert("ok");
-          // console.log("Add Last Icon correctly Uploaded!");
-          // this.saveFile(spData, "./api/img-upload.php", "config");
         } else if (url === "cat" && op === "edit") {
           if (fileImg !== null) {
             // console.log("Cat edit!");
@@ -1392,8 +1301,6 @@ class Main extends React.Component {
             "hidden": false
           };
           this.showAlert("ok");
-          // console.log("Edit Cat correctly Uploaded!");
-          // this.saveFile(spData, "./api/img-upload.php", "config");
         } else if (url === "cat" && op === "add") {
           // console.log("CatAdd in Pos: ", inPos);
           catNewItem.icon = "./itemicons/" + nome;
@@ -1418,8 +1325,6 @@ class Main extends React.Component {
             "hidden": false
           };
           this.showAlert("ok");
-          // console.log("Add Icon correctly Uploaded!");
-          // this.saveFile(spData, "./api/img-upload.php", "config");
         } else if (url === "cat" && op === "addlast") {
           // console.log("CatAddLast...");
           catNewItem.icon = "./itemicons/" + nome;
@@ -1448,8 +1353,6 @@ class Main extends React.Component {
             "hidden": false
           };
           this.showAlert("ok");
-          // console.log("Add Last Icon correctly Uploaded!");
-          // this.saveFile(spData, "./api/img-upload.php", "config");
         } else if (url === "back" && op === "edit") {
           spData.backgroundImage = "./img/" + nome;
           spData.backgroundColor = this.hexToRgb(tempColor) + ", 1)";
@@ -1473,11 +1376,9 @@ class Main extends React.Component {
             }
           });
           this.showAlert("ok");
-          // console.log("File correctly Uploaded!");
           this.setState({
             activityChanged: false
           });
-          // this.saveFile(spData, "./api/img-upload.php", "config");
         } else if (url === "backcat" && op === "edit") {
           spData.catImage = "./img/" + nome;
           spData.catColor = this.hexToRgb(tempCatColor) + ", 1)";
@@ -1501,16 +1402,13 @@ class Main extends React.Component {
             }
           });
           this.showAlert("ok");
-          // console.log("File correctly Uploaded!");
           this.setState({
             activityChanged: false
           });
-          // this.saveFile(spData, "./api/img-upload.php", "config");
         }
         this.saveFile(spData, "./api/img-upload.php", "config");
         fileCatImg = null;
         fileImg = null;
-        // console.log("Result=", user);
       });
   }
 
@@ -1774,7 +1672,6 @@ class Main extends React.Component {
   }
 
   saveClock = () => {
-    // console.log(tempColor);
     spData.clockColor = this.hexToRgb(tempColor) + ", " + tempOpacity + ")";
     spData.clockOpacity = parseFloat(tempOpacity.replace(/,/g, "."));
     spData.clockTextColor = this.hexToRgb(tempTextColor) + ", 1)";
@@ -1798,7 +1695,6 @@ class Main extends React.Component {
     }
     if (temp2 !== "")
       spData.menuCreditsLabel = temp2;
-    // console.log(tempColor);
     spData.menuColor = this.hexToRgb(tempColor) + ", " + tempOpacity + ")";
     spData.menuOpacity = parseFloat(tempOpacity.replace(/,/g, "."));
     if (blockHide !== "none") {
@@ -2201,8 +2097,6 @@ class Main extends React.Component {
           }
         });
       }
-      // this.showAlert("ok");
-      // this.saveFile(spData, "./api/img-upload.php", "config");
       changes = true;
     }
 
@@ -2263,8 +2157,6 @@ class Main extends React.Component {
           }
         });
       }
-      // this.showAlert("ok");
-      // this.saveFile(spData, "./api/img-upload.php", "config");
       changes = true;
     }
 
@@ -2305,7 +2197,6 @@ class Main extends React.Component {
       blockHide = "none";
       this.showAlert("ok");
       this.saveFile(spData, "./api/img-upload.php", "config");
-      // this.hideModal("logo");
     }
   }
 
@@ -2754,8 +2645,6 @@ class Main extends React.Component {
         this.setState({ searchDiaShow: false });
         document.getElementById('searchForm').reset();
         this.setState({ resItems: [] });
-        // this.showAlert("false");
-        // this.showAlert("all");
         temp = "";
     }
     this.showAlert("all");
@@ -2977,34 +2866,6 @@ class Main extends React.Component {
     // console.log(id, " for ", pos);
     this.showModal("itemVideo");
   }
-
-  // resItemVideo(id) {
-  //   temp3 = id;
-  //   array = [...this.state.resItems];
-  //   for (let i = 0; i < array.length; i++) {
-  //     if (array[i].id === id) {
-  //       tempItemTitle = array[i].title;
-  //       this.setState({
-  //         videoLink: array[i].link
-  //       })
-  //     }
-  //   }
-  //   this.showModal("itemVideo");
-  // }
-
-  // catItemVideo(id) {
-  //   temp3 = id;
-  //   array = [...this.state.catItems];
-  //   for (let i = 0; i < array.length; i++) {
-  //     if (array[i].id === id) {
-  //       tempItemTitle = array[i].title;
-  //       this.setState({
-  //         videoLink: array[i].link
-  //       })
-  //     }
-  //   }
-  //   this.showModal("itemVideo");
-  // }
 
   crsShow() {
     this.showModal("exCrs");
@@ -6056,130 +5917,6 @@ class LogoImg extends React.Component {
     );
   }
 }
-
-// class App extends React.Component {
-//   constructor(props) {
-//     super(props);
-//   }
-
-//   render() {
-
-//     const linkOrVideo = this.props.video
-//       ?
-//       (<a title={this.props.title} onClick={() => this.props.itemVideo("itemVideo", this.props.id)}>
-//         <img className="items" title={this.props.title} alt={this.props.title} src={this.props.icon} />
-//       </a>)
-//       :
-//       (< a title={this.props.title} href={this.props.link} target="_blank" >
-//         <img className="items" title={this.props.title} alt={this.props.title} src={this.props.icon} />
-//       </a>);
-
-//     let itemBtn = "";
-//     let descrButton = "";
-//     if (this.props.descr !== "") {
-//       descrButton = (
-//         // <Accordion title={this.props.title} content={this.props.descr} />
-
-//         // <h4><p className="lato pointer" onClick={() => this.props.appDescr("AppDescr", this.props.id)}><b>{this.props.title}</b></p></h4>
-
-//         <h4>
-//           <div className="row lato text-center m-auto">
-//             <div className="col">
-//               <div className="row">
-//                 <div className="col d-flex flex-column justify-content-center align-items-center">
-//                   <b>{this.props.title}</b>
-//                 </div>
-//                 <div className="col-2 borderleft pointer d-flex flex-column justify-content-center align-items-center"
-//                   onClick={() => this.props.appDescr("AppDescr", this.props.id)}>
-//                   <b>+</b>
-//                 </div>
-//               </div>
-//             </div>
-//           </div>
-//         </h4>
-//       )
-//     } else {
-//       descrButton = (
-//         <h4><p className="lato"><b>{this.props.title}</b></p></h4>
-//       );
-//     };
-//     if (this.props.showItemsBtn === "ShowItemBtn") {
-//       itemBtn = (
-//         <div className="itemcontainer">
-//           {linkOrVideo}
-//           {descrButton}
-//           {/* <h4><p className="lato"><b>{this.props.title}</b></p></h4> */}
-//           <div className="row btncontainer">
-//             <button className="col itembutton solidgreen m-1" onClick={() => this.props.itemEditDel("itemEdit", this.props.id, this.props.pos)}>
-//               Edit
-//             </button>
-//             <button className="col-1 itembutton black m-1 pad01">
-//               {this.props.pos + 1} {/* {this.props.id} */}
-//             </button>
-//             <button className="col itembutton solidbrick m-1" onClick={() => this.props.itemEditDel("itemDel", this.props.id)}>
-//               Remove
-//             </button>
-//           </div>
-//         </div>
-//       )
-//     } else {
-//       itemBtn = (
-//         <div className="itemcontainer">
-//           {linkOrVideo}
-//           {descrButton}
-//           {/* <h4><p className="lato"><b>{this.props.title}</b></p></h4> */}
-//         </div>
-//       )
-//     }
-//     return (
-//       <>
-//         {itemBtn}
-//       </>
-//     );
-//   }
-// }
-
-// class ItemAdd extends React.Component {
-//   constructor(props) {
-//     super(props);
-//   }
-//   render() {
-//     let itemBtn = ""
-//     if (this.props.showItemsBtn === "ShowItemBtn") {
-//       itemBtn = (
-//         <div className="itemcontainer">
-//           <div className="iconcontainer box box2">
-//             <img className="items pointer" title="Add Item" alt="Add Item" src="./itemicons/ac_add.svg"
-//               onClick={() => this.props.addItem()} />
-//           </div>
-//           <h4>
-//             <div className="row lato text-center m-1">
-//               <div className="col">
-//                 <div className="row">
-//                   <div className="col d-flex flex-column justify-content-center align-items-center">
-//                     <b>Add Item</b>
-//                   </div>
-//                 </div>
-//               </div>
-//             </div>
-//           </h4>
-//           <div className="row btncontainer">
-//             <button className="col addbutton solidgreen m-1" onClick={() => this.props.addItem()}>
-//               Add Item
-//             </button>
-//           </div>
-//         </div>
-//       )
-//     } else {
-//       itemBtn = "";
-//     }
-//     return (
-//       <>
-//         {itemBtn}
-//       </>
-//     );
-//   }
-// }
 
 class CrsAdd extends React.Component {
   constructor(props) {
