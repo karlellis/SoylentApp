@@ -67,8 +67,9 @@ var nome = "";
 var credentials = require("./initSec.json");
 var spData = require("./initData.json");
 
-const Item = ({ showItemsBtn, pos, id, title, link, descr, icon, video, cat, itemEditDel, itemVideo, itemHide }) => {
+const Item = ({ showItemsBtn, pos, id, title, link, descr, icon, video, hidden, cat, itemEditDel, itemVideo, itemHide }) => {
   const [isActive, setIsActive] = useState(false);
+  const hide = hidden ? <ItemRedPoint /> : ""
   const linkOrVideo = video
     ?
     (<img className="items pointer" title={title} alt={title} src={icon}
@@ -102,6 +103,7 @@ const Item = ({ showItemsBtn, pos, id, title, link, descr, icon, video, cat, ite
               <div className="col d-flex flex-column justify-content-center align-items-center">
                 <b>{title}</b>
               </div>
+              {hide}
               <div className="col-2 borderleft pointer d-flex flex-column justify-content-center align-items-center"
                 onClick={() => setIsActive(!isActive)}>
                 <b>{isActive ? '-' : '+'}</b>
@@ -121,6 +123,7 @@ const Item = ({ showItemsBtn, pos, id, title, link, descr, icon, video, cat, ite
               <div className="col d-flex flex-column justify-content-center align-items-center">
                 <b>{title}</b>
               </div>
+              {hide}
             </div>
           </div>
         </div>
@@ -3031,7 +3034,7 @@ class Main extends React.Component {
               return (
                 <Item showItemsBtn={this.state.itemsBtnShow} key={i} pos={i} id={id}
                   title={title} link={link} descr={descr} cat={cat} icon={icon} video={video}
-                  itemEditDel={this.itemEditDel} itemVideo={this.itemVideo} itemHide={hidden} />
+                  itemEditDel={this.itemEditDel} itemVideo={this.itemVideo} itemHide={hidden} hidden={hidden} />
               )
             })
           }
@@ -3047,7 +3050,7 @@ class Main extends React.Component {
               return (
                 <Item showItemsBtn={this.state.itemsBtnShow} key={i} pos={i} id={id}
                   title={title} link={link} descr={descr} cat={cat} icon={icon} video={video}
-                  itemEditDel={this.itemEditDel} itemVideo={this.itemVideo} itemHide={hidden} />
+                  itemEditDel={this.itemEditDel} itemVideo={this.itemVideo} itemHide={hidden} hidden={hidden} />
               )
             })
           }
@@ -4744,7 +4747,7 @@ class Main extends React.Component {
                         return (
                           <Item showItemsBtn={this.state.itemsBtnShow} key={i} pos={i} id={id}
                             title={title} link={link} descr={descr} cat={cat} icon={icon} video={video}
-                            itemVideo={this.itemVideo} itemEditDel={this.itemEditDel} itemHide={hidden} />
+                            itemVideo={this.itemVideo} itemEditDel={this.itemEditDel} itemHide={hidden} hidden={hidden} />
                         )
                       })
                     }
@@ -5813,7 +5816,7 @@ class Main extends React.Component {
                             // <ItemSearchRes key={i} pos={i} id={id}
                             <Item key={i} pos={i} id={id}
                               title={title} link={link} descr={descr} cat={"Search"} icon={icon} video={video}
-                              itemVideo={this.itemVideo} itemHide={hidden} />
+                              itemVideo={this.itemVideo} itemHide={hidden} hidden={hidden} />
                           )
                         })
                       }
@@ -5902,6 +5905,16 @@ class RedPoint extends React.Component {
   }
 }
 
+class ItemRedPoint extends React.Component {
+  render() {
+    return (
+      <div class="col-2 borderleft itemx d-flex flex-column justify-content-center align-items-center">
+        <img className="itemx mt-2 mb-2" title="Hidden" alt="Hidden" src="./img/point.svg" />
+      </div>
+    );
+  }
+}
+
 class LogoImg extends React.Component {
   constructor(props) {
     super(props);
@@ -5978,7 +5991,7 @@ class Cat extends React.Component {
   }
 
   render() {
-
+    const hide = this.props.itemHide ? <ItemRedPoint /> : ""
     let catBtn = ""
     if (this.props.showItemsBtn === "ShowItemBtn") {
       catBtn = (
@@ -5994,6 +6007,7 @@ class Cat extends React.Component {
                   <div className="col d-flex flex-column justify-content-center align-items-center">
                     <b>{this.props.title}</b>
                   </div>
+                  {hide}
                 </div>
               </div>
             </div>
@@ -6026,6 +6040,7 @@ class Cat extends React.Component {
                   <div className="col d-flex flex-column justify-content-center align-items-center">
                     <b>{this.props.title}</b>
                   </div>
+                  {hide}
                 </div>
               </div>
             </div>

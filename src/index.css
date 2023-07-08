@@ -26,6 +26,9 @@ p {
 	font-size: 16px;
 }
 
+.itemx {
+	height: 2em;
+}
 .extcredits {
 	border: none;
 	color: white;
