@@ -27,8 +27,16 @@ p {
 }
 
 .itemx {
-	height: 2em;
+	width: 1.5em;
+	padding-left: .3em;
+	padding-right: .3em;
 }
+
+.menux {
+	padding: .3em;
+	background: rgba(47, 79, 79, .7) !important;
+}
+
 .extcredits {
 	border: none;
 	color: white;

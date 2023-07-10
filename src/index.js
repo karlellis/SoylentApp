@@ -5900,7 +5900,7 @@ class OverlayImg extends React.Component {
 class RedPoint extends React.Component {
   render() {
     return (
-      <img className="gear mt-2 mb-2" title="Hidden" alt="Hidden" src="./img/point.svg" />
+      <img className="gear menux mt-2 mb-2" title="Hidden" alt="Hidden" src="./img/point.svg" />
     );
   }
 }
