@@ -75,7 +75,7 @@ const Item = ({ showItemsBtn, pos, id, title, link, descr, icon, video, hidden, 
     (<img className="items pointer" title={title} alt={title} src={icon}
       onClick={() => itemVideo(id, cat)} />)
     :
-    (< a title={title} href={link} target="_blank" >
+    (< a title={title} href={link} target="_blank" rel="noreferrer">
       <img className="items" title={title}
         alt={title} src={icon} />
     </a>);

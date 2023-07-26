@@ -1,6 +1,8 @@
-Options -Indexes
-<Files "sec.json">
-  Order Allow,Deny
-  Deny from all
-  Allow from soylent.rf.gd
-</Files>
+<IfModule mod_rewrite.c>
+  <Files "sec.json">
+    order deny,allow
+    deny from all
+    Require local
+    allow from all
+  </Files>
+</IfModule>
