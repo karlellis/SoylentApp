@@ -43,6 +43,8 @@ var arrayAdd = [];
 var inPos = "";
 var blockHide = "none";
 var categoryFirst = "none";
+var dropDownIsOpen = false;
+var currElement = "";
 var newItem = {
   "title": "",
   "link": "",
@@ -826,6 +828,7 @@ class Main extends React.Component {
       disFieldMC: false,
       catSel: "Root",
       selectedCat: "Root",
+      refresh: false,
       backStyle: {
         backgroundImage: "",
         backgroundColor: "",
@@ -1027,6 +1030,10 @@ class Main extends React.Component {
         // console.log("loginColor: ", spData.loginColor);
       })
     })
+    window.addEventListener("click", this.hideDropdown);
+    document.addEventListener('click', e => {
+      currElement = document.elementFromPoint(e.clientX, e.clientY).id;
+    }, { passive: true });
   }
 
   componentDidUpdate() {
@@ -2900,6 +2907,20 @@ class Main extends React.Component {
     }
   }
 
+  hideDropdown = () => {
+    if (dropDownIsOpen && currElement !== "menuButton") {
+      this.setState({
+        refresh: true
+      });
+      dropDownIsOpen = false;
+      // console.log("dropDownIsOpen: ", dropDownIsOpen);
+    } else {
+      this.setState({
+        refresh: false
+      });
+    }
+  }
+
   render() {
     const { mainBtn: mainBtn } = this.state;
     const { catFirst: catFirst } = this.state;
@@ -2927,12 +2948,12 @@ class Main extends React.Component {
 
     let menuButtons = (
       <>
-        <Dropdown search={this.search} crsShow={this.crsShow} />
+        <Dropdown search={this.search} crsShow={this.crsShow} refresh={this.state.refresh} />
       </>
     );
 
     let catMenuButtons = (
-      <DropdownCat items={this.state.cats} catName={this.state.catSel} setCat={this.setCat} />
+      <DropdownCat items={this.state.cats} catName={this.state.catSel} setCat={this.setCat} refresh={this.state.refresh} />
     )
 
     let head = (
@@ -6119,21 +6140,30 @@ class Dropdown extends React.Component {
     super(props);
   }
 
-  state = {
-    isOpen: false
-  };
+  // state = {
+  //   isOpen: false
+  // };
 
-  toggleOpen = () => this.setState({ isOpen: !this.state.isOpen });
+  toggleOpen = () => {
+    // this.setState({ isOpen: !this.state.isOpen });
+    dropDownIsOpen = !dropDownIsOpen;
+    console.log("dropDownIsOpen: ", dropDownIsOpen);
+  }
+
 
   render() {
+    // if (this.props.anyClose === true && this.state.isOpen === true) {
+    //   this.setState({ isOpen: false });
+    // }
     const showHideSearch = spData.noMenuSearch ? "d-none" : "d-block";
     const showHideCredits = spData.noMenuCredits ? "d-none" : "d-block";
-    const menuClass = `dropdown-menu${this.state.isOpen ? " show d-flex flex-column justify-content-center align-items-center" : " disNone"}`;
+    const menuClass = `dropdown-menu${/* this.state.isOpen &&  */dropDownIsOpen /* !this.props.anyClose */ ? " show d-flex flex-column justify-content-center align-items-center" : " disNone"}`;
     return (
       <div className="dropdown" onClick={this.toggleOpen}>
 
         <button
           className="button indaco m-1 dropdown-toggle"
+          id="menuButton"
           type="button"
           data-toggle="dropdown"
           aria-haspopup="true"
@@ -6161,24 +6191,29 @@ class Dropdown extends React.Component {
 }
 
 class DropdownCat extends React.Component {
-  state = {
-    isOpen: false
-  };
+  // state = {
+  //   isOpen: false
+  // };
 
   changeText(selected) {
     this.setState({ selCat: selected });
   }
 
-  toggleOpen = () => this.setState({ isOpen: !this.state.isOpen });
+  toggleOpen = () => {
+    // this.setState({ isOpen: !this.state.isOpen });
+    dropDownIsOpen = !dropDownIsOpen;
+    console.log("dropDownIsOpen: ", dropDownIsOpen);
+  }
 
   render() {
-    const menuClass = `dropdown-menu${this.state.isOpen ? " show d-flex flex-column justify-content-start align-items-center" : " disNone"}`;
+    const menuClass = `dropdown-menu${/* this.state.isOpen */ dropDownIsOpen ? " show d-flex flex-column justify-content-start align-items-center" : " disNone"}`;
 
     return (
       <div className="dropdown" onClick={this.toggleOpen}>
 
         <button
           className="button indaco m-1 dropdown-toggle"
+          id="menuButton"
           type="button"
           data-toggle="dropdown"
           aria-haspopup="true"
