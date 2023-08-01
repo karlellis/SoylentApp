@@ -1030,9 +1030,10 @@ class Main extends React.Component {
         // console.log("loginColor: ", spData.loginColor);
       })
     })
-    window.addEventListener("click", this.hideDropdown);
+    // window.addEventListener("click", this.hideDropdown);
     document.addEventListener('click', e => {
       currElement = document.elementFromPoint(e.clientX, e.clientY).id;
+      this.hideDropdown();
     }, { passive: true });
   }
 
