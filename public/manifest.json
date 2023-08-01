@@ -1,6 +1,6 @@
 {
-  "short_name": "Soy App",
-  "name": "Soylent Television",
+  "short_name": "SoyApp",
+  "name": "Soylent Application",
   "icons": [
     {
       "src": "./img/favicon.ico",
