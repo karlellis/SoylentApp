@@ -1,2 +1,2 @@
-# Soylent Television
-Public Domain Television. Soylent Tv - The Recycled One!!!
+# Soylent Application
+Configurable simple CMS for easy link access.
