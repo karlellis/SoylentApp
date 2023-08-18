@@ -1,6 +1,10 @@
 import React from "react";
 import { useState, useEffect } from 'react';
 import ReactDOM from "react-dom/client";
+// Bootstrap CSS
+import "bootstrap/dist/css/bootstrap.min.css";
+// Bootstrap Bundle JS
+import "bootstrap/dist/js/bootstrap.bundle.min";
 import "./index.css";
 // import "./bootstrap/js/bootstrap.bundle.min.js"
 const bcrypt = require("bcryptjs")
@@ -5887,10 +5891,10 @@ class Main extends React.Component {
           </section>
         </div>
         {/* BOOTSTRAP JS */}
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        {/* <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
           integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
           crossorigin="anonymous">
-        </script>
+        </script> */}
         {/* <script src="./bootstrap/js/bootstrap.bundle.min.js"
           integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
         </script> */}
