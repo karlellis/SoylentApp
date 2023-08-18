@@ -11,8 +11,9 @@ one of its subfolders.
 2) Open your browser and point to that folder on the server.
 3) The main page will appear.
 4) To start editing, click on the symbol at the top right header and use the default credentials:
-User: admin
-Psw: admin
-5) To finish editing, click again the symbol at the top right header.
+- User: admin
+- Psw: admin
 
-Follow the doc for more details.
+6) To finish editing, click again the symbol at the top right header.
+
+Follow the /public/doc for more details.
