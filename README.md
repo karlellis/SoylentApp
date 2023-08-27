@@ -16,4 +16,24 @@ one of its subfolders.
 
 6) To finish editing, click again the symbol at the top right header.
 
+# Update to new release:
+
+To update to a new release:
+
+1) Extract all files from the latest release Zip archive.
+2) With something like FileZilla keep the following folders on the server (do not delete) to maintain your data:
+- Config
+- img
+- itemicons
+- sec
+3) Delete and replace all the remaining folders and files with the ones that come with the new release:
+- api
+- static
+- asset-manifest.json
+- index.html
+- manifest.json
+- robots.txt
+- .htaccess
+4) Refresh the page. Update is complete.
+
 Follow the /public/doc for more details.
