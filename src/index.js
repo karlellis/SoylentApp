@@ -49,6 +49,7 @@ var blockHide = "none";
 var categoryFirst = "none";
 var dropDownIsOpen = false;
 var currElement = "";
+var currURL = window.location.href;
 var newItem = {
   "title": "",
   "link": "",
@@ -496,8 +497,8 @@ const SearchDialog = ({ handleClose, handleSave, handleReset, searchDiaShow, chi
         {children}
         <div className="modal-footer darkBG">
           <button type="button" disabled={(activityChanged) ? true : false} className="btn btn-primary" onClick={handleSave}>Search</button>
-          <button type="button" disabled={(activityChanged) ? true : false} className="btn btn-primary" onClick={handleReset}>Reset</button>
-          <button type="button" disabled={(activityChanged) ? true : false} className="btn btn-secondary" data-dismiss="modal" onClick={handleClose}>Close</button>
+          <button type="button" /* disabled={(activityChanged) ? true : false} */ className="btn btn-primary" onClick={handleReset}>Reset</button>
+          <button type="button"/*  disabled={(activityChanged) ? true : false} */ className="btn btn-secondary" data-dismiss="modal" onClick={handleClose}>Close</button>
         </div>
       </section>
     </div>
@@ -833,6 +834,7 @@ class Main extends React.Component {
       catSel: "Root",
       selectedCat: "Root",
       refresh: false,
+      onlyRead: false,
       backStyle: {
         backgroundImage: "",
         backgroundColor: "",
@@ -889,7 +891,9 @@ class Main extends React.Component {
 
   componentDidMount() {
     fetch('./config/data.json').then(response => {
+      // fetch('./config/data.json?' + new Date().getTime()).then(response => {
       response.json().then(settings => {
+        // console.log(settings);
         spData = settings;
         // console.log("Apps: ", settings.items);
         this.setState({
@@ -1027,18 +1031,26 @@ class Main extends React.Component {
         document.getElementById('clockForm').reset();
         document.getElementById('searchForm').reset();
         this.itemCatSel("Root", spData.items);
+        document.addEventListener('click', e => {
+          currElement = document.elementFromPoint(e.clientX, e.clientY).id;
+          this.hideDropdown();
+        }, { passive: true });
         // console.log("Items: ", this.state.items);
         // console.log("Root Items: ", this.state.rootItems);
         // console.log("Check password: ", comparePassword("admin", password));
         // console.log("Hashed first password: ", hashPassword(password));
         // console.log("loginColor: ", spData.loginColor);
       })
+        .catch(error => {
+          window.location.reload(true);
+          console.error("Errore: ", error);
+        });
     })
     // window.addEventListener("click", this.hideDropdown);
-    document.addEventListener('click', e => {
-      currElement = document.elementFromPoint(e.clientX, e.clientY).id;
-      this.hideDropdown();
-    }, { passive: true });
+    // document.addEventListener('click', e => {
+    //   currElement = document.elementFromPoint(e.clientX, e.clientY).id;
+    //   this.hideDropdown();
+    // }, { passive: true });
   }
 
   componentDidUpdate() {
@@ -1551,6 +1563,12 @@ class Main extends React.Component {
     document.getElementById('searchForm').reset();
     this.setState({ resItems: [] });
     temp = "";
+    this.setState({
+      onlyRead: false
+    })
+    this.setState({
+      activityChanged: false
+    })
   }
 
   showAlert(id) {
@@ -1634,6 +1652,12 @@ class Main extends React.Component {
         "hidden": false
       };
       this.showAlert("ok");
+      this.setState({
+        onlyRead: true
+      })
+      this.setState({
+        activityChanged: true
+      })
     } else {
       this.showAlert("err");
     }
@@ -2912,6 +2936,13 @@ class Main extends React.Component {
     }
   }
 
+  handleKeyDownSearch = (e) => {
+    if (e.keyCode === 13) {
+      e.preventDefault();
+      this.itemSearch();
+    }
+  }
+
   hideDropdown = () => {
     if (dropDownIsOpen && currElement !== "menuButton") {
       this.setState({
@@ -3133,7 +3164,7 @@ class Main extends React.Component {
 
     return (
       // TITOLO, OROLOGIO E BUTTONS
-      <body>
+      <>
         <noscript>You need to enable JavaScript to run this app.</noscript>
         <div style={this.state.backStyle}></div>
         <div class="contenitore">
@@ -5798,15 +5829,15 @@ class Main extends React.Component {
               </div>
             </CrsDelDialog>
 
-            <SearchDialog searchDiaShow={this.state.searchDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("search")} handleSave={this.itemSearch} handleReset={this.itemSearchReset}>
+            <SearchDialog searchDiaShow={this.state.searchDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("search")} handleSave={this.itemSearch} handleReset={this.itemSearchReset} >
               <div className="modal-content noborder">
                 <div className="modal-header-dark">
                   <h5 className="modal-title-dark" >Search</h5>
                 </div>
                 <div className="modal-body-dark darkBG">
-                  <form id="searchForm" onKeyDown={this.handleKeyDown}>
-                    <div className="form-group">
-                      <input type="text" className="form-control contenitore pt-2" ref={(input) => { this.searchInput = input; }} onChange={e => temp = e.target.value} placeholder={"Search..."} />
+                  <form id="searchForm" onKeyDown={this.handleKeyDownSearch}>
+                    <div className="form-group stickydivtop">
+                      <input type="text" className="form-control contenitore pt-2" ref={(input) => { this.searchInput = input; }} onChange={e => temp = e.target.value} placeholder={"Search..."} readOnly={this.state.onlyRead} />
                     </div>
                     <Ok okShow={this.state.okShow} display={this.state.display}>
                       <div className="row text-center pt-2">
@@ -5898,7 +5929,7 @@ class Main extends React.Component {
         {/* <script src="./bootstrap/js/bootstrap.bundle.min.js"
           integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
         </script> */}
-      </body>
+      </>
 
     );
   }
@@ -6156,7 +6187,7 @@ class Dropdown extends React.Component {
   toggleOpen = () => {
     // this.setState({ isOpen: !this.state.isOpen });
     dropDownIsOpen = !dropDownIsOpen;
-    console.log("dropDownIsOpen: ", dropDownIsOpen);
+    // console.log("dropDownIsOpen: ", dropDownIsOpen);
   }
 
 
@@ -6211,7 +6242,7 @@ class DropdownCat extends React.Component {
   toggleOpen = () => {
     // this.setState({ isOpen: !this.state.isOpen });
     dropDownIsOpen = !dropDownIsOpen;
-    console.log("dropDownIsOpen: ", dropDownIsOpen);
+    // console.log("dropDownIsOpen: ", dropDownIsOpen);
   }
 
   render() {

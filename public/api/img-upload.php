@@ -1,6 +1,9 @@
 <?php
+$actual_href = (empty($_SERVER['HTTPS']) ? 'http' : 'https') . "://$_SERVER[HTTP_HOST]";
+
 header("Content-Type: application/json");
-header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Origin: {$actual_href}");
+// header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: PUT, GET, POST");
 
 // For XAMPP - Suppress notice and warning
