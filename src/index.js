@@ -6,12 +6,13 @@ import "bootstrap/dist/css/bootstrap.min.css";
 // Bootstrap Bundle JS
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import "./index.css";
-// import "./bootstrap/js/bootstrap.bundle.min.js"
 const bcrypt = require("bcryptjs")
 var fileImg = null;
 var fileCatImg = null;
 var cgPos = "";
 var currPos = "";
+var usrTmp = "";
+var pswTmp = "";
 var temp = "";
 var temp2 = "";
 var temp3 = "";
@@ -2254,26 +2255,26 @@ class Main extends React.Component {
   }
 
   loginCheck = () => {
-    // console.log("Login User: " + temp);
-    // console.log("Login Psw: " + temp2);
-    comparePassword(temp2, credentials.password)
+    // console.log("Login User: " + usrTmp);
+    // console.log("Login Psw: " + pswTmp);
+    comparePassword(pswTmp, credentials.password)
       .then(pass => {
-        comparePassword(temp, credentials.user)
+        comparePassword(usrTmp, credentials.user)
           .then(user => {
             // console.log("PassResult: ", pass)
             // console.log("UserResult: ", user)
             if (user && pass && login === false) {
               login = true;
-              temp = "";
-              temp2 = "";
+              usrTmp = "";
+              pswTmp = "";
               this.showMainButtons();
               this.hideModal("login");
             } else {
               // if (!user) {
-              // console.log("WRONG User: " + temp);
+              // console.log("WRONG User: " + usrTmp);
               // }
               // if (!pass) {
-              // console.log("WRONG Psw: " + temp2)
+              // console.log("WRONG Psw: " + pswTmp)
               // }
               this.showAlert("err");
               login = false;
@@ -2286,23 +2287,23 @@ class Main extends React.Component {
   }
 
   loginEditCheck = () => {
-    if (temp !== "" || temp2 !== "") {
-      // console.log("User: " + temp)
-      // console.log("Psw: " + temp2)
+    if (usrTmp !== "" || pswTmp !== "") {
+      // console.log("User: " + usrTmp)
+      // console.log("Psw: " + pswTmp)
       spData.loginColor = this.hexToRgb(tempColor) + ", " + tempOpacity + ")";
       spData.loginOpacity = parseFloat(tempOpacity.replace(/,/g, "."));
-      hashUsrPsw(temp, temp2)
+      hashUsrPsw(usrTmp, pswTmp)
         .then(result => {
           // console.log(result)
           credentials.user = result[0];
-          // console.log("User: " + temp)
+          // console.log("User: " + usrTmp)
           // console.log("UserHash: " + spData.user)
           credentials.password = result[1];
-          // console.log("Psw: " + temp2)
+          // console.log("Psw: " + pswTmp)
           // console.log("PswHash: " + spData.password)
           this.saveFile(credentials, "./api/img-upload.php", "credentials");
-          temp = "";
-          temp2 = "";
+          usrTmp = "";
+          pswTmp = "";
           this.saveFile(spData, "./api/img-upload.php", "config");
           this.showAlert("ok");
         })
@@ -2685,6 +2686,9 @@ class Main extends React.Component {
         document.getElementById('searchForm').reset();
         this.setState({ resItems: [] });
         temp = "";
+        this.setState({
+          onlyRead: false
+        })
     }
     this.showAlert("all");
     tempColor = "";
@@ -3125,8 +3129,6 @@ class Main extends React.Component {
       )
     }
 
-
-
     let foot = (
       <div className="row mt-2 mb-2 zindex1">
         <div className="col">
@@ -3163,7 +3165,7 @@ class Main extends React.Component {
     )
 
     return (
-      // TITOLO, OROLOGIO E BUTTONS
+
       <>
         <noscript>You need to enable JavaScript to run this app.</noscript>
         <div style={this.state.backStyle}></div>
@@ -3186,7 +3188,7 @@ class Main extends React.Component {
                             </div>
                             <div className="col d-flex flex-column justify-content-center align-items-center">
                               <input type="text" className="form-control border-0"
-                                ref={(input) => { this.userInput = input; }} onChange={e => temp = e.target.value} />
+                                ref={(input) => { this.userInput = input; }} onChange={e => usrTmp = e.target.value} />
                             </div>
                           </div>
                         </div>
@@ -3201,7 +3203,7 @@ class Main extends React.Component {
                               <label>Psw</label>
                             </div>
                             <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="password" autocomplete="on" className="form-control border-0" onChange={e => temp2 = e.target.value} />
+                              <input type="password" autocomplete="on" className="form-control border-0" onChange={e => pswTmp = e.target.value} />
                             </div>
                           </div>
                         </div>
@@ -3243,7 +3245,7 @@ class Main extends React.Component {
                             </div>
                             <div className="col d-flex flex-column justify-content-center align-items-center">
                               <input type="text" className="form-control border-0"
-                                ref={(input) => { this.userChangeInput = input; }} onChange={e => temp = e.target.value} autocomplete="off" />
+                                ref={(input) => { this.userChangeInput = input; }} onChange={e => usrTmp = e.target.value} autocomplete="off" />
                             </div>
                           </div>
                         </div>
@@ -3258,7 +3260,7 @@ class Main extends React.Component {
                               <label>Psw</label>
                             </div>
                             <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="password" autocomplete="new-password" className="form-control border-0" onChange={e => temp2 = e.target.value} />
+                              <input type="password" autocomplete="new-password" className="form-control border-0" onChange={e => pswTmp = e.target.value} />
                             </div>
                           </div>
                         </div>
@@ -5832,12 +5834,12 @@ class Main extends React.Component {
             <SearchDialog searchDiaShow={this.state.searchDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("search")} handleSave={this.itemSearch} handleReset={this.itemSearchReset} >
               <div className="modal-content noborder">
                 <div className="modal-header-dark">
-                  <h5 className="modal-title-dark" >Search</h5>
+                  <h5 className="modal-title-dark" >{spData.menuSearchLabel}</h5>
                 </div>
                 <div className="modal-body-dark darkBG">
                   <form id="searchForm" onKeyDown={this.handleKeyDownSearch}>
                     <div className="form-group stickydivtop">
-                      <input type="text" className="form-control contenitore pt-2" ref={(input) => { this.searchInput = input; }} onChange={e => temp = e.target.value} placeholder={"Search..."} readOnly={this.state.onlyRead} />
+                      <input type="text" className="form-control contenitore pt-2" ref={(input) => { this.searchInput = input; }} onChange={e => temp = e.target.value} placeholder={spData.menuSearchLabel + "..."} readOnly={this.state.onlyRead} />
                     </div>
                     <Ok okShow={this.state.okShow} display={this.state.display}>
                       <div className="row text-center pt-2">
@@ -5870,7 +5872,6 @@ class Main extends React.Component {
                       {
                         this.state.resItems.map(({ id, title, link, descr, icon, video, hidden }, i) => {
                           return (
-                            // <ItemSearchRes key={i} pos={i} id={id}
                             <Item key={i} pos={i} id={id}
                               title={title} link={link} descr={descr} cat={"Search"} icon={icon} video={video}
                               itemVideo={this.itemVideo} itemHide={hidden} hidden={hidden} />
@@ -5912,23 +5913,12 @@ class Main extends React.Component {
               {head}
               {buttons}
             </div>
-            {/* BODY */}
             <div className="textcenter">
               {pageBody}
-              {/* <ItemAdd showItemsBtn={this.state.itemsBtnShow} addItem={this.itemOrCat} /> */}
-              {/* FOOTER */}
               {foot}
             </div>
           </section>
         </div>
-        {/* BOOTSTRAP JS */}
-        {/* <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-          integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-          crossorigin="anonymous">
-        </script> */}
-        {/* <script src="./bootstrap/js/bootstrap.bundle.min.js"
-          integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
-        </script> */}
       </>
 
     );
