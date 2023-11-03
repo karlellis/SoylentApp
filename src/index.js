@@ -1058,6 +1058,9 @@ class Main extends React.Component {
     this.userInput.focus();
     this.userChangeInput.focus();
     this.searchInput.focus();
+    // window.scrollTo(0, 0)
+    this.containerCat.scrollTop = 0;
+    this.containerCrs.scrollTop = 0;
   }
 
   saveFile(file, url, key) {
@@ -4797,7 +4800,7 @@ class Main extends React.Component {
                   <h5 className="modal-title latowhite" >{tempCatTitle}</h5>
                 </div>
                 <div style={this.state.catStyle}></div>
-                <div className="modal-body-dark">
+                <div ref={ el => this.containerCat = el} className="modal-body-dark">
                   <div className="textcenter">
                     <CrsAdd showItemsBtn={this.state.itemsBtnShow} addItem={this.addItem} />
                     {/* <ItmAdd showItemsBtn={this.state.itemsBtnShow} addItem={this.addItem} /> */}
@@ -5561,7 +5564,7 @@ class Main extends React.Component {
                   <h5 className="modal-title latowhite" >{spData.menuCreditsLabel}</h5>
                 </div>
                 <div style={this.state.catStyle}></div>
-                <div className="modal-body-dark">
+                <div ref={ el => this.containerCrs = el} className="modal-body-dark">
                   <div className="textcenter">
                     <CrsAdd showItemsBtn={this.state.itemsBtnShow} addItem={this.crsAddItem} />
                     {
