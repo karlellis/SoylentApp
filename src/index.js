@@ -1058,9 +1058,6 @@ class Main extends React.Component {
     this.userInput.focus();
     this.userChangeInput.focus();
     this.searchInput.focus();
-    // window.scrollTo(0, 0)
-    this.containerCat.scrollTop = 0;
-    this.containerCrs.scrollTop = 0;
   }
 
   saveFile(file, url, key) {
@@ -2645,6 +2642,7 @@ class Main extends React.Component {
         })
         this.setState({ catItems: [] });
         // console.log("Current Cat: ", this.state.catSel);
+        this.containerCat.scrollTop = 0;
         break;
       case "crsedit":
         this.setState({ crsEditDiaShow: false });
@@ -2659,6 +2657,7 @@ class Main extends React.Component {
         break;
       case "excrs":
         this.setState({ crsDiaShow: false });
+        this.containerCrs.scrollTop = 0;
         break;
       case "video":
         this.setState({ itemVideoDiaShow: false });
