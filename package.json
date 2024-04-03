@@ -1,6 +1,6 @@
 {
   "name": "soy-app",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "homepage": "./",
   "private": true,
   "dependencies": {
@@ -54,5 +54,13 @@
     "nth-check": "2.0.2",
     "qs": "6.5.3",
     "postcss": "8.4.31"
+  },
+  "overrides": {
+    "minimist": "1.2.6",
+    "node-fetch": "2.6.7",
+    "nth-check": "2.0.1",
+    "qs": "6.5.3",
+    "postcss": "8.4.31",
+    "express": "4.19.2"
   }
 }

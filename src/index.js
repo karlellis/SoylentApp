@@ -49,8 +49,9 @@ var inPos = "";
 var blockHide = "none";
 var categoryFirst = "none";
 var dropDownIsOpen = false;
+var catDropDownIsOpen = false;
 var currElement = "";
-var currURL = window.location.href;
+// var currURL = window.location.href;
 var newItem = {
   "title": "",
   "link": "",
@@ -1055,8 +1056,8 @@ class Main extends React.Component {
   }
 
   componentDidUpdate() {
-    this.userInput.focus();
-    this.userChangeInput.focus();
+    // this.userInput.focus();
+    // this.userChangeInput.focus();
     this.searchInput.focus();
   }
 
@@ -2955,6 +2956,17 @@ class Main extends React.Component {
         refresh: true
       });
       dropDownIsOpen = false;
+      // console.log("dropDownIsOpen: ", dropDownIsOpen);
+    } else {
+      this.setState({
+        refresh: false
+      });
+    }
+    if (catDropDownIsOpen && currElement !== "catMenuButton") {
+      this.setState({
+        refresh: true
+      });
+      catDropDownIsOpen = false;
       // console.log("dropDownIsOpen: ", dropDownIsOpen);
     } else {
       this.setState({
@@ -6233,19 +6245,20 @@ class DropdownCat extends React.Component {
 
   toggleOpen = () => {
     // this.setState({ isOpen: !this.state.isOpen });
-    dropDownIsOpen = !dropDownIsOpen;
+    // dropDownIsOpen = !dropDownIsOpen;
+    catDropDownIsOpen = !catDropDownIsOpen;
     // console.log("dropDownIsOpen: ", dropDownIsOpen);
   }
 
   render() {
-    const menuClass = `dropdown-menu${/* this.state.isOpen */ dropDownIsOpen ? " show d-flex flex-column justify-content-start align-items-center" : " disNone"}`;
+    const menuClass = `dropdown-menu${/* this.state.isOpen */ catDropDownIsOpen ? " show d-flex flex-column justify-content-start align-items-center" : " disNone"}`;
 
     return (
       <div className="dropdown" onClick={this.toggleOpen}>
 
         <button
           className="button indaco m-1 dropdown-toggle"
-          id="menuButton"
+          id="catMenuButton"
           type="button"
           data-toggle="dropdown"
           aria-haspopup="true"
