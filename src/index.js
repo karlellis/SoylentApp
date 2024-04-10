@@ -76,6 +76,8 @@ var nome = "";
 var credentials = require("./initSec.json");
 var spData = require("./initData.json");
 
+// ELEMENTS
+
 const Item = ({ showItemsBtn, pos, id, title, link, descr, icon, video, hidden, cat, itemEditDel, itemVideo, itemHide }) => {
   const [isActive, setIsActive] = useState(false);
   const hide = hidden ? <ItemRedPoint /> : ""
@@ -175,6 +177,123 @@ const Item = ({ showItemsBtn, pos, id, title, link, descr, icon, video, hidden, 
   return (
     <>
       {(!itemHide || showItemsBtn === "ShowItemBtn") && itemBtn}
+    </>
+  );
+}
+
+const Cat = ({ showItemsBtn, pos, title, icon, hidden, catCont, catEditDel, itemHide }) => {
+  const hide = hidden ? <ItemRedPoint /> : ""
+  let catBtn = ""
+  if (showItemsBtn === "ShowItemBtn") {
+    catBtn = (
+      <div className="itemcontainer">
+        <div className="iconcontainer box box2">
+          <img className="items pointer" title={title} alt={title} src={icon}
+            onClick={() => catCont(pos)} />
+        </div>
+        <h4>
+          <div className="row lato text-center m-1">
+            <div className="col">
+              <div className="row">
+                <div className="col d-flex flex-column justify-content-center align-items-center">
+                  <b>{title}</b>
+                </div>
+                {hide}
+              </div>
+            </div>
+          </div>
+        </h4>
+        <div className="row btncontainer">
+          <button className="col itembutton solidgreen m-1" onClick={() => catEditDel("CatEdit", pos)}>
+            Edit
+          </button>
+          <button className="col-1 itembutton black m-1 pad01">
+            {pos + 1}
+          </button>
+          <button className="col itembutton solidbrick m-1" onClick={() => catEditDel("CatDel", pos)}>
+            Remove
+          </button>
+        </div>
+
+      </div>
+    )
+  } else {
+    catBtn = (
+      <div className="itemcontainer">
+        <div className="iconcontainer box box2">
+          <img className="items pointer" title={title} alt={title} src={icon}
+            onClick={() => catCont(pos)} />
+        </div>
+        <h4>
+          <div className="row lato text-center m-1">
+            <div className="col">
+              <div className="row">
+                <div className="col d-flex flex-column justify-content-center align-items-center">
+                  <b>{title}</b>
+                </div>
+                {hide}
+              </div>
+            </div>
+          </div>
+        </h4>
+      </div>
+    )
+  }
+  return (
+    <>
+      {(!itemHide || showItemsBtn === "ShowItemBtn") && catBtn}
+    </>
+  );
+
+}
+
+const Credit = ({ showItemsBtn, pos, title, link, descr, crsEditDel }) => {
+  let creditBtn = ""
+  if (showItemsBtn === "ShowItemBtn") {
+    creditBtn = (
+      <>
+        <div className="row">
+          <button className="col extcredits green m-1"
+            onClick={() => {
+              window.open(link);
+            }}>
+            <h2><font color="white">
+              {title}
+            </font></h2>
+            <h5><font color="Chartreuse">{descr}</font></h5>
+          </button>
+        </div>
+        <div className="row btncontainer">
+          <button className="col itembutton solidgreen m-1" onClick={() => crsEditDel("CrsEdit", pos)}>
+            Edit
+          </button>
+          <button className="col-1 itembutton black m-1 pad01">
+            {pos + 1}
+          </button>
+          <button className="col itembutton solidbrick m-1" onClick={() => crsEditDel("CrsDel", pos)}>
+            Remove
+          </button>
+        </div>
+      </>
+    )
+  } else {
+    creditBtn = (
+      <div className="row">
+        <button className="col extcredits green m-1"
+          onClick={() => {
+            window.open(link);
+          }}>
+          <h2><font color="white">
+            {title}
+          </font></h2>
+          <h5><font color="Chartreuse">{descr}</font></h5>
+        </button>
+      </div>
+    )
+  }
+  return (
+    <>
+      {creditBtn}
     </>
   );
 }
@@ -350,13 +469,45 @@ const Upload = ({ upShow, children }) => {
   );
 };
 
-const Error = ({ errShow, children }) => {
+const Error = ({ errShow, errMsg, errCol, children }) => {
   return (
     <div className={`mb-2 ${errShow ? 'alert-shown' : 'alert-hidden'}`} >
-      {children}
+      <div className="row text-center pt-2">
+        <div className="col">
+          <div className="row">
+            <section className={"col pt-2 contenitore " + errCol + " latowhite d-flex justify-content-center align-items-center "}>
+              <div>
+                <p className="norfont">{errMsg}</p>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+      {/* {children} */}
     </div>
   );
 };
+
+const Alert = ({ alertShow, alertMsg, alertCol, children }) => {
+  return (
+    <div className={`mb-2 ${alertShow ? 'alert-shown' : 'alert-hidden'}`} >
+      <div className="row text-center pt-2">
+        <div className="col">
+          <div className="row">
+            <section className={"col pt-2 contenitore " + alertCol + " latowhite d-flex justify-content-center align-items-center "}>
+              <div>
+                <p className="norfont">{alertMsg}</p>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+      {/* {children} */}
+    </div>
+  );
+};
+
+// DIALOGS
 
 const MenuDialog = ({ handleSave, handleClose, menuDiaShow, children }) => {
   const showHideClassName = menuDiaShow ? "modal display-block" : "modal display-none";
@@ -702,6 +853,8 @@ const LogoDialog = ({ handleUpload, handleClose, logoDiaShow, children, activity
   );
 };
 
+// FUNCTIONS
+
 async function fetchUpPHP(file, url, key) {
   // console.log("fetchUpPHP...");
   var data = new FormData()
@@ -774,6 +927,8 @@ async function comparePassword(plaintextPassword, hash) {
   return result;
 }
 
+// MAIN
+
 class Main extends React.Component {
   constructor(props) {
     super(props)
@@ -818,7 +973,12 @@ class Main extends React.Component {
       okShow: false,
       altOkShow: false,
       display: false,
+      alertShow: false,
+      alertMsg: "",
+      alertCol: "",
       errShow: false,
+      errMsg: "",
+      errCol: "",
       upShow: false,
       activityChanged: false,
       disFieldB: false,
@@ -1060,6 +1220,8 @@ class Main extends React.Component {
     // this.userChangeInput.focus();
     this.searchInput.focus();
   }
+
+  // ACTIONS
 
   saveFile(file, url, key) {
     fetchUpConfig(file, url, key)
@@ -2277,7 +2439,13 @@ class Main extends React.Component {
               // if (!pass) {
               // console.log("WRONG Psw: " + pswTmp)
               // }
-              this.showAlert("err");
+              this.setState({
+                alertMsg: "Wrong user name or password!",
+                alertCol: "brick",
+                alertShow: true
+              });
+              setTimeout(() => this.setState({ alertShow: false }), 1000);
+              // this.showAlert("err");
               login = false;
             }
           })
@@ -2318,6 +2486,8 @@ class Main extends React.Component {
       this.showAlert("altok");
     }
   }
+
+  // SHOW MODALS
 
   showModal(id) {
     switch (id) {
@@ -2547,6 +2717,8 @@ class Main extends React.Component {
     }
   };
 
+  // HIDE MODALS
+
   hideModal(id) {
     switch (id) {
       case "title":
@@ -2703,6 +2875,8 @@ class Main extends React.Component {
       activityChanged: false
     });
   };
+
+  // ACTION BUTTONS
 
   itemsButtonShow(id) {
     if (this.state.itemsBtnShow !== id) {
@@ -2937,6 +3111,8 @@ class Main extends React.Component {
     })
   }
 
+  // SERVICE FUNCTIONS
+
   handleKeyDown = (e) => {
     if (e.keyCode === 13) {
       e.preventDefault();
@@ -2975,6 +3151,8 @@ class Main extends React.Component {
     }
   }
 
+  // PAGE RENDER
+
   render() {
     const { mainBtn: mainBtn } = this.state;
     const { catFirst: catFirst } = this.state;
@@ -2997,6 +3175,9 @@ class Main extends React.Component {
     const showHideCrTitle = spData.noFootAddTitle ? "d-none" : "d-block";
     const showHideCrSub = spData.noFootAddSubtitle ? "d-none" : "d-block";
     const showHideCrSub2 = spData.noFootAddSubtitle2 ? "d-none" : "d-block";
+
+    // PAGE COMPONENTS
+
     let buttons = "";
     let pageBody = "";
 
@@ -3178,6 +3359,8 @@ class Main extends React.Component {
       </div >
     )
 
+    // HTML ELEMENTS
+
     return (
 
       <>
@@ -3224,7 +3407,11 @@ class Main extends React.Component {
                       </div>
                     </div>
 
-                    <Error errShow={this.state.errShow}>
+                    <Alert alertShow={this.state.alertShow} alertMsg={this.state.alertMsg} alertCol={this.state.alertCol}></Alert>
+
+                    {/* <Error errShow={this.state.errShow} errMsg="Wrong user name or password!" errCol="brick"></Error> */}
+
+                    {/* <Error errShow={this.state.errShow}>
                       <div className="row text-center pt-2">
                         <div className="col">
                           <div className="row">
@@ -3236,7 +3423,7 @@ class Main extends React.Component {
                           </div>
                         </div>
                       </div>
-                    </Error>
+                    </Error> */}
 
                   </form>
                 </div>
@@ -3354,19 +3541,20 @@ class Main extends React.Component {
                         </div>
                       </div>
                     </AltOk>
-                    <Error errShow={this.state.errShow}>
+                    <Error errShow={this.state.errShow} errMsg="Fill in at least one field." errCol="brick"></Error>
+                    {/* <Error errShow={this.state.errShow}>
                       <div className="row text-center pt-2">
                         <div className="col">
                           <div className="row">
                             <section className="col pt-2 contenitore brick latowhite d-flex justify-content-center align-items-center ">
                               <div>
-                                <p className="norfont">Fill in at least one field.</p>
+                                <p className="norfont"></p>
                               </div>
                             </section>
                           </div>
                         </div>
                       </div>
-                    </Error>
+                    </Error> */}
                   </form>
                 </div>
               </div>
@@ -3536,7 +3724,8 @@ class Main extends React.Component {
                         </div>
                       </div>
                     </Ok>
-                    <Error errShow={this.state.errShow}>
+                    <Error errShow={this.state.errShow} errMsg="Enter at least one character." errCol="brick"></Error>
+                    {/* <Error errShow={this.state.errShow}>
                       <div className="row text-center pt-2">
                         <div className="col">
                           <div className="row">
@@ -3548,7 +3737,7 @@ class Main extends React.Component {
                           </div>
                         </div>
                       </div>
-                    </Error>
+                    </Error> */}
                   </form>
                 </div>
               </div>
@@ -3712,7 +3901,8 @@ class Main extends React.Component {
                         </div>
                       </div>
                     </Ok>
-                    <Error errShow={this.state.errShow}>
+                    <Error errShow={this.state.errShow} errMsg="Enter at least one character." errCol="brick"></Error>
+                    {/* <Error errShow={this.state.errShow}>
                       <div className="row text-center pt-2">
                         <div className="col">
                           <div className="row">
@@ -3724,7 +3914,7 @@ class Main extends React.Component {
                           </div>
                         </div>
                       </div>
-                    </Error>
+                    </Error> */}
                   </form>
                 </div>
               </div>
@@ -3875,7 +4065,8 @@ class Main extends React.Component {
                         </div>
                       </div>
                     </Ok>
-                    <Error errShow={this.state.errShow}>
+                    <Error errShow={this.state.errShow} errMsg="Enter at least one character." errCol="brick"></Error>
+                    {/* <Error errShow={this.state.errShow}>
                       <div className="row text-center pt-2">
                         <div className="col">
                           <div className="row">
@@ -3887,7 +4078,7 @@ class Main extends React.Component {
                           </div>
                         </div>
                       </div>
-                    </Error>
+                    </Error> */}
                   </form>
                 </div>
               </div>
@@ -4787,7 +4978,8 @@ class Main extends React.Component {
                         </div>
                       </div>
                     </Upload>
-                    <Error errShow={this.state.errShow} >
+                    <Error errShow={this.state.errShow} errMsg="No changes made!" errCol="solidblue"></Error>
+                    {/* <Error errShow={this.state.errShow} >
                       <div className="row text-center pt-2">
                         <div className="col">
                           <div className="row">
@@ -4799,7 +4991,7 @@ class Main extends React.Component {
                           </div>
                         </div>
                       </div>
-                    </Error>
+                    </Error> */}
                   </form>
                 </div>
               </div>
@@ -4811,7 +5003,7 @@ class Main extends React.Component {
                   <h5 className="modal-title latowhite" >{tempCatTitle}</h5>
                 </div>
                 <div style={this.state.catStyle}></div>
-                <div ref={ el => this.containerCat = el} className="modal-body-dark">
+                <div ref={el => this.containerCat = el} className="modal-body-dark">
                   <div className="textcenter">
                     <CrsAdd showItemsBtn={this.state.itemsBtnShow} addItem={this.addItem} />
                     {/* <ItmAdd showItemsBtn={this.state.itemsBtnShow} addItem={this.addItem} /> */}
@@ -5031,7 +5223,8 @@ class Main extends React.Component {
                         </div>
                       </div>
                     </Upload>
-                    <Error errShow={this.state.errShow} >
+                    <Error errShow={this.state.errShow} errMsg="No changes made!" errCol="solidblue"></Error>
+                    {/* <Error errShow={this.state.errShow} >
                       <div className="row text-center pt-2">
                         <div className="col">
                           <div className="row">
@@ -5043,7 +5236,7 @@ class Main extends React.Component {
                           </div>
                         </div>
                       </div>
-                    </Error>
+                    </Error> */}
                   </form>
                 </div>
               </div>
@@ -5250,7 +5443,8 @@ class Main extends React.Component {
                         </div>
                       </div>
                     </Upload>
-                    <Error errShow={this.state.errShow} >
+                    <Error errShow={this.state.errShow} errMsg="Fill in all fields / Check position." errCol="brick"></Error>
+                    {/* <Error errShow={this.state.errShow} >
                       <div className="row text-center pt-2">
                         <div className="col">
                           <div className="row">
@@ -5262,7 +5456,7 @@ class Main extends React.Component {
                           </div>
                         </div>
                       </div>
-                    </Error>
+                    </Error> */}
                   </form>
                 </div>
               </div>
@@ -5397,7 +5591,8 @@ class Main extends React.Component {
                         </div>
                       </div>
                     </Upload>
-                    <Error errShow={this.state.errShow} >
+                    <Error errShow={this.state.errShow} errMsg="No changes made or CAT name duplicated!" errCol="solidblue"></Error>
+                    {/* <Error errShow={this.state.errShow} >
                       <div className="row text-center pt-2">
                         <div className="col">
                           <div className="row">
@@ -5409,7 +5604,7 @@ class Main extends React.Component {
                           </div>
                         </div>
                       </div>
-                    </Error>
+                    </Error> */}
                   </form>
                 </div>
               </div>
@@ -5521,7 +5716,8 @@ class Main extends React.Component {
                         </div>
                       </div>
                     </Upload>
-                    <Error errShow={this.state.errShow} >
+                    <Error errShow={this.state.errShow} errMsg="Fill in all fields or CAT name duplicated!" errCol="brick"></Error>
+                    {/* <Error errShow={this.state.errShow} >
                       <div className="row text-center pt-2">
                         <div className="col">
                           <div className="row">
@@ -5533,7 +5729,7 @@ class Main extends React.Component {
                           </div>
                         </div>
                       </div>
-                    </Error>
+                    </Error> */}
                   </form>
                 </div>
               </div>
@@ -5575,7 +5771,7 @@ class Main extends React.Component {
                   <h5 className="modal-title latowhite" >{spData.menuCreditsLabel}</h5>
                 </div>
                 <div style={this.state.catStyle}></div>
-                <div ref={ el => this.containerCrs = el} className="modal-body-dark">
+                <div ref={el => this.containerCrs = el} className="modal-body-dark">
                   <div className="textcenter">
                     <CrsAdd showItemsBtn={this.state.itemsBtnShow} addItem={this.crsAddItem} />
                     {
@@ -5690,7 +5886,8 @@ class Main extends React.Component {
                         </div>
                       </div>
                     </Upload>
-                    <Error errShow={this.state.errShow} >
+                    <Error errShow={this.state.errShow} errMsg="Fill in all fields!" errCol="brick"></Error>
+                    {/* <Error errShow={this.state.errShow} >
                       <div className="row text-center pt-2">
                         <div className="col">
                           <div className="row">
@@ -5702,7 +5899,7 @@ class Main extends React.Component {
                           </div>
                         </div>
                       </div>
-                    </Error>
+                    </Error> */}
                   </form>
                 </div>
               </div>
@@ -5805,7 +6002,8 @@ class Main extends React.Component {
                         </div>
                       </div>
                     </Upload>
-                    <Error errShow={this.state.errShow} >
+                    <Error errShow={this.state.errShow} errMsg="No changes made!" errCol="solidblue"></Error>
+                    {/* <Error errShow={this.state.errShow} >
                       <div className="row text-center pt-2">
                         <div className="col">
                           <div className="row">
@@ -5817,7 +6015,7 @@ class Main extends React.Component {
                           </div>
                         </div>
                       </div>
-                    </Error>
+                    </Error> */}
                   </form>
                 </div>
               </div>
@@ -5868,7 +6066,8 @@ class Main extends React.Component {
                         </div>
                       </div>
                     </Ok>
-                    <Error errShow={this.state.errShow} >
+                    <Error errShow={this.state.errShow} errMsg="Enter at least one character." errCol="brick"></Error>
+                    {/* <Error errShow={this.state.errShow} >
                       <div className="row text-center pt-2">
                         <div className="col">
                           <div className="row">
@@ -5880,7 +6079,7 @@ class Main extends React.Component {
                           </div>
                         </div>
                       </div>
-                    </Error>
+                    </Error> */}
                     {/* RESITEMS */}
                     <div className="textcenter">
                       {
@@ -6050,134 +6249,134 @@ class ItmAdd extends React.Component {
   }
 }
 
-class Cat extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+// class Cat extends React.Component {
+//   constructor(props) {
+//     super(props);
+//   }
 
-  render() {
-    const hide = this.props.itemHide ? <ItemRedPoint /> : ""
-    let catBtn = ""
-    if (this.props.showItemsBtn === "ShowItemBtn") {
-      catBtn = (
-        <div className="itemcontainer">
-          <div className="iconcontainer box box2">
-            <img className="items pointer" title={this.props.title} alt={this.props.title} src={this.props.icon}
-              onClick={() => this.props.catCont(this.props.pos)} />
-          </div>
-          <h4>
-            <div className="row lato text-center m-1">
-              <div className="col">
-                <div className="row">
-                  <div className="col d-flex flex-column justify-content-center align-items-center">
-                    <b>{this.props.title}</b>
-                  </div>
-                  {hide}
-                </div>
-              </div>
-            </div>
-          </h4>
-          <div className="row btncontainer">
-            <button className="col itembutton solidgreen m-1" onClick={() => this.props.catEditDel("CatEdit", this.props.pos)}>
-              Edit
-            </button>
-            <button className="col-1 itembutton black m-1 pad01">
-              {this.props.pos + 1}
-            </button>
-            <button className="col itembutton solidbrick m-1" onClick={() => this.props.catEditDel("CatDel", this.props.pos)}>
-              Remove
-            </button>
-          </div>
+//   render() {
+//     const hide = this.props.itemHide ? <ItemRedPoint /> : ""
+//     let catBtn = ""
+//     if (this.props.showItemsBtn === "ShowItemBtn") {
+//       catBtn = (
+//         <div className="itemcontainer">
+//           <div className="iconcontainer box box2">
+//             <img className="items pointer" title={this.props.title} alt={this.props.title} src={this.props.icon}
+//               onClick={() => this.props.catCont(this.props.pos)} />
+//           </div>
+//           <h4>
+//             <div className="row lato text-center m-1">
+//               <div className="col">
+//                 <div className="row">
+//                   <div className="col d-flex flex-column justify-content-center align-items-center">
+//                     <b>{this.props.title}</b>
+//                   </div>
+//                   {hide}
+//                 </div>
+//               </div>
+//             </div>
+//           </h4>
+//           <div className="row btncontainer">
+//             <button className="col itembutton solidgreen m-1" onClick={() => this.props.catEditDel("CatEdit", this.props.pos)}>
+//               Edit
+//             </button>
+//             <button className="col-1 itembutton black m-1 pad01">
+//               {this.props.pos + 1}
+//             </button>
+//             <button className="col itembutton solidbrick m-1" onClick={() => this.props.catEditDel("CatDel", this.props.pos)}>
+//               Remove
+//             </button>
+//           </div>
 
-        </div>
-      )
-    } else {
-      catBtn = (
-        <div className="itemcontainer">
-          <div className="iconcontainer box box2">
-            <img className="items pointer" title={this.props.title} alt={this.props.title} src={this.props.icon}
-              onClick={() => this.props.catCont(this.props.pos)} />
-          </div>
-          <h4>
-            <div className="row lato text-center m-1">
-              <div className="col">
-                <div className="row">
-                  <div className="col d-flex flex-column justify-content-center align-items-center">
-                    <b>{this.props.title}</b>
-                  </div>
-                  {hide}
-                </div>
-              </div>
-            </div>
-          </h4>
-        </div>
-      )
-    }
-    return (
-      <>
-        {(!this.props.itemHide || this.props.showItemsBtn === "ShowItemBtn") && catBtn}
-        {/* {catBtn} */}
-      </>
-    );
-  }
-}
+//         </div>
+//       )
+//     } else {
+//       catBtn = (
+//         <div className="itemcontainer">
+//           <div className="iconcontainer box box2">
+//             <img className="items pointer" title={this.props.title} alt={this.props.title} src={this.props.icon}
+//               onClick={() => this.props.catCont(this.props.pos)} />
+//           </div>
+//           <h4>
+//             <div className="row lato text-center m-1">
+//               <div className="col">
+//                 <div className="row">
+//                   <div className="col d-flex flex-column justify-content-center align-items-center">
+//                     <b>{this.props.title}</b>
+//                   </div>
+//                   {hide}
+//                 </div>
+//               </div>
+//             </div>
+//           </h4>
+//         </div>
+//       )
+//     }
+//     return (
+//       <>
+//         {(!this.props.itemHide || this.props.showItemsBtn === "ShowItemBtn") && catBtn}
+//         {/* {catBtn} */}
+//       </>
+//     );
+//   }
+// }
 
-class Credit extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+// class Credit extends React.Component {
+//   constructor(props) {
+//     super(props);
+//   }
 
-  render() {
-    let creditBtn = ""
-    if (this.props.showItemsBtn === "ShowItemBtn") {
-      creditBtn = (
-        <>
-          <div className="row">
-            <button className="col extcredits green m-1"
-              onClick={() => {
-                window.open(this.props.link);
-              }}>
-              <h2><font color="white">
-                {this.props.title}
-              </font></h2>
-              <h5><font color="Chartreuse">{this.props.descr}</font></h5>
-            </button>
-          </div>
-          <div className="row btncontainer">
-            <button className="col itembutton solidgreen m-1" onClick={() => this.props.crsEditDel("CrsEdit", this.props.pos)}>
-              Edit
-            </button>
-            <button className="col-1 itembutton black m-1 pad01">
-              {this.props.pos + 1}
-            </button>
-            <button className="col itembutton solidbrick m-1" onClick={() => this.props.crsEditDel("CrsDel", this.props.pos)}>
-              Remove
-            </button>
-          </div>
-        </>
-      )
-    } else {
-      creditBtn = (
-        <div className="row">
-          <button className="col extcredits green m-1"
-            onClick={() => {
-              window.open(this.props.link);
-            }}>
-            <h2><font color="white">
-              {this.props.title}
-            </font></h2>
-            <h5><font color="Chartreuse">{this.props.descr}</font></h5>
-          </button>
-        </div>
-      )
-    }
-    return (
-      <>
-        {creditBtn}
-      </>
-    );
-  }
-}
+//   render() {
+//     let creditBtn = ""
+//     if (this.props.showItemsBtn === "ShowItemBtn") {
+//       creditBtn = (
+//         <>
+//           <div className="row">
+//             <button className="col extcredits green m-1"
+//               onClick={() => {
+//                 window.open(this.props.link);
+//               }}>
+//               <h2><font color="white">
+//                 {this.props.title}
+//               </font></h2>
+//               <h5><font color="Chartreuse">{this.props.descr}</font></h5>
+//             </button>
+//           </div>
+//           <div className="row btncontainer">
+//             <button className="col itembutton solidgreen m-1" onClick={() => this.props.crsEditDel("CrsEdit", this.props.pos)}>
+//               Edit
+//             </button>
+//             <button className="col-1 itembutton black m-1 pad01">
+//               {this.props.pos + 1}
+//             </button>
+//             <button className="col itembutton solidbrick m-1" onClick={() => this.props.crsEditDel("CrsDel", this.props.pos)}>
+//               Remove
+//             </button>
+//           </div>
+//         </>
+//       )
+//     } else {
+//       creditBtn = (
+//         <div className="row">
+//           <button className="col extcredits green m-1"
+//             onClick={() => {
+//               window.open(this.props.link);
+//             }}>
+//             <h2><font color="white">
+//               {this.props.title}
+//             </font></h2>
+//             <h5><font color="Chartreuse">{this.props.descr}</font></h5>
+//           </button>
+//         </div>
+//       )
+//     }
+//     return (
+//       <>
+//         {creditBtn}
+//       </>
+//     );
+//   }
+// }
 
 class Dropdown extends React.Component {
   constructor(props) {
