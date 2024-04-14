@@ -1253,7 +1253,8 @@ class Main extends React.Component {
     }
     tempIcon = "";
     tempCatIcon = "";
-    this.showAlert("up");
+    this.fireAlert("Loading data... Please wait.", "solidblue");
+    // this.showAlert("up");
     this.setState({
       activityChanged: true
     })
@@ -1261,7 +1262,8 @@ class Main extends React.Component {
       .then(res => {
         if (url === "logo" && op === "edit") {
           spData.LogoIcon = "./img/" + nome;
-          this.showAlert("ok");
+          this.fireAlert("Changes Made!", "solidgreen");
+          // this.showAlert("ok");
           this.setState({
             activityChanged: false
           });
@@ -1348,7 +1350,8 @@ class Main extends React.Component {
             "id": 0,
             "hidden": false
           };
-          this.showAlert("ok");
+          this.fireAlert("Changes Made!", "solidgreen");
+          // this.showAlert("ok");
         } else if (url === "icon" && op === "add") {
           // console.log("Icon add TEMP4: ", temp4);
           newItem.icon = "./itemicons/" + nome;
@@ -1399,7 +1402,8 @@ class Main extends React.Component {
             "id": 0,
             "hidden": false
           };
-          this.showAlert("ok");
+          this.fireAlert("Item added!", "solidgreen");
+          // this.showAlert("ok");
         } else if (url === "icon" && op === "addlast") {
           // console.log("Icon addLast TEMP4: ", temp4);
           newItem.icon = "./itemicons/" + nome;
@@ -1443,7 +1447,8 @@ class Main extends React.Component {
             "id": 0,
             "hidden": false
           };
-          this.showAlert("ok");
+          this.fireAlert("Item added!", "solidgreen");
+          // this.showAlert("ok");
         } else if (url === "cat" && op === "edit") {
           if (fileImg !== null) {
             // console.log("Cat edit!");
@@ -1491,7 +1496,8 @@ class Main extends React.Component {
             "icon": "",
             "hidden": false
           };
-          this.showAlert("ok");
+          this.fireAlert("Changes Made!", "solidgreen");
+          // this.showAlert("ok");
         } else if (url === "cat" && op === "add") {
           // console.log("CatAdd in Pos: ", inPos);
           catNewItem.icon = "./itemicons/" + nome;
@@ -1515,7 +1521,8 @@ class Main extends React.Component {
             "icon": "",
             "hidden": false
           };
-          this.showAlert("ok");
+          this.fireAlert("Cat added!", "solidgreen");
+          // this.showAlert("ok");
         } else if (url === "cat" && op === "addlast") {
           // console.log("CatAddLast...");
           catNewItem.icon = "./itemicons/" + nome;
@@ -1543,7 +1550,8 @@ class Main extends React.Component {
             "icon": "",
             "hidden": false
           };
-          this.showAlert("ok");
+          this.fireAlert("Cat added!", "solidgreen");
+          // this.showAlert("ok");
         } else if (url === "back" && op === "edit") {
           spData.backgroundImage = "./img/" + nome;
           spData.backgroundColor = this.hexToRgb(tempColor) + ", 1)";
@@ -1566,7 +1574,8 @@ class Main extends React.Component {
               zIndex: "-1"
             }
           });
-          this.showAlert("ok");
+          this.fireAlert("Changes Made!", "solidgreen");
+          // this.showAlert("ok");
           this.setState({
             activityChanged: false
           });
@@ -1592,7 +1601,8 @@ class Main extends React.Component {
               zIndex: "-1"
             }
           });
-          this.showAlert("ok");
+          this.fireAlert("Changes Made!", "solidgreen");
+          // this.showAlert("ok");
           this.setState({
             activityChanged: false
           });
@@ -1677,7 +1687,7 @@ class Main extends React.Component {
         "link": "",
         "descr": ""
       };
-      this.showAlert("ok");
+      // this.showAlert("ok");
     }
     this.saveFile(spData, "./api/img-upload.php", "config");
   }
@@ -1718,12 +1728,13 @@ class Main extends React.Component {
     }
     blockHide = "none";
     temp = "";
-    this.showAlert("ok");
+    this.fireAlert("Changes Made!", "solidgreen");
+    // this.showAlert("ok");
     this.saveFile(spData, "./api/img-upload.php", "config");
   }
 
   itemSearchReset = () => {
-    this.showAlert("all");
+    // this.showAlert("all");
     document.getElementById('searchForm').reset();
     this.setState({ resItems: [] });
     temp = "";
@@ -1815,7 +1826,8 @@ class Main extends React.Component {
         "id": 0,
         "hidden": false
       };
-      this.showAlert("ok");
+      this.fireAlert("Search results:", "solidgreen");
+      // this.showAlert("ok");
       this.setState({
         onlyRead: true
       })
@@ -1823,7 +1835,8 @@ class Main extends React.Component {
         activityChanged: true
       })
     } else {
-      this.showAlert("err");
+      this.fireAlert("Enter at least one character.", "brick");
+      // this.showAlert("err");
     }
   }
 
@@ -1883,7 +1896,8 @@ class Main extends React.Component {
       spData.clockShow = blockHide;
     }
     blockHide = "none";
-    this.showAlert("ok");
+    this.fireAlert("Changes Made!", "solidgreen");
+    // this.showAlert("ok");
     this.saveFile(spData, "./api/img-upload.php", "config");
   }
 
@@ -1891,20 +1905,22 @@ class Main extends React.Component {
     if (disable1 !== "none") {
       spData.noMenuSearch = disable1;
     }
-    if (temp !== "")
+    if (temp !== "") {
       spData.menuSearchLabel = temp;
+    }
     if (disable2 !== "none") {
       spData.noMenuCredits = disable2;
     }
-    if (temp2 !== "")
+    if (temp2 !== "") {
       spData.menuCreditsLabel = temp2;
+    }
     spData.menuColor = this.hexToRgb(tempColor) + ", " + tempOpacity + ")";
     spData.menuOpacity = parseFloat(tempOpacity.replace(/,/g, "."));
     if (blockHide !== "none") {
       spData.menuShow = blockHide;
     }
-
-    this.showAlert("ok");
+    this.fireAlert("Changes Made!", "solidgreen");
+    // this.showAlert("ok");
     this.saveFile(spData, "./api/img-upload.php", "config");
     temp = "";
     temp2 = "";
@@ -1947,7 +1963,8 @@ class Main extends React.Component {
     disable1 = "none";
     disable2 = "none";
     disable3 = "none";
-    this.showAlert("ok");
+    this.fireAlert("Changes Made!", "solidgreen");
+    // this.showAlert("ok");
     this.saveFile(spData, "./api/img-upload.php", "config");
   }
 
@@ -1985,7 +2002,8 @@ class Main extends React.Component {
     disable1 = "none";
     disable2 = "none";
     disable3 = "none";
-    this.showAlert("ok");
+    this.fireAlert("Changes Made!", "solidgreen");
+    // this.showAlert("ok");
     this.saveFile(spData, "./api/img-upload.php", "config");
   }
 
@@ -2002,7 +2020,8 @@ class Main extends React.Component {
         if (inPos < arrayLength && inPos >= 0 && inPos !== currPos) {
           this.saveImgFile(fileImg, "icon", "edit");
         } else {
-          this.showAlert("err");
+          this.fireAlert("No changes made!", "solidblue");
+          // this.showAlert("err");
         }
       } else {
         // console.log("cgPos === \"\"");
@@ -2010,7 +2029,8 @@ class Main extends React.Component {
       }
     } else {
       // console.log("fileImg - temp2 - temp3 are Null!!!");
-      this.showAlert("err");
+      this.fireAlert("No changes made!", "solidblue");
+      // this.showAlert("err");
     }
   }
 
@@ -2029,13 +2049,15 @@ class Main extends React.Component {
         if (inPos <= (arrayLength) && inPos >= 0) {
           this.saveImgFile(fileImg, "icon", "add");
         } else {
-          this.showAlert("err");
+          this.fireAlert("Fill in all fields / Check position.", "brick");
+          // this.showAlert("err");
         }
       } else {
         this.saveImgFile(fileImg, "icon", "addlast");
       }
     } else {
-      this.showAlert("err");
+      this.fireAlert("Fill in all fields / Check position.", "brick");
+      // this.showAlert("err");
     }
   }
 
@@ -2062,7 +2084,8 @@ class Main extends React.Component {
     temp = "";
     temp2 = "";
     temp3 = "";
-    this.showAlert("ok");
+    this.fireAlert("Application removed!", "solidgreen");
+    // this.showAlert("ok");
     this.saveFile(spData, "./api/img-upload.php", "config");
     this.setState({
       activityChanged: true
@@ -2092,18 +2115,21 @@ class Main extends React.Component {
         if (inPos < arrayLength && inPos >= 0 && inPos !== currPos && !dup) {
           this.saveImgFile(fileImg, "cat", "edit");
         } else {
-          this.showAlert("err");
+          this.fireAlert("No changes made or CAT name duplicated!", "solidblue");
+          // this.showAlert("err");
         }
       } else {
         if (!dup) {
           this.saveImgFile(fileImg, "cat", "edit");
         } else {
-          this.showAlert("err");
+          this.fireAlert("No changes made or CAT name duplicated!", "solidblue");
+          // this.showAlert("err");
         }
       }
     } else {
       // console.log("fileImg - temp2 - temp are \"\"");
-      this.showAlert("err");
+      this.fireAlert("No changes made or CAT name duplicated!", "solidblue");
+      // this.showAlert("err");
     }
   }
 
@@ -2124,17 +2150,20 @@ class Main extends React.Component {
         if (inPos <= arrayLength && !dup && inPos >= 0) {
           this.saveImgFile(fileImg, "cat", "add");
         } else {
-          this.showAlert("err");
+          this.fireAlert("No changes made or CAT name duplicated!", "solidblue");
+          // this.showAlert("err");
         }
       } else {
         if (!dup) {
           this.saveImgFile(fileImg, "cat", "addlast");
         } else {
-          this.showAlert("err");
+          this.fireAlert("No changes made or CAT name duplicated!", "solidblue");
+          // this.showAlert("err");
         }
       }
     } else {
-      this.showAlert("err");
+      this.fireAlert("No changes made or CAT name duplicated!", "solidblue");
+      // this.showAlert("err");
     }
   }
 
@@ -2157,7 +2186,8 @@ class Main extends React.Component {
     currPos = "";
     temp2 = "";
     temp3 = "";
-    this.showAlert("ok");
+    this.fireAlert("Category removed!", "solidgreen");
+    // this.showAlert("ok");
     this.saveFile(spData, "./api/img-upload.php", "config");
     this.setState({
       activityChanged: true
@@ -2171,23 +2201,27 @@ class Main extends React.Component {
         // console.log("InPos: ", inPos);
         if (inPos < arrayLength && inPos >= 0 && inPos !== currPos) {
           this.saveCrs("crs", "edit");
-          this.showAlert("ok");
+          this.fireAlert("Changes Made!", "solidgreen");
+          // this.showAlert("ok");
           this.setState({
             activityChanged: true
           });
         } else {
-          this.showAlert("err");
+          this.fireAlert("No changes made!", "solidblue");
+          // this.showAlert("err");
         }
       } else {
         this.saveCrs("crs", "edit");
-        this.showAlert("ok");
+        this.fireAlert("Changes Made!", "solidgreen");
+        // this.showAlert("ok");
         this.setState({
           activityChanged: true
         });
       }
     } else {
       // console.log("fileImg - temp2 - temp are \"\"");
-      this.showAlert("err");
+      this.fireAlert("No changes made!", "solidblue");
+      // this.showAlert("err");
     }
   }
 
@@ -2199,22 +2233,26 @@ class Main extends React.Component {
         // console.log("InPos: ", inPos);
         if (inPos < arrayLength/*  && !dup */) {
           this.saveCrs("crs", "add");
-          this.showAlert("ok");
+          this.fireAlert("Credit added!", "solidgreen");
+          // this.showAlert("ok");
           this.setState({
             activityChanged: true
           });
         } else {
-          this.showAlert("err");
+          this.fireAlert("Fill in all fields!", "brick");
+          // this.showAlert("err");
         }
       } else {
         this.saveCrs("crs", "addlast");
-        this.showAlert("ok");
+        this.fireAlert("Credit added!", "solidgreen");
+        // this.showAlert("ok");
         this.setState({
           activityChanged: true
         });
       }
     } else {
-      this.showAlert("err");
+      this.fireAlert("Fill in all fields!", "brick");
+      // this.showAlert("err");
     }
   }
 
@@ -2232,7 +2270,9 @@ class Main extends React.Component {
     temp2 = "";
     temp3 = "";
     temp4 = "";
-    this.showAlert("ok");
+
+    this.fireAlert("Credit removed!", "solidgreen");
+    // this.showAlert("ok");
     this.saveFile(spData, "./api/img-upload.php", "config");
     this.setState({
       activityChanged: true
@@ -2372,9 +2412,11 @@ class Main extends React.Component {
     }
 
     if (!changes) {
-      this.showAlert("err");
+      this.fireAlert("No changes made!", "solidblue");
+      // this.showAlert("err");
     } else {
-      this.showAlert("ok");
+      this.fireAlert("Changes Made!", "solidgreen");
+      // this.showAlert("ok");
       this.saveFile(spData, "./api/img-upload.php", "config");
     }
   }
@@ -2398,7 +2440,8 @@ class Main extends React.Component {
         spData.logoShow = blockHide;
       }
       blockHide = "none";
-      this.showAlert("ok");
+      this.fireAlert("Changes Made!", "solidgreen");
+      // this.showAlert("ok");
       this.saveFile(spData, "./api/img-upload.php", "config");
     }
   }
@@ -2415,6 +2458,15 @@ class Main extends React.Component {
 
   loginEditSession(id) {
     this.showModal("loginEdit");
+  }
+
+  fireAlert = (msg, color) => {
+    this.setState({
+      alertMsg: msg,
+      alertCol: color,
+      alertShow: true
+    });
+    setTimeout(() => this.setState({ alertShow: false }), 1500);
   }
 
   loginCheck = () => {
@@ -2439,12 +2491,15 @@ class Main extends React.Component {
               // if (!pass) {
               // console.log("WRONG Psw: " + pswTmp)
               // }
-              this.setState({
-                alertMsg: "Wrong user name or password!",
-                alertCol: "brick",
-                alertShow: true
-              });
-              setTimeout(() => this.setState({ alertShow: false }), 1000);
+              this.fireAlert("Wrong user name or password!", "brick");
+
+              // this.setState({
+              //   alertMsg: "Wrong user name or password!",
+              //   alertCol: "brick",
+              //   alertShow: true
+              // });
+              // setTimeout(() => this.setState({ alertShow: false }), 1000);
+
               // this.showAlert("err");
               login = false;
             }
@@ -2474,7 +2529,9 @@ class Main extends React.Component {
           usrTmp = "";
           pswTmp = "";
           this.saveFile(spData, "./api/img-upload.php", "config");
-          this.showAlert("ok");
+          this.fireAlert("Username and password changed successfully!", "solidgreen");
+
+          // this.showAlert("ok");
         })
         .catch(err => {
           console.log(err)
@@ -2483,7 +2540,8 @@ class Main extends React.Component {
       spData.loginColor = this.hexToRgb(tempColor) + ", " + tempOpacity + ")";
       spData.loginOpacity = parseFloat(tempOpacity.replace(/,/g, "."));
       this.saveFile(spData, "./api/img-upload.php", "config");
-      this.showAlert("altok");
+      this.fireAlert("Changes Made!", "solidgreen");
+      // this.showAlert("altok");
     }
   }
 
@@ -2865,7 +2923,7 @@ class Main extends React.Component {
           onlyRead: false
         })
     }
-    this.showAlert("all");
+    // this.showAlert("all");
     tempColor = "";
     tempTextColor = "";
     tempColW = "";
@@ -3515,7 +3573,9 @@ class Main extends React.Component {
                       </div>
                     </div>
 
-                    <Ok okShow={this.state.okShow}>
+                    <Alert alertShow={this.state.alertShow} alertMsg={this.state.alertMsg} alertCol={this.state.alertCol}></Alert>
+
+                    {/* <Ok okShow={this.state.okShow}>
                       <div className="row text-center pt-2">
                         <div className="col">
                           <div className="row">
@@ -3528,8 +3588,8 @@ class Main extends React.Component {
                         </div>
                       </div>
                     </Ok>
-                    <AltOk altOkShow={this.state.altOkShow}>
-                      <div className="row text-center pt-2">
+                    <AltOk altOkShow={this.state.altOkShow}> */}
+                    {/* <div className="row text-center pt-2">
                         <div className="col">
                           <div className="row">
                             <section className="col pt-2 contenitore solidgreen latowhite d-flex justify-content-center align-items-center ">
@@ -3540,8 +3600,8 @@ class Main extends React.Component {
                           </div>
                         </div>
                       </div>
-                    </AltOk>
-                    <Error errShow={this.state.errShow} errMsg="Fill in at least one field." errCol="brick"></Error>
+                    </AltOk> */}
+                    {/* <Error errShow={this.state.errShow} errMsg="Fill in at least one field." errCol="brick"></Error> */}
                     {/* <Error errShow={this.state.errShow}>
                       <div className="row text-center pt-2">
                         <div className="col">
@@ -3710,8 +3770,8 @@ class Main extends React.Component {
                         </div>
                       </div>
                     </div>
-
-                    <Ok okShow={this.state.okShow}>
+                    <Alert alertShow={this.state.alertShow} alertMsg={this.state.alertMsg} alertCol={this.state.alertCol}></Alert>
+                    {/* <Ok okShow={this.state.okShow}>
                       <div className="row text-center pt-2">
                         <div className="col">
                           <div className="row">
@@ -3723,8 +3783,8 @@ class Main extends React.Component {
                           </div>
                         </div>
                       </div>
-                    </Ok>
-                    <Error errShow={this.state.errShow} errMsg="Enter at least one character." errCol="brick"></Error>
+                    </Ok> */}
+                    {/* <Error errShow={this.state.errShow} errMsg="Enter at least one character." errCol="brick"></Error> */}
                     {/* <Error errShow={this.state.errShow}>
                       <div className="row text-center pt-2">
                         <div className="col">
@@ -3888,7 +3948,9 @@ class Main extends React.Component {
                       </div>
                     </div>
 
-                    <Ok okShow={this.state.okShow}>
+                    <Alert alertShow={this.state.alertShow} alertMsg={this.state.alertMsg} alertCol={this.state.alertCol}></Alert>
+
+                    {/* <Ok okShow={this.state.okShow}>
                       <div className="row text-center pt-2">
                         <div className="col">
                           <div className="row">
@@ -3900,8 +3962,8 @@ class Main extends React.Component {
                           </div>
                         </div>
                       </div>
-                    </Ok>
-                    <Error errShow={this.state.errShow} errMsg="Enter at least one character." errCol="brick"></Error>
+                    </Ok> */}
+                    {/* <Error errShow={this.state.errShow} errMsg="Enter at least one character." errCol="brick"></Error> */}
                     {/* <Error errShow={this.state.errShow}>
                       <div className="row text-center pt-2">
                         <div className="col">
@@ -4051,8 +4113,8 @@ class Main extends React.Component {
                         </div>
                       </div>
                     </div>
-
-                    <Ok okShow={this.state.okShow}>
+                    <Alert alertShow={this.state.alertShow} alertMsg={this.state.alertMsg} alertCol={this.state.alertCol}></Alert>
+                    {/* <Ok okShow={this.state.okShow}>
                       <div className="row text-center pt-2">
                         <div className="col">
                           <div className="row">
@@ -4065,7 +4127,7 @@ class Main extends React.Component {
                         </div>
                       </div>
                     </Ok>
-                    <Error errShow={this.state.errShow} errMsg="Enter at least one character." errCol="brick"></Error>
+                    <Error errShow={this.state.errShow} errMsg="Enter at least one character." errCol="brick"></Error> */}
                     {/* <Error errShow={this.state.errShow}>
                       <div className="row text-center pt-2">
                         <div className="col">
@@ -4214,8 +4276,9 @@ class Main extends React.Component {
                         </div>
                       </div>
                     </div>
+                    <Alert alertShow={this.state.alertShow} alertMsg={this.state.alertMsg} alertCol={this.state.alertCol}></Alert>
 
-                    <Ok okShow={this.state.okShow}>
+                    {/* <Ok okShow={this.state.okShow}>
                       <div className="row text-center pt-2">
                         <div className="col">
                           <div className="row">
@@ -4227,8 +4290,8 @@ class Main extends React.Component {
                           </div>
                         </div>
                       </div>
-                    </Ok>
-                    <Upload upShow={this.state.upShow}>
+                    </Ok> */}
+                    {/* <Upload upShow={this.state.upShow}>
                       <div className="row text-center pt-2">
                         <div className="col">
                           <div className="row">
@@ -4240,7 +4303,7 @@ class Main extends React.Component {
                           </div>
                         </div>
                       </div>
-                    </Upload>
+                    </Upload> */}
                   </form>
                 </div>
               </div>
@@ -4476,7 +4539,9 @@ class Main extends React.Component {
                       </div>
                     </div>
 
-                    <Ok okShow={this.state.okShow}>
+                    <Alert alertShow={this.state.alertShow} alertMsg={this.state.alertMsg} alertCol={this.state.alertCol}></Alert>
+
+                    {/* <Ok okShow={this.state.okShow}>
                       <div className="row text-center pt-2">
                         <div className="col">
                           <div className="row">
@@ -4488,7 +4553,7 @@ class Main extends React.Component {
                           </div>
                         </div>
                       </div>
-                    </Ok>
+                    </Ok> */}
                   </form>
                 </div>
               </div>
@@ -4726,7 +4791,10 @@ class Main extends React.Component {
                         </div>
                       </div>
                     </div>
-                    <Ok okShow={this.state.okShow}>
+
+                    <Alert alertShow={this.state.alertShow} alertMsg={this.state.alertMsg} alertCol={this.state.alertCol}></Alert>
+
+                    {/* <Ok okShow={this.state.okShow}>
                       <div className="row text-center pt-2">
                         <div className="col">
                           <div className="row">
@@ -4738,7 +4806,7 @@ class Main extends React.Component {
                           </div>
                         </div>
                       </div>
-                    </Ok>
+                    </Ok> */}
                   </form>
                 </div>
               </div>
@@ -4952,7 +5020,9 @@ class Main extends React.Component {
                       </div>
                     </div>
 
-                    <Ok okShow={this.state.okShow}>
+                    <Alert alertShow={this.state.alertShow} alertMsg={this.state.alertMsg} alertCol={this.state.alertCol}></Alert>
+
+                    {/* <Ok okShow={this.state.okShow}>
                       <div className="row text-center pt-2">
                         <div className="col">
                           <div className="row">
@@ -4978,7 +5048,7 @@ class Main extends React.Component {
                         </div>
                       </div>
                     </Upload>
-                    <Error errShow={this.state.errShow} errMsg="No changes made!" errCol="solidblue"></Error>
+                    <Error errShow={this.state.errShow} errMsg="No changes made!" errCol="solidblue"></Error> */}
                     {/* <Error errShow={this.state.errShow} >
                       <div className="row text-center pt-2">
                         <div className="col">
@@ -5197,6 +5267,8 @@ class Main extends React.Component {
                       </div>
                     </div>
 
+                    <Alert alertShow={this.state.alertShow} alertMsg={this.state.alertMsg} alertCol={this.state.alertCol}></Alert>
+                    {/* 
                     <Ok okShow={this.state.okShow}>
                       <div className="row text-center pt-2">
                         <div className="col">
@@ -5223,7 +5295,7 @@ class Main extends React.Component {
                         </div>
                       </div>
                     </Upload>
-                    <Error errShow={this.state.errShow} errMsg="No changes made!" errCol="solidblue"></Error>
+                    <Error errShow={this.state.errShow} errMsg="No changes made!" errCol="solidblue"></Error> */}
                     {/* <Error errShow={this.state.errShow} >
                       <div className="row text-center pt-2">
                         <div className="col">
@@ -5417,7 +5489,9 @@ class Main extends React.Component {
                       </div>
                     </div>
 
-                    <Ok okShow={this.state.okShow}>
+                    <Alert alertShow={this.state.alertShow} alertMsg={this.state.alertMsg} alertCol={this.state.alertCol}></Alert>
+
+                    {/* <Ok okShow={this.state.okShow}>
                       <div className="row text-center pt-2">
                         <div className="col">
                           <div className="row">
@@ -5443,7 +5517,7 @@ class Main extends React.Component {
                         </div>
                       </div>
                     </Upload>
-                    <Error errShow={this.state.errShow} errMsg="Fill in all fields / Check position." errCol="brick"></Error>
+                    <Error errShow={this.state.errShow} errMsg="Fill in all fields / Check position." errCol="brick"></Error> */}
                     {/* <Error errShow={this.state.errShow} >
                       <div className="row text-center pt-2">
                         <div className="col">
@@ -5467,7 +5541,10 @@ class Main extends React.Component {
                   <h5 className="modal-title" >Permanently delete {tempItemTitle} item?</h5>
                 </div>
                 <div className="modal-body">
-                  <Ok okShow={this.state.okShow}>
+
+                  <Alert alertShow={this.state.alertShow} alertMsg={this.state.alertMsg} alertCol={this.state.alertCol}></Alert>
+
+                  {/* <Ok okShow={this.state.okShow}>
                     <div className="row text-center pt-2">
                       <div className="col">
                         <div className="row">
@@ -5479,7 +5556,7 @@ class Main extends React.Component {
                         </div>
                       </div>
                     </div>
-                  </Ok>
+                  </Ok> */}
                 </div>
               </div>
             </ItemDelDialog>
@@ -5565,7 +5642,9 @@ class Main extends React.Component {
                       </div>
                     </div>
 
-                    <Ok okShow={this.state.okShow}>
+                    <Alert alertShow={this.state.alertShow} alertMsg={this.state.alertMsg} alertCol={this.state.alertCol}></Alert>
+
+                    {/* <Ok okShow={this.state.okShow}>
                       <div className="row text-center pt-2">
                         <div className="col">
                           <div className="row">
@@ -5591,7 +5670,7 @@ class Main extends React.Component {
                         </div>
                       </div>
                     </Upload>
-                    <Error errShow={this.state.errShow} errMsg="No changes made or CAT name duplicated!" errCol="solidblue"></Error>
+                    <Error errShow={this.state.errShow} errMsg="No changes made or CAT name duplicated!" errCol="solidblue"></Error> */}
                     {/* <Error errShow={this.state.errShow} >
                       <div className="row text-center pt-2">
                         <div className="col">
@@ -5690,6 +5769,8 @@ class Main extends React.Component {
                       </div>
                     </div>
 
+                    <Alert alertShow={this.state.alertShow} alertMsg={this.state.alertMsg} alertCol={this.state.alertCol}></Alert>
+                    {/* 
                     <Ok okShow={this.state.okShow}>
                       <div className="row text-center pt-2">
                         <div className="col">
@@ -5716,7 +5797,7 @@ class Main extends React.Component {
                         </div>
                       </div>
                     </Upload>
-                    <Error errShow={this.state.errShow} errMsg="Fill in all fields or CAT name duplicated!" errCol="brick"></Error>
+                    <Error errShow={this.state.errShow} errMsg="Fill in all fields or CAT name duplicated!" errCol="brick"></Error> */}
                     {/* <Error errShow={this.state.errShow} >
                       <div className="row text-center pt-2">
                         <div className="col">
@@ -5740,7 +5821,10 @@ class Main extends React.Component {
                   <h5 className="modal-title" >Permanently delete {tempCatTitle} category?</h5>
                 </div>
                 <div className="modal-body">
-                  <Ok okShow={this.state.okShow}>
+
+                  <Alert alertShow={this.state.alertShow} alertMsg={this.state.alertMsg} alertCol={this.state.alertCol}></Alert>
+
+                  {/* <Ok okShow={this.state.okShow}>
                     <div className="row text-center pt-2">
                       <div className="col">
                         <div className="row">
@@ -5752,7 +5836,7 @@ class Main extends React.Component {
                         </div>
                       </div>
                     </div>
-                  </Ok>
+                  </Ok> */}
                 </div>
               </div>
             </CatDelDialog>
@@ -5860,7 +5944,9 @@ class Main extends React.Component {
                       </div>
                     </div>
 
-                    <Ok okShow={this.state.okShow}>
+                    <Alert alertShow={this.state.alertShow} alertMsg={this.state.alertMsg} alertCol={this.state.alertCol}></Alert>
+
+                    {/* <Ok okShow={this.state.okShow}>
                       <div className="row text-center pt-2">
                         <div className="col">
                           <div className="row">
@@ -5886,7 +5972,7 @@ class Main extends React.Component {
                         </div>
                       </div>
                     </Upload>
-                    <Error errShow={this.state.errShow} errMsg="Fill in all fields!" errCol="brick"></Error>
+                    <Error errShow={this.state.errShow} errMsg="Fill in all fields!" errCol="brick"></Error> */}
                     {/* <Error errShow={this.state.errShow} >
                       <div className="row text-center pt-2">
                         <div className="col">
@@ -5976,7 +6062,9 @@ class Main extends React.Component {
                       </div>
                     </div>
 
-                    <Ok okShow={this.state.okShow}>
+                    <Alert alertShow={this.state.alertShow} alertMsg={this.state.alertMsg} alertCol={this.state.alertCol}></Alert>
+
+                    {/* <Ok okShow={this.state.okShow}>
                       <div className="row text-center pt-2">
                         <div className="col">
                           <div className="row">
@@ -6002,7 +6090,7 @@ class Main extends React.Component {
                         </div>
                       </div>
                     </Upload>
-                    <Error errShow={this.state.errShow} errMsg="No changes made!" errCol="solidblue"></Error>
+                    <Error errShow={this.state.errShow} errMsg="No changes made!" errCol="solidblue"></Error> */}
                     {/* <Error errShow={this.state.errShow} >
                       <div className="row text-center pt-2">
                         <div className="col">
@@ -6026,7 +6114,10 @@ class Main extends React.Component {
                   <h5 className="modal-title" >Permanently delete {tempCrsTitle} credit?</h5>
                 </div>
                 <div className="modal-body">
-                  <Ok okShow={this.state.okShow}>
+
+                  <Alert alertShow={this.state.alertShow} alertMsg={this.state.alertMsg} alertCol={this.state.alertCol}></Alert>
+
+                  {/* <Ok okShow={this.state.okShow}>
                     <div className="row text-center pt-2">
                       <div className="col">
                         <div className="row">
@@ -6038,7 +6129,7 @@ class Main extends React.Component {
                         </div>
                       </div>
                     </div>
-                  </Ok>
+                  </Ok> */}
                 </div>
               </div>
             </CrsDelDialog>
@@ -6053,7 +6144,10 @@ class Main extends React.Component {
                     <div className="form-group stickydivtop">
                       <input type="text" className="form-control contenitore pt-2" ref={(input) => { this.searchInput = input; }} onChange={e => temp = e.target.value} placeholder={spData.menuSearchLabel + "..."} readOnly={this.state.onlyRead} />
                     </div>
-                    <Ok okShow={this.state.okShow} display={this.state.display}>
+
+                    <Alert alertShow={this.state.alertShow} alertMsg={this.state.alertMsg} alertCol={this.state.alertCol}></Alert>
+
+                    {/* <Ok okShow={this.state.okShow} display={this.state.display}>
                       <div className="row text-center pt-2">
                         <div className="col">
                           <div className="row">
@@ -6066,7 +6160,7 @@ class Main extends React.Component {
                         </div>
                       </div>
                     </Ok>
-                    <Error errShow={this.state.errShow} errMsg="Enter at least one character." errCol="brick"></Error>
+                    <Error errShow={this.state.errShow} errMsg="Enter at least one character." errCol="brick"></Error> */}
                     {/* <Error errShow={this.state.errShow} >
                       <div className="row text-center pt-2">
                         <div className="col">
