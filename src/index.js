@@ -298,13 +298,35 @@ const Credit = ({ showItemsBtn, pos, title, link, descr, crsEditDel }) => {
   );
 }
 
+const Element = ({ eleShow, children, mainBtn, id, sfondo, colore, z, colW }) => {
+  const showHideClassName = eleShow ? "d-block" : "d-none";
+  const justifyCenterEnd = mainBtn ? "justify-content-end" : "justify-content-center";
+  return (
+    <section id={id} style={{ backgroundColor: sfondo, color: colore, zIndex: z }}
+      className={showHideClassName + " " + justifyCenterEnd + " " + colW + " latoplain d-flex flex-column align-items-center"}>
+      {children}
+    </section>
+  );
+};
+
 const Menu = ({ menuShow, children, mainBtn }) => {
   const showHideClassName = menuShow ? "d-block" : "d-none";
   const justifyCenterEnd = mainBtn ? "justify-content-end" : "justify-content-center";
   return (
-    <section id="HeadMenu" style={{ backgroundColor: spData.menuColor, color: spData.menuTextColor, zIndex: 1 }} className={showHideClassName + " " + justifyCenterEnd + " col-md-1 d-flex flex-column align-items-center"}>
+    <section id="HeadMenu" style={{ backgroundColor: spData.menuColor, color: spData.menuTextColor, zIndex: 1 }}
+      className={showHideClassName + " " + justifyCenterEnd + " col-md-1 d-flex flex-column align-items-center"}>
       {children}
     </section>
+  );
+};
+
+const EditElement = ({ editEleShow, children, hidden }) => {
+  const showHideClassName = editEleShow ? "d-block" : "d-none";
+  const hide = hidden ? "" : <RedPoint />
+  return (
+    <div className={showHideClassName + " stretch d-flex justify-content-center align-items-center"}>
+      {children} {hide}
+    </div>
   );
 };
 
@@ -322,7 +344,8 @@ const Info = ({ infoShow, children, mainBtn }) => {
   const showHideClassName = infoShow ? "d-block" : "d-none";
   const justifyCenterEnd = mainBtn ? "justify-content-end" : "justify-content-center";
   return (
-    <section id="FootInfo" style={{ backgroundColor: spData.footInfoColor, color: spData.footInfoTextColor }} className={showHideClassName + " " + justifyCenterEnd + " " + spData.footInfoColW + " latoplain d-flex flex-column align-items-center"}>
+    <section id="FootInfo" style={{ backgroundColor: spData.footInfoColor, color: spData.footInfoTextColor }}
+      className={showHideClassName + " " + justifyCenterEnd + " " + spData.footInfoColW + " latoplain d-flex flex-column align-items-center"}>
       {children}
     </section>
   );
@@ -342,7 +365,8 @@ const AddInfo = ({ addInfoShow, children, mainBtn }) => {
   const showHideClassName = addInfoShow ? "d-block" : "d-none";
   const justifyCenterEnd = mainBtn ? "justify-content-end" : "justify-content-center";
   return (
-    <section id="FootAddInfo" style={{ backgroundColor: spData.footAddColor, color: spData.footAddTextColor }} className={showHideClassName + " " + justifyCenterEnd + " " + spData.footAddColW + " latoplain d-flex flex-column align-items-center"}>
+    <section id="FootAddInfo" style={{ backgroundColor: spData.footAddColor, color: spData.footAddTextColor }}
+      className={showHideClassName + " " + justifyCenterEnd + " " + spData.footAddColW + " latoplain d-flex flex-column align-items-center"}>
       {children}
     </section>
   );
@@ -362,7 +386,8 @@ const Titolo = ({ titleShow, children, mainBtn }) => {
   const showHideClassName = titleShow ? "d-block" : "d-none";
   const justifyCenterEnd = mainBtn ? "justify-content-end" : "justify-content-center";
   return (
-    <section id="HeadTitle" style={{ backgroundColor: spData.headColor, color: spData.headTextColor }} className={showHideClassName + " " + justifyCenterEnd + " " + spData.headColW + " latoplain d-flex flex-column align-items-center"}>
+    <section id="HeadTitle" style={{ backgroundColor: spData.headColor, color: spData.headTextColor }}
+      className={showHideClassName + " " + justifyCenterEnd + " " + spData.headColW + " latoplain d-flex flex-column align-items-center"}>
       {children}
     </section>
   );
@@ -382,7 +407,8 @@ const Logo = ({ logoShow, children, mainBtn }) => {
   const showHideClassName = logoShow ? "d-block" : "d-none";
   const justifyCenterEnd = mainBtn ? "justify-content-end" : "justify-content-center";
   return (
-    <section id="HeadLogo" style={{ backgroundColor: spData.logoColor }} className={showHideClassName + " " + justifyCenterEnd + " " + spData.logoColW + " d-flex flex-column justify-content-end align-items-center"}>
+    <section id="HeadLogo" style={{ backgroundColor: spData.logoColor }}
+      className={showHideClassName + " " + justifyCenterEnd + " " + spData.logoColW + " d-flex flex-column justify-content-end align-items-center"}>
       {children}
     </section>
   );
@@ -402,7 +428,8 @@ const Clock = ({ clockShow, children, mainBtn }) => {
   const showHideClassName = clockShow ? "d-block" : "d-none";
   const justifyCenterEnd = mainBtn ? "justify-content-end" : "justify-content-center";
   return (
-    <section id="HeadDate" style={{ backgroundColor: spData.clockColor, color: spData.clockTextColor }} className={showHideClassName + " " + justifyCenterEnd + " " + spData.clockColW + " latoplain d-flex flex-column align-items-center"}>
+    <section id="HeadDate" style={{ backgroundColor: spData.clockColor, color: spData.clockTextColor }}
+      className={showHideClassName + " " + justifyCenterEnd + " " + spData.clockColW + " latoplain d-flex flex-column align-items-center"}>
       {children}
     </section>
   );
@@ -439,51 +466,6 @@ const EditSet = ({ editSetShow, children }) => {
   return (
     <div className={showHideClassName + " stretch d-flex justify-content-center align-items-center"}>
       {children}
-    </div>
-  );
-};
-
-const Ok = ({ okShow, children }) => {
-  return (
-    <div className={`mb-2 ${okShow ? 'alert-shown' : 'alert-hidden'}`} >
-      {children}
-    </div>
-  );
-
-};
-
-const AltOk = ({ altOkShow, children }) => {
-  return (
-    <div className={`mb-2 ${altOkShow ? 'alert-shown' : 'alert-hidden'}`} >
-      {children}
-    </div>
-  );
-
-};
-
-const Upload = ({ upShow, children }) => {
-  return (
-    <div className={`mb-2 ${upShow ? 'alert-shown' : 'alert-hidden'}`} >
-      {children}
-    </div>
-  );
-};
-
-const Error = ({ errShow, errMsg, errCol, children }) => {
-  return (
-    <div className={`mb-2 ${errShow ? 'alert-shown' : 'alert-hidden'}`} >
-      <div className="row text-center pt-2">
-        <div className="col">
-          <div className="row">
-            <section className={"col pt-2 contenitore " + errCol + " latowhite d-flex justify-content-center align-items-center "}>
-              <div>
-                <p className="norfont">{errMsg}</p>
-              </div>
-            </section>
-          </div>
-        </div>
-      </div>
-      {/* {children} */}
     </div>
   );
 };
@@ -533,6 +515,21 @@ const ItemOrCatDialog = ({ handleItem, handleCat, handleClose, iocDiaShow, child
         <div className="modal-footer">
           <button type="button" className="btn btn-primary" data-dismiss="modal" onClick={handleItem}>Item</button>
           <button type="button" className="btn btn-success" data-dismiss="modal" onClick={handleCat}>Category</button>
+          <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={handleClose}>Close</button>
+        </div>
+      </section>
+    </div>
+  );
+};
+
+const EleDialog = ({ handleSave, handleClose, eleDiaShow, children, saveLabel }) => {
+  const showHideClassName = eleDiaShow ? "modal display-block" : "modal display-none";
+  return (
+    <div className={showHideClassName}>
+      <section className="modal-main">
+        {children}
+        <div className="modal-footer">
+          <button type="button" className="btn btn-primary" onClick={handleSave}>{saveLabel}</button>
           <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={handleClose}>Close</button>
         </div>
       </section>
@@ -853,13 +850,435 @@ const LogoDialog = ({ handleUpload, handleClose, logoDiaShow, children, activity
   );
 };
 
+// MODAL SIMPLE COMPONENTES
+
+const ModalTitle = ({ title }) => {
+  return (
+    <div className="modal-header">
+      <h5 className="modal-title" >{title}</h5>
+    </div>
+  )
+}
+
+const InputFile = () => {
+  return (
+    <div className="form-group">
+      <div className="row text-center mb-1 m-auto">
+        <div className="col">
+          <div className="row border">
+            <div className="col d-flex flex-column justify-content-center align-items-center">
+              <input type="file" className="form-control boxs border-0" name="icon" onChange={e => fileImg = e.target.files[0]} />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+const InputPosition = ({ edit, pos, id }) => {
+  if (edit === "Add Item") {
+    return (
+      <div className="form-group">
+        <div className="row text-center mb-1 m-auto">
+          <div className="col">
+            <div className="row border">
+              <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
+                <label>Pos</label>
+              </div>
+              <div className="col d-flex flex-column justify-content-center align-items-center">
+                <input type="text" placeholder="Leave blank for last..." id={id} className="form-control border-0"
+                  onChange={e => {
+                    temp = e.target.value;
+                  }
+                  } />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  } else {
+    return (
+      <div className="form-group">
+        <div className="row text-center mb-1 m-auto">
+          <div className="col">
+            <div className="row border">
+              <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
+                <label>Pos</label>
+              </div>
+              <div className="col d-flex flex-column justify-content-center align-items-center">
+                <input type="text" className="form-control border-0" placeholder={pos + 1} id={id}
+                  onChange={e => {
+                    cgPos = e.target.value;
+                  }
+                  } />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+}
+
+const InputTitle = ({ label, edit, tempTitle, id, tempo }) => {
+  if (edit === "Add Item") {
+    return (
+      <div className="form-group">
+        <div className="row text-center mb-1 m-auto">
+          <div className="col">
+            <div className="row border">
+              <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
+                <label>{label}</label>
+              </div>
+              <div className="col d-flex flex-column justify-content-center align-items-center">
+                <input type="text" className="form-control border-0" id={id} onChange={tempo} />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  } else {
+    return (
+      <div className="form-group">
+        <div className="row text-center mb-1 m-auto">
+          <div className="col">
+            <div className="row border">
+              <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
+                <label>{label}</label>
+              </div>
+              <div className="col d-flex flex-column justify-content-center align-items-center">
+                <input type="text" className="form-control border-0" defaultValue={tempTitle} id={id} onChange={tempo} />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+}
+
+const InputLink = ({ edit, tempLink, id }) => {
+  if (edit === "Add Item") {
+    return (
+      <div className="form-group">
+        <div className="row text-center mb-1 m-auto">
+          <div className="col">
+            <div className="row border">
+              <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
+                <label>Link</label>
+              </div>
+              <div className="col d-flex flex-column justify-content-center align-items-center">
+                <input type="text" className="form-control border-0" id={id} onChange={e => temp3 = e.target.value} />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  } else {
+    return (
+      <div className="form-group">
+        <div className="row text-center mb-1 m-auto">
+          <div className="col">
+            <div className="row border">
+              <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
+                <label>Link</label>
+              </div>
+              <div className="col d-flex flex-column justify-content-center align-items-center">
+                <input type="text" className="form-control border-0" defaultValue={tempLink} onChange={e => temp3 = e.target.value} />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+}
+
+const InputCat = ({ catMenuB }) => {
+  return (
+    <div className="form-group">
+      <div className="row mb-1 m-auto">
+        <div className="col">
+          <div className="row border">
+            <div className="col pt-1 pb-1 padlr latomenu d-flex flex-column justify-content-center align-items-center">
+              <label>Category</label>
+            </div>
+            <div className="col d-flex flex-column justify-content-center align-items-center">
+              {catMenuB}
+            </div>
+          </div>
+        </div>
+        <div className="col-1"></div>
+        <div className="col">
+        </div>
+      </div>
+    </div>
+  )
+}
+
+const InputWidth = ({ idAuto, idCol1, idCol2, idCol3, idCol4, idCol5,
+  valAuto, valCol1, valCol2, valCol3, valCol4, valCol5 }) => {
+  return (
+    <div class="form-group" >
+      <div className="row text-center mb-1 m-auto">
+        <div className="col">
+          <div className="row border">
+            <div className="col-2 col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
+              <label>Width</label>
+            </div>
+            <div className="col pt-1 pb-1">
+              <div className="row m-auto">
+                <div className="col radio">
+                  <label class="radio-inline"> <input type="radio" name="blockWidth" id={idAuto} value={valAuto} onChange={e => tempColW = e.target.value} /> Auto </label>
+                </div>
+                <div className="col radio">
+                  <label class="radio-inline"> <input type="radio" name="blockWidth" id={idCol1} value={valCol1} onChange={e => tempColW = e.target.value} /> 1 </label>
+                </div>
+                <div className="col radio">
+                  <label class="radio-inline"> <input type="radio" name="blockWidth" id={idCol2} value={valCol2} onChange={e => tempColW = e.target.value} /> 2 </label>
+                </div>
+                <div className="col radio">
+                  <label class="radio-inline"> <input type="radio" name="blockWidth" id={idCol3} value={valCol3} onChange={e => tempColW = e.target.value} /> 3 </label>
+                </div>
+                <div className="col radio">
+                  <label class="radio-inline"> <input type="radio" name="blockWidth" id={idCol4} value={valCol4} onChange={e => tempColW = e.target.value} /> 4 </label>
+                </div>
+                <div className="col radio">
+                  <label class="radio-inline"> <input type="radio" name="blockWidth" id={idCol5} value={valCol5} onChange={e => tempColW = e.target.value} /> 5 </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+const InputBackColor = ({ backColor }) => {
+
+  function rgbToHex(rgb) {
+    // console.log("spData: ", spData);
+    // console.log("loginColor: ", spData.loginColor);
+    // console.log("logoColor: ", spData.logoColor);
+    rgb = rgb.replace(/[^\d,]/g, '').split(',');
+    var r = parseInt(rgb[0]);
+    var g = parseInt(rgb[1]);
+    var b = parseInt(rgb[2]);
+    return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+  }
+
+  return (
+    <div className="col">
+      <div className="row border">
+        <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
+          <label>Back color</label>
+        </div>
+        <div className="col d-flex flex-column justify-content-center align-items-center">
+          <input type="color" className="form-control border-0 p-0" defaultValue={rgbToHex(backColor)} onChange={e => tempColor = e.target.value} />
+        </div>
+      </div>
+    </div>
+  )
+}
+
+const InputTextColor = ({ textColor }) => {
+
+  function rgbToHex(rgb) {
+    // console.log("spData: ", spData);
+    // console.log("loginColor: ", spData.loginColor);
+    // console.log("logoColor: ", spData.logoColor);
+    rgb = rgb.replace(/[^\d,]/g, '').split(',');
+    var r = parseInt(rgb[0]);
+    var g = parseInt(rgb[1]);
+    var b = parseInt(rgb[2]);
+    return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+  }
+
+  return (
+    <div className="col">
+      <div className="row border">
+        <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
+          <label>Text color</label>
+        </div>
+        <div className="col d-flex flex-column justify-content-center align-items-center">
+          <input type="color" className="form-control border-0 p-0" defaultValue={rgbToHex(textColor)} onChange={e => tempTextColor = e.target.value} />
+        </div>
+      </div>
+    </div>
+  )
+}
+
+const InputOpacity = ({ opacity, id, tempo }) => {
+  return (
+    <div className="form-group">
+      <div className="row mb-1 m-auto">
+        <div className="col">
+          <div className="row border">
+            <div className="col pt-1 pb-1 p-0 latomenu d-flex flex-column justify-content-center align-items-center">
+              <label>Opacity</label>
+            </div>
+            <div className="col d-flex flex-column justify-content-center align-items-center p-0">
+              <div className="row" style={{ width: "100%" }}>
+                <div className="col-1 d-flex flex-column justify-content-center align-items-center">
+                  <img className="plusminus" title="0" alt="0" src="./itemicons/rangeZero.svg" />
+                </div>
+                <div className="col d-flex flex-column justify-content-center align-items-center">
+                  <input type="range" class="form-range border-0 p-0" min="0" max="1" step="0.1" list="optickmarks" defaultValue={opacity} id={id} onChange={tempo} ></input>
+                  <datalist id="optickmarks">
+                    <option value={"0"}></option>
+                    <option value={"0.25"}></option>
+                    <option className="tick" value={"0.5"}></option>
+                    <option value={"0.75"}></option>
+                    <option value={"1"}></option>
+                  </datalist>
+                </div>
+                <div className="col-1 d-flex flex-column justify-content-center align-items-center">
+                  <img className="plusminus" title="1" alt="1" src="./itemicons/rangeOne.svg" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+const InputVideo = () => {
+  return (
+    <div className="form-group">
+      <div className="row mb-1 m-auto">
+        <div className="col">
+          <div className="row border">
+            <div className="col pt-1 pb-1 padlr latomenu d-flex flex-column justify-content-center
+             align-items-center">
+              <label>Video</label>
+            </div>
+            <div className="col d-flex flex-column justify-content-center align-items-center">
+              <label class="switch">
+                <input type="checkbox" className="form-control" defaultChecked={tempItemVideo}
+                  onClick={e => {
+                    if (tempItemVideo === false) {
+                      temp4 = true;
+                    } else {
+                      temp4 = false;
+                    }
+                  }} />
+                <span class="slider round" title="Video Player"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+        <div className="col-1"></div>
+        <div className="col">
+        </div>
+      </div>
+    </div>
+  )
+}
+
+const InputInfos = ({ label, disField, stateDisBlk, title, hideSwitch, tempo, id }) => {
+  return (
+    <div className="form-group">
+      <div className="row text-center mb-1 m-auto">
+        <div className="col">
+          <div className="row border">
+            <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
+              <label>{label}</label>
+            </div>
+            <div className="col d-flex flex-column justify-content-center align-items-center">
+              <input type="text" disabled={disField} className="form-control border-0"
+                defaultValue={title} id={id} onChange={tempo} />
+            </div>
+            <div className="col-2 border d-flex flex-column justify-content-center align-items-center">
+              <label className="switch">
+                <input type="checkbox" className="form-control" defaultChecked={hideSwitch}
+                  onClick={stateDisBlk} />
+                <span class="slider round" title="Hide"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+const InputHideBlocks = ({ hideSwitch }) => {
+  return (
+    <div className="form-group">
+      <div className="row mb-1 m-auto">
+        <div className="col">
+          <div className="row border">
+            <div className="col col pt-1 pb-1 padlr latomenu d-flex flex-column justify-content-center align-items-center">
+              <label>Hide</label>
+            </div>
+            <div className="col d-flex flex-column justify-content-center align-items-center">
+              <label class="switch">
+                <input type="checkbox" className="form-control" defaultChecked={!hideSwitch} onClick={e => {
+                  if (hideSwitch === false) {
+                    blockHide = true;
+                  } else {
+                    blockHide = false;
+                  }
+                }} />
+                <span class="slider round" title="Hide"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+        <div className="col-1"></div>
+        <div className="col">
+        </div>
+      </div>
+    </div>
+  )
+}
+
+const InputHide = ({ hideSwitch }) => {
+  return (
+    <div className="form-group">
+      <div className="row mb-1 m-auto">
+        <div className="col">
+          <div className="row border">
+            <div className="col col pt-1 pb-1 padlr latomenu d-flex flex-column justify-content-center align-items-center">
+              <label>Hide</label>
+            </div>
+            <div className="col d-flex flex-column justify-content-center align-items-center">
+              <label class="switch">
+                <input type="checkbox" className="form-control" defaultChecked={hideSwitch} onClick={e => {
+                  if (hideSwitch === false) {
+                    blockHide = true;
+                  } else {
+                    blockHide = false;
+                  }
+                }} />
+                <span class="slider round"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+        <div className="col-1"></div>
+        <div className="col">
+        </div>
+      </div>
+    </div>
+  )
+}
+
 // FUNCTIONS
 
 async function fetchUpPHP(file, url, key) {
   // console.log("fetchUpPHP...");
   var data = new FormData()
   data.append(key, file)
-  const response = await fetch(url, {
+  // const response = await fetch(url, {
+  await fetch(url, {
     method: 'POST',
     headers: {
       'Accept': '*/*'
@@ -875,7 +1294,8 @@ async function fetchUpPHP(file, url, key) {
 async function fetchUpConfig(file, url, key) {
   var data = new FormData()
   data.append(key, JSON.stringify(file))
-  const response = await fetch(url, {
+  // const response = await fetch(url, {
+  await fetch(url, {
     method: 'POST',
     headers: {
       'Accept': '*/*'
@@ -888,7 +1308,8 @@ async function fetchUpConfig(file, url, key) {
 }
 
 async function fetchDownCredentials(url) {
-  const response = await fetch(url, {
+  // const response = await fetch(url, {
+  await fetch(url, {
     method: 'GET',
     headers: {
       'Accept': '*/*'
@@ -904,7 +1325,8 @@ async function fetchDownCredentials(url) {
 async function fetchDelPHP(itemIcon, url, key) {
   var data = new FormData()
   data.append(key, itemIcon)
-  const response = await fetch(url, {
+  // const response = await fetch(url, {
+  await fetch(url, {
     method: 'POST',
     headers: {
       'Accept': '*/*'
@@ -1284,11 +1706,14 @@ class Main extends React.Component {
           if (blockHide !== "none") {
             array[temp].hidden = blockHide;
           }
+          // console.log("SaveImageFile InPos: ", inPos);
           if (inPos !== "") {
             let index = 0;
             if (tempCatTitle !== "Root") {
+              // console.log("tempCatTitle !== Root", inPos);
               index = this.state.catItems[inPos].id;
             } else {
+              // console.log("tempCatTitle === Root", inPos);
               index = this.state.rootItems[inPos].id;
             }
             // console.log("Index: ", index);
@@ -1301,6 +1726,7 @@ class Main extends React.Component {
             newItem.cat = array[temp].cat;
             newItem.id = index;
             newItem.hidden = array[temp].hidden;
+            var noAddArray = [];
             if (index > temp) {
               array = this.addAfter(array, index + 1, newItem);
               for (let i = (index + 1); i < array.length; i++) {
@@ -1312,7 +1738,7 @@ class Main extends React.Component {
               for (let i = (temp); i < array.length; i++) {
                 (array[i].id)--;
               }
-              var noAddArray = [...array];
+              noAddArray = [...array];
               this.setState({ items: array });
               spData.items = noAddArray;
             } else {
@@ -1325,7 +1751,7 @@ class Main extends React.Component {
               for (let i = (temp + 1); i < array.length; i++) {
                 (array[i].id)--;
               }
-              var noAddArray = [...array];
+              noAddArray = [...array];
               this.setState({ items: array });
               spData.items = noAddArray;
             }
@@ -1544,6 +1970,7 @@ class Main extends React.Component {
           // console.log("CatItems: ", spData.cats);
           arrayAdd = [];
           temp2 = "";
+          inPos = "";
           blockHide = "none";
           catNewItem = {
             "title": "",
@@ -1659,7 +2086,7 @@ class Main extends React.Component {
       if (temp4 !== "") {
         array[currPos].descr = temp4;
       }
-      if (temp !== "") {
+      if (cgPos !== "") {
         // console.log("CurrPos: ", currPos);
         // console.log("InPos: ", inPos);
         CrsNewItem.title = array[currPos].title;
@@ -1681,7 +2108,7 @@ class Main extends React.Component {
       temp2 = "";
       temp3 = "";
       temp4 = "";
-      temp = "";
+      cgPos = "";
       CrsNewItem = {
         "title": "",
         "link": "",
@@ -1746,43 +2173,43 @@ class Main extends React.Component {
     })
   }
 
-  showAlert(id) {
-    switch (id) {
-      case "ok":
-        this.setState({ altOkShow: false });
-        this.setState({ okShow: true });
-        this.setState({ errShow: false });
-        this.setState({ upShow: false });
-        setTimeout(() => this.setState({ okShow: false }), 1000);
-        break;
-      case "altok":
-        this.setState({ altOkShow: true });
-        this.setState({ okShow: false });
-        this.setState({ errShow: false });
-        this.setState({ upShow: false });
-        setTimeout(() => this.setState({ altOkShow: false }), 1000);
-        break;
-      case "err":
-        this.setState({ altOkShow: false });
-        this.setState({ errShow: true });
-        this.setState({ okShow: false });
-        this.setState({ upShow: false });
-        setTimeout(() => this.setState({ errShow: false }), 1000);
-        break;
-      case "up":
-        this.setState({ altOkShow: false });
-        this.setState({ errShow: false });
-        this.setState({ okShow: false });
-        this.setState({ upShow: true });
-        break;
-      case "all":
-        this.setState({ altOkShow: false });
-        this.setState({ errShow: false });
-        this.setState({ okShow: false });
-        this.setState({ upShow: false });
-        break;
-    }
-  }
+  // showAlert(id) {
+  //   switch (id) {
+  //     case "ok":
+  //       this.setState({ altOkShow: false });
+  //       this.setState({ okShow: true });
+  //       this.setState({ errShow: false });
+  //       this.setState({ upShow: false });
+  //       setTimeout(() => this.setState({ okShow: false }), 1000);
+  //       break;
+  //     case "altok":
+  //       this.setState({ altOkShow: true });
+  //       this.setState({ okShow: false });
+  //       this.setState({ errShow: false });
+  //       this.setState({ upShow: false });
+  //       setTimeout(() => this.setState({ altOkShow: false }), 1000);
+  //       break;
+  //     case "err":
+  //       this.setState({ altOkShow: false });
+  //       this.setState({ errShow: true });
+  //       this.setState({ okShow: false });
+  //       this.setState({ upShow: false });
+  //       setTimeout(() => this.setState({ errShow: false }), 1000);
+  //       break;
+  //     case "up":
+  //       this.setState({ altOkShow: false });
+  //       this.setState({ errShow: false });
+  //       this.setState({ okShow: false });
+  //       this.setState({ upShow: true });
+  //       break;
+  //     case "all":
+  //       this.setState({ altOkShow: false });
+  //       this.setState({ errShow: false });
+  //       this.setState({ okShow: false });
+  //       this.setState({ upShow: false });
+  //       break;
+  //   }
+  // }
 
   itemSearch = () => {
     if (temp !== "") {
@@ -2084,7 +2511,7 @@ class Main extends React.Component {
     temp = "";
     temp2 = "";
     temp3 = "";
-    this.fireAlert("Application removed!", "solidgreen");
+    this.fireAlert("Item removed!", "solidgreen");
     // this.showAlert("ok");
     this.saveFile(spData, "./api/img-upload.php", "config");
     this.setState({
@@ -2146,23 +2573,25 @@ class Main extends React.Component {
       }
       if (temp !== "") {
         inPos = parseInt(temp) - 1;
-        // console.log("InPos: ", inPos);
+        // console.log("AddCat (temp full) InPos: ", inPos);
         if (inPos <= arrayLength && !dup && inPos >= 0) {
           this.saveImgFile(fileImg, "cat", "add");
         } else {
-          this.fireAlert("No changes made or CAT name duplicated!", "solidblue");
+          this.fireAlert("Check Position!", "brick");
           // this.showAlert("err");
         }
       } else {
+        // console.log("AddCat (temp Empty) inPos: ", inPos);
         if (!dup) {
           this.saveImgFile(fileImg, "cat", "addlast");
         } else {
-          this.fireAlert("No changes made or CAT name duplicated!", "solidblue");
+          this.fireAlert("CAT name duplicated!", "brick");
           // this.showAlert("err");
         }
       }
+      // console.log("AddCat InPos (out temp check): ", inPos);
     } else {
-      this.fireAlert("No changes made or CAT name duplicated!", "solidblue");
+      this.fireAlert("Empty Icon or Title!", "brick");
       // this.showAlert("err");
     }
   }
@@ -2195,9 +2624,9 @@ class Main extends React.Component {
   }
 
   applyCrsEdit = () => {
-    if (temp2 !== tempCrsTitle || temp3 !== tempCrsLink || temp4 !== tempCrsDescr || temp !== "") {
-      if (temp !== "") {
-        inPos = parseInt(temp) - 1;
+    if (temp2 !== tempCrsTitle || temp3 !== tempCrsLink || temp4 !== tempCrsDescr || cgPos !== "") {
+      if (cgPos !== "") {
+        inPos = parseInt(cgPos) - 1;
         // console.log("InPos: ", inPos);
         if (inPos < arrayLength && inPos >= 0 && inPos !== currPos) {
           this.saveCrs("crs", "edit");
@@ -2287,6 +2716,11 @@ class Main extends React.Component {
       this.saveImgFile(fileImg, "back", "edit");
       changes = true;
     }
+
+    console.log("Tempopacity:", tempOpacity);
+    console.log("BackgroundOpacity:", spData.backgroundOpacity.toString());
+    console.log("Tempopacity1:", tempOpacity1);
+    console.log("CatBackgroundOpacity:", spData.catOpacity.toString());
 
     if (tempColor !== this.rgbToHex(spData.backgroundColor)
       || tempOpacity !== spData.backgroundOpacity.toString() || disable1 !== "none") {
@@ -2575,6 +3009,9 @@ class Main extends React.Component {
           case "col-5":
             radiobtn = document.getElementById("headCol5");
             radiobtn.checked = true;
+            break;
+          default:
+          // will NOT execute because of the line preceding the switch.
         }
         tempColor = this.rgbToHex(spData.headColor);
         tempOpacity = spData.headOpacity.toString();
@@ -2621,6 +3058,9 @@ class Main extends React.Component {
           case "col-5":
             radiobtn = document.getElementById("logoCol5");
             radiobtn.checked = true;
+            break;
+          default:
+          // will NOT execute because of the line preceding the switch.
         }
         tempColor = this.rgbToHex(spData.logoColor);
         tempOpacity = spData.logoOpacity.toString();
@@ -2652,38 +3092,44 @@ class Main extends React.Component {
           case "col-5":
             radiobtn = document.getElementById("infoCol5");
             radiobtn.checked = true;
+            break;
+          default:
+          // will NOT execute because of the line preceding the switch.
         }
         tempColor = this.rgbToHex(spData.footInfoColor);
         tempOpacity = spData.footInfoOpacity.toString();
         tempTextColor = this.rgbToHex(spData.footInfoTextColor);
         this.setState({ infoDiaShow: true });
         break;
-      case "credit":
+      case "addInfo":
         tempColW = spData.footAddColW;
         switch (spData.footAddColW) {
           case "col-md":
-            radiobtn = document.getElementById("creditColAuto");
+            radiobtn = document.getElementById("addInfoColAuto");
             radiobtn.checked = true;
             break;
           case "col-md-1":
-            radiobtn = document.getElementById("creditCol1");
+            radiobtn = document.getElementById("addInfoCol1");
             radiobtn.checked = true;
             break;
           case "col-md-2":
-            radiobtn = document.getElementById("creditCol2");
+            radiobtn = document.getElementById("addInfoCol2");
             radiobtn.checked = true;
             break;
           case "col-md-3":
-            radiobtn = document.getElementById("creditCol3");
+            radiobtn = document.getElementById("addInfoCol3");
             radiobtn.checked = true;
             break;
           case "col-md-4":
-            radiobtn = document.getElementById("creditCol4");
+            radiobtn = document.getElementById("addInfoCol4");
             radiobtn.checked = true;
             break;
           case "col-md-5":
-            radiobtn = document.getElementById("creditCol5");
+            radiobtn = document.getElementById("addInfoCol5");
             radiobtn.checked = true;
+            break;
+          default:
+          // will NOT execute because of the line preceding the switch.
         }
         tempColor = this.rgbToHex(spData.footAddColor);
         tempOpacity = spData.footAddOpacity.toString();
@@ -2766,12 +3212,17 @@ class Main extends React.Component {
           case "col-md-5":
             radiobtn = document.getElementById("clockCol5");
             radiobtn.checked = true;
+            break;
+          default:
+          // will NOT execute because of the line preceding the switch.
         }
         tempColor = this.rgbToHex(spData.clockColor);
         tempOpacity = spData.clockOpacity.toString();
         tempTextColor = this.rgbToHex(spData.clockTextColor);
         this.setState({ clockDiaShow: true });
         break;
+      default:
+      // will NOT execute because of the line preceding the switch.
     }
   };
 
@@ -2781,6 +3232,7 @@ class Main extends React.Component {
     switch (id) {
       case "title":
         this.setState({ titleDiaShow: false });
+        document.getElementById('titleOpRange').value = "";
         document.getElementById('titleForm').reset();
         break;
       case "menu":
@@ -2793,6 +3245,7 @@ class Main extends React.Component {
         disable1 = "none";
         disable2 = "none";
         this.setState({ menuDiaShow: false });
+        document.getElementById('menuOpRange').value = "";
         document.getElementById('menuForm').reset();
         break;
       case "login":
@@ -2801,10 +3254,12 @@ class Main extends React.Component {
         break;
       case "loginedit":
         this.setState({ loginEditDiaShow: false });
+        document.getElementById('loginOpRange').value = "";
         document.getElementById('loginEditForm').reset();
         break;
       case "logo":
         this.setState({ logoDiaShow: false });
+        document.getElementById('logoOpRange').value = "";
         document.getElementById('logoForm').reset();
         break;
       case "info":
@@ -2821,9 +3276,10 @@ class Main extends React.Component {
         disable2 = "none";
         disable3 = "none";
         this.setState({ infoDiaShow: false });
+        document.getElementById('infoOpRange').value = "";
         document.getElementById('infoForm').reset();
         break;
-      case "credit":
+      case "addInfo":
         this.setState({
           disFieldC: spData.noFootAddTitle
         });
@@ -2837,6 +3293,7 @@ class Main extends React.Component {
         disable2 = "none";
         disable3 = "none";
         this.setState({ addInfoDiaShow: false });
+        document.getElementById('addInfoOpRange').value = "";
         document.getElementById('creditForm').reset();
         break;
       case "itemEdit":
@@ -2908,10 +3365,13 @@ class Main extends React.Component {
         disable2 = "none";
         categoryFirst = "none";
         this.setState({ backEditDiaShow: false });
+        document.getElementById('catOpRange').value = "";
+        document.getElementById('backOpRange').value = "";
         document.getElementById('backEditForm').reset();
         break;
       case "clock":
         this.setState({ clockDiaShow: false });
+        document.getElementById('clockOpRange').value = "";
         document.getElementById('clockForm').reset();
         break;
       case "search":
@@ -2922,6 +3382,9 @@ class Main extends React.Component {
         this.setState({
           onlyRead: false
         })
+        break;
+      default:
+      // will NOT execute because of the line preceding the switch.
     }
     // this.showAlert("all");
     tempColor = "";
@@ -3196,7 +3659,7 @@ class Main extends React.Component {
         refresh: false
       });
     }
-    if (catDropDownIsOpen && currElement !== "catMenuButton") {
+    if (catDropDownIsOpen && currElement !== "editCatMenuButton" && currElement !== "addCatMenuButton") {
       this.setState({
         refresh: true
       });
@@ -3212,20 +3675,20 @@ class Main extends React.Component {
   // PAGE RENDER
 
   render() {
-    const { mainBtn: mainBtn } = this.state;
-    const { catFirst: catFirst } = this.state;
-    const { disFieldB: disFieldB } = this.state;
-    const { disFieldBC: disFieldBC } = this.state;
-    const { disFieldT: disFieldT } = this.state;
-    const { disFieldT2: disFieldT2 } = this.state;
-    const { disFieldT3: disFieldT3 } = this.state;
-    const { disFieldC: disFieldC } = this.state;
-    const { disFieldC2: disFieldC2 } = this.state;
-    const { disFieldC3: disFieldC3 } = this.state;
-    const { disFieldIA: disFieldIA } = this.state;
-    const { disFieldIE: disFieldIE } = this.state;
-    const { disFieldMS: disFieldMS } = this.state;
-    const { disFieldMC: disFieldMC } = this.state;
+    const { mainBtn } = this.state;
+    const { catFirst } = this.state;
+    const { disFieldB } = this.state;
+    const { disFieldBC } = this.state;
+    const { disFieldT } = this.state;
+    const { disFieldT2 } = this.state;
+    const { disFieldT3 } = this.state;
+    const { disFieldC } = this.state;
+    const { disFieldC2 } = this.state;
+    const { disFieldC3 } = this.state;
+    const { disFieldIA } = this.state;
+    const { disFieldIE } = this.state;
+    const { disFieldMS } = this.state;
+    const { disFieldMC } = this.state;
 
     const showHideFootTitle = spData.noFootTitle ? "d-none" : "d-block";
     const showHideFootSub = spData.noFootSubtitle ? "d-none" : "d-block";
@@ -3245,60 +3708,99 @@ class Main extends React.Component {
       </>
     );
 
-    let catMenuButtons = (
-      <DropdownCat items={this.state.cats} catName={this.state.catSel} setCat={this.setCat} refresh={this.state.refresh} />
+    let eCatMenuButtons = (
+      <DropdownCat items={this.state.cats} catName={this.state.catSel} id="editCatMenuButton" setCat={this.setCat} refresh={this.state.refresh} />
+    )
+
+    let aCatMenuButtons = (
+      <DropdownCat items={this.state.cats} catName={this.state.catSel} id="addCatMenuButton" setCat={this.setCat} refresh={this.state.refresh} />
     )
 
     let head = (
       <div className="row text-center mt-2 mb-2">
         <div className="col">
           <div className="row">
-            <Menu menuShow={this.state.menuShow} mainBtn={this.state.mainBtn}>
-              {/* MENU */}
+            {/* <Menu menuShow={this.state.menuShow} mainBtn={this.state.mainBtn}> */}
+            {/* MENU */}
+            <Element eleShow={this.state.menuShow} mainBtn={this.state.mainBtn} id="HeadMenu" sfondo={spData.menuColor} colore={spData.menuTextColor} z={1} colW="col-md-1">
               {menuButtons}
-              <EditMenu editMenuShow={this.state.mainBtn} hidden={spData.menuShow}>
+              <EditElement editEleShow={this.state.mainBtn} hidden={spData.menuShow}>
                 <button className="col flexbutton solidgreen m-1" onClick={() => this.showModal("menu")}>
                   Edit Menu
                 </button>
-              </EditMenu>
-            </Menu>
-            <Titolo titleShow={this.state.titleShow} mainBtn={this.state.mainBtn}>
-              {/* TITOLO */}
+              </EditElement>
+              {/* <EditMenu editMenuShow={this.state.mainBtn} hidden={spData.menuShow}>
+                <button className="col flexbutton solidgreen m-1" onClick={() => this.showModal("menu")}>
+                  Edit Menu
+                </button>
+              </EditMenu> */}
+            </Element>
+            {/* </Menu> */}
+            {/* TITOLO */}
+            <Element eleShow={this.state.titleShow} mainBtn={this.state.mainBtn} id="HeadTitle" sfondo={spData.headColor} colore={spData.headTextColor} z={""} colW={spData.headColW}>
+              {/* <Titolo titleShow={this.state.titleShow} mainBtn={this.state.mainBtn}> */}
               <div>
                 <p className="medfont">{spData.headTitle}</p>
               </div>
-              <EditTitolo editTitleShow={this.state.mainBtn} hidden={spData.titleShow}>
+              <EditElement editEleShow={this.state.mainBtn} hidden={spData.titleShow}>
                 <button className="col flexbutton solidgreen m-1" onClick={() => this.showModal("title")}>
                   Edit Title
                 </button>
-              </EditTitolo>
-            </Titolo>
-            <Logo logoShow={this.state.logoShow} mainBtn={this.state.mainBtn}>
-              {/* LOGO */}
+              </EditElement>
+              {/* <EditTitolo editTitleShow={this.state.mainBtn} hidden={spData.titleShow}>
+                <button className="col flexbutton solidgreen m-1" onClick={() => this.showModal("title")}>
+                  Edit Title
+                </button>
+              </EditTitolo> */}
+            </Element>
+            {/* </Titolo> */}
+            {/* LOGO */}
+            <Element eleShow={this.state.logoShow} mainBtn={this.state.mainBtn} id="HeadLogo" sfondo={spData.logoColor} colore="white" z={""} colW={spData.logoColW}>
+              {/* <Logo logoShow={this.state.logoShow} mainBtn={this.state.mainBtn}> */}
               <LogoImg />
-              <EditLogo editLogoShow={this.state.mainBtn} hidden={spData.logoShow}>
+              <EditElement editEleShow={this.state.mainBtn} hidden={spData.logoShow}>
                 <button className="col latowhite flexbutton solidgreen m-1" onClick={() => this.showModal("logo")}>
                   Edit Logo
                 </button>
-              </EditLogo>
-            </Logo>
-            <Clock clockShow={this.state.clockShow} mainBtn={this.state.mainBtn}>
-              {/* OROLOGIO */}
+              </EditElement>
+              {/* <EditLogo editLogoShow={this.state.mainBtn} hidden={spData.logoShow}>
+                <button className="col latowhite flexbutton solidgreen m-1" onClick={() => this.showModal("logo")}>
+                  Edit Logo
+                </button>
+              </EditLogo> */}
+            </Element>
+            {/* </Logo> */}
+
+            {/* OROLOGIO */}
+            {/* <Clock clockShow={this.state.clockShow} mainBtn={this.state.mainBtn}> */}
+            <Element eleShow={this.state.clockShow} mainBtn={this.state.mainBtn} id="HeadDate" sfondo={spData.clockColor} colore={spData.clockTextColor} z={""} colW={spData.clockColW}>
               <Orologio />
-              <EditClock editClockShow={this.state.mainBtn} hidden={spData.clockShow}>
+              <EditElement editEleShow={this.state.mainBtn} hidden={spData.clockShow}>
                 <button className="col flexbutton solidgreen m-1" onClick={() => this.showModal("clock")}>
                   Edit Clock
                 </button>
-              </EditClock>
-            </Clock>
+              </EditElement>
+              {/* <EditClock editClockShow={this.state.mainBtn} hidden={spData.clockShow}>
+                <button className="col flexbutton solidgreen m-1" onClick={() => this.showModal("clock")}>
+                  Edit Clock
+                </button>
+              </EditClock> */}
+              {/* </Clock> */}
+            </Element>
+
             {/* SETTINGS */}
             <Set mainBtn={this.state.mainBtn}>
               <LoginGear handleShowButtons={this.loginSession} />
-              <EditSet editSetShow={this.state.mainBtn}>
+              <EditElement editEleShow={this.state.mainBtn} hidden={true}>
                 <button className="col latowhite flexbutton solidgreen m-1" onClick={() => this.loginEditSession("LoginEdit")}>
                   Edit Login
                 </button>
-              </EditSet>
+              </EditElement>
+              {/* <EditSet editSetShow={this.state.mainBtn}>
+                <button className="col latowhite flexbutton solidgreen m-1" onClick={() => this.loginEditSession("LoginEdit")}>
+                  Edit Login
+                </button>
+              </EditSet> */}
             </Set>
           </div>
         </div>
@@ -3338,7 +3840,7 @@ class Main extends React.Component {
               return (
                 <Cat showItemsBtn={this.state.itemsBtnShow} key={i} pos={i}
                   title={title} icon={icon} catEditDel={this.catEditDel}
-                  catCont={this.catCont} itemHide={hidden} />
+                  catCont={this.catCont} itemHide={hidden} hidden={hidden} />
               )
             })
           }
@@ -3374,7 +3876,7 @@ class Main extends React.Component {
               return (
                 <Cat showItemsBtn={this.state.itemsBtnShow} key={i} pos={i}
                   title={title} icon={icon} catEditDel={this.catEditDel}
-                  catCont={this.catCont} itemHide={hidden} />
+                  catCont={this.catCont} itemHide={hidden} hidden={hidden} />
               )
             })
           }
@@ -3387,31 +3889,46 @@ class Main extends React.Component {
         <div className="col">
           <div className="row">
             {/* INFO */}
-            <Info infoShow={this.state.infoShow} mainBtn={this.state.mainBtn}>
+            <Element eleShow={this.state.infoShow} mainBtn={this.state.mainBtn} id="FootInfo" sfondo={spData.footInfoColor} colore={spData.footInfoTextColor} z={""} colW={spData.footInfoColW}>
+              {/* <Info infoShow={this.state.infoShow} mainBtn={this.state.mainBtn}> */}
               <div>
                 <p className={showHideFootTitle + " medfont"}>{spData.footTitle}</p>
                 <p className={showHideFootSub + " smallfont"}>{spData.footSubtitle}</p>
                 <p className={showHideFootSub2 + " smallfont"}>{spData.footSubtitle2}</p>
               </div>
-              <EditInfo editInfoShow={this.state.mainBtn} hidden={spData.infoShow}>
+              <EditElement editEleShow={this.state.mainBtn} hidden={spData.infoShow}>
                 <button className="col flexbutton solidgreen m-1" onClick={() => this.showModal("info")}>
                   Edit Info
                 </button>
-              </EditInfo>
-            </Info>
+              </EditElement>
+              {/* <EditInfo editInfoShow={this.state.mainBtn} hidden={spData.infoShow}>
+                <button className="col flexbutton solidgreen m-1" onClick={() => this.showModal("info")}>
+                  Edit Info
+                </button>
+              </EditInfo> */}
+            </Element>
+            {/* </Info> */}
             {/* CREDITI */}
-            <AddInfo addInfoShow={this.state.addInfoShow} infoShow={this.state.infoShow} mainBtn={this.state.mainBtn}>
+            {/* CREDITI */}
+            <Element eleShow={this.state.addInfoShow} mainBtn={this.state.mainBtn} id="FootAddInfo" sfondo={spData.footAddColor} colore={spData.footAddTextColor} z={""} colW={spData.footAddColW}>
+              {/* <AddInfo addInfoShow={this.state.addInfoShow} infoShow={this.state.infoShow} mainBtn={this.state.mainBtn}> */}
               <div>
                 <p className={showHideCrTitle + " smallfont"}>{spData.footAddTitle}</p>
                 <p className={showHideCrSub + " smallfont"}><i>{spData.footAddSubtitle}</i></p>
                 <p className={showHideCrSub2 + " verysmallfont"}>{spData.footAddSubtitle2}</p>
               </div>
-              <EditAddInfo editAddInfoShow={this.state.mainBtn} hidden={spData.addInfoShow}>
-                <button className="col flexbutton brick m-1" onClick={() => this.showModal("credit")}>
+              <EditElement editEleShow={this.state.mainBtn} hidden={spData.addInfoShow}>
+                <button className="col flexbutton brick m-1" onClick={() => this.showModal("addInfo")}>
                   Edit Add Info
                 </button>
-              </EditAddInfo>
-            </AddInfo>
+              </EditElement>
+              {/* <EditAddInfo editAddInfoShow={this.state.mainBtn} hidden={spData.addInfoShow}>
+                <button className="col flexbutton brick m-1" onClick={() => this.showModal("addInfo")}>
+                  Edit Add Info
+                </button>
+              </EditAddInfo> */}
+            </Element>
+            {/* </AddInfo> */}
           </div>
         </div>
       </div >
@@ -3426,14 +3943,16 @@ class Main extends React.Component {
         <div style={this.state.backStyle}></div>
         <div class="contenitore">
           <section>
+
             <LoginDialog loginDiaShow={this.state.loginDiaShow} handleClose={() => this.hideModal("login")} handleLogin={this.loginCheck}>
               <div className="modal-content">
-                <div className="modal-header">
-                  <h5 className="modal-title" >Login</h5>
-                </div>
+
+                <ModalTitle title="Login"></ModalTitle>
+
                 <div className="modal-body">
                   <form id="loginForm">
 
+                    {/* User */}
                     <div className="form-group">
                       <div className="row text-center mb-1 m-auto">
                         <div className="col">
@@ -3450,6 +3969,7 @@ class Main extends React.Component {
                       </div>
                     </div>
 
+                    {/* Password */}
                     <div className="form-group">
                       <div className="row text-center mb-1 m-auto">
                         <div className="col">
@@ -3467,34 +3987,20 @@ class Main extends React.Component {
 
                     <Alert alertShow={this.state.alertShow} alertMsg={this.state.alertMsg} alertCol={this.state.alertCol}></Alert>
 
-                    {/* <Error errShow={this.state.errShow} errMsg="Wrong user name or password!" errCol="brick"></Error> */}
-
-                    {/* <Error errShow={this.state.errShow}>
-                      <div className="row text-center pt-2">
-                        <div className="col">
-                          <div className="row">
-                            <section className="col pt-2 contenitore brick latowhite d-flex justify-content-center align-items-center ">
-                              <div>
-                                <p className="norfont">Wrong user name or password!</p>
-                              </div>
-                            </section>
-                          </div>
-                        </div>
-                      </div>
-                    </Error> */}
-
                   </form>
                 </div>
               </div>
             </LoginDialog>
+
             <LoginEditDialog loginEditDiaShow={this.state.loginEditDiaShow} handleClose={() => this.hideModal("loginedit")} handleEditLogin={this.loginEditCheck}>
               <div className="modal-content noborder">
-                <div className="modal-header">
-                  <h5 className="modal-title" >Edit Login</h5>
-                </div>
+
+                <ModalTitle title="Edit Login"></ModalTitle>
+
                 <div className="modal-body">
                   <form id="loginEditForm" autocomplete="off">
 
+                    {/* User */}
                     <div className="form-group">
                       <div className="row text-center mb-1 m-auto">
                         <div className="col">
@@ -3511,6 +4017,7 @@ class Main extends React.Component {
                       </div>
                     </div>
 
+                    {/* Password */}
                     <div className="form-group">
                       <div className="row text-center mb-1 m-auto">
                         <div className="col">
@@ -3526,9 +4033,13 @@ class Main extends React.Component {
                       </div>
                     </div>
 
+                    {/* Back color */}
                     <div className="form-group">
                       <div className="row mb-1 m-auto">
-                        <div className="col">
+
+                        <InputBackColor backColor={spData.loginColor}></InputBackColor>
+
+                        {/* <div className="col">
                           <div className="row border">
                             <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
                               <label>Back color</label>
@@ -3537,11 +4048,14 @@ class Main extends React.Component {
                               <input type="color" className="form-control border-0 p-0" defaultValue={this.rgbToHex(spData.loginColor)} onChange={e => tempColor = e.target.value} />
                             </div>
                           </div>
-                        </div>
+                        </div> */}
+
                       </div>
                     </div>
 
-                    <div className="form-group">
+                    <InputOpacity opacity={spData.loginOpacity} id="loginOpRange" tempo={e => tempOpacity = e.target.value}></InputOpacity>
+
+                    {/* <div className="form-group">
                       <div className="row mb-1 m-auto">
                         <div className="col">
                           <div className="row border">
@@ -3571,63 +4085,46 @@ class Main extends React.Component {
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </div> */}
 
                     <Alert alertShow={this.state.alertShow} alertMsg={this.state.alertMsg} alertCol={this.state.alertCol}></Alert>
 
-                    {/* <Ok okShow={this.state.okShow}>
-                      <div className="row text-center pt-2">
-                        <div className="col">
-                          <div className="row">
-                            <section className="col pt-2 contenitore solidgreen latowhite d-flex justify-content-center align-items-center ">
-                              <div>
-                                <p className="norfont">Username and password changed successfully!</p>
-                              </div>
-                            </section>
-                          </div>
-                        </div>
-                      </div>
-                    </Ok>
-                    <AltOk altOkShow={this.state.altOkShow}> */}
-                    {/* <div className="row text-center pt-2">
-                        <div className="col">
-                          <div className="row">
-                            <section className="col pt-2 contenitore solidgreen latowhite d-flex justify-content-center align-items-center ">
-                              <div>
-                                <p className="norfont">Changes Made!</p>
-                              </div>
-                            </section>
-                          </div>
-                        </div>
-                      </div>
-                    </AltOk> */}
-                    {/* <Error errShow={this.state.errShow} errMsg="Fill in at least one field." errCol="brick"></Error> */}
-                    {/* <Error errShow={this.state.errShow}>
-                      <div className="row text-center pt-2">
-                        <div className="col">
-                          <div className="row">
-                            <section className="col pt-2 contenitore brick latowhite d-flex justify-content-center align-items-center ">
-                              <div>
-                                <p className="norfont"></p>
-                              </div>
-                            </section>
-                          </div>
-                        </div>
-                      </div>
-                    </Error> */}
                   </form>
                 </div>
               </div>
             </LoginEditDialog>
-            <MenuDialog menuDiaShow={this.state.menuDiaShow} handleClose={() => this.hideModal("menu")} handleSave={this.saveMenu}>
+
+            <EleDialog eleDiaShow={this.state.menuDiaShow} handleClose={() => this.hideModal("menu")} handleSave={this.saveMenu} saveLabel="Apply">
+              {/* <MenuDialog menuDiaShow={this.state.menuDiaShow} handleClose={() => this.hideModal("menu")} handleSave={this.saveMenu}> */}
               <div className="modal-content noborder">
-                <div className="modal-header">
-                  <h5 className="modal-title" >Edit Menu</h5>
-                </div>
+
+                <ModalTitle title="Edit Menu"></ModalTitle>
+
                 <div className="modal-body">
                   <form id="menuForm">
 
-                    <div className="form-group">
+                    {/* Search */}
+                    <InputInfos label="Search"
+                      disField={disFieldMS}
+                      stateDisBlk={e => {
+                        if (this.state.disFieldMS === false) {
+                          this.setState({
+                            disFieldMS: true
+                          });
+                          disable1 = true;
+                        } else {
+                          this.setState({
+                            disFieldMS: false
+                          });
+                          disable1 = false;
+                        }
+                      }}
+                      title={spData.menuSearchLabel}
+                      hideSwitch={spData.noMenuSearch}
+                      tempo={e => temp = e.target.value}>
+                    </InputInfos>
+
+                    {/* <div className="form-group">
                       <div className="row text-center mb-1 m-auto">
                         <div className="col">
                           <div className="row border">
@@ -3658,9 +4155,30 @@ class Main extends React.Component {
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </div> */}
 
-                    <div className="form-group">
+                    {/* Credit */}
+                    <InputInfos label="Credits"
+                      disField={disFieldMC}
+                      stateDisBlk={e => {
+                        if (this.state.disFieldMC === false) {
+                          this.setState({
+                            disFieldMC: true
+                          });
+                          disable2 = true;
+                        } else {
+                          this.setState({
+                            disFieldMC: false
+                          });
+                          disable2 = false;
+                        }
+                      }}
+                      title={spData.menuCreditsLabel}
+                      hideSwitch={spData.noMenuCredits}
+                      tempo={e => temp2 = e.target.value}>
+                    </InputInfos>
+
+                    {/* <div className="form-group">
                       <div className="row text-center mb-1 m-auto">
                         <div className="col">
                           <div className="row border">
@@ -3691,11 +4209,15 @@ class Main extends React.Component {
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </div> */}
 
+                    {/* Back color */}
                     <div className="form-group">
                       <div className="row mb-1 m-auto">
-                        <div className="col">
+
+                        <InputBackColor backColor={spData.menuColor}></InputBackColor>
+
+                        {/* <div className="col">
                           <div className="row border">
                             <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
                               <label>Back color</label>
@@ -3704,11 +4226,14 @@ class Main extends React.Component {
                               <input type="color" className="form-control border-0 p-0" defaultValue={this.rgbToHex(spData.menuColor)} onChange={e => tempColor = e.target.value} />
                             </div>
                           </div>
-                        </div>
+                        </div> */}
+
                       </div>
                     </div>
 
-                    <div className="form-group">
+                    <InputOpacity opacity={spData.menuOpacity} id="menuOpRange" tempo={e => tempOpacity = e.target.value}></InputOpacity>
+
+                    {/* <div className="form-group">
                       <div className="row mb-1 m-auto">
                         <div className="col">
                           <div className="row border">
@@ -3742,9 +4267,11 @@ class Main extends React.Component {
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </div> */}
 
-                    <div className="form-group">
+                    <InputHideBlocks hideSwitch={spData.menuShow}></InputHideBlocks>
+
+                    {/* <div className="form-group">
                       <div className="row mb-1 m-auto">
                         <div className="col">
                           <div className="row border">
@@ -3769,48 +4296,30 @@ class Main extends React.Component {
                         <div className="col">
                         </div>
                       </div>
-                    </div>
+                    </div> */}
+
                     <Alert alertShow={this.state.alertShow} alertMsg={this.state.alertMsg} alertCol={this.state.alertCol}></Alert>
-                    {/* <Ok okShow={this.state.okShow}>
-                      <div className="row text-center pt-2">
-                        <div className="col">
-                          <div className="row">
-                            <section className="col pt-2 contenitore solidgreen latowhite d-flex justify-content-center align-items-center ">
-                              <div>
-                                <p className="norfont">Changes made!</p>
-                              </div>
-                            </section>
-                          </div>
-                        </div>
-                      </div>
-                    </Ok> */}
-                    {/* <Error errShow={this.state.errShow} errMsg="Enter at least one character." errCol="brick"></Error> */}
-                    {/* <Error errShow={this.state.errShow}>
-                      <div className="row text-center pt-2">
-                        <div className="col">
-                          <div className="row">
-                            <section className="col pt-2 contenitore brick latowhite d-flex justify-content-center align-items-center ">
-                              <div>
-                                <p className="norfont">Enter at least one character.</p>
-                              </div>
-                            </section>
-                          </div>
-                        </div>
-                      </div>
-                    </Error> */}
+
                   </form>
                 </div>
               </div>
-            </MenuDialog>
+              {/* </MenuDialog> */}
+            </EleDialog>
+
             <TitleDialog titleDiaShow={this.state.titleDiaShow} handleClose={() => this.hideModal("title")} handleSave={this.saveTitle}>
               <div className="modal-content noborder">
-                <div className="modal-header">
-                  <h5 className="modal-title" >Edit Title (Site name)</h5>
-                </div>
+
+                <ModalTitle title="Edit Title (Site name)"></ModalTitle>
+
                 <div className="modal-body">
                   <form id="titleForm" onKeyDown={this.handleKeyDown}>
 
-                    <div className="form-group">
+
+                    <InputTitle label="Name" edit="Edit Item" tempTitle={spData.headTitle}
+                      tempo={e => temp = e.target.value} >
+                    </InputTitle>
+
+                    {/* <div className="form-group">
                       <div className="row text-center mb-1 m-auto">
                         <div className="col">
                           <div className="row border">
@@ -3823,9 +4332,12 @@ class Main extends React.Component {
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </div> */}
 
-                    <div class="form-group" >
+                    <InputWidth idAuto="headColAuto" idCol1="headCol1" idCol2="headCol2" idCol3="headCol3" idCol4="headCol4" idCol5="headCol5"
+                      valAuto="col" valCol1="col-1" valCol2="col-2" valCol3="col-3" valCol4="col-4" valCol5="col-5"></InputWidth>
+
+                    {/* <div class="form-group" >
                       <div className="row text-center mb-1 m-auto">
                         <div className="col">
                           <div className="row border">
@@ -3857,11 +4369,14 @@ class Main extends React.Component {
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </div> */}
 
                     <div className="form-group">
                       <div className="row mb-1 m-auto">
-                        <div className="col">
+
+                        <InputBackColor backColor={spData.headColor}></InputBackColor>
+
+                        {/* <div className="col">
                           <div className="row border">
                             <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
                               <label>Back color</label>
@@ -3870,9 +4385,13 @@ class Main extends React.Component {
                               <input type="color" className="form-control border-0 p-0" defaultValue={this.rgbToHex(spData.headColor)} onChange={e => tempColor = e.target.value} />
                             </div>
                           </div>
-                        </div>
+                        </div> */}
+
                         <div className="col-1"></div>
-                        <div className="col">
+
+                        <InputTextColor textColor={spData.headTextColor}></InputTextColor>
+
+                        {/* <div className="col">
                           <div className="row border">
                             <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
                               <label>Text color</label>
@@ -3881,11 +4400,14 @@ class Main extends React.Component {
                               <input type="color" className="form-control border-0 p-0" defaultValue={this.rgbToHex(spData.headTextColor)} onChange={e => tempTextColor = e.target.value} />
                             </div>
                           </div>
-                        </div>
+                        </div> */}
+
                       </div>
                     </div>
 
-                    <div className="form-group">
+                    <InputOpacity opacity={spData.headOpacity} id="titleOpRange" tempo={e => tempOpacity = e.target.value}></InputOpacity>
+
+                    {/* <div className="form-group">
                       <div className="row mb-1 m-auto">
                         <div className="col">
                           <div className="row border">
@@ -3919,9 +4441,11 @@ class Main extends React.Component {
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </div> */}
 
-                    <div className="form-group">
+                    <InputHideBlocks hideSwitch={spData.titleShow}></InputHideBlocks>
+
+                    {/* <div className="form-group">
                       <div className="row mb-1 m-auto">
                         <div className="col">
                           <div className="row border">
@@ -3946,50 +4470,27 @@ class Main extends React.Component {
                         <div className="col">
                         </div>
                       </div>
-                    </div>
+                    </div> */}
 
                     <Alert alertShow={this.state.alertShow} alertMsg={this.state.alertMsg} alertCol={this.state.alertCol}></Alert>
 
-                    {/* <Ok okShow={this.state.okShow}>
-                      <div className="row text-center pt-2">
-                        <div className="col">
-                          <div className="row">
-                            <section className="col pt-2 contenitore solidgreen latowhite d-flex justify-content-center align-items-center ">
-                              <div>
-                                <p className="norfont">Changes made!</p>
-                              </div>
-                            </section>
-                          </div>
-                        </div>
-                      </div>
-                    </Ok> */}
-                    {/* <Error errShow={this.state.errShow} errMsg="Enter at least one character." errCol="brick"></Error> */}
-                    {/* <Error errShow={this.state.errShow}>
-                      <div className="row text-center pt-2">
-                        <div className="col">
-                          <div className="row">
-                            <section className="col pt-2 contenitore brick latowhite d-flex justify-content-center align-items-center ">
-                              <div>
-                                <p className="norfont">Enter at least one character.</p>
-                              </div>
-                            </section>
-                          </div>
-                        </div>
-                      </div>
-                    </Error> */}
                   </form>
                 </div>
               </div>
             </TitleDialog>
+
             <ClockDialog clockDiaShow={this.state.clockDiaShow} handleClose={() => this.hideModal("clock")} handleSave={this.saveClock}>
               <div className="modal-content noborder">
-                <div className="modal-header">
-                  <h5 className="modal-title" >Edit Clock</h5>
-                </div>
+
+                <ModalTitle title="Edit Clock"></ModalTitle>
+
                 <div className="modal-body">
                   <form id="clockForm">
 
-                    <div class="form-group" >
+                    <InputWidth idAuto="clockColAuto" idCol1="clockCol1" idCol2="clockCol2" idCol3="clockCol3" idCol4="clockCol4" idCol5="clockCol5"
+                      valAuto="col-md" valCol1="col-md-1" valCol2="col-md-2" valCol3="col-md-3" valCol4="col-md-4" valCol5="col-md-5"></InputWidth>
+
+                    {/* <div class="form-group" >
                       <div className="row text-center mb-1 m-auto">
                         <div className="col">
                           <div className="row border">
@@ -4023,11 +4524,15 @@ class Main extends React.Component {
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </div> */}
 
+                    {/* Back & Text colors */}
                     <div className="form-group">
                       <div className="row mb-1 m-auto">
-                        <div className="col">
+
+                        <InputBackColor backColor={spData.clockColor}></InputBackColor>
+
+                        {/* <div className="col">
                           <div className="row border">
                             <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
                               <label>Back color</label>
@@ -4036,9 +4541,13 @@ class Main extends React.Component {
                               <input type="color" className="form-control border-0 p-0" defaultValue={this.rgbToHex(spData.clockColor)} onChange={e => tempColor = e.target.value} />
                             </div>
                           </div>
-                        </div>
+                        </div> */}
+
                         <div className="col-1"></div>
-                        <div className="col">
+
+                        <InputTextColor textColor={spData.clockTextColor}></InputTextColor>
+
+                        {/* <div className="col">
                           <div className="row border">
                             <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
                               <label>Text color</label>
@@ -4047,11 +4556,14 @@ class Main extends React.Component {
                               <input type="color" className="form-control border-0 p-0" defaultValue={this.rgbToHex(spData.clockTextColor)} onChange={e => tempTextColor = e.target.value} />
                             </div>
                           </div>
-                        </div>
+                        </div> */}
+
                       </div>
                     </div>
 
-                    <div className="form-group">
+                    <InputOpacity opacity={spData.clockOpacity} id="clockOpRange" tempo={e => tempOpacity = e.target.value}></InputOpacity>
+
+                    {/* <div className="form-group">
                       <div className="row mb-1 m-auto">
                         <div className="col">
                           <div className="row border">
@@ -4085,9 +4597,11 @@ class Main extends React.Component {
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </div> */}
 
-                    <div className="form-group">
+                    <InputHideBlocks hideSwitch={spData.clockShow}></InputHideBlocks>
+
+                    {/* <div className="form-group">
                       <div className="row mb-1 m-auto">
                         <div className="col">
                           <div className="row border">
@@ -4112,48 +4626,26 @@ class Main extends React.Component {
                         <div className="col">
                         </div>
                       </div>
-                    </div>
+                    </div> */}
+
                     <Alert alertShow={this.state.alertShow} alertMsg={this.state.alertMsg} alertCol={this.state.alertCol}></Alert>
-                    {/* <Ok okShow={this.state.okShow}>
-                      <div className="row text-center pt-2">
-                        <div className="col">
-                          <div className="row">
-                            <section className="col pt-2 contenitore solidgreen latowhite d-flex justify-content-center align-items-center ">
-                              <div>
-                                <p className="norfont">Changes made!</p>
-                              </div>
-                            </section>
-                          </div>
-                        </div>
-                      </div>
-                    </Ok>
-                    <Error errShow={this.state.errShow} errMsg="Enter at least one character." errCol="brick"></Error> */}
-                    {/* <Error errShow={this.state.errShow}>
-                      <div className="row text-center pt-2">
-                        <div className="col">
-                          <div className="row">
-                            <section className="col pt-2 contenitore brick latowhite d-flex justify-content-center align-items-center ">
-                              <div>
-                                <p className="norfont">Enter at least one character.</p>
-                              </div>
-                            </section>
-                          </div>
-                        </div>
-                      </div>
-                    </Error> */}
+
                   </form>
                 </div>
               </div>
             </ClockDialog>
+
             <LogoDialog logoDiaShow={this.state.logoDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("logo")} handleUpload={this.saveLogo}>
               <div className="modal-content noborder">
-                <div className="modal-header">
-                  <h5 className="modal-title" >Edit Logo</h5>
-                </div>
+
+                <ModalTitle title="Edit Logo"></ModalTitle>
+
                 <div className="modal-body">
                   <form id="logoForm">
 
-                    <div className="form-group">
+                    <InputFile></InputFile>
+
+                    {/* <div className="form-group">
                       <div className="row text-center mb-1 m-auto">
                         <div className="col">
                           <div className="row border">
@@ -4163,9 +4655,12 @@ class Main extends React.Component {
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </div> */}
 
-                    <div class="form-group" >
+                    <InputWidth idAuto="logoColAuto" idCol1="logoCol1" idCol2="logoCol2" idCol3="logoCol3" idCol4="logoCol4" idCol5="logoCol5"
+                      valAuto="col" valCol1="col-1" valCol2="col-2" valCol3="col-3" valCol4="col-4" valCol5="col-5"></InputWidth>
+
+                    {/* <div class="form-group" >
                       <div className="row text-center mb-1 m-auto">
                         <div className="col">
                           <div className="row border">
@@ -4197,11 +4692,15 @@ class Main extends React.Component {
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </div> */}
 
+                    {/* Back color */}
                     <div className="form-group">
                       <div className="row mb-1 m-auto">
-                        <div className="col">
+
+                        <InputBackColor backColor={spData.logoColor}></InputBackColor>
+
+                        {/* <div className="col">
                           <div className="row border">
                             <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
                               <label>Back color</label>
@@ -4210,11 +4709,14 @@ class Main extends React.Component {
                               <input type="color" className="form-control border-0 p-0" defaultValue={this.rgbToHex(spData.logoColor)} onChange={e => tempColor = e.target.value} />
                             </div>
                           </div>
-                        </div>
+                        </div> */}
+
                       </div>
                     </div>
 
-                    <div className="form-group">
+                    <InputOpacity opacity={spData.logoOpacity} id="logoOpRange" tempo={e => tempOpacity = e.target.value}></InputOpacity>
+
+                    {/* <div className="form-group">
                       <div className="row mb-1 m-auto">
                         <div className="col">
                           <div className="row border">
@@ -4248,9 +4750,11 @@ class Main extends React.Component {
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </div> */}
 
-                    <div className="form-group">
+                    <InputHideBlocks hideSwitch={spData.logoShow}></InputHideBlocks>
+
+                    {/* <div className="form-group">
                       <div className="row mb-1 m-auto">
                         <div className="col">
                           <div className="row border">
@@ -4275,35 +4779,10 @@ class Main extends React.Component {
                         <div className="col">
                         </div>
                       </div>
-                    </div>
+                    </div> */}
+
                     <Alert alertShow={this.state.alertShow} alertMsg={this.state.alertMsg} alertCol={this.state.alertCol}></Alert>
 
-                    {/* <Ok okShow={this.state.okShow}>
-                      <div className="row text-center pt-2">
-                        <div className="col">
-                          <div className="row">
-                            <section className="col pt-2 contenitore solidgreen latowhite d-flex justify-content-center align-items-center ">
-                              <div>
-                                <p className="norfont">Changes made!</p>
-                              </div>
-                            </section>
-                          </div>
-                        </div>
-                      </div>
-                    </Ok> */}
-                    {/* <Upload upShow={this.state.upShow}>
-                      <div className="row text-center pt-2">
-                        <div className="col">
-                          <div className="row">
-                            <section className="col pt-2 contenitore solidblue latowhite d-flex justify-content-center align-items-center ">
-                              <div>
-                                <p className="norfont">Loading data... Please wait.</p>
-                              </div>
-                            </section>
-                          </div>
-                        </div>
-                      </div>
-                    </Upload> */}
                   </form>
                 </div>
               </div>
@@ -4311,13 +4790,33 @@ class Main extends React.Component {
 
             <InfoDialog infoDiaShow={this.state.infoDiaShow} handleClose={() => this.hideModal("info")} handleSave={this.saveInfo}>
               <div className="modal-content noborder">
-                <div className="modal-header">
-                  <h5 className="modal-title" >Edit Foot Info</h5>
-                </div>
+
+                <ModalTitle title="Edit Foot Info"></ModalTitle>
+
                 <div className="modal-body">
                   <form id="infoForm">
 
-                    <div className="form-group">
+                    <InputInfos label="Info"
+                      disField={disFieldT}
+                      stateDisBlk={e => {
+                        if (this.state.disFieldT === false) {
+                          this.setState({
+                            disFieldT: true
+                          });
+                          disable1 = true;
+                        } else {
+                          this.setState({
+                            disFieldT: false
+                          });
+                          disable1 = false;
+                        }
+                      }}
+                      title={spData.footTitle}
+                      hideSwitch={spData.noFootTitle}
+                      tempo={e => temp = e.target.value}>
+                    </InputInfos>
+
+                    {/* <div className="form-group">
                       <div className="row text-center mb-1 m-auto">
                         <div className="col">
                           <div className="row border">
@@ -4348,9 +4847,29 @@ class Main extends React.Component {
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </div> */}
 
-                    <div className="form-group">
+                    <InputInfos label="Info #2"
+                      disField={disFieldT2}
+                      stateDisBlk={e => {
+                        if (this.state.disFieldT2 === false) {
+                          this.setState({
+                            disFieldT2: true
+                          });
+                          disable2 = true;
+                        } else {
+                          this.setState({
+                            disFieldT2: false
+                          });
+                          disable2 = false;
+                        }
+                      }}
+                      title={spData.footSubtitle}
+                      hideSwitch={spData.noFootSubtitle}
+                      tempo={e => temp2 = e.target.value}>
+                    </InputInfos>
+
+                    {/* <div className="form-group">
                       <div className="row text-center mb-1 m-auto">
                         <div className="col">
                           <div className="row border">
@@ -4358,7 +4877,7 @@ class Main extends React.Component {
                               <label>Info #2</label>
                             </div>
                             <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="text" disabled={disFieldT2} className="form-control border-0" defaultValue={spData.footSubtitle} onChange={e => temp2 = e.target.value} /*placeholder={spData.footSubtitle}*/ />
+                              <input type="text" disabled={disFieldT2} className="form-control border-0" defaultValue={spData.footSubtitle} onChange={e => temp2 = e.target.value} />
                             </div>
                             <div className="col-2 border d-flex flex-column justify-content-center align-items-center">
                               <label class="switch">
@@ -4381,18 +4900,37 @@ class Main extends React.Component {
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </div> */}
 
-                    <div className="form-group">
+                    <InputInfos label="Info #3"
+                      disField={disFieldT3}
+                      stateDisBlk={e => {
+                        if (this.state.disFieldT3 === false) {
+                          this.setState({
+                            disFieldT3: true
+                          });
+                          disable3 = true;
+                        } else {
+                          this.setState({
+                            disFieldT3: false
+                          });
+                          disable3 = false;
+                        }
+                      }}
+                      title={spData.footSubtitle2}
+                      hideSwitch={spData.noFootSubtitle2}
+                      tempo={e => temp3 = e.target.value}>
+                    </InputInfos>
+
+                    {/* <div className="form-group">
                       <div className="row text-center mb-1 m-auto">
                         <div className="col">
                           <div className="row border">
                             <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
                               <label>Info #3</label>
                             </div>
-
                             <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="text" disabled={disFieldT3} className="form-control border-0" defaultValue={spData.footSubtitle2} onChange={e => temp3 = e.target.value} /*placeholder={spData.footSubtitle2}*/ />
+                              <input type="text" disabled={disFieldT3} className="form-control border-0" defaultValue={spData.footSubtitle2} onChange={e => temp3 = e.target.value} />
                             </div>
                             <div className="col-2 border d-flex flex-column justify-content-center align-items-center">
                               <label class="switch">
@@ -4415,9 +4953,12 @@ class Main extends React.Component {
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </div> */}
 
-                    <div class="form-group" >
+                    <InputWidth idAuto="infoColAuto" idCol1="infoCol1" idCol2="infoCol2" idCol3="infoCol3" idCol4="infoCol4" idCol5="infoCol5"
+                      valAuto="col" valCol1="col-1" valCol2="col-2" valCol3="col-3" valCol4="col-4" valCol5="col-5"></InputWidth>
+
+                    {/* <div class="form-group" >
                       <div className="row text-center mb-1 m-auto">
                         <div className="col">
                           <div className="row border">
@@ -4449,11 +4990,14 @@ class Main extends React.Component {
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </div> */}
 
                     <div className="form-group">
                       <div className="row mb-1 m-auto">
-                        <div className="col">
+
+                        <InputBackColor backColor={spData.footInfoColor}></InputBackColor>
+
+                        {/* <div className="col">
                           <div className="row border">
                             <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
                               <label>Back color</label>
@@ -4462,9 +5006,13 @@ class Main extends React.Component {
                               <input type="color" className="form-control border-0 p-0" defaultValue={this.rgbToHex(spData.footInfoColor)} onChange={e => tempColor = e.target.value} />
                             </div>
                           </div>
-                        </div>
+                        </div> */}
+
                         <div className="col-1"></div>
-                        <div className="col">
+
+                        <InputTextColor textColor={spData.footInfoTextColor}></InputTextColor>
+
+                        {/* <div className="col">
                           <div className="row border">
                             <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
                               <label>Text color</label>
@@ -4473,11 +5021,14 @@ class Main extends React.Component {
                               <input type="color" className="form-control border-0 p-0" defaultValue={this.rgbToHex(spData.footInfoTextColor)} onChange={e => tempTextColor = e.target.value} />
                             </div>
                           </div>
-                        </div>
+                        </div> */}
+
                       </div>
                     </div>
 
-                    <div className="form-group">
+                    <InputOpacity opacity={spData.footInfoOpacity} id="infoOpRange" tempo={e => tempOpacity = e.target.value}></InputOpacity>
+
+                    {/* <div className="form-group">
                       <div className="row mb-1 m-auto">
                         <div className="col">
                           <div className="row border">
@@ -4510,9 +5061,11 @@ class Main extends React.Component {
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </div> */}
 
-                    <div className="form-group">
+                    <InputHideBlocks hideSwitch={spData.infoShow}></InputHideBlocks>
+
+                    {/* <div className="form-group">
                       <div className="row mb-1 m-auto">
                         <div className="col">
                           <div className="row border">
@@ -4537,36 +5090,44 @@ class Main extends React.Component {
                         <div className="col">
                         </div>
                       </div>
-                    </div>
+                    </div> */}
 
                     <Alert alertShow={this.state.alertShow} alertMsg={this.state.alertMsg} alertCol={this.state.alertCol}></Alert>
 
-                    {/* <Ok okShow={this.state.okShow}>
-                      <div className="row text-center pt-2">
-                        <div className="col">
-                          <div className="row">
-                            <section className="col pt-2 contenitore solidgreen latowhite d-flex justify-content-center align-items-center ">
-                              <div>
-                                <p className="norfont">Changes made!</p>
-                              </div>
-                            </section>
-                          </div>
-                        </div>
-                      </div>
-                    </Ok> */}
                   </form>
                 </div>
               </div>
             </InfoDialog>
-            <AddInfoDialog addInfoDiaShow={this.state.addInfoDiaShow} handleClose={() => this.hideModal("credit")} handleSave={this.saveAddInfo}>
+
+            <AddInfoDialog addInfoDiaShow={this.state.addInfoDiaShow} handleClose={() => this.hideModal("addInfo")} handleSave={this.saveAddInfo}>
               <div className="modal-content noborder">
-                <div className="modal-header">
-                  <h5 className="modal-title" >Edit Foot additional Info</h5>
-                </div>
+
+                <ModalTitle title="Edit Foot additional Info"></ModalTitle>
+
                 <div className="modal-body">
                   <form id="creditForm">
 
-                    <div className="form-group">
+                    <InputInfos label="Add Info"
+                      disField={disFieldC}
+                      stateDisBlk={e => {
+                        if (this.state.disFieldC === false) {
+                          this.setState({
+                            disFieldC: true
+                          });
+                          disable1 = true;
+                        } else {
+                          this.setState({
+                            disFieldC: false
+                          });
+                          disable1 = false;
+                        }
+                      }}
+                      title={spData.footAddTitle}
+                      hideSwitch={spData.noFootAddTitle}
+                      tempo={e => temp = e.target.value}>
+                    </InputInfos>
+
+                    {/* <div className="form-group">
                       <div className="row text-center mb-1 m-auto">
                         <div className="col">
                           <div className="row border">
@@ -4598,9 +5159,29 @@ class Main extends React.Component {
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </div> */}
 
-                    <div className="form-group">
+                    <InputInfos label="Add Info #2"
+                      disField={disFieldC2}
+                      stateDisBlk={e => {
+                        if (this.state.disFieldC2 === false) {
+                          this.setState({
+                            disFieldC2: true
+                          });
+                          disable2 = true;
+                        } else {
+                          this.setState({
+                            disFieldC2: false
+                          });
+                          disable2 = false;
+                        }
+                      }}
+                      title={spData.footAddSubtitle}
+                      hideSwitch={spData.noFootAddSubtitle}
+                      tempo={e => temp2 = e.target.value}>
+                    </InputInfos>
+
+                    {/* <div className="form-group">
                       <div className="row text-center mb-1 m-auto">
                         <div className="col">
                           <div className="row border">
@@ -4632,9 +5213,29 @@ class Main extends React.Component {
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </div> */}
 
-                    <div className="form-group">
+                    <InputInfos label="Add Info #3"
+                      disField={disFieldC3}
+                      stateDisBlk={e => {
+                        if (this.state.disFieldC3 === false) {
+                          this.setState({
+                            disFieldC3: true
+                          });
+                          disable3 = true;
+                        } else {
+                          this.setState({
+                            disFieldC3: false
+                          });
+                          disable3 = false;
+                        }
+                      }}
+                      title={spData.footAddSubtitle2}
+                      hideSwitch={spData.noFootAddSubtitle2}
+                      tempo={e => temp3 = e.target.value}>
+                    </InputInfos>
+
+                    {/* <div className="form-group">
                       <div className="row text-center mb-1 m-auto">
                         <div className="col">
                           <div className="row border">
@@ -4666,9 +5267,12 @@ class Main extends React.Component {
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </div> */}
 
-                    <div class="form-group" >
+                    <InputWidth idAuto="addInfoColAuto" idCol1="addInfoCol1" idCol2="addInfoCol2" idCol3="addInfoCol3" idCol4="addInfoCol4" idCol5="addInfoCol5"
+                      valAuto="col-md" valCol1="col-md-1" valCol2="col-md-2" valCol3="col-md-3" valCol4="col-md-4" valCol5="col-md-5"></InputWidth>
+
+                    {/* <div class="form-group" >
                       <div className="row text-center mb-1 m-auto">
                         <div className="col">
                           <div className="row border">
@@ -4700,11 +5304,14 @@ class Main extends React.Component {
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </div> */}
 
                     <div className="form-group">
                       <div className="row mb-1 m-auto">
-                        <div className="col">
+
+                        <InputBackColor backColor={spData.footAddColor}></InputBackColor>
+
+                        {/* <div className="col">
                           <div className="row border">
                             <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
                               <label>Back color</label>
@@ -4713,9 +5320,13 @@ class Main extends React.Component {
                               <input type="color" className="form-control border-0 p-0" defaultValue={this.rgbToHex(spData.footAddColor)} onChange={e => tempColor = e.target.value} />
                             </div>
                           </div>
-                        </div>
+                        </div> */}
+
                         <div className="col-1"></div>
-                        <div className="col">
+
+                        <InputTextColor textColor={spData.footAddTextColor}></InputTextColor>
+
+                        {/* <div className="col">
                           <div className="row border">
                             <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
                               <label>Text color</label>
@@ -4724,11 +5335,14 @@ class Main extends React.Component {
                               <input type="color" className="form-control border-0 p-0" defaultValue={this.rgbToHex(spData.footAddTextColor)} onChange={e => tempTextColor = e.target.value} />
                             </div>
                           </div>
-                        </div>
+                        </div> */}
+
                       </div>
                     </div>
 
-                    <div className="form-group">
+                    <InputOpacity opacity={spData.footAddOpacity} id="addInfoOpRange" tempo={e => tempOpacity = e.target.value}></InputOpacity>
+
+                    {/* <div className="form-group">
                       <div className="row mb-1 m-auto">
                         <div className="col">
                           <div className="row border">
@@ -4762,9 +5376,11 @@ class Main extends React.Component {
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </div> */}
 
-                    <div className="form-group">
+                    <InputHideBlocks hideSwitch={spData.addInfoShow}></InputHideBlocks>
+
+                    {/* <div className="form-group">
                       <div className="row mb-1 m-auto">
                         <div className="col">
                           <div className="row border">
@@ -4790,23 +5406,10 @@ class Main extends React.Component {
                         <div className="col">
                         </div>
                       </div>
-                    </div>
+                    </div> */}
 
                     <Alert alertShow={this.state.alertShow} alertMsg={this.state.alertMsg} alertCol={this.state.alertCol}></Alert>
 
-                    {/* <Ok okShow={this.state.okShow}>
-                      <div className="row text-center pt-2">
-                        <div className="col">
-                          <div className="row">
-                            <section className="col pt-2 contenitore solidgreen latowhite d-flex justify-content-center align-items-center ">
-                              <div>
-                                <p className="norfont">Changes made!</p>
-                              </div>
-                            </section>
-                          </div>
-                        </div>
-                      </div>
-                    </Ok> */}
                   </form>
                 </div>
               </div>
@@ -4814,9 +5417,9 @@ class Main extends React.Component {
 
             <BackEditDialog backEditDiaShow={this.state.backEditDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("back")} handleSave={this.saveBack}>
               <div className="modal-content noborder">
-                <div className="modal-header">
-                  <h5 className="modal-title" >Edit Preferences</h5>
-                </div>
+
+                <ModalTitle title="Edit Preferences"></ModalTitle>
+
                 <div className="modal-body">
                   <form id="backEditForm">
 
@@ -4910,7 +5513,7 @@ class Main extends React.Component {
                         <div className="col">
                           <div className="row border">
                             <div className="col pt-1 pb-1 p-0 latomenu d-flex flex-column justify-content-center align-items-center">
-                              <label>Brightness</label>
+                              <label>Main Brightness</label>
                             </div>
 
                             <div className="col d-flex flex-column justify-content-center align-items-center p-0">
@@ -4956,7 +5559,9 @@ class Main extends React.Component {
                       </div>
                     </div>
 
-                    <div className="form-group">
+                    <InputOpacity opacity={spData.catOpacity} id="catOpRange" tempo={e => tempOpacity1 = e.target.value}></InputOpacity>
+
+                    {/* <div className="form-group">
                       <div className="row mb-1 m-auto">
                         <div className="col">
                           <div className="row border">
@@ -4991,7 +5596,7 @@ class Main extends React.Component {
                         </div>
 
                       </div>
-                    </div>
+                    </div> */}
 
                     <div className="form-group">
                       <div className="row mb-1 m-auto">
@@ -5022,46 +5627,6 @@ class Main extends React.Component {
 
                     <Alert alertShow={this.state.alertShow} alertMsg={this.state.alertMsg} alertCol={this.state.alertCol}></Alert>
 
-                    {/* <Ok okShow={this.state.okShow}>
-                      <div className="row text-center pt-2">
-                        <div className="col">
-                          <div className="row">
-                            <section className="col pt-2 contenitore solidgreen latowhite d-flex justify-content-center align-items-center ">
-                              <div>
-                                <p className="norfont">Changes made!</p>
-                              </div>
-                            </section>
-                          </div>
-                        </div>
-                      </div>
-                    </Ok>
-                    <Upload upShow={this.state.upShow}>
-                      <div className="row text-center pt-2">
-                        <div className="col">
-                          <div className="row">
-                            <section className="col pt-2 contenitore solidblue latowhite d-flex justify-content-center align-items-center ">
-                              <div>
-                                <p className="norfont">Loading data... Please wait.</p>
-                              </div>
-                            </section>
-                          </div>
-                        </div>
-                      </div>
-                    </Upload>
-                    <Error errShow={this.state.errShow} errMsg="No changes made!" errCol="solidblue"></Error> */}
-                    {/* <Error errShow={this.state.errShow} >
-                      <div className="row text-center pt-2">
-                        <div className="col">
-                          <div className="row">
-                            <section className="col pt-2 contenitore solidblue latowhite d-flex justify-content-center align-items-center ">
-                              <div>
-                                <p className="norfont">No changes made!</p>
-                              </div>
-                            </section>
-                          </div>
-                        </div>
-                      </div>
-                    </Error> */}
                   </form>
                 </div>
               </div>
@@ -5093,25 +5658,17 @@ class Main extends React.Component {
 
             <ItemEditDialog itemEditDiaShow={this.state.itemEditDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("itemEdit")} handleSave={this.applyItemEdit}>
               <div className="modal-content noborder">
-                <div className="modal-header">
-                  <h5 className="modal-title" >Edit Item</h5>
-                </div>
+
+                <ModalTitle title="Edit Item"></ModalTitle>
+
                 <div className="modal-body">
                   <form id="itemEditForm">
 
-                    <div className="form-group">
-                      <div className="row text-center mb-1 m-auto">
-                        <div className="col">
-                          <div className="row border">
-                            <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="file" className="form-control boxs border-0" name="icon" onChange={e => fileImg = e.target.files[0]} />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                    <InputFile></InputFile>
 
-                    <div className="form-group">
+                    <InputPosition edit="Edit Item" pos={currPos} id="clearitemswitchpos" ></InputPosition>
+
+                    {/* <div className="form-group">
                       <div className="row text-center mb-1 m-auto">
                         <div className="col">
                           <div className="row border">
@@ -5128,9 +5685,13 @@ class Main extends React.Component {
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </div> */}
 
-                    <div className="form-group">
+                    <InputTitle label="Title" edit="Edit Item" tempTitle={tempItemTitle}
+                      tempo={e => temp2 = e.target.value} >
+                    </InputTitle>
+
+                    {/* <div className="form-group">
                       <div className="row text-center mb-1 m-auto">
                         <div className="col">
                           <div className="row border">
@@ -5143,9 +5704,11 @@ class Main extends React.Component {
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </div> */}
 
-                    <div className="form-group">
+                    <InputLink edit="Edit Item" tempLink={tempItemLink} ></InputLink>
+
+                    {/* <div className="form-group">
                       <div className="row text-center mb-1 m-auto">
                         <div className="col">
                           <div className="row border">
@@ -5158,9 +5721,31 @@ class Main extends React.Component {
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </div> */}
 
-                    <div className="form-group">
+                    {/* Descr. */}
+
+                    <InputInfos label="Descr."
+                      disField={disFieldIE}
+                      stateDisBlk={e => {
+                        if (this.state.disFieldIE === false) {
+                          this.setState({
+                            disFieldIE: true
+                          });
+                          noDescr = true;
+                        } else {
+                          this.setState({
+                            disFieldIE: false
+                          });
+                          noDescr = false;
+                        }
+                      }}
+                      title={tempItemDescr}
+                      hideSwitch={noDescr}
+                      tempo={e => temp6 = e.target.value}>
+                    </InputInfos>
+
+                    {/* <div className="form-group">
                       <div className="row text-center mb-1 m-auto">
                         <div className="col">
                           <div className="row border">
@@ -5193,24 +5778,29 @@ class Main extends React.Component {
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </div> */}
 
-                    <div className="form-group">
+                    <InputVideo></InputVideo>
+
+                    {/* <div className="form-group">
                       <div className="row mb-1 m-auto">
                         <div className="col">
                           <div className="row border">
                             <div className="col pt-1 pb-1 padlr latomenu d-flex flex-column justify-content-center align-items-center">
                               <label>Video</label>
                             </div>
-                            <div className="col d-flex flex-column justify-content-center align-items-center">
+
+                            <div className="col d-flex flex-column justify-content-center 
+                            align-items-center">
                               <label class="switch">
-                                <input type="checkbox" className="form-control" defaultChecked={tempItemVideo} onClick={e => {
-                                  if (tempItemVideo === false) {
-                                    temp4 = true;
-                                  } else {
-                                    temp4 = false;
-                                  }
-                                }} />
+                                <input type="checkbox" className="form-control"
+                                  defaultChecked={tempItemVideo} onClick={e => {
+                                    if (tempItemVideo === false) {
+                                      temp4 = true;
+                                    } else {
+                                      temp4 = false;
+                                    }
+                                  }} />
                                 <span class="slider round" title="Video Player"></span>
                               </label>
                             </div>
@@ -5220,36 +5810,46 @@ class Main extends React.Component {
                         <div className="col">
                         </div>
                       </div>
-                    </div>
+                    </div> */}
 
-                    <div className="form-group">
+                    {/* <div className="form-group">
                       <div className="row mb-1 m-auto">
                         <div className="col">
                           <div className="row border">
-                            <div className="col col pt-1 pb-1 padlr latomenu d-flex flex-column justify-content-center align-items-center">
+                            <div className="col col pt-1 pb-1 padlr latomenu d-flex flex-column 
+                            justify-content-center align-items-center">
                               <label>Hide</label>
-                            </div>
-                            <div className="col d-flex flex-column justify-content-center align-items-center">
+                            </div> */}
+
+                    <InputHide hideSwitch={tempItemHide}></InputHide>
+
+                    {/* <div className="col d-flex flex-column justify-content-center 
+                            align-items-center">
                               <label class="switch">
-                                <input type="checkbox" className="form-control" defaultChecked={tempItemHide} onClick={e => {
-                                  if (tempItemHide === false) {
-                                    blockHide = true;
-                                  } else {
-                                    blockHide = false;
-                                  }
-                                }} />
+                                <input type="checkbox" className="form-control"
+                                  defaultChecked={tempItemHide} onClick={e => {
+                                    if (tempItemHide === false) {
+                                      blockHide = true;
+                                    } else {
+                                      blockHide = false;
+                                    }
+                                  }} />
                                 <span class="slider round"></span>
                               </label>
-                            </div>
-                          </div>
+                            </div> */}
+
+                    {/* </div>
                         </div>
                         <div className="col-1"></div>
                         <div className="col">
                         </div>
                       </div>
-                    </div>
+                    </div> */}
 
-                    <div className="form-group">
+                    {/* Category */}
+                    <InputCat catMenuB={eCatMenuButtons}></InputCat>
+
+                    {/* <div className="form-group">
                       <div className="row mb-1 m-auto">
                         <div className="col">
                           <div className="row border">
@@ -5257,7 +5857,7 @@ class Main extends React.Component {
                               <label>Category</label>
                             </div>
                             <div className="col d-flex flex-column justify-content-center align-items-center">
-                              {catMenuButtons}
+                              {eCatMenuButtons}
                             </div>
                           </div>
                         </div>
@@ -5265,75 +5865,29 @@ class Main extends React.Component {
                         <div className="col">
                         </div>
                       </div>
-                    </div>
+                    </div> */}
 
                     <Alert alertShow={this.state.alertShow} alertMsg={this.state.alertMsg} alertCol={this.state.alertCol}></Alert>
-                    {/* 
-                    <Ok okShow={this.state.okShow}>
-                      <div className="row text-center pt-2">
-                        <div className="col">
-                          <div className="row">
-                            <section className="col pt-2 contenitore solidgreen latowhite d-flex justify-content-center align-items-center ">
-                              <div>
-                                <p className="norfont">Changes made!</p>
-                              </div>
-                            </section>
-                          </div>
-                        </div>
-                      </div>
-                    </Ok>
-                    <Upload upShow={this.state.upShow}>
-                      <div className="row text-center pt-2">
-                        <div className="col">
-                          <div className="row">
-                            <section className="col pt-2 contenitore solidblue latowhite d-flex justify-content-center align-items-center ">
-                              <div>
-                                <p className="norfont">Loading data... Please wait.</p>
-                              </div>
-                            </section>
-                          </div>
-                        </div>
-                      </div>
-                    </Upload>
-                    <Error errShow={this.state.errShow} errMsg="No changes made!" errCol="solidblue"></Error> */}
-                    {/* <Error errShow={this.state.errShow} >
-                      <div className="row text-center pt-2">
-                        <div className="col">
-                          <div className="row">
-                            <section className="col pt-2 contenitore solidblue latowhite d-flex justify-content-center align-items-center ">
-                              <div>
-                                <p className="norfont">No changes made!</p>
-                              </div>
-                            </section>
-                          </div>
-                        </div>
-                      </div>
-                    </Error> */}
+
                   </form>
                 </div>
               </div>
             </ItemEditDialog>
             <ItemAddDialog itemAddDiaShow={this.state.itemAddDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("itemAdd")} handleSave={this.applyItemAdd}>
               <div className="modal-content noborder">
-                <div className="modal-header">
-                  <h5 className="modal-title" >Add Item</h5>
-                </div>
+
+                <ModalTitle title="Add Item"></ModalTitle>
+
                 <div className="modal-body">
                   <form id="itemAddForm">
 
-                    <div className="form-group">
-                      <div className="row text-center mb-1 m-auto">
-                        <div className="col">
-                          <div className="row border">
-                            <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="file" className="form-control boxs border-0" name="icon" onChange={e => fileImg = e.target.files[0]} />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                    <InputFile></InputFile>
 
-                    <div className="form-group">
+                    {/* Position */}
+
+                    <InputPosition edit="Add Item" pos={currPos} id="clearitempos" ></InputPosition>
+
+                    {/* <div className="form-group">
                       <div className="row text-center mb-1 m-auto">
                         <div className="col">
                           <div className="row border">
@@ -5350,9 +5904,15 @@ class Main extends React.Component {
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </div> */}
 
-                    <div className="form-group">
+                    {/* Title */}
+
+                    <InputTitle label="Title" edit="Add Item" id="clearitemtitle"
+                      tempo={e => temp2 = e.target.value}>
+                    </InputTitle>
+
+                    {/* <div className="form-group">
                       <div className="row text-center mb-1 m-auto">
                         <div className="col">
                           <div className="row border">
@@ -5365,9 +5925,13 @@ class Main extends React.Component {
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </div> */}
 
-                    <div className="form-group">
+                    {/* Link */}
+
+                    <InputLink edit="Add Item" id="clearitemlink"></InputLink>
+
+                    {/* <div className="form-group">
                       <div className="row text-center mb-1 m-auto">
                         <div className="col">
                           <div className="row border">
@@ -5380,9 +5944,32 @@ class Main extends React.Component {
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </div> */}
 
-                    <div className="form-group">
+                    {/* Descr. */}
+
+                    <InputInfos label="Descr."
+                      disField={disFieldIA}
+                      stateDisBlk={e => {
+                        if (this.state.disFieldIA === false) {
+                          this.setState({
+                            disFieldIA: true
+                          });
+                          noDescr = true;
+                        } else {
+                          this.setState({
+                            disFieldIA: false
+                          });
+                          noDescr = false;
+                        }
+                      }}
+                      title={tempItemDescr}
+                      hideSwitch={noDescr}
+                      tempo={e => temp6 = e.target.value}
+                      id="clearitemdescr">
+                    </InputInfos>
+
+                    {/* <div className="form-group">
                       <div className="row text-center mb-1 m-auto">
                         <div className="col">
                           <div className="row border">
@@ -5415,9 +6002,12 @@ class Main extends React.Component {
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </div> */}
 
-                    <div className="form-group">
+                    {/* Video */}
+                    <InputVideo></InputVideo>
+
+                    {/* <div className="form-group">
                       <div className="row mb-1 m-auto">
                         <div className="col">
                           <div className="row border">
@@ -5442,16 +6032,20 @@ class Main extends React.Component {
                         <div className="col">
                         </div>
                       </div>
-                    </div>
+                    </div> */}
 
-                    <div className="form-group">
+                    {/* Hide */}
+                    {/* <div className="form-group">
                       <div className="row mb-1 m-auto">
                         <div className="col">
                           <div className="row border">
                             <div className="col col pt-1 pb-1 padlr latomenu d-flex flex-column justify-content-center align-items-center">
                               <label>Hide</label>
-                            </div>
-                            <div className="col d-flex flex-column justify-content-center align-items-center">
+                            </div> */}
+
+                    <InputHide hideSwitch={tempItemHide}></InputHide>
+
+                    {/* <div className="col d-flex flex-column justify-content-center align-items-center">
                               <label class="switch">
                                 <input type="checkbox" className="form-control" defaultChecked={tempItemHide} onClick={e => {
                                   if (tempItemHide === false) {
@@ -5462,16 +6056,20 @@ class Main extends React.Component {
                                 }} />
                                 <span class="slider round"></span>
                               </label>
-                            </div>
-                          </div>
+                            </div> */}
+
+                    {/* </div>
                         </div>
                         <div className="col-1"></div>
                         <div className="col">
                         </div>
                       </div>
-                    </div>
+                    </div> */}
 
-                    <div className="form-group">
+                    {/* Category */}
+                    <InputCat catMenuB={aCatMenuButtons}></InputCat>
+
+                    {/* <div className="form-group">
                       <div className="row mb-1 m-auto">
                         <div className="col">
                           <div className="row border">
@@ -5479,97 +6077,46 @@ class Main extends React.Component {
                               <label>Category</label>
                             </div>
                             <div className="col d-flex flex-column justify-content-center align-items-center">
-                              {catMenuButtons}
+                              {aCatMenuButtons}
                             </div>
                           </div>
-                        </div>
+                        </div >
                         <div className="col-1"></div>
                         <div className="col">
                         </div>
                       </div>
-                    </div>
+                    </div> */}
 
                     <Alert alertShow={this.state.alertShow} alertMsg={this.state.alertMsg} alertCol={this.state.alertCol}></Alert>
 
-                    {/* <Ok okShow={this.state.okShow}>
-                      <div className="row text-center pt-2">
-                        <div className="col">
-                          <div className="row">
-                            <section className="col pt-2 contenitore solidgreen latowhite d-flex justify-content-center align-items-center ">
-                              <div>
-                                <p className="norfont">Item added!</p>
-                              </div>
-                            </section>
-                          </div>
-                        </div>
-                      </div>
-                    </Ok>
-                    <Upload upShow={this.state.upShow} >
-                      <div className="row text-center pt-2">
-                        <div className="col">
-                          <div className="row">
-                            <section className="col pt-2 contenitore solidblue latowhite d-flex justify-content-center align-items-center ">
-                              <div>
-                                <p className="norfont">Loading data... Please wait.</p>
-                              </div>
-                            </section>
-                          </div>
-                        </div>
-                      </div>
-                    </Upload>
-                    <Error errShow={this.state.errShow} errMsg="Fill in all fields / Check position." errCol="brick"></Error> */}
-                    {/* <Error errShow={this.state.errShow} >
-                      <div className="row text-center pt-2">
-                        <div className="col">
-                          <div className="row">
-                            <section className="col pt-2 contenitore brick latowhite d-flex justify-content-center align-items-center ">
-                              <div>
-                                <p className="norfont">Fill in all fields / Check position.</p>
-                              </div>
-                            </section>
-                          </div>
-                        </div>
-                      </div>
-                    </Error> */}
                   </form>
                 </div>
               </div>
             </ItemAddDialog>
             <ItemDelDialog itemDelDiaShow={this.state.itemDelDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("itemDel")} handleSave={this.applyItemDel}>
               <div className="modal-content noborder">
-                <div className="modal-header">
-                  <h5 className="modal-title" >Permanently delete {tempItemTitle} item?</h5>
-                </div>
+
+                <ModalTitle title={"Permanently delete " + tempItemTitle + " item?"}></ModalTitle>
+
                 <div className="modal-body">
 
                   <Alert alertShow={this.state.alertShow} alertMsg={this.state.alertMsg} alertCol={this.state.alertCol}></Alert>
 
-                  {/* <Ok okShow={this.state.okShow}>
-                    <div className="row text-center pt-2">
-                      <div className="col">
-                        <div className="row">
-                          <section className="col pt-2 contenitore solidgreen latowhite d-flex justify-content-center align-items-center ">
-                            <div>
-                              <p className="norfont">Application removed!</p>
-                            </div>
-                          </section>
-                        </div>
-                      </div>
-                    </div>
-                  </Ok> */}
                 </div>
               </div>
             </ItemDelDialog>
 
             <CatEditDialog catEditDiaShow={this.state.catEditDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("catedit")} handleSave={this.applyCatEdit}>
               <div className="modal-content noborder">
-                <div className="modal-header">
-                  <h5 className="modal-title" >Edit Category</h5>
-                </div>
+
+                <ModalTitle title="Edit Category"></ModalTitle>
+
                 <div className="modal-body">
                   <form id="catEditForm">
 
-                    <div className="form-group">
+                    <InputFile></InputFile>
+
+                    {/* <div className="form-group">
                       <div className="row text-center mb-1 m-auto">
                         <div className="col">
                           <div className="row border">
@@ -5579,9 +6126,11 @@ class Main extends React.Component {
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </div> */}
 
-                    <div className="form-group">
+                    <InputPosition edit="Edit Item" pos={currPos} id="clearcatswitchpos" ></InputPosition>
+
+                    {/* <div className="form-group">
                       <div className="row text-center mb-1 m-auto">
                         <div className="col">
                           <div className="row border">
@@ -5598,9 +6147,13 @@ class Main extends React.Component {
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </div> */}
 
-                    <div className="form-group">
+                    <InputTitle label="Title" edit="Edit Item" tempTitle={tempCatTitle}
+                      tempo={e => temp2 = e.target.value}>
+                    </InputTitle>
+
+                    {/* <div className="form-group">
                       <div className="row text-center mb-1 m-auto">
                         <div className="col">
                           <div className="row border">
@@ -5613,16 +6166,19 @@ class Main extends React.Component {
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </div> */}
 
-                    <div className="form-group">
+                    {/* <div className="form-group">
                       <div className="row mb-1 m-auto">
                         <div className="col">
                           <div className="row border">
                             <div className="col col pt-1 pb-1 padlr latomenu d-flex flex-column justify-content-center align-items-center">
                               <label>Hide</label>
-                            </div>
-                            <div className="col d-flex flex-column justify-content-center align-items-center">
+                            </div> */}
+
+                    <InputHide hideSwitch={tempItemHide}></InputHide>
+
+                    {/* <div className="col d-flex flex-column justify-content-center align-items-center">
                               <label class="switch">
                                 <input type="checkbox" className="form-control" defaultChecked={tempItemHide} onClick={e => {
                                   if (tempItemHide === false) {
@@ -5633,70 +6189,33 @@ class Main extends React.Component {
                                 }} />
                                 <span class="slider round"></span>
                               </label>
-                            </div>
-                          </div>
+                            </div> */}
+
+                    {/* </div>
                         </div>
                         <div className="col-1"></div>
                         <div className="col">
                         </div>
                       </div>
-                    </div>
+                    </div> */}
 
                     <Alert alertShow={this.state.alertShow} alertMsg={this.state.alertMsg} alertCol={this.state.alertCol}></Alert>
 
-                    {/* <Ok okShow={this.state.okShow}>
-                      <div className="row text-center pt-2">
-                        <div className="col">
-                          <div className="row">
-                            <section className="col pt-2 contenitore solidgreen latowhite d-flex justify-content-center align-items-center ">
-                              <div>
-                                <p className="norfont">Changes made!</p>
-                              </div>
-                            </section>
-                          </div>
-                        </div>
-                      </div>
-                    </Ok>
-                    <Upload upShow={this.state.upShow}>
-                      <div className="row text-center pt-2">
-                        <div className="col">
-                          <div className="row">
-                            <section className="col pt-2 contenitore solidblue latowhite d-flex justify-content-center align-items-center ">
-                              <div>
-                                <p className="norfont">Loading data... Please wait.</p>
-                              </div>
-                            </section>
-                          </div>
-                        </div>
-                      </div>
-                    </Upload>
-                    <Error errShow={this.state.errShow} errMsg="No changes made or CAT name duplicated!" errCol="solidblue"></Error> */}
-                    {/* <Error errShow={this.state.errShow} >
-                      <div className="row text-center pt-2">
-                        <div className="col">
-                          <div className="row">
-                            <section className="col pt-2 contenitore solidblue latowhite d-flex justify-content-center align-items-center ">
-                              <div>
-                                <p className="norfont">No changes made or CAT name duplicated!</p>
-                              </div>
-                            </section>
-                          </div>
-                        </div>
-                      </div>
-                    </Error> */}
                   </form>
                 </div>
               </div>
             </CatEditDialog>
             <CatAddDialog catAddDiaShow={this.state.catAddDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("catadd")} handleSave={this.applyCatAdd}>
               <div className="modal-content noborder">
-                <div className="modal-header">
-                  <h5 className="modal-title" >Add Category</h5>
-                </div>
+
+                <ModalTitle title="Add Category"></ModalTitle>
+
                 <div className="modal-body">
                   <form id="catAddForm">
 
-                    <div className="form-group">
+                    <InputFile></InputFile>
+
+                    {/* <div className="form-group">
                       <div className="row text-center mb-1 m-auto">
                         <div className="col">
                           <div className="row border">
@@ -5706,9 +6225,11 @@ class Main extends React.Component {
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </div> */}
 
-                    <div className="form-group">
+                    <InputPosition edit="Add Item" id="clearcatpos" ></InputPosition>
+
+                    {/* <div className="form-group">
                       <div className="row text-center mb-1 m-auto">
                         <div className="col">
                           <div className="row border">
@@ -5725,9 +6246,13 @@ class Main extends React.Component {
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </div> */}
 
-                    <div className="form-group">
+                    <InputTitle label="Title" edit="Add Item" id="clearcattitle"
+                      tempo={e => temp2 = e.target.value}>
+                    </InputTitle>
+
+                    {/* <div className="form-group">
                       <div className="row text-center mb-1 m-auto">
                         <div className="col">
                           <div className="row border">
@@ -5740,16 +6265,19 @@ class Main extends React.Component {
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </div> */}
 
-                    <div className="form-group">
+                    {/* <div className="form-group">
                       <div className="row mb-1 m-auto">
                         <div className="col">
                           <div className="row border">
                             <div className="col col pt-1 pb-1 padlr latomenu d-flex flex-column justify-content-center align-items-center">
                               <label>Hide</label>
-                            </div>
-                            <div className="col d-flex flex-column justify-content-center align-items-center">
+                            </div> */}
+
+                    <InputHide hideSwitch={tempItemHide}></InputHide>
+
+                    {/* <div className="col d-flex flex-column justify-content-center align-items-center">
                               <label class="switch">
                                 <input type="checkbox" className="form-control" defaultChecked={tempItemHide} onClick={e => {
                                   if (tempItemHide === false) {
@@ -5760,92 +6288,41 @@ class Main extends React.Component {
                                 }} />
                                 <span class="slider round"></span>
                               </label>
-                            </div>
-                          </div>
+                            </div> */}
+
+                    {/* </div>
                         </div>
                         <div className="col-1"></div>
                         <div className="col">
                         </div>
                       </div>
-                    </div>
+                    </div> */}
 
-                    <Alert alertShow={this.state.alertShow} alertMsg={this.state.alertMsg} alertCol={this.state.alertCol}></Alert>
-                    {/* 
-                    <Ok okShow={this.state.okShow}>
-                      <div className="row text-center pt-2">
-                        <div className="col">
-                          <div className="row">
-                            <section className="col pt-2 contenitore solidgreen latowhite d-flex justify-content-center align-items-center ">
-                              <div>
-                                <p className="norfont">Cat added!</p>
-                              </div>
-                            </section>
-                          </div>
-                        </div>
-                      </div>
-                    </Ok>
-                    <Upload upShow={this.state.upShow} >
-                      <div className="row text-center pt-2">
-                        <div className="col">
-                          <div className="row">
-                            <section className="col pt-2 contenitore solidblue latowhite d-flex justify-content-center align-items-center ">
-                              <div>
-                                <p className="norfont">Loading data... Please wait.</p>
-                              </div>
-                            </section>
-                          </div>
-                        </div>
-                      </div>
-                    </Upload>
-                    <Error errShow={this.state.errShow} errMsg="Fill in all fields or CAT name duplicated!" errCol="brick"></Error> */}
-                    {/* <Error errShow={this.state.errShow} >
-                      <div className="row text-center pt-2">
-                        <div className="col">
-                          <div className="row">
-                            <section className="col pt-2 contenitore brick latowhite d-flex justify-content-center align-items-center ">
-                              <div>
-                                <p className="norfont">Fill in all fields or CAT name duplicated!</p>
-                              </div>
-                            </section>
-                          </div>
-                        </div>
-                      </div>
-                    </Error> */}
+                    <Alert alertShow={this.state.alertShow} alertMsg={this.state.alertMsg}
+                      alertCol={this.state.alertCol}></Alert>
+
                   </form>
                 </div>
               </div>
             </CatAddDialog>
             <CatDelDialog catDelDiaShow={this.state.catDelDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("catdel")} handleSave={this.applyCatDel}>
               <div className="modal-content noborder">
-                <div className="modal-header">
-                  <h5 className="modal-title" >Permanently delete {tempCatTitle} category?</h5>
-                </div>
+
+                <ModalTitle title={"Permanently delete " + tempCatTitle + " category?"}></ModalTitle>
+
                 <div className="modal-body">
 
                   <Alert alertShow={this.state.alertShow} alertMsg={this.state.alertMsg} alertCol={this.state.alertCol}></Alert>
 
-                  {/* <Ok okShow={this.state.okShow}>
-                    <div className="row text-center pt-2">
-                      <div className="col">
-                        <div className="row">
-                          <section className="col pt-2 contenitore solidgreen latowhite d-flex justify-content-center align-items-center ">
-                            <div>
-                              <p className="norfont">Category removed!</p>
-                            </div>
-                          </section>
-                        </div>
-                      </div>
-                    </div>
-                  </Ok> */}
                 </div>
               </div>
             </CatDelDialog>
 
             <ItemOrCatDialog iocDiaShow={this.state.iocDiaShow} activityChanged={this.state.activityChanged} handleItem={this.addItem} handleCat={this.catAddItem} handleClose={() => this.hideModal("itemorcat")}>
               <div className="modal-content noborder">
-                <div className="modal-header">
-                  <h5 className="modal-title" >Add Item or Category?</h5>
-                </div>
+
+                <ModalTitle title="Add Item or Category?"></ModalTitle>
+
               </div>
             </ItemOrCatDialog>
 
@@ -5874,13 +6351,15 @@ class Main extends React.Component {
             </CrsDialog>
             <CrsAddDialog crsAddDiaShow={this.state.crsAddDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("crsadd")} handleSave={this.applyCrsAdd}>
               <div className="modal-content noborder">
-                <div className="modal-header">
-                  <h5 className="modal-title" >Add Credit</h5>
-                </div>
+
+                <ModalTitle title="Add Credit"></ModalTitle>
+
                 <div className="modal-body">
                   <form id="crsAddForm">
 
-                    <div className="form-group">
+                    <InputPosition edit="Add Item" id="clearcrspos" ></InputPosition>
+
+                    {/* <div className="form-group">
                       <div className="row text-center mb-1 m-auto">
                         <div className="col">
                           <div className="row border">
@@ -5897,9 +6376,13 @@ class Main extends React.Component {
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </div> */}
 
-                    <div className="form-group">
+                    <InputTitle label="Title" edit="Add Item" id="clearcrstitle"
+                      tempo={e => temp2 = e.target.value}>
+                    </InputTitle>
+
+                    {/* <div className="form-group">
                       <div className="row text-center mb-1 m-auto">
                         <div className="col">
                           <div className="row border">
@@ -5912,9 +6395,11 @@ class Main extends React.Component {
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </div> */}
 
-                    <div className="form-group">
+                    <InputLink edit="Add Item" id="clearcrslink"></InputLink>
+
+                    {/* <div className="form-group">
                       <div className="row text-center mb-1 m-auto">
                         <div className="col">
                           <div className="row border">
@@ -5927,9 +6412,14 @@ class Main extends React.Component {
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </div> */}
 
-                    <div className="form-group">
+                    {/* Descr. */}
+                    <InputTitle label="Descr." edit="Edit Item" tempTitle={tempItemTitle} id="clearcrsdescr"
+                      tempo={e => temp4 = e.target.value}>
+                    </InputTitle>
+
+                    {/* <div className="form-group">
                       <div className="row text-center mb-1 m-auto">
                         <div className="col">
                           <div className="row border">
@@ -5942,62 +6432,24 @@ class Main extends React.Component {
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </div> */}
 
                     <Alert alertShow={this.state.alertShow} alertMsg={this.state.alertMsg} alertCol={this.state.alertCol}></Alert>
 
-                    {/* <Ok okShow={this.state.okShow}>
-                      <div className="row text-center pt-2">
-                        <div className="col">
-                          <div className="row">
-                            <section className="col pt-2 contenitore solidgreen latowhite d-flex justify-content-center align-items-center ">
-                              <div>
-                                <p className="norfont">Credit added!</p>
-                              </div>
-                            </section>
-                          </div>
-                        </div>
-                      </div>
-                    </Ok>
-                    <Upload upShow={this.state.upShow} >
-                      <div className="row text-center pt-2">
-                        <div className="col">
-                          <div className="row">
-                            <section className="col pt-2 contenitore solidblue latowhite d-flex justify-content-center align-items-center ">
-                              <div>
-                                <p className="norfont">Loading data... Please wait.</p>
-                              </div>
-                            </section>
-                          </div>
-                        </div>
-                      </div>
-                    </Upload>
-                    <Error errShow={this.state.errShow} errMsg="Fill in all fields!" errCol="brick"></Error> */}
-                    {/* <Error errShow={this.state.errShow} >
-                      <div className="row text-center pt-2">
-                        <div className="col">
-                          <div className="row">
-                            <section className="col pt-2 contenitore brick latowhite d-flex justify-content-center align-items-center ">
-                              <div>
-                                <p className="norfont">Fill in all fields!</p>
-                              </div>
-                            </section>
-                          </div>
-                        </div>
-                      </div>
-                    </Error> */}
                   </form>
                 </div>
               </div>
             </CrsAddDialog>
             <CrsEditDialog crsEditDiaShow={this.state.crsEditDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("crsedit")} handleSave={this.applyCrsEdit}>
               <div className="modal-content noborder">
-                <div className="modal-header">
-                  <h5 className="modal-title" >Edit Credit</h5>
-                </div>
+
+                <ModalTitle title="Edit Credit"></ModalTitle>
+
                 <div className="modal-body">
                   <form id="crsEditForm">
 
+                    <InputPosition edit="Edit Item" pos={currPos} id="clearcrsswitchpos" ></InputPosition>
+                    {/* 
                     <div className="form-group">
                       <div className="row text-center mb-1 m-auto">
                         <div className="col">
@@ -6015,9 +6467,13 @@ class Main extends React.Component {
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </div> */}
 
-                    <div className="form-group">
+                    <InputTitle label="Title" edit="Edit Item" tempTitle={tempCrsTitle}
+                      tempo={e => temp2 = e.target.value}>
+                    </InputTitle>
+
+                    {/* <div className="form-group">
                       <div className="row text-center mb-1 m-auto">
                         <div className="col">
                           <div className="row border">
@@ -6030,9 +6486,11 @@ class Main extends React.Component {
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </div> */}
 
-                    <div className="form-group">
+                    <InputLink edit="Edit Item" tempLink={tempCrsLink} ></InputLink>
+
+                    {/* <div className="form-group">
                       <div className="row text-center mb-1 m-auto">
                         <div className="col">
                           <div className="row border">
@@ -6045,9 +6503,14 @@ class Main extends React.Component {
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </div> */}
 
-                    <div className="form-group">
+                    {/* Descr. */}
+                    <InputTitle label="Descr." edit="Edit Item" tempTitle={tempCrsDescr}
+                      tempo={e => temp4 = e.target.value}>
+                    </InputTitle>
+
+                    {/* <div className="form-group">
                       <div className="row text-center mb-1 m-auto">
                         <div className="col">
                           <div className="row border">
@@ -6060,76 +6523,23 @@ class Main extends React.Component {
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </div> */}
 
                     <Alert alertShow={this.state.alertShow} alertMsg={this.state.alertMsg} alertCol={this.state.alertCol}></Alert>
 
-                    {/* <Ok okShow={this.state.okShow}>
-                      <div className="row text-center pt-2">
-                        <div className="col">
-                          <div className="row">
-                            <section className="col pt-2 contenitore solidgreen latowhite d-flex justify-content-center align-items-center ">
-                              <div>
-                                <p className="norfont">Changes made!</p>
-                              </div>
-                            </section>
-                          </div>
-                        </div>
-                      </div>
-                    </Ok>
-                    <Upload upShow={this.state.upShow} >
-                      <div className="row text-center pt-2">
-                        <div className="col">
-                          <div className="row">
-                            <section className="col pt-2 contenitore solidblue latowhite d-flex justify-content-center align-items-center ">
-                              <div>
-                                <p className="norfont">Loading data... Please wait.</p>
-                              </div>
-                            </section>
-                          </div>
-                        </div>
-                      </div>
-                    </Upload>
-                    <Error errShow={this.state.errShow} errMsg="No changes made!" errCol="solidblue"></Error> */}
-                    {/* <Error errShow={this.state.errShow} >
-                      <div className="row text-center pt-2">
-                        <div className="col">
-                          <div className="row">
-                            <section className="col pt-2 contenitore solidblue latowhite d-flex justify-content-center align-items-center ">
-                              <div>
-                                <p className="norfont">No changes made!</p>
-                              </div>
-                            </section>
-                          </div>
-                        </div>
-                      </div>
-                    </Error> */}
                   </form>
                 </div>
               </div>
             </CrsEditDialog>
             <CrsDelDialog crsDelDiaShow={this.state.crsDelDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("crsdel")} handleSave={this.applyCrsDel}>
               <div className="modal-content noborder">
-                <div className="modal-header">
-                  <h5 className="modal-title" >Permanently delete {tempCrsTitle} credit?</h5>
-                </div>
+
+                <ModalTitle title={"Permanently delete " + tempCrsTitle + " credit?"}></ModalTitle>
+
                 <div className="modal-body">
 
                   <Alert alertShow={this.state.alertShow} alertMsg={this.state.alertMsg} alertCol={this.state.alertCol}></Alert>
 
-                  {/* <Ok okShow={this.state.okShow}>
-                    <div className="row text-center pt-2">
-                      <div className="col">
-                        <div className="row">
-                          <section className="col pt-2 contenitore solidgreen latowhite d-flex justify-content-center align-items-center ">
-                            <div>
-                              <p className="norfont">Credit removed!</p>
-                            </div>
-                          </section>
-                        </div>
-                      </div>
-                    </div>
-                  </Ok> */}
                 </div>
               </div>
             </CrsDelDialog>
@@ -6147,33 +6557,6 @@ class Main extends React.Component {
 
                     <Alert alertShow={this.state.alertShow} alertMsg={this.state.alertMsg} alertCol={this.state.alertCol}></Alert>
 
-                    {/* <Ok okShow={this.state.okShow} display={this.state.display}>
-                      <div className="row text-center pt-2">
-                        <div className="col">
-                          <div className="row">
-                            <section className="col pt-2 contenitore solidgreen latowhite d-flex justify-content-center align-items-center ">
-                              <div>
-                                <p className="norfont">Search results:</p>
-                              </div>
-                            </section>
-                          </div>
-                        </div>
-                      </div>
-                    </Ok>
-                    <Error errShow={this.state.errShow} errMsg="Enter at least one character." errCol="brick"></Error> */}
-                    {/* <Error errShow={this.state.errShow} >
-                      <div className="row text-center pt-2">
-                        <div className="col">
-                          <div className="row">
-                            <section className="col pt-2 contenitore brick latowhite d-flex justify-content-center align-items-center ">
-                              <div>
-                                <p className="norfont">Enter at least one character.</p>
-                              </div>
-                            </section>
-                          </div>
-                        </div>
-                      </div>
-                    </Error> */}
                     {/* RESITEMS */}
                     <div className="textcenter">
                       {
@@ -6210,7 +6593,7 @@ class Main extends React.Component {
 
                 <div className="modal-body align-items-center darkBG">
                   <center>
-                    <iframe width="100%" height="350" src={this.state.videoLink} frameborder="0" allowfullscreen="true"></iframe>
+                    <iframe width="100%" height="350" src={this.state.videoLink} frameborder="0" allowfullscreen="true" title="videoFrame"></iframe>
                   </center>
                 </div>
               </div>
@@ -6225,7 +6608,7 @@ class Main extends React.Component {
               {foot}
             </div>
           </section>
-        </div>
+        </div >
       </>
 
     );
@@ -6233,9 +6616,9 @@ class Main extends React.Component {
 }
 
 class LoginGear extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+  // constructor(props) {
+  //   super(props);
+  // }
   render() {
     const gearClick = () => {
       this.props.handleShowButtons(true);
@@ -6274,9 +6657,9 @@ class ItemRedPoint extends React.Component {
 }
 
 class LogoImg extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+  // constructor(props) {
+  //   super(props);
+  // }
   link = spData.homeLink;
   render() {
     const logoClick = () => {
@@ -6290,9 +6673,9 @@ class LogoImg extends React.Component {
 }
 
 class CrsAdd extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+  // constructor(props) {
+  //   super(props);
+  // }
   render() {
     let crsBtn = ""
     if (this.props.showItemsBtn === "ShowItemBtn") {
@@ -6320,9 +6703,9 @@ class CrsAdd extends React.Component {
 }
 
 class ItmAdd extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+  // constructor(props) {
+  //   super(props);
+  // }
   render() {
     let itmBtn = ""
     if (this.props.showItemsBtn === "ShowItemBtn") {
@@ -6473,9 +6856,9 @@ class ItmAdd extends React.Component {
 // }
 
 class Dropdown extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+  // constructor(props) {
+  //   super(props);
+  // }
 
   // state = {
   //   isOpen: false
@@ -6544,14 +6927,16 @@ class DropdownCat extends React.Component {
   }
 
   render() {
-    const menuClass = `dropdown-menu${/* this.state.isOpen */ catDropDownIsOpen ? " show d-flex flex-column justify-content-start align-items-center" : " disNone"}`;
+    const menuClass = `dropdown-menu${/* this.state.isOpen */
+      catDropDownIsOpen ? " show d-flex flex-column justify-content-start align-items-center" :
+        " disNone"}`;
 
     return (
       <div className="dropdown" onClick={this.toggleOpen}>
 
         <button
           className="button indaco m-1 dropdown-toggle"
-          id="catMenuButton"
+          id={this.props.id}
           type="button"
           data-toggle="dropdown"
           aria-haspopup="true"
