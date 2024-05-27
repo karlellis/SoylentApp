@@ -44,6 +44,8 @@ var tempCatIcon = "";
 var arrayLength = 0;
 var login = false;
 var array = [];
+var catArray = [];
+var catArrayLength = 0;
 var arrayAdd = [];
 var inPos = "";
 var blockHide = "none";
@@ -522,15 +524,18 @@ const ItemOrCatDialog = ({ handleItem, handleCat, handleClose, iocDiaShow, child
   );
 };
 
-const EleDialog = ({ handleSave, handleClose, eleDiaShow, children, saveLabel }) => {
+const EleDialog = ({ handleSave, handleClose, eleDiaShow, children, saveLabel, activityChanged,
+  hideApply, hideClose, footTheme }) => {
   const showHideClassName = eleDiaShow ? "modal display-block" : "modal display-none";
+  const showHideApply = hideApply ? "display-none" : "display-block";
+  const showHideClose = hideClose ? "display-none" : "display-block";
   return (
     <div className={showHideClassName}>
       <section className="modal-main">
         {children}
-        <div className="modal-footer">
-          <button type="button" className="btn btn-primary" onClick={handleSave}>{saveLabel}</button>
-          <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={handleClose}>Close</button>
+        <div className={footTheme}>
+          <button type="button" disabled={(activityChanged) ? true : false} className={showHideApply + " btn btn-primary"} onClick={handleSave}>{saveLabel}</button>
+          <button type="button" className={showHideClose + " btn btn-secondary"} data-dismiss="modal" onClick={handleClose}>Close</button>
         </div>
       </section>
     </div>
@@ -1403,6 +1408,7 @@ class Main extends React.Component {
       errCol: "",
       upShow: false,
       activityChanged: false,
+      cPos: "",
       disFieldB: false,
       disFieldBC: false,
       disFieldT: false,
@@ -1741,6 +1747,11 @@ class Main extends React.Component {
               noAddArray = [...array];
               this.setState({ items: array });
               spData.items = noAddArray;
+              console.log("index > temp = ", (index));
+              this.itemEditDel("itemEdit", newItem.id, (index))
+              // document.getElementById('clearitemswitchpos').value = ""; //ADDED FOR MULTIEDIT
+              // document.getElementById('clearitemswitchpos').placeholder = 99;
+
             } else {
               array = this.addAfter(array, index, newItem);
               for (let i = (index + 1); i < array.length; i++) {
@@ -1754,28 +1765,37 @@ class Main extends React.Component {
               noAddArray = [...array];
               this.setState({ items: array });
               spData.items = noAddArray;
+              console.log("Index = ", index);
+              this.itemEditDel("itemEdit", newItem.id, index)
+              // document.getElementById('clearitemswitchpos').value = ""; //ADDED FOR MULTIEDIT
+              // document.getElementById('clearitemswitchpos').placeholder = 99;
+
             }
+
+            newItem = {
+              "title": "",
+              "link": "",
+              "icon": "",
+              "descr": "",
+              "video": false,
+              "cat": "",
+              "id": 0,
+              "hidden": false
+            };
           }
+
+          // this.itemEditDel("itemEdit", array[temp].id, currPos)
           inPos = "";
           cgPos = "";
           currPos = "";
-          temp = "";
+          // temp = ""; // TO KEEP APPLY ACTIVE
           temp2 = "";
           temp3 = "";
           temp4 = "";
           temp5 = tempCatTitle;
           temp6 = "";
           blockHide = "none";
-          newItem = {
-            "title": "",
-            "link": "",
-            "icon": "",
-            "descr": "",
-            "video": false,
-            "cat": "",
-            "id": 0,
-            "hidden": false
-          };
+
           this.fireAlert("Changes Made!", "solidgreen");
           // this.showAlert("ok");
         } else if (url === "icon" && op === "add") {
@@ -1828,6 +1848,8 @@ class Main extends React.Component {
             "id": 0,
             "hidden": false
           };
+          this.setState({ disFieldIA: true });
+          document.getElementById('itemAddForm').reset();
           this.fireAlert("Item added!", "solidgreen");
           // this.showAlert("ok");
         } else if (url === "icon" && op === "addlast") {
@@ -1873,6 +1895,8 @@ class Main extends React.Component {
             "id": 0,
             "hidden": false
           };
+          this.setState({ disFieldIA: true });
+          document.getElementById('itemAddForm').reset();
           this.fireAlert("Item added!", "solidgreen");
           // this.showAlert("ok");
         } else if (url === "cat" && op === "edit") {
@@ -1947,6 +1971,7 @@ class Main extends React.Component {
             "icon": "",
             "hidden": false
           };
+          document.getElementById('catAddForm').reset();
           this.fireAlert("Cat added!", "solidgreen");
           // this.showAlert("ok");
         } else if (url === "cat" && op === "addlast") {
@@ -1959,7 +1984,7 @@ class Main extends React.Component {
             catNewItem.hidden = false;
           }
           // console.log("CatNewItem: ", catNewItem);
-          inPos = arrayLength;
+          inPos = array.length;
           // console.log("Pos: ", inPos);
           tempIcon = "";
           arrayAdd = this.addAfter(array, inPos, catNewItem);
@@ -1977,6 +2002,7 @@ class Main extends React.Component {
             "icon": "",
             "hidden": false
           };
+          document.getElementById('catAddForm').reset();
           this.fireAlert("Cat added!", "solidgreen");
           // this.showAlert("ok");
         } else if (url === "back" && op === "edit") {
@@ -2048,34 +2074,36 @@ class Main extends React.Component {
       arrayAdd = this.addAfter(array, inPos, CrsNewItem);
       this.setState({ creditsItems: arrayAdd });
       spData.creditsItems = arrayAdd;
-      arrayAdd = [];
-      temp2 = "";
-      temp3 = "";
-      temp4 = "";
-      temp = "";
-      CrsNewItem = {
-        "title": "",
-        "link": "",
-        "descr": ""
-      };
+      // arrayAdd = [];
+      // temp2 = "";
+      // temp3 = "";
+      // temp4 = "";
+      // temp = "";
+      // CrsNewItem = {
+      //   "title": "",
+      //   "link": "",
+      //   "descr": ""
+      // };
+      document.getElementById('crsAddForm').reset();
     } else if (url === "crs" && op === "addlast") {
       CrsNewItem.title = temp2;
       CrsNewItem.link = temp3;
       CrsNewItem.descr = temp4;
-      inPos = arrayLength;
+      inPos = array.length;
       arrayAdd = this.addAfter(array, inPos, CrsNewItem);
       this.setState({ creditsItems: arrayAdd });
       spData.creditsItems = arrayAdd;
-      arrayAdd = [];
-      temp2 = "";
-      temp3 = "";
-      temp4 = "";
-      temp = "";
-      CrsNewItem = {
-        "title": "",
-        "link": "",
-        "descr": ""
-      };
+      // arrayAdd = [];
+      // temp2 = "";
+      // temp3 = "";
+      // temp4 = "";
+      // temp = "";
+      // CrsNewItem = {
+      //   "title": "",
+      //   "link": "",
+      //   "descr": ""
+      // };
+      document.getElementById('crsAddForm').reset();
     } else if (url === "crs" && op === "edit") {
       if (temp2 !== "") {
         array[currPos].title = temp2;
@@ -2104,18 +2132,38 @@ class Main extends React.Component {
           spData.creditsItems = arrayAdd;
         }
       }
-      arrayAdd = [];
-      temp2 = "";
-      temp3 = "";
-      temp4 = "";
-      cgPos = "";
-      CrsNewItem = {
-        "title": "",
-        "link": "",
-        "descr": ""
-      };
+      // array = [...this.state.creditsItems];
+      // arrayLength = (array.length);
+      // document.getElementById('clearcrspos').value = "";
+      // document.getElementById('clearcrstitle').value = "";
+      // document.getElementById('clearcrslink').value = "";
+      // document.getElementById('clearcrsdescr').value = "";
+
+      // arrayAdd = [];
+      // temp2 = "";
+      // temp3 = "";
+      // temp4 = "";
+      // cgPos = "";
+      // inPos = "";
+      // CrsNewItem = {
+      //   "title": "",
+      //   "link": "",
+      //   "descr": ""
+      // };
       // this.showAlert("ok");
     }
+    arrayAdd = [];
+    temp = "";
+    temp2 = "";
+    temp3 = "";
+    temp4 = "";
+    cgPos = "";
+    inPos = "";
+    CrsNewItem = {
+      "title": "",
+      "link": "",
+      "descr": ""
+    };
     this.saveFile(spData, "./api/img-upload.php", "config");
   }
 
@@ -2436,19 +2484,61 @@ class Main extends React.Component {
 
   applyItemEdit = () => {
     array = [...this.state.items];
+    catArray = [...this.state.catItems];
     if (noDescr === true) {
       temp6 = "";
     }
-    if (fileImg !== null || temp2 !== "" || temp3 !== "" || temp4 !== tempItemVideo || temp5 !== tempCatTitle || temp6 !== tempItemDescr || cgPos !== "" ||
+
+    console.log("fileImg: ", fileImg);
+    console.log("temp2: ", temp2);
+    console.log("temp3: ", temp3);
+    console.log("temp4: ", temp4);
+    console.log("tempItemVideo: ", tempItemVideo);
+    console.log("temp5: ", temp5);
+    console.log("tempCatTitle: ", tempCatTitle);
+    console.log("temp6: ", temp6);
+    console.log("tempItemDescr: ", tempItemDescr);
+    console.log("cgPos: ", cgPos);
+    console.log("blockHide: ", blockHide);
+    console.log("tempItemHide: ", tempItemHide);
+
+    if (fileImg !== null || temp2 !== "" || temp3 !== "" || temp4 !== tempItemVideo ||
+      temp5 !== tempCatTitle || temp6 !== tempItemDescr || cgPos !== "" ||
       blockHide !== tempItemHide) {
+      // if (cgPos !== "" && temp5 !== tempCatTitle) {
       if (cgPos !== "") {
-        inPos = parseInt(cgPos) - 1;
-        // console.log("Edit inPos: ", inPos, " currPos: ", currPos);
-        if (inPos < arrayLength && inPos >= 0 && inPos !== currPos) {
-          this.saveImgFile(fileImg, "icon", "edit");
+        if (temp5 === tempCatTitle) {
+          inPos = parseInt(cgPos) - 1;
+          // console.log("Edit inPos: ", inPos, " currPos: ", currPos);
+          if (temp5 === "Root") {
+            if (inPos < arrayLength && inPos >= 0 && inPos !== currPos) {
+              this.saveImgFile(fileImg, "icon", "edit");
+            } else {
+              cgPos = "";
+              // document.getElementById('clearitemswitchpos').value = ""; //ADDED FOR MULTIEDIT
+              // document.getElementById('clearitemswitchpos').placeholder = currPos;
+              this.fireAlert("Check position!", "brick");
+              // this.showAlert("err");
+            }
+          } else {
+            catArrayLength = catArray.length;
+            console.log("CatItemLength: ", catArrayLength);
+            if (inPos < catArrayLength && inPos >= 0 && inPos !== currPos) {
+              this.saveImgFile(fileImg, "icon", "edit");
+            } else {
+              cgPos = "";
+              // document.getElementById('clearitemswitchpos').value = ""; //ADDED FOR MULTIEDIT
+              // document.getElementById('clearitemswitchpos').placeholder = currPos;
+              this.fireAlert("Check position!", "brick");
+              // this.showAlert("err");
+            }
+          }
         } else {
-          this.fireAlert("No changes made!", "solidblue");
-          // this.showAlert("err");
+          // cgPos = "";
+          this.setState({
+            cPos: currPos
+          })
+          this.fireAlert("Don't change position & category at the same time!", "brick");
         }
       } else {
         // console.log("cgPos === \"\"");
@@ -2514,9 +2604,12 @@ class Main extends React.Component {
     this.fireAlert("Item removed!", "solidgreen");
     // this.showAlert("ok");
     this.saveFile(spData, "./api/img-upload.php", "config");
-    this.setState({
-      activityChanged: true
-    });
+    setTimeout(() => this.setState({ itemDelDiaShow: false }), 1750);
+    // this.setState({ itemDelDiaShow: false });
+
+    // this.setState({
+    //   activityChanged: true
+    // });
   }
 
   addAfter(array, index, newItem) {
@@ -2618,9 +2711,10 @@ class Main extends React.Component {
     this.fireAlert("Category removed!", "solidgreen");
     // this.showAlert("ok");
     this.saveFile(spData, "./api/img-upload.php", "config");
-    this.setState({
-      activityChanged: true
-    });
+    setTimeout(() => this.setState({ catDelDiaShow: false }), 1750);
+    // this.setState({
+    //   activityChanged: true
+    // });
   }
 
   applyCrsEdit = () => {
@@ -2656,6 +2750,7 @@ class Main extends React.Component {
 
   applyCrsAdd = () => {
     array = [...this.state.creditsItems];
+    // console.log("Array Length: ", array.length);
     if (temp2 !== "" && temp3 !== "" && temp4 !== "") {
       if (temp !== "") {
         inPos = parseInt(temp) - 1;
@@ -2679,6 +2774,20 @@ class Main extends React.Component {
           activityChanged: true
         });
       }
+      console.log("fileImg: ", fileImg);
+      console.log("temp: ", temp);
+      console.log("temp2: ", temp2);
+      console.log("temp3: ", temp3);
+      console.log("temp4: ", temp4);
+      console.log("tempItemVideo: ", tempItemVideo);
+      console.log("temp5: ", temp5);
+      console.log("tempCatTitle: ", tempCatTitle);
+      console.log("temp6: ", temp6);
+      console.log("tempItemDescr: ", tempItemDescr);
+      console.log("cgPos: ", cgPos);
+      console.log("inPos: ", inPos);
+      console.log("blockHide: ", blockHide);
+      console.log("tempItemHide: ", tempItemHide);
     } else {
       this.fireAlert("Fill in all fields!", "brick");
       // this.showAlert("err");
@@ -2703,9 +2812,10 @@ class Main extends React.Component {
     this.fireAlert("Credit removed!", "solidgreen");
     // this.showAlert("ok");
     this.saveFile(spData, "./api/img-upload.php", "config");
-    this.setState({
-      activityChanged: true
-    });
+    setTimeout(() => this.setState({ crsDelDiaShow: false }), 1750);
+    // this.setState({
+    //   activityChanged: true
+    // });
   }
 
   saveBack = () => {
@@ -3138,6 +3248,9 @@ class Main extends React.Component {
         break;
       case "itemEdit":
         // console.log("CurrPos ", currPos);
+        this.setState({
+          cPos: currPos
+        })
         this.setState({ itemEditDiaShow: true });
         break;
       case "itemDel":
@@ -3558,6 +3671,7 @@ class Main extends React.Component {
         temp4 = array[i].video;
         temp5 = array[i].cat;
         temp6 = array[i].descr;
+        blockHide = array[i].hidden;
         this.setState({
           catSel: temp5
         })
@@ -3571,6 +3685,9 @@ class Main extends React.Component {
 
     if (op === "itemEdit") {
       document.getElementById('clearitemswitchpos').value = "";
+      // this.hideModal("itemEdit");
+      // document.getElementById('clearitemswitchpos').placeholder = currPos + 1;
+      // document.getElementById('clearitemswitchpos').refresh();
       this.showModal("itemEdit");
     } else {
       this.showModal("itemDel");
@@ -3943,7 +4060,7 @@ class Main extends React.Component {
         <div style={this.state.backStyle}></div>
         <div class="contenitore">
           <section>
-
+            {/* LOGIN DIALOG */}
             <LoginDialog loginDiaShow={this.state.loginDiaShow} handleClose={() => this.hideModal("login")} handleLogin={this.loginCheck}>
               <div className="modal-content">
 
@@ -3991,7 +4108,7 @@ class Main extends React.Component {
                 </div>
               </div>
             </LoginDialog>
-
+            {/* LOGIN EDIT DIALOG */}
             <LoginEditDialog loginEditDiaShow={this.state.loginEditDiaShow} handleClose={() => this.hideModal("loginedit")} handleEditLogin={this.loginEditCheck}>
               <div className="modal-content noborder">
 
@@ -4093,8 +4210,11 @@ class Main extends React.Component {
                 </div>
               </div>
             </LoginEditDialog>
-
-            <EleDialog eleDiaShow={this.state.menuDiaShow} handleClose={() => this.hideModal("menu")} handleSave={this.saveMenu} saveLabel="Apply">
+            {/* MENU DIALOG */}
+            <EleDialog footTheme="modal-footer" hideApply={false} hideClose={false}
+              activityChanged={false} eleDiaShow={this.state.menuDiaShow}
+              handleClose={() => this.hideModal("menu")} handleSave={this.saveMenu}
+              saveLabel="Apply">
               {/* <MenuDialog menuDiaShow={this.state.menuDiaShow} handleClose={() => this.hideModal("menu")} handleSave={this.saveMenu}> */}
               <div className="modal-content noborder">
 
@@ -4305,8 +4425,12 @@ class Main extends React.Component {
               </div>
               {/* </MenuDialog> */}
             </EleDialog>
-
-            <TitleDialog titleDiaShow={this.state.titleDiaShow} handleClose={() => this.hideModal("title")} handleSave={this.saveTitle}>
+            {/* TITLE DIALOG */}
+            <EleDialog footTheme="modal-footer" hideApply={false} hideClose={false}
+              activityChanged={false} eleDiaShow={this.state.titleDiaShow}
+              handleClose={() => this.hideModal("title")} handleSave={this.saveTitle}
+              saveLabel="Apply">
+              {/* <TitleDialog titleDiaShow={this.state.titleDiaShow} handleClose={() => this.hideModal("title")} handleSave={this.saveTitle}> */}
               <div className="modal-content noborder">
 
                 <ModalTitle title="Edit Title (Site name)"></ModalTitle>
@@ -4477,9 +4601,14 @@ class Main extends React.Component {
                   </form>
                 </div>
               </div>
-            </TitleDialog>
-
-            <ClockDialog clockDiaShow={this.state.clockDiaShow} handleClose={() => this.hideModal("clock")} handleSave={this.saveClock}>
+              {/* </TitleDialog> */}
+            </EleDialog>
+            {/* CLOCK DIALOG */}
+            <EleDialog footTheme="modal-footer" hideApply={false} hideClose={false}
+              activityChanged={false} eleDiaShow={this.state.clockDiaShow}
+              handleClose={() => this.hideModal("clock")} handleSave={this.saveClock}
+              saveLabel="Apply">
+              {/* <ClockDialog clockDiaShow={this.state.clockDiaShow} handleClose={() => this.hideModal("clock")} handleSave={this.saveClock}> */}
               <div className="modal-content noborder">
 
                 <ModalTitle title="Edit Clock"></ModalTitle>
@@ -4633,9 +4762,14 @@ class Main extends React.Component {
                   </form>
                 </div>
               </div>
-            </ClockDialog>
-
-            <LogoDialog logoDiaShow={this.state.logoDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("logo")} handleUpload={this.saveLogo}>
+              {/* </ClockDialog> */}
+            </EleDialog>
+            {/* LOGO DIALOG (Removed ActivityChanged)*/}
+            <EleDialog footTheme="modal-footer" hideApply={false} hideClose={false}
+              activityChanged={false} eleDiaShow={this.state.logoDiaShow}
+              handleClose={() => this.hideModal("logo")} handleSave={this.saveLogo}
+              saveLabel="Apply">
+              {/* <LogoDialog logoDiaShow={this.state.logoDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("logo")} handleUpload={this.saveLogo}> */}
               <div className="modal-content noborder">
 
                 <ModalTitle title="Edit Logo"></ModalTitle>
@@ -4786,9 +4920,14 @@ class Main extends React.Component {
                   </form>
                 </div>
               </div>
-            </LogoDialog>
-
-            <InfoDialog infoDiaShow={this.state.infoDiaShow} handleClose={() => this.hideModal("info")} handleSave={this.saveInfo}>
+              {/* </LogoDialog> */}
+            </EleDialog>
+            {/* INFO DIALOG */}
+            <EleDialog footTheme="modal-footer" hideApply={false} hideClose={false}
+              activityChanged={false} eleDiaShow={this.state.infoDiaShow}
+              handleClose={() => this.hideModal("info")} handleSave={this.saveInfo}
+              saveLabel="Apply">
+              {/* <InfoDialog infoDiaShow={this.state.infoDiaShow} handleClose={() => this.hideModal("info")} handleSave={this.saveInfo}> */}
               <div className="modal-content noborder">
 
                 <ModalTitle title="Edit Foot Info"></ModalTitle>
@@ -5097,9 +5236,14 @@ class Main extends React.Component {
                   </form>
                 </div>
               </div>
-            </InfoDialog>
-
-            <AddInfoDialog addInfoDiaShow={this.state.addInfoDiaShow} handleClose={() => this.hideModal("addInfo")} handleSave={this.saveAddInfo}>
+              {/* </InfoDialog> */}
+            </EleDialog>
+            {/* ADDINFO DIALOG */}
+            <EleDialog footTheme="modal-footer" hideApply={false} hideClose={false}
+              activityChanged={false} eleDiaShow={this.state.addInfoDiaShow}
+              handleClose={() => this.hideModal("addInfo")} handleSave={this.saveAddInfo}
+              saveLabel="Apply">
+              {/* <AddInfoDialog addInfoDiaShow={this.state.addInfoDiaShow} handleClose={() => this.hideModal("addInfo")} handleSave={this.saveAddInfo}> */}
               <div className="modal-content noborder">
 
                 <ModalTitle title="Edit Foot additional Info"></ModalTitle>
@@ -5413,9 +5557,14 @@ class Main extends React.Component {
                   </form>
                 </div>
               </div>
-            </AddInfoDialog>
-
-            <BackEditDialog backEditDiaShow={this.state.backEditDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("back")} handleSave={this.saveBack}>
+              {/* </AddInfoDialog> */}
+            </EleDialog>
+            {/* BACKEDIT DIALOG */}
+            <EleDialog footTheme="modal-footer" hideApply={false} hideClose={false}
+              activityChanged={false} eleDiaShow={this.state.backEditDiaShow}
+              handleClose={() => this.hideModal("back")} handleSave={this.saveBack}
+              saveLabel="Apply">
+              {/* <BackEditDialog backEditDiaShow={this.state.backEditDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("back")} handleSave={this.saveBack}> */}
               <div className="modal-content noborder">
 
                 <ModalTitle title="Edit Preferences"></ModalTitle>
@@ -5630,9 +5779,13 @@ class Main extends React.Component {
                   </form>
                 </div>
               </div>
-            </BackEditDialog>
-
-            <CatDialog catDiaShow={this.state.catDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("cat")}>
+              {/* </BackEditDialog> */}
+            </EleDialog>
+            {/* CAT DIALOG */}
+            <EleDialog footTheme="modal-footer-dark" hideApply={true} hideClose={false}
+              activityChanged={false} eleDiaShow={this.state.catDiaShow}
+              handleClose={() => this.hideModal("cat")}>
+              {/* <CatDialog catDiaShow={this.state.catDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("cat")}> */}
               <div className="modal-content noBG">
                 <div className="modal-header darkBG">
                   <h5 className="modal-title latowhite" >{tempCatTitle}</h5>
@@ -5654,9 +5807,14 @@ class Main extends React.Component {
                   </div>
                 </div>
               </div>
-            </CatDialog>
-
-            <ItemEditDialog itemEditDiaShow={this.state.itemEditDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("itemEdit")} handleSave={this.applyItemEdit}>
+              {/* </CatDialog> */}
+            </EleDialog>
+            {/* ITEM EDIT DIALOG */}
+            <EleDialog footTheme="modal-footer" hideApply={false} hideClose={false}
+              activityChanged={false} eleDiaShow={this.state.itemEditDiaShow}
+              handleClose={() => this.hideModal("itemEdit")} handleSave={this.applyItemEdit}
+              saveLabel="Edit">
+              {/* <ItemEditDialog itemEditDiaShow={this.state.itemEditDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("itemEdit")} handleSave={this.applyItemEdit}> */}
               <div className="modal-content noborder">
 
                 <ModalTitle title="Edit Item"></ModalTitle>
@@ -5666,7 +5824,7 @@ class Main extends React.Component {
 
                     <InputFile></InputFile>
 
-                    <InputPosition edit="Edit Item" pos={currPos} id="clearitemswitchpos" ></InputPosition>
+                    <InputPosition edit="Edit Item" pos={this.state.cPos} id="clearitemswitchpos" ></InputPosition>
 
                     {/* <div className="form-group">
                       <div className="row text-center mb-1 m-auto">
@@ -5872,8 +6030,14 @@ class Main extends React.Component {
                   </form>
                 </div>
               </div>
-            </ItemEditDialog>
-            <ItemAddDialog itemAddDiaShow={this.state.itemAddDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("itemAdd")} handleSave={this.applyItemAdd}>
+              {/* </ItemEditDialog> */}
+            </EleDialog>
+            {/* ITEM ADD DIALOG */}
+            <EleDialog footTheme="modal-footer" hideApply={false} hideClose={false}
+              activityChanged={false} eleDiaShow={this.state.itemAddDiaShow}
+              handleClose={() => this.hideModal("itemAdd")} handleSave={this.applyItemAdd}
+              saveLabel="Add">
+              {/* <ItemAddDialog itemAddDiaShow={this.state.itemAddDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("itemAdd")} handleSave={this.applyItemAdd}> */}
               <div className="modal-content noborder">
 
                 <ModalTitle title="Add Item"></ModalTitle>
@@ -6092,8 +6256,14 @@ class Main extends React.Component {
                   </form>
                 </div>
               </div>
-            </ItemAddDialog>
-            <ItemDelDialog itemDelDiaShow={this.state.itemDelDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("itemDel")} handleSave={this.applyItemDel}>
+              {/* </ItemAddDialog> */}
+            </EleDialog>
+            {/* ITEM DEL DIALOG */}
+            <EleDialog footTheme="modal-footer" hideApply={false} hideClose={false}
+              activityChanged={false} eleDiaShow={this.state.itemDelDiaShow}
+              handleClose={() => this.hideModal("itemDel")} handleSave={this.applyItemDel}
+              saveLabel="Remove">
+              {/* <ItemDelDialog itemDelDiaShow={this.state.itemDelDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("itemDel")} handleSave={this.applyItemDel}> */}
               <div className="modal-content noborder">
 
                 <ModalTitle title={"Permanently delete " + tempItemTitle + " item?"}></ModalTitle>
@@ -6104,9 +6274,14 @@ class Main extends React.Component {
 
                 </div>
               </div>
-            </ItemDelDialog>
-
-            <CatEditDialog catEditDiaShow={this.state.catEditDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("catedit")} handleSave={this.applyCatEdit}>
+              {/* </ItemDelDialog> */}
+            </EleDialog>
+            {/* CAT EDIT DIALOG */}
+            <EleDialog footTheme="modal-footer" hideApply={false} hideClose={false}
+              activityChanged={false} eleDiaShow={this.state.catEditDiaShow}
+              handleClose={() => this.hideModal("catedit")} handleSave={this.applyCatEdit}
+              saveLabel="Edit">
+              {/* <CatEditDialog catEditDiaShow={this.state.catEditDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("catedit")} handleSave={this.applyCatEdit}> */}
               <div className="modal-content noborder">
 
                 <ModalTitle title="Edit Category"></ModalTitle>
@@ -6204,8 +6379,14 @@ class Main extends React.Component {
                   </form>
                 </div>
               </div>
-            </CatEditDialog>
-            <CatAddDialog catAddDiaShow={this.state.catAddDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("catadd")} handleSave={this.applyCatAdd}>
+              {/* </CatEditDialog> */}
+            </EleDialog>
+            {/* CAT ADD DIALOG */}
+            <EleDialog footTheme="modal-footer" hideApply={false} hideClose={false}
+              activityChanged={false} eleDiaShow={this.state.catAddDiaShow}
+              handleClose={() => this.hideModal("catadd")} handleSave={this.applyCatAdd}
+              saveLabel="Add">
+              {/* <CatAddDialog catAddDiaShow={this.state.catAddDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("catadd")} handleSave={this.applyCatAdd}> */}
               <div className="modal-content noborder">
 
                 <ModalTitle title="Add Category"></ModalTitle>
@@ -6304,8 +6485,14 @@ class Main extends React.Component {
                   </form>
                 </div>
               </div>
-            </CatAddDialog>
-            <CatDelDialog catDelDiaShow={this.state.catDelDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("catdel")} handleSave={this.applyCatDel}>
+              {/* </CatAddDialog> */}
+            </EleDialog>
+            {/* CAT DEL DIALOG */}
+            <EleDialog footTheme="modal-footer" hideApply={false} hideClose={false}
+              activityChanged={false} eleDiaShow={this.state.catDelDiaShow}
+              handleClose={() => this.hideModal("catdel")} handleSave={this.applyCatDel}
+              saveLabel="Remove">
+              {/* <CatDelDialog catDelDiaShow={this.state.catDelDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("catdel")} handleSave={this.applyCatDel}> */}
               <div className="modal-content noborder">
 
                 <ModalTitle title={"Permanently delete " + tempCatTitle + " category?"}></ModalTitle>
@@ -6316,8 +6503,9 @@ class Main extends React.Component {
 
                 </div>
               </div>
-            </CatDelDialog>
-
+              {/* </CatDelDialog> */}
+            </EleDialog>
+            {/* ITEM OR CAT DIALOG */}
             <ItemOrCatDialog iocDiaShow={this.state.iocDiaShow} activityChanged={this.state.activityChanged} handleItem={this.addItem} handleCat={this.catAddItem} handleClose={() => this.hideModal("itemorcat")}>
               <div className="modal-content noborder">
 
@@ -6325,7 +6513,7 @@ class Main extends React.Component {
 
               </div>
             </ItemOrCatDialog>
-
+            {/* CREDITS DIALOG */}
             <CrsDialog crsDiaShow={this.state.crsDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("excrs")} handleSave={this.applyItemEdit}>
               <div className="modal-content noBG">
                 <div className="modal-header darkBG">
@@ -6349,7 +6537,12 @@ class Main extends React.Component {
               </div>
 
             </CrsDialog>
-            <CrsAddDialog crsAddDiaShow={this.state.crsAddDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("crsadd")} handleSave={this.applyCrsAdd}>
+            {/* CREDITS ADD DIALOG */}
+            <EleDialog footTheme="modal-footer" hideApply={false} hideClose={false}
+              activityChanged={false} eleDiaShow={this.state.crsAddDiaShow}
+              handleClose={() => this.hideModal("crsadd")} handleSave={this.applyCrsAdd}
+              saveLabel="Add">
+              {/* <CrsAddDialog crsAddDiaShow={this.state.crsAddDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("crsadd")} handleSave={this.applyCrsAdd}> */}
               <div className="modal-content noborder">
 
                 <ModalTitle title="Add Credit"></ModalTitle>
@@ -6415,7 +6608,7 @@ class Main extends React.Component {
                     </div> */}
 
                     {/* Descr. */}
-                    <InputTitle label="Descr." edit="Edit Item" tempTitle={tempItemTitle} id="clearcrsdescr"
+                    <InputTitle label="Descr." edit="Add Item" tempTitle={tempItemTitle} id="clearcrsdescr"
                       tempo={e => temp4 = e.target.value}>
                     </InputTitle>
 
@@ -6439,8 +6632,14 @@ class Main extends React.Component {
                   </form>
                 </div>
               </div>
-            </CrsAddDialog>
-            <CrsEditDialog crsEditDiaShow={this.state.crsEditDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("crsedit")} handleSave={this.applyCrsEdit}>
+              {/* </CrsAddDialog> */}
+            </EleDialog>
+            {/* CREDITS EDIT DIALOG */}
+            <EleDialog footTheme="modal-footer" hideApply={false} hideClose={false}
+              activityChanged={false} eleDiaShow={this.state.crsEditDiaShow}
+              handleClose={() => this.hideModal("crsedit")} handleSave={this.applyCrsEdit}
+              saveLabel="Edit">
+              {/* <CrsEditDialog crsEditDiaShow={this.state.crsEditDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("crsedit")} handleSave={this.applyCrsEdit}> */}
               <div className="modal-content noborder">
 
                 <ModalTitle title="Edit Credit"></ModalTitle>
@@ -6530,8 +6729,14 @@ class Main extends React.Component {
                   </form>
                 </div>
               </div>
-            </CrsEditDialog>
-            <CrsDelDialog crsDelDiaShow={this.state.crsDelDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("crsdel")} handleSave={this.applyCrsDel}>
+              {/* </CrsEditDialog> */}
+            </EleDialog>
+            {/* CREDITS DEL DIALOG */}
+            <EleDialog footTheme="modal-footer" hideApply={false} hideClose={false}
+              activityChanged={false} eleDiaShow={this.state.crsDelDiaShow}
+              handleClose={() => this.hideModal("crsdel")} handleSave={this.applyCrsDel}
+              saveLabel="Remove">
+              {/* <CrsDelDialog crsDelDiaShow={this.state.crsDelDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("crsdel")} handleSave={this.applyCrsDel}> */}
               <div className="modal-content noborder">
 
                 <ModalTitle title={"Permanently delete " + tempCrsTitle + " credit?"}></ModalTitle>
@@ -6542,8 +6747,9 @@ class Main extends React.Component {
 
                 </div>
               </div>
-            </CrsDelDialog>
-
+              {/* </CrsDelDialog> */}
+            </EleDialog>
+            {/* SEARCH DIALOG */}
             <SearchDialog searchDiaShow={this.state.searchDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("search")} handleSave={this.itemSearch} handleReset={this.itemSearchReset} >
               <div className="modal-content noborder">
                 <div className="modal-header-dark">
@@ -6573,6 +6779,7 @@ class Main extends React.Component {
                 </div>
               </div>
             </SearchDialog>
+            {/* ITEM VIDEO DIALOG */}
             <ItemVideoDialog itemVideoDiaShow={this.state.itemVideoDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("video")} handleSave={this.applyItemEdit}>
               <div className="modal-content darkBG">
 
@@ -6607,7 +6814,7 @@ class Main extends React.Component {
               {pageBody}
               {foot}
             </div>
-          </section>
+          </section >
         </div >
       </>
 
