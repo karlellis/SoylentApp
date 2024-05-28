@@ -311,6 +311,51 @@ const Element = ({ eleShow, children, mainBtn, id, sfondo, colore, z, colW }) =>
   );
 };
 
+const EditElement = ({ editEleShow, children, hidden }) => {
+  const showHideClassName = editEleShow ? "d-block" : "d-none";
+  const hide = hidden ? "" : <RedPoint />
+  return (
+    <div className={showHideClassName + " stretch d-flex justify-content-center align-items-center"}>
+      {children} {hide}
+    </div>
+  );
+};
+
+const Set = ({ children, mainBtn }) => {
+  const justifyCenterEnd = mainBtn ? "justify-content-end" : "justify-content-center";
+  return (
+    <section id="HeadSettings" style={{ backgroundColor: spData.loginColor }} className={justifyCenterEnd + " col-md-1 indaco d-flex flex-column align-items-center"}>
+      {children}
+    </section>
+  );
+};
+
+const SettingsGear = ({ showItemsBtn }) => {
+  const whiteOrCol = showItemsBtn ? "./img/colGear.svg" : "./img/gear.svg"
+  return (
+    <img className="gear mt-2 mb-2" alt="Settings" title="Settings" src={whiteOrCol} />
+  );
+}
+
+const Alert = ({ alertShow, alertMsg, alertCol, children }) => {
+  return (
+    <div className={`mb-2 ${alertShow ? 'alert-shown' : 'alert-hidden'}`} >
+      <div className="row text-center pt-2">
+        <div className="col">
+          <div className="row">
+            <section className={"col pt-2 contenitore " + alertCol + " latowhite d-flex justify-content-center align-items-center "}>
+              <div>
+                <p className="norfont">{alertMsg}</p>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+      {/* {children} */}
+    </div>
+  );
+};
+
 const Menu = ({ menuShow, children, mainBtn }) => {
   const showHideClassName = menuShow ? "d-block" : "d-none";
   const justifyCenterEnd = mainBtn ? "justify-content-end" : "justify-content-center";
@@ -319,16 +364,6 @@ const Menu = ({ menuShow, children, mainBtn }) => {
       className={showHideClassName + " " + justifyCenterEnd + " col-md-1 d-flex flex-column align-items-center"}>
       {children}
     </section>
-  );
-};
-
-const EditElement = ({ editEleShow, children, hidden }) => {
-  const showHideClassName = editEleShow ? "d-block" : "d-none";
-  const hide = hidden ? "" : <RedPoint />
-  return (
-    <div className={showHideClassName + " stretch d-flex justify-content-center align-items-center"}>
-      {children} {hide}
-    </div>
   );
 };
 
@@ -447,22 +482,6 @@ const EditClock = ({ editClockShow, children, hidden }) => {
   );
 };
 
-const Set = ({ children, mainBtn }) => {
-  const justifyCenterEnd = mainBtn ? "justify-content-end" : "justify-content-center";
-  return (
-    <section id="HeadSettings" style={{ backgroundColor: spData.loginColor }} className={justifyCenterEnd + " col-md-1 indaco d-flex flex-column align-items-center"}>
-      {children}
-    </section>
-  );
-};
-
-const SettingsGear = ({ showItemsBtn }) => {
-  const whiteOrCol = showItemsBtn ? "./img/colGear.svg" : "./img/gear.svg"
-  return (
-    <img className="gear mt-2 mb-2" alt="Settings" title="Settings" src={whiteOrCol} />
-  );
-}
-
 const EditSet = ({ editSetShow, children }) => {
   const showHideClassName = editSetShow ? "d-block" : "d-none";
   return (
@@ -472,35 +491,51 @@ const EditSet = ({ editSetShow, children }) => {
   );
 };
 
-const Alert = ({ alertShow, alertMsg, alertCol, children }) => {
+// DIALOGS
+
+const EleDialog = ({ handleSave, handleMidBtn, handleClose, eleDiaShow, children, saveLabel, midBtnLabel,
+  activityChanged, hideApply, hideClose, hideMidBtn, footTheme, mainTheme }) => {
+  const showHideClassName = eleDiaShow ? "modal display-block" : "modal display-none";
+  const showHideApply = hideApply ? "display-none" : "display-block";
+  const showHideMidBtn = hideMidBtn ? "display-none" : "display-block";
+  const showHideClose = hideClose ? "display-none" : "display-block";
   return (
-    <div className={`mb-2 ${alertShow ? 'alert-shown' : 'alert-hidden'}`} >
-      <div className="row text-center pt-2">
-        <div className="col">
-          <div className="row">
-            <section className={"col pt-2 contenitore " + alertCol + " latowhite d-flex justify-content-center align-items-center "}>
-              <div>
-                <p className="norfont">{alertMsg}</p>
-              </div>
-            </section>
-          </div>
+    <div className={showHideClassName}>
+      <section className={mainTheme}>
+        {children}
+        <div className={footTheme}>
+          <button type="button" disabled={(activityChanged) ? true : false} className={showHideApply + " btn btn-primary"} onClick={handleSave}>{saveLabel}</button>
+          <button type="button" /* disabled={(activityChanged) ? true : false} */ className={showHideMidBtn + " btn btn-success"} onClick={handleMidBtn}>{midBtnLabel}</button>
+          <button type="button" className={showHideClose + " btn btn-secondary"} data-dismiss="modal" onClick={handleClose}>Close</button>
         </div>
-      </div>
-      {/* {children} */}
+      </section>
     </div>
   );
 };
 
-// DIALOGS
-
-const MenuDialog = ({ handleSave, handleClose, menuDiaShow, children }) => {
-  const showHideClassName = menuDiaShow ? "modal display-block" : "modal display-none";
+const LoginEditDialog = ({ handleEditLogin, handleClose, loginEditDiaShow, children }) => {
+  const showHideClassName = loginEditDiaShow ? "modal display-block" : "modal display-none";
   return (
     <div className={showHideClassName}>
       <section className="modal-main">
         {children}
         <div className="modal-footer">
-          <button type="button" className="btn btn-primary" onClick={handleSave}>Apply</button>
+          <button type="button" className="btn btn-primary" onClick={handleEditLogin}>Apply</button>
+          <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={handleClose}>Close</button>
+        </div>
+      </section>
+    </div>
+  );
+};
+
+const LoginDialog = ({ handleLogin, handleClose, loginDiaShow, children }) => {
+  const showHideClassName = loginDiaShow ? "modal display-block" : "modal display-none";
+  return (
+    <div className={showHideClassName}>
+      <section className="modal-main">
+        {children}
+        <div className="modal-footer">
+          <button type="button" className="btn btn-primary" onClick={handleLogin}>Login</button>
           <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={handleClose}>Close</button>
         </div>
       </section>
@@ -524,26 +559,23 @@ const ItemOrCatDialog = ({ handleItem, handleCat, handleClose, iocDiaShow, child
   );
 };
 
-const EleDialog = ({ handleSave, handleClose, eleDiaShow, children, saveLabel, activityChanged,
-  hideApply, hideClose, footTheme }) => {
-  const showHideClassName = eleDiaShow ? "modal display-block" : "modal display-none";
-  const showHideApply = hideApply ? "display-none" : "display-block";
-  const showHideClose = hideClose ? "display-none" : "display-block";
+const TitleDialog = ({ handleSave, handleClose, titleDiaShow, children }) => {
+  const showHideClassName = titleDiaShow ? "modal display-block" : "modal display-none";
   return (
     <div className={showHideClassName}>
       <section className="modal-main">
         {children}
-        <div className={footTheme}>
-          <button type="button" disabled={(activityChanged) ? true : false} className={showHideApply + " btn btn-primary"} onClick={handleSave}>{saveLabel}</button>
-          <button type="button" className={showHideClose + " btn btn-secondary"} data-dismiss="modal" onClick={handleClose}>Close</button>
+        <div className="modal-footer">
+          <button type="button" className="btn btn-primary" onClick={handleSave}>Apply</button>
+          <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={handleClose}>Close</button>
         </div>
       </section>
     </div>
   );
 };
 
-const TitleDialog = ({ handleSave, handleClose, titleDiaShow, children }) => {
-  const showHideClassName = titleDiaShow ? "modal display-block" : "modal display-none";
+const MenuDialog = ({ handleSave, handleClose, menuDiaShow, children }) => {
+  const showHideClassName = menuDiaShow ? "modal display-block" : "modal display-none";
   return (
     <div className={showHideClassName}>
       <section className="modal-main">
@@ -803,36 +835,6 @@ const AddInfoDialog = ({ handleSave, handleClose, addInfoDiaShow, children }) =>
         {children}
         <div className="modal-footer">
           <button type="button" className="btn btn-primary" onClick={handleSave}>Apply</button>
-          <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={handleClose}>Close</button>
-        </div>
-      </section>
-    </div>
-  );
-};
-
-const LoginEditDialog = ({ handleEditLogin, handleClose, loginEditDiaShow, children }) => {
-  const showHideClassName = loginEditDiaShow ? "modal display-block" : "modal display-none";
-  return (
-    <div className={showHideClassName}>
-      <section className="modal-main">
-        {children}
-        <div className="modal-footer">
-          <button type="button" className="btn btn-primary" onClick={handleEditLogin}>Apply</button>
-          <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={handleClose}>Close</button>
-        </div>
-      </section>
-    </div>
-  );
-};
-
-const LoginDialog = ({ handleLogin, handleClose, loginDiaShow, children }) => {
-  const showHideClassName = loginDiaShow ? "modal display-block" : "modal display-none";
-  return (
-    <div className={showHideClassName}>
-      <section className="modal-main">
-        {children}
-        <div className="modal-footer">
-          <button type="button" className="btn btn-primary" onClick={handleLogin}>Login</button>
           <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={handleClose}>Close</button>
         </div>
       </section>
@@ -3886,8 +3888,6 @@ class Main extends React.Component {
                 </button>
               </EditLogo> */}
             </Element>
-            {/* </Logo> */}
-
             {/* OROLOGIO */}
             {/* <Clock clockShow={this.state.clockShow} mainBtn={this.state.mainBtn}> */}
             <Element eleShow={this.state.clockShow} mainBtn={this.state.mainBtn} id="HeadDate" sfondo={spData.clockColor} colore={spData.clockTextColor} z={""} colW={spData.clockColW}>
@@ -3904,7 +3904,6 @@ class Main extends React.Component {
               </EditClock> */}
               {/* </Clock> */}
             </Element>
-
             {/* SETTINGS */}
             <Set mainBtn={this.state.mainBtn}>
               <LoginGear handleShowButtons={this.loginSession} />
@@ -4211,7 +4210,7 @@ class Main extends React.Component {
               </div>
             </LoginEditDialog>
             {/* MENU DIALOG */}
-            <EleDialog footTheme="modal-footer" hideApply={false} hideClose={false}
+            <EleDialog mainTheme="modal-main" footTheme="modal-footer" hideMidBtn={true} hideApply={false} hideClose={false}
               activityChanged={false} eleDiaShow={this.state.menuDiaShow}
               handleClose={() => this.hideModal("menu")} handleSave={this.saveMenu}
               saveLabel="Apply">
@@ -4426,7 +4425,7 @@ class Main extends React.Component {
               {/* </MenuDialog> */}
             </EleDialog>
             {/* TITLE DIALOG */}
-            <EleDialog footTheme="modal-footer" hideApply={false} hideClose={false}
+            <EleDialog mainTheme="modal-main" footTheme="modal-footer" hideMidBtn={true} hideApply={false} hideClose={false}
               activityChanged={false} eleDiaShow={this.state.titleDiaShow}
               handleClose={() => this.hideModal("title")} handleSave={this.saveTitle}
               saveLabel="Apply">
@@ -4604,7 +4603,7 @@ class Main extends React.Component {
               {/* </TitleDialog> */}
             </EleDialog>
             {/* CLOCK DIALOG */}
-            <EleDialog footTheme="modal-footer" hideApply={false} hideClose={false}
+            <EleDialog mainTheme="modal-main" footTheme="modal-footer" hideMidBtn={true} hideApply={false} hideClose={false}
               activityChanged={false} eleDiaShow={this.state.clockDiaShow}
               handleClose={() => this.hideModal("clock")} handleSave={this.saveClock}
               saveLabel="Apply">
@@ -4765,7 +4764,7 @@ class Main extends React.Component {
               {/* </ClockDialog> */}
             </EleDialog>
             {/* LOGO DIALOG (Removed ActivityChanged)*/}
-            <EleDialog footTheme="modal-footer" hideApply={false} hideClose={false}
+            <EleDialog mainTheme="modal-main" footTheme="modal-footer" hideMidBtn={true} hideApply={false} hideClose={false}
               activityChanged={false} eleDiaShow={this.state.logoDiaShow}
               handleClose={() => this.hideModal("logo")} handleSave={this.saveLogo}
               saveLabel="Apply">
@@ -4923,7 +4922,7 @@ class Main extends React.Component {
               {/* </LogoDialog> */}
             </EleDialog>
             {/* INFO DIALOG */}
-            <EleDialog footTheme="modal-footer" hideApply={false} hideClose={false}
+            <EleDialog mainTheme="modal-main" footTheme="modal-footer" hideMidBtn={true} hideApply={false} hideClose={false}
               activityChanged={false} eleDiaShow={this.state.infoDiaShow}
               handleClose={() => this.hideModal("info")} handleSave={this.saveInfo}
               saveLabel="Apply">
@@ -5239,7 +5238,7 @@ class Main extends React.Component {
               {/* </InfoDialog> */}
             </EleDialog>
             {/* ADDINFO DIALOG */}
-            <EleDialog footTheme="modal-footer" hideApply={false} hideClose={false}
+            <EleDialog mainTheme="modal-main" footTheme="modal-footer" hideMidBtn={true} hideApply={false} hideClose={false}
               activityChanged={false} eleDiaShow={this.state.addInfoDiaShow}
               handleClose={() => this.hideModal("addInfo")} handleSave={this.saveAddInfo}
               saveLabel="Apply">
@@ -5560,7 +5559,7 @@ class Main extends React.Component {
               {/* </AddInfoDialog> */}
             </EleDialog>
             {/* BACKEDIT DIALOG */}
-            <EleDialog footTheme="modal-footer" hideApply={false} hideClose={false}
+            <EleDialog mainTheme="modal-main" footTheme="modal-footer" hideMidBtn={true} hideApply={false} hideClose={false}
               activityChanged={false} eleDiaShow={this.state.backEditDiaShow}
               handleClose={() => this.hideModal("back")} handleSave={this.saveBack}
               saveLabel="Apply">
@@ -5782,7 +5781,7 @@ class Main extends React.Component {
               {/* </BackEditDialog> */}
             </EleDialog>
             {/* CAT DIALOG */}
-            <EleDialog footTheme="modal-footer-dark" hideApply={true} hideClose={false}
+            <EleDialog mainTheme="modal-main-dark" footTheme="modal-footer-dark" hideMidBtn={true} hideApply={true} hideClose={false}
               activityChanged={false} eleDiaShow={this.state.catDiaShow}
               handleClose={() => this.hideModal("cat")}>
               {/* <CatDialog catDiaShow={this.state.catDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("cat")}> */}
@@ -5810,7 +5809,7 @@ class Main extends React.Component {
               {/* </CatDialog> */}
             </EleDialog>
             {/* ITEM EDIT DIALOG */}
-            <EleDialog footTheme="modal-footer" hideApply={false} hideClose={false}
+            <EleDialog mainTheme="modal-main" footTheme="modal-footer" hideMidBtn={true} hideApply={false} hideClose={false}
               activityChanged={false} eleDiaShow={this.state.itemEditDiaShow}
               handleClose={() => this.hideModal("itemEdit")} handleSave={this.applyItemEdit}
               saveLabel="Edit">
@@ -6033,7 +6032,7 @@ class Main extends React.Component {
               {/* </ItemEditDialog> */}
             </EleDialog>
             {/* ITEM ADD DIALOG */}
-            <EleDialog footTheme="modal-footer" hideApply={false} hideClose={false}
+            <EleDialog mainTheme="modal-main" footTheme="modal-footer" hideMidBtn={true} hideApply={false} hideClose={false}
               activityChanged={false} eleDiaShow={this.state.itemAddDiaShow}
               handleClose={() => this.hideModal("itemAdd")} handleSave={this.applyItemAdd}
               saveLabel="Add">
@@ -6259,7 +6258,7 @@ class Main extends React.Component {
               {/* </ItemAddDialog> */}
             </EleDialog>
             {/* ITEM DEL DIALOG */}
-            <EleDialog footTheme="modal-footer" hideApply={false} hideClose={false}
+            <EleDialog mainTheme="modal-main" footTheme="modal-footer" hideMidBtn={true} hideApply={false} hideClose={false}
               activityChanged={false} eleDiaShow={this.state.itemDelDiaShow}
               handleClose={() => this.hideModal("itemDel")} handleSave={this.applyItemDel}
               saveLabel="Remove">
@@ -6277,7 +6276,7 @@ class Main extends React.Component {
               {/* </ItemDelDialog> */}
             </EleDialog>
             {/* CAT EDIT DIALOG */}
-            <EleDialog footTheme="modal-footer" hideApply={false} hideClose={false}
+            <EleDialog mainTheme="modal-main" footTheme="modal-footer" hideMidBtn={true} hideApply={false} hideClose={false}
               activityChanged={false} eleDiaShow={this.state.catEditDiaShow}
               handleClose={() => this.hideModal("catedit")} handleSave={this.applyCatEdit}
               saveLabel="Edit">
@@ -6382,7 +6381,7 @@ class Main extends React.Component {
               {/* </CatEditDialog> */}
             </EleDialog>
             {/* CAT ADD DIALOG */}
-            <EleDialog footTheme="modal-footer" hideApply={false} hideClose={false}
+            <EleDialog mainTheme="modal-main" footTheme="modal-footer" hideMidBtn={true} hideApply={false} hideClose={false}
               activityChanged={false} eleDiaShow={this.state.catAddDiaShow}
               handleClose={() => this.hideModal("catadd")} handleSave={this.applyCatAdd}
               saveLabel="Add">
@@ -6488,7 +6487,7 @@ class Main extends React.Component {
               {/* </CatAddDialog> */}
             </EleDialog>
             {/* CAT DEL DIALOG */}
-            <EleDialog footTheme="modal-footer" hideApply={false} hideClose={false}
+            <EleDialog mainTheme="modal-main" footTheme="modal-footer" hideMidBtn={true} hideApply={false} hideClose={false}
               activityChanged={false} eleDiaShow={this.state.catDelDiaShow}
               handleClose={() => this.hideModal("catdel")} handleSave={this.applyCatDel}
               saveLabel="Remove">
@@ -6506,15 +6505,23 @@ class Main extends React.Component {
               {/* </CatDelDialog> */}
             </EleDialog>
             {/* ITEM OR CAT DIALOG */}
-            <ItemOrCatDialog iocDiaShow={this.state.iocDiaShow} activityChanged={this.state.activityChanged} handleItem={this.addItem} handleCat={this.catAddItem} handleClose={() => this.hideModal("itemorcat")}>
+            <EleDialog mainTheme="modal-main" footTheme="modal-footer" hideMidBtn={false} hideApply={false} hideClose={false}
+              activityChanged={false} eleDiaShow={this.state.iocDiaShow}
+              handleClose={() => this.hideModal("itemorcat")} handleSave={this.addItem} handleMidBtn={this.catAddItem}
+              saveLabel="Item" midBtnLabel="Category">
+            {/* <ItemOrCatDialog iocDiaShow={this.state.iocDiaShow} activityChanged={this.state.activityChanged} handleItem={this.addItem} handleCat={this.catAddItem} handleClose={() => this.hideModal("itemorcat")}> */}
               <div className="modal-content noborder">
 
                 <ModalTitle title="Add Item or Category?"></ModalTitle>
 
               </div>
-            </ItemOrCatDialog>
+            {/* </ItemOrCatDialog> */}
+            </EleDialog>
             {/* CREDITS DIALOG */}
-            <CrsDialog crsDiaShow={this.state.crsDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("excrs")} handleSave={this.applyItemEdit}>
+            <EleDialog mainTheme="modal-main-dark" footTheme="modal-footer-dark" hideMidBtn={true} hideApply={true} hideClose={false}
+              activityChanged={false} eleDiaShow={this.state.crsDiaShow}
+              handleClose={() => this.hideModal("excrs")}>
+              {/* <CrsDialog crsDiaShow={this.state.crsDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("excrs")} handleSave={this.applyItemEdit}> */}
               <div className="modal-content noBG">
                 <div className="modal-header darkBG">
                   <h5 className="modal-title latowhite" >{spData.menuCreditsLabel}</h5>
@@ -6536,9 +6543,10 @@ class Main extends React.Component {
                 </div>
               </div>
 
-            </CrsDialog>
+              {/* </CrsDialog> */}
+            </EleDialog>
             {/* CREDITS ADD DIALOG */}
-            <EleDialog footTheme="modal-footer" hideApply={false} hideClose={false}
+            <EleDialog mainTheme="modal-main" footTheme="modal-footer" hideMidBtn={true} hideApply={false} hideClose={false}
               activityChanged={false} eleDiaShow={this.state.crsAddDiaShow}
               handleClose={() => this.hideModal("crsadd")} handleSave={this.applyCrsAdd}
               saveLabel="Add">
@@ -6635,7 +6643,7 @@ class Main extends React.Component {
               {/* </CrsAddDialog> */}
             </EleDialog>
             {/* CREDITS EDIT DIALOG */}
-            <EleDialog footTheme="modal-footer" hideApply={false} hideClose={false}
+            <EleDialog mainTheme="modal-main" footTheme="modal-footer" hideMidBtn={true} hideApply={false} hideClose={false}
               activityChanged={false} eleDiaShow={this.state.crsEditDiaShow}
               handleClose={() => this.hideModal("crsedit")} handleSave={this.applyCrsEdit}
               saveLabel="Edit">
@@ -6732,7 +6740,7 @@ class Main extends React.Component {
               {/* </CrsEditDialog> */}
             </EleDialog>
             {/* CREDITS DEL DIALOG */}
-            <EleDialog footTheme="modal-footer" hideApply={false} hideClose={false}
+            <EleDialog mainTheme="modal-main" footTheme="modal-footer" hideMidBtn={true} hideApply={false} hideClose={false}
               activityChanged={false} eleDiaShow={this.state.crsDelDiaShow}
               handleClose={() => this.hideModal("crsdel")} handleSave={this.applyCrsDel}
               saveLabel="Remove">
@@ -6750,7 +6758,10 @@ class Main extends React.Component {
               {/* </CrsDelDialog> */}
             </EleDialog>
             {/* SEARCH DIALOG */}
-            <SearchDialog searchDiaShow={this.state.searchDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("search")} handleSave={this.itemSearch} handleReset={this.itemSearchReset} >
+            <EleDialog mainTheme="modal-main-dark" footTheme="modal-footer darkBG" hideMidBtn={false} hideApply={false} hideClose={false}
+              activityChanged={this.state.activityChanged} eleDiaShow={this.state.searchDiaShow} saveLabel="Search" midBtnLabel="Reset"
+              handleClose={() => this.hideModal("search")} handleSave={this.itemSearch} handleMidBtn={this.itemSearchReset}>
+              {/* <SearchDialog searchDiaShow={this.state.searchDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("search")} handleSave={this.itemSearch} handleReset={this.itemSearchReset} > */}
               <div className="modal-content noborder">
                 <div className="modal-header-dark">
                   <h5 className="modal-title-dark" >{spData.menuSearchLabel}</h5>
@@ -6778,11 +6789,14 @@ class Main extends React.Component {
                   </form>
                 </div>
               </div>
-            </SearchDialog>
+              {/* </SearchDialog> */}
+            </EleDialog>
             {/* ITEM VIDEO DIALOG */}
-            <ItemVideoDialog itemVideoDiaShow={this.state.itemVideoDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("video")} handleSave={this.applyItemEdit}>
+            <EleDialog mainTheme="modal-main darkBG" footTheme="modal-footer-dark" hideMidBtn={true} hideApply={true} hideClose={false}
+              activityChanged={false} eleDiaShow={this.state.itemVideoDiaShow}
+              handleClose={() => this.hideModal("video")}>
+              {/* <ItemVideoDialog itemVideoDiaShow={this.state.itemVideoDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("video")} handleSave={this.applyItemEdit}> */}
               <div className="modal-content darkBG">
-
                 <div className="row mb-1 m-1 modal-header-dark">
                   <div className="col">
                     <div className="row">
@@ -6804,7 +6818,8 @@ class Main extends React.Component {
                   </center>
                 </div>
               </div>
-            </ItemVideoDialog>
+              {/* </ItemVideoDialog> */}
+            </EleDialog>
 
             <div className="stickytop">
               {head}
