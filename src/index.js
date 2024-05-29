@@ -1278,6 +1278,304 @@ const InputHide = ({ hideSwitch }) => {
   )
 }
 
+const AddSym = ({ showItemsBtn, addItem, addLabel }) => {
+  let plusBtn = "";
+  if (showItemsBtn === "ShowItemBtn") {
+    plusBtn = (
+      <button className="col extcredits solidgreen m-1"
+        onClick={addItem}>
+        <img className="gear mt-2 mb-2" title={addLabel} alt={addLabel} src="./itemicons/plus.svg" />
+      </button>
+    )
+  } else {
+    plusBtn = "";
+  }
+  return (
+    <>
+      {plusBtn}
+    </>
+  );
+}
+
+const Dropdown = ({ search, crsShow }) => {
+  const showHideSearch = spData.noMenuSearch ? "d-none" : "d-block";
+  const showHideCredits = spData.noMenuCredits ? "d-none" : "d-block";
+  const menuClass = `dropdown-menu${dropDownIsOpen ? " show d-flex flex-column justify-content-center align-items-center" : " disNone"}`;
+  return (
+    <div className="dropdown"
+      onClick={() => dropDownIsOpen = !dropDownIsOpen}>
+      <button
+        className="button indaco m-1 dropdown-toggle"
+        id="menuButton"
+        type="button"
+        data-toggle="dropdown"
+        aria-haspopup="true"
+      >
+        Menu
+      </button>
+      <div className={menuClass + " menuBG"} >
+        <button className={showHideSearch + " col menuItem green m-1"}
+          onClick={search}>
+          {spData.menuSearchLabel}
+        </button>
+        <button className={showHideCredits + " col menuItem blue m-1"}
+          onClick={crsShow}>
+          {spData.menuCreditsLabel}
+        </button>
+      </div>
+    </div>
+  );
+}
+
+const DropdownCat = ({ items, id, catName, setCat }) => {
+  const menuClass = `dropdown-menu${catDropDownIsOpen ? " show d-flex flex-column justify-content-start align-items-center" :
+    " disNone"}`;
+  return (
+    <div className="dropdown"
+      onClick={() => catDropDownIsOpen = !catDropDownIsOpen}>
+      <button
+        className="button indaco m-1 dropdown-toggle"
+        id={id}
+        type="button"
+        data-toggle="dropdown"
+        aria-haspopup="true"
+      >
+        {catName}
+      </button>
+      <div className={menuClass + " menuBG"}>
+        <button className="col menuItem green m-1"
+          onClick={(e) => {
+            setCat("Root", e);
+          }}>
+          Root
+        </button>
+        {
+          items.map(({ id, title, icon }, i) => {
+            return (
+              <button className="col menuItem green m-1"
+                onClick={(e) => {
+                  setCat(title, e);
+                }}>
+                {title}
+              </button>
+            )
+          })
+        }
+      </div>
+    </div>
+  );
+}
+
+const LoginGear = ({ handleShowButtons }) => {
+  return (
+    <img className="gear mt-2 mb-2" alt="Login" src="./img/gears.svg" onClick={() => handleShowButtons(true)} />
+  );
+}
+
+const OverlayImg = ({ }) => {
+  return (
+    <img className="overlay" alt="Overlay" src={spData.LogoIcon} />
+  );
+}
+
+const RedPoint = ({ }) => {
+  return (
+    <img className="gear menux mt-2 mb-2" title="Hidden" alt="Hidden" src="./img/point.svg" />
+  );
+}
+
+const ItemRedPoint = ({ }) => {
+  return (
+    <div class="col-2 borderleft itemx d-flex flex-column justify-content-center align-items-center">
+      <img className="itemx mt-2 mb-2" title="Hidden" alt="Hidden" src="./img/point.svg" />
+    </div>
+  );
+}
+
+const LogoImg = ({ }) => {
+  return (
+    <img className="logo mt-2 mb-2" title="Home" alt="Logo" src={spData.LogoIcon}
+      onClick={() => window.location.href = spData.homeLink} />
+  );
+}
+
+// class RedPoint extends React.Component {
+//   render() {
+//     return (
+//       <img className="gear menux mt-2 mb-2" title="Hidden" alt="Hidden" src="./img/point.svg" />
+//     );
+//   }
+// }
+
+// class ItemRedPoint extends React.Component {
+//   render() {
+//     return (
+//       <div class="col-2 borderleft itemx d-flex flex-column justify-content-center align-items-center">
+//         <img className="itemx mt-2 mb-2" title="Hidden" alt="Hidden" src="./img/point.svg" />
+//       </div>
+//     );
+//   }
+// }
+
+// class LogoImg extends React.Component {
+//   link = spData.homeLink;
+//   render() {
+//     const logoClick = () => {
+//       window.location.href = spData.homeLink;
+//     }
+//     return (
+//       <img className="logo mt-2 mb-2" title="Home" alt="Logo" src={spData.LogoIcon}
+//         onClick={() => logoClick()} />
+//     );
+//   }
+// }
+
+// class OverlayImg extends React.Component {
+
+//   render() {
+//     return (
+//       <img className="overlay" alt="Overlay" src={spData.LogoIcon} />
+//     );
+//   }
+// }
+
+// class LoginGear extends React.Component {
+//   // constructor(props) {
+//   //   super(props);
+//   // }
+//   render() {
+//     const gearClick = () => {
+//       this.props.handleShowButtons(true);
+//     }
+//     return (
+//       <img className="gear mt-2 mb-2" alt="Login" src="./img/gears.svg" onClick={() => gearClick()} />
+//     );
+//   }
+// }
+
+// class DropdownCat extends React.Component {
+//   changeText(selected) {
+//     this.setState({ selCat: selected });
+//   }
+
+//   toggleOpen = () => {
+//     catDropDownIsOpen = !catDropDownIsOpen;
+//   }
+
+//   render() {
+//     const menuClass = `dropdown-menu${/* this.state.isOpen */
+//       catDropDownIsOpen ? " show d-flex flex-column justify-content-start align-items-center" :
+//         " disNone"}`;
+
+//     return (
+//       <div className="dropdown" onClick={this.toggleOpen}>
+
+//         <button
+//           className="button indaco m-1 dropdown-toggle"
+//           id={this.props.id}
+//           type="button"
+//           data-toggle="dropdown"
+//           aria-haspopup="true"
+//         >
+//           {this.props.catName}
+//         </button>
+//         <div className={menuClass + " menuBG"}>
+//           <button className="col menuItem green m-1"
+//             onClick={(e) => {
+//               this.changeText("Root")
+//               this.props.setCat("Root", e);
+//             }}>
+//             Root
+//           </button>
+//           {
+//             this.props.items.map(({ id, title, icon }, i) => {
+//               return (
+//                 <button className="col menuItem green m-1"
+//                   onClick={(e) => {
+//                     this.changeText(title)
+//                     this.props.setCat(title, e);
+//                   }}>
+//                   {title}
+//                 </button>
+//               )
+//             })
+//           }
+//         </div>
+//       </div>
+//     );
+//   }
+// }
+
+// class Dropdown extends React.Component {
+//   toggleOpen = () => {
+//     dropDownIsOpen = !dropDownIsOpen;
+//   }
+//   render() {
+//     const showHideSearch = spData.noMenuSearch ? "d-none" : "d-block";
+//     const showHideCredits = spData.noMenuCredits ? "d-none" : "d-block";
+//     const menuClass = `dropdown-menu${dropDownIsOpen ? " show d-flex flex-column justify-content-center align-items-center" : " disNone"}`;
+//     return (
+//       <div className="dropdown" onClick={this.toggleOpen}>
+
+//         <button
+//           className="button indaco m-1 dropdown-toggle"
+//           id="menuButton"
+//           type="button"
+//           data-toggle="dropdown"
+//           aria-haspopup="true"
+//         >
+//           Menu
+//         </button>
+//         <div className={menuClass + " menuBG"} >
+
+//           <button className={showHideSearch + " col menuItem green m-1"}
+//             onClick={() => {
+//               this.props.search();
+//             }}>
+//             {spData.menuSearchLabel}
+//           </button>
+//           <button className={showHideCredits + " col menuItem blue m-1"}
+//             onClick={() => {
+//               this.props.crsShow();
+//             }}>
+//             {spData.menuCreditsLabel}
+//           </button>
+//         </div>
+//       </div>
+//     );
+//   }
+// }
+
+// class CrsAdd extends React.Component {
+//   // constructor(props) {
+//   //   super(props);
+//   // }
+//   render() {
+//     let crsBtn = ""
+//     if (this.props.showItemsBtn === "ShowItemBtn") {
+//       crsBtn = (
+
+//         <div className="row stickydivtop">
+//           <button className="col extcredits solidgreen m-1"
+//             onClick={() => this.props.addItem()}>
+//             <img className="gear mt-2 mb-1" title="Add Item" alt="Add Item" src="./itemicons/plus.svg" />
+//             {/* <img className="plus mt-2 mb-1" title="Add Item" alt="Add Item" src="./itemicons/plus.svg" /> */}
+//             {/* <h5><font color="Chartreuse">Add Item</font></h5> */}
+//           </button>
+//         </div>
+
+//       )
+//     } else {
+//       crsBtn = "";
+//     }
+//     return (
+//       <>
+//         {crsBtn}
+//       </>
+//     );
+//   }
+// }
+
 // FUNCTIONS
 
 async function fetchUpPHP(file, url, key) {
@@ -1354,6 +1652,36 @@ async function hashUsrPsw(plaintextUser, plaintextPass) {
 async function comparePassword(plaintextPassword, hash) {
   const result = await bcrypt.compare(plaintextPassword, hash);
   return result;
+}
+
+function Orologio() {
+  const [dateState, setDateState] = useState(new Date());
+  useEffect(() => {
+    setInterval(() => setDateState(new Date()), 1000);
+  }, []);
+  return (
+    <div className="Orologio">
+      {/* <ClockIcon /> */}
+      <p className="medfont">
+        {dateState.toLocaleString('it-IT', {
+          hour: 'numeric',
+          minute: 'numeric',
+          second: 'numeric',
+          hour12: false,
+        })}
+      </p>
+      {/* <CalenderIcon /> */}
+      <p className="smallfont">
+        {' '}
+        {dateState.toLocaleDateString('it-IT', {
+          weekday: 'short',
+          day: 'numeric',
+          month: 'short',
+          year: 'numeric',
+        })}
+      </p>
+    </div>
+  );
 }
 
 // MAIN
@@ -3778,6 +4106,7 @@ class Main extends React.Component {
         refresh: false
       });
     }
+
     if (catDropDownIsOpen && currElement !== "editCatMenuButton" && currElement !== "addCatMenuButton") {
       this.setState({
         refresh: true
@@ -3934,7 +4263,7 @@ class Main extends React.Component {
               <SettingsGear showItemsBtn={this.state.itemsBtnShow} />
             </button>
 
-            <ItmAdd showItemsBtn={this.state.itemsBtnShow} addItem={this.itemOrCat} />
+            <AddSym showItemsBtn={this.state.itemsBtnShow} addItem={this.itemOrCat} addLabel={"Add Item or Category"} />
 
             {/* <ItemAdd className="col" showItemsBtn={this.state.itemsBtnShow} addItem={this.itemOrCat} /> */}
             <button className="col button solidbrick m-1"
@@ -5792,7 +6121,9 @@ class Main extends React.Component {
                 <div style={this.state.catStyle}></div>
                 <div ref={el => this.containerCat = el} className="modal-body-dark">
                   <div className="textcenter">
-                    <CrsAdd showItemsBtn={this.state.itemsBtnShow} addItem={this.addItem} />
+                    <div className="row stickydivtop">
+                      <AddSym showItemsBtn={this.state.itemsBtnShow} addItem={this.addItem} addLabel={"Add Item"} />
+                    </div>
                     {/* <ItmAdd showItemsBtn={this.state.itemsBtnShow} addItem={this.addItem} /> */}
                     {
                       this.state.catItems.map(({ id, title, link, descr, cat, icon, video, hidden }, i) => {
@@ -6126,7 +6457,7 @@ class Main extends React.Component {
                           noDescr = false;
                         }
                       }}
-                      title={tempItemDescr}
+                      title=""
                       hideSwitch={noDescr}
                       tempo={e => temp6 = e.target.value}
                       id="clearitemdescr">
@@ -6509,13 +6840,13 @@ class Main extends React.Component {
               activityChanged={false} eleDiaShow={this.state.iocDiaShow}
               handleClose={() => this.hideModal("itemorcat")} handleSave={this.addItem} handleMidBtn={this.catAddItem}
               saveLabel="Item" midBtnLabel="Category">
-            {/* <ItemOrCatDialog iocDiaShow={this.state.iocDiaShow} activityChanged={this.state.activityChanged} handleItem={this.addItem} handleCat={this.catAddItem} handleClose={() => this.hideModal("itemorcat")}> */}
+              {/* <ItemOrCatDialog iocDiaShow={this.state.iocDiaShow} activityChanged={this.state.activityChanged} handleItem={this.addItem} handleCat={this.catAddItem} handleClose={() => this.hideModal("itemorcat")}> */}
               <div className="modal-content noborder">
 
                 <ModalTitle title="Add Item or Category?"></ModalTitle>
 
               </div>
-            {/* </ItemOrCatDialog> */}
+              {/* </ItemOrCatDialog> */}
             </EleDialog>
             {/* CREDITS DIALOG */}
             <EleDialog mainTheme="modal-main-dark" footTheme="modal-footer-dark" hideMidBtn={true} hideApply={true} hideClose={false}
@@ -6529,7 +6860,9 @@ class Main extends React.Component {
                 <div style={this.state.catStyle}></div>
                 <div ref={el => this.containerCrs = el} className="modal-body-dark">
                   <div className="textcenter">
-                    <CrsAdd showItemsBtn={this.state.itemsBtnShow} addItem={this.crsAddItem} />
+                    <div className="row stickydivtop">
+                      <AddSym showItemsBtn={this.state.itemsBtnShow} addItem={this.crsAddItem} addLabel={"Add Credit"} />
+                    </div>
                     {
                       this.state.creditsItems.map(({ id, title, link, descr, }, i) => {
                         return (
@@ -6837,116 +7170,116 @@ class Main extends React.Component {
   }
 }
 
-class LoginGear extends React.Component {
-  // constructor(props) {
-  //   super(props);
-  // }
-  render() {
-    const gearClick = () => {
-      this.props.handleShowButtons(true);
-    }
-    return (
-      <img className="gear mt-2 mb-2" alt="Login" src="./img/gears.svg" onClick={() => gearClick()} />
-    );
-  }
-}
+// class LoginGear extends React.Component {
+//   // constructor(props) {
+//   //   super(props);
+//   // }
+//   render() {
+//     const gearClick = () => {
+//       this.props.handleShowButtons(true);
+//     }
+//     return (
+//       <img className="gear mt-2 mb-2" alt="Login" src="./img/gears.svg" onClick={() => gearClick()} />
+//     );
+//   }
+// }
 
-class OverlayImg extends React.Component {
+// class OverlayImg extends React.Component {
 
-  render() {
-    return (
-      <img className="overlay" alt="Overlay" src={spData.LogoIcon} />
-    );
-  }
-}
+//   render() {
+//     return (
+//       <img className="overlay" alt="Overlay" src={spData.LogoIcon} />
+//     );
+//   }
+// }
 
-class RedPoint extends React.Component {
-  render() {
-    return (
-      <img className="gear menux mt-2 mb-2" title="Hidden" alt="Hidden" src="./img/point.svg" />
-    );
-  }
-}
+// class RedPoint extends React.Component {
+//   render() {
+//     return (
+//       <img className="gear menux mt-2 mb-2" title="Hidden" alt="Hidden" src="./img/point.svg" />
+//     );
+//   }
+// }
 
-class ItemRedPoint extends React.Component {
-  render() {
-    return (
-      <div class="col-2 borderleft itemx d-flex flex-column justify-content-center align-items-center">
-        <img className="itemx mt-2 mb-2" title="Hidden" alt="Hidden" src="./img/point.svg" />
-      </div>
-    );
-  }
-}
+// class ItemRedPoint extends React.Component {
+//   render() {
+//     return (
+//       <div class="col-2 borderleft itemx d-flex flex-column justify-content-center align-items-center">
+//         <img className="itemx mt-2 mb-2" title="Hidden" alt="Hidden" src="./img/point.svg" />
+//       </div>
+//     );
+//   }
+// }
 
-class LogoImg extends React.Component {
-  // constructor(props) {
-  //   super(props);
-  // }
-  link = spData.homeLink;
-  render() {
-    const logoClick = () => {
-      window.location.href = spData.homeLink;
-    }
-    return (
-      <img className="logo mt-2 mb-2" title="Home" alt="Logo" src={spData.LogoIcon}
-        onClick={() => logoClick()} />
-    );
-  }
-}
+// class LogoImg extends React.Component {
+//   // constructor(props) {
+//   //   super(props);
+//   // }
+//   link = spData.homeLink;
+//   render() {
+//     const logoClick = () => {
+//       window.location.href = spData.homeLink;
+//     }
+//     return (
+//       <img className="logo mt-2 mb-2" title="Home" alt="Logo" src={spData.LogoIcon}
+//         onClick={() => logoClick()} />
+//     );
+//   }
+// }
 
-class CrsAdd extends React.Component {
-  // constructor(props) {
-  //   super(props);
-  // }
-  render() {
-    let crsBtn = ""
-    if (this.props.showItemsBtn === "ShowItemBtn") {
-      crsBtn = (
+// class CrsAdd extends React.Component {
+//   // constructor(props) {
+//   //   super(props);
+//   // }
+//   render() {
+//     let crsBtn = ""
+//     if (this.props.showItemsBtn === "ShowItemBtn") {
+//       crsBtn = (
 
-        <div className="row stickydivtop">
-          <button className="col extcredits solidgreen m-1"
-            onClick={() => this.props.addItem()}>
-            <img className="gear mt-2 mb-1" title="Add Item" alt="Add Item" src="./itemicons/plus.svg" />
-            {/* <img className="plus mt-2 mb-1" title="Add Item" alt="Add Item" src="./itemicons/plus.svg" /> */}
-            {/* <h5><font color="Chartreuse">Add Item</font></h5> */}
-          </button>
-        </div>
+//         <div className="row stickydivtop">
+//           <button className="col extcredits solidgreen m-1"
+//             onClick={() => this.props.addItem()}>
+//             <img className="gear mt-2 mb-1" title="Add Item" alt="Add Item" src="./itemicons/plus.svg" />
+//             {/* <img className="plus mt-2 mb-1" title="Add Item" alt="Add Item" src="./itemicons/plus.svg" /> */}
+//             {/* <h5><font color="Chartreuse">Add Item</font></h5> */}
+//           </button>
+//         </div>
 
-      )
-    } else {
-      crsBtn = "";
-    }
-    return (
-      <>
-        {crsBtn}
-      </>
-    );
-  }
-}
+//       )
+//     } else {
+//       crsBtn = "";
+//     }
+//     return (
+//       <>
+//         {crsBtn}
+//       </>
+//     );
+//   }
+// }
 
-class ItmAdd extends React.Component {
-  // constructor(props) {
-  //   super(props);
-  // }
-  render() {
-    let itmBtn = ""
-    if (this.props.showItemsBtn === "ShowItemBtn") {
-      itmBtn = (
-        <button className="col button solidgreen m-1"
-          onClick={() => this.props.addItem()}>
-          <img className="gear mt-2 mb-2" title="Add Item" alt="Add Item" src="./itemicons/plus.svg" />
-        </button>
-      )
-    } else {
-      itmBtn = "";
-    }
-    return (
-      <>
-        {itmBtn}
-      </>
-    );
-  }
-}
+// class ItmAdd extends React.Component {
+//   // constructor(props) {
+//   //   super(props);
+//   // }
+//   render() {
+//     let itmBtn = ""
+//     if (this.props.showItemsBtn === "ShowItemBtn") {
+//       itmBtn = (
+//         <button className="col button solidgreen m-1"
+//           onClick={() => this.props.addItem()}>
+//           <img className="gear mt-2 mb-2" title="Add Item" alt="Add Item" src="./itemicons/plus.svg" />
+//         </button>
+//       )
+//     } else {
+//       itmBtn = "";
+//     }
+//     return (
+//       <>
+//         {itmBtn}
+//       </>
+//     );
+//   }
+// }
 
 // class Cat extends React.Component {
 //   constructor(props) {
@@ -7077,151 +7410,128 @@ class ItmAdd extends React.Component {
 //   }
 // }
 
-class Dropdown extends React.Component {
-  // constructor(props) {
-  //   super(props);
-  // }
+// class Dropdown extends React.Component {
+//   toggleOpen = () => {
+//     dropDownIsOpen = !dropDownIsOpen;
+//   }
+//   render() {
+//     const showHideSearch = spData.noMenuSearch ? "d-none" : "d-block";
+//     const showHideCredits = spData.noMenuCredits ? "d-none" : "d-block";
+//     const menuClass = `dropdown-menu${dropDownIsOpen ? " show d-flex flex-column justify-content-center align-items-center" : " disNone"}`;
+//     return (
+//       <div className="dropdown" onClick={this.toggleOpen}>
 
-  // state = {
-  //   isOpen: false
-  // };
+//         <button
+//           className="button indaco m-1 dropdown-toggle"
+//           id="menuButton"
+//           type="button"
+//           data-toggle="dropdown"
+//           aria-haspopup="true"
+//         >
+//           Menu
+//         </button>
+//         <div className={menuClass + " menuBG"} >
 
-  toggleOpen = () => {
-    // this.setState({ isOpen: !this.state.isOpen });
-    dropDownIsOpen = !dropDownIsOpen;
-    // console.log("dropDownIsOpen: ", dropDownIsOpen);
-  }
+//           <button className={showHideSearch + " col menuItem green m-1"}
+//             onClick={() => {
+//               this.props.search();
+//             }}>
+//             {spData.menuSearchLabel}
+//           </button>
+//           <button className={showHideCredits + " col menuItem blue m-1"}
+//             onClick={() => {
+//               this.props.crsShow();
+//             }}>
+//             {spData.menuCreditsLabel}
+//           </button>
+//         </div>
+//       </div>
+//     );
+//   }
+// }
 
+// class DropdownCat extends React.Component {
+//   changeText(selected) {
+//     this.setState({ selCat: selected });
+//   }
 
-  render() {
-    // if (this.props.anyClose === true && this.state.isOpen === true) {
-    //   this.setState({ isOpen: false });
-    // }
-    const showHideSearch = spData.noMenuSearch ? "d-none" : "d-block";
-    const showHideCredits = spData.noMenuCredits ? "d-none" : "d-block";
-    const menuClass = `dropdown-menu${/* this.state.isOpen &&  */dropDownIsOpen /* !this.props.anyClose */ ? " show d-flex flex-column justify-content-center align-items-center" : " disNone"}`;
-    return (
-      <div className="dropdown" onClick={this.toggleOpen}>
+//   toggleOpen = () => {
+//     catDropDownIsOpen = !catDropDownIsOpen;
+//   }
 
-        <button
-          className="button indaco m-1 dropdown-toggle"
-          id="menuButton"
-          type="button"
-          data-toggle="dropdown"
-          aria-haspopup="true"
-        >
-          Menu
-        </button>
-        <div className={menuClass + " menuBG"} >
+//   render() {
+//     const menuClass = `dropdown-menu${/* this.state.isOpen */
+//       catDropDownIsOpen ? " show d-flex flex-column justify-content-start align-items-center" :
+//         " disNone"}`;
 
-          <button className={showHideSearch + " col menuItem green m-1"}
-            onClick={() => {
-              this.props.search();
-            }}>
-            {spData.menuSearchLabel}
-          </button>
-          <button className={showHideCredits + " col menuItem blue m-1"}
-            onClick={() => {
-              this.props.crsShow();
-            }}>
-            {spData.menuCreditsLabel}
-          </button>
-        </div>
-      </div>
-    );
-  }
-}
+//     return (
+//       <div className="dropdown" onClick={this.toggleOpen}>
 
-class DropdownCat extends React.Component {
-  // state = {
-  //   isOpen: false
-  // };
+//         <button
+//           className="button indaco m-1 dropdown-toggle"
+//           id={this.props.id}
+//           type="button"
+//           data-toggle="dropdown"
+//           aria-haspopup="true"
+//         >
+//           {this.props.catName}
+//         </button>
+//         <div className={menuClass + " menuBG"}>
+//           <button className="col menuItem green m-1"
+//             onClick={(e) => {
+//               this.changeText("Root")
+//               this.props.setCat("Root", e);
+//             }}>
+//             Root
+//           </button>
+//           {
+//             this.props.items.map(({ id, title, icon }, i) => {
+//               return (
+//                 <button className="col menuItem green m-1"
+//                   onClick={(e) => {
+//                     this.changeText(title)
+//                     this.props.setCat(title, e);
+//                   }}>
+//                   {title}
+//                 </button>
+//               )
+//             })
+//           }
+//         </div>
+//       </div>
+//     );
+//   }
+// }
 
-  changeText(selected) {
-    this.setState({ selCat: selected });
-  }
-
-  toggleOpen = () => {
-    // this.setState({ isOpen: !this.state.isOpen });
-    // dropDownIsOpen = !dropDownIsOpen;
-    catDropDownIsOpen = !catDropDownIsOpen;
-    // console.log("dropDownIsOpen: ", dropDownIsOpen);
-  }
-
-  render() {
-    const menuClass = `dropdown-menu${/* this.state.isOpen */
-      catDropDownIsOpen ? " show d-flex flex-column justify-content-start align-items-center" :
-        " disNone"}`;
-
-    return (
-      <div className="dropdown" onClick={this.toggleOpen}>
-
-        <button
-          className="button indaco m-1 dropdown-toggle"
-          id={this.props.id}
-          type="button"
-          data-toggle="dropdown"
-          aria-haspopup="true"
-        >
-          {this.props.catName}
-        </button>
-        <div className={menuClass + " menuBG"}>
-          <button className="col menuItem green m-1"
-            onClick={(e) => {
-              this.changeText("Root")
-              this.props.setCat("Root", e);
-            }}>
-            Root
-          </button>
-
-          {
-            this.props.items.map(({ id, title, icon }, i) => {
-              return (
-                <button className="col menuItem green m-1"
-                  onClick={(e) => {
-                    this.changeText(title)
-                    this.props.setCat(title, e);
-                  }}>
-                  {title}
-                </button>
-              )
-            })
-          }
-        </div>
-      </div>
-    );
-  }
-}
-
-function Orologio() {
-  const [dateState, setDateState] = useState(new Date());
-  useEffect(() => {
-    setInterval(() => setDateState(new Date()), 1000);
-  }, []);
-  return (
-    <div className="Orologio">
-      {/* <ClockIcon /> */}
-      <p className="medfont">
-        {dateState.toLocaleString('it-IT', {
-          hour: 'numeric',
-          minute: 'numeric',
-          second: 'numeric',
-          hour12: false,
-        })}
-      </p>
-      {/* <CalenderIcon /> */}
-      <p className="smallfont">
-        {' '}
-        {dateState.toLocaleDateString('it-IT', {
-          weekday: 'short',
-          day: 'numeric',
-          month: 'short',
-          year: 'numeric',
-        })}
-      </p>
-    </div>
-  );
-}
+// function Orologio() {
+//   const [dateState, setDateState] = useState(new Date());
+//   useEffect(() => {
+//     setInterval(() => setDateState(new Date()), 1000);
+//   }, []);
+//   return (
+//     <div className="Orologio">
+//       {/* <ClockIcon /> */}
+//       <p className="medfont">
+//         {dateState.toLocaleString('it-IT', {
+//           hour: 'numeric',
+//           minute: 'numeric',
+//           second: 'numeric',
+//           hour12: false,
+//         })}
+//       </p>
+//       {/* <CalenderIcon /> */}
+//       <p className="smallfont">
+//         {' '}
+//         {dateState.toLocaleDateString('it-IT', {
+//           weekday: 'short',
+//           day: 'numeric',
+//           month: 'short',
+//           year: 'numeric',
+//         })}
+//       </p>
+//     </div>
+//   );
+// }
 
 // ========================================
 
