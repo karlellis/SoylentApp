@@ -351,7 +351,6 @@ const Alert = ({ alertShow, alertMsg, alertCol, children }) => {
           </div>
         </div>
       </div>
-      {/* {children} */}
     </div>
   );
 };
@@ -1806,7 +1805,7 @@ class Main extends React.Component {
     this.showModal = this.showModal.bind(this);
     this.hideModal = this.hideModal.bind(this);
     this.loginSession = this.loginSession.bind(this);
-    this.loginEditSession = this.loginEditSession.bind(this);
+    // this.loginEditSession = this.loginEditSession.bind(this);
   }
 
   componentDidMount() {
@@ -2518,26 +2517,6 @@ class Main extends React.Component {
     return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
   }
 
-  saveTitle = () => {
-    if (temp !== "") {
-      spData.headTitle = temp;
-    }
-    // console.log("Titolo: " + spData.headTitle);
-    spData.headColor = this.hexToRgb(tempColor) + ", " + tempOpacity + ")";
-    spData.headOpacity = parseFloat(tempOpacity.replace(/,/g, "."))/* .toFixed(1) */;
-    spData.headTextColor = this.hexToRgb(tempTextColor) + ", 1)";
-    spData.headColW = tempColW;
-    // console.log("Colore: " + spData.headColor);
-    if (blockHide !== "none") {
-      spData.titleShow = blockHide;
-    }
-    blockHide = "none";
-    temp = "";
-    this.fireAlert("Changes Made!", "solidgreen");
-    // this.showAlert("ok");
-    this.saveFile(spData, "./api/img-upload.php", "config");
-  }
-
   itemSearchReset = () => {
     // this.showAlert("all");
     document.getElementById('searchForm').reset();
@@ -2692,19 +2671,7 @@ class Main extends React.Component {
     }
   }
 
-  saveClock = () => {
-    spData.clockColor = this.hexToRgb(tempColor) + ", " + tempOpacity + ")";
-    spData.clockOpacity = parseFloat(tempOpacity.replace(/,/g, "."));
-    spData.clockTextColor = this.hexToRgb(tempTextColor) + ", 1)";
-    spData.clockColW = tempColW;
-    if (blockHide !== "none") {
-      spData.clockShow = blockHide;
-    }
-    blockHide = "none";
-    this.fireAlert("Changes Made!", "solidgreen");
-    // this.showAlert("ok");
-    this.saveFile(spData, "./api/img-upload.php", "config");
-  }
+  // HEAD ACTIONS
 
   saveMenu = () => {
     if (disable1 !== "none") {
@@ -2733,6 +2700,212 @@ class Main extends React.Component {
 
     disable1 = "none";
     disable2 = "none";
+  }
+
+  saveTitle = () => {
+    if (temp !== "") {
+      spData.headTitle = temp;
+    }
+    // console.log("Titolo: " + spData.headTitle);
+    spData.headColor = this.hexToRgb(tempColor) + ", " + tempOpacity + ")";
+    spData.headOpacity = parseFloat(tempOpacity.replace(/,/g, "."))/* .toFixed(1) */;
+    spData.headTextColor = this.hexToRgb(tempTextColor) + ", 1)";
+    spData.headColW = tempColW;
+    // console.log("Colore: " + spData.headColor);
+    if (blockHide !== "none") {
+      spData.titleShow = blockHide;
+    }
+    blockHide = "none";
+    temp = "";
+    this.fireAlert("Changes Made!", "solidgreen");
+    // this.showAlert("ok");
+    this.saveFile(spData, "./api/img-upload.php", "config");
+  }
+
+  saveLogo = () => {
+    if (fileImg !== null) {
+      tempIcon = spData.LogoIcon;
+      this.saveImgFile(fileImg, "logo", "edit");
+      spData.logoColor = this.hexToRgb(tempColor) + ", " + tempOpacity + ")";
+      spData.logoOpacity = parseFloat(tempOpacity.replace(/,/g, "."));
+      spData.logoColW = tempColW;
+      if (blockHide !== "none") {
+        spData.logoShow = blockHide;
+      }
+      blockHide = "none";
+    } else {
+      spData.logoColor = this.hexToRgb(tempColor) + ", " + tempOpacity + ")";
+      spData.logoOpacity = parseFloat(tempOpacity.replace(/,/g, "."));
+      spData.logoColW = tempColW;
+      if (blockHide !== "none") {
+        spData.logoShow = blockHide;
+      }
+      blockHide = "none";
+      this.fireAlert("Changes Made!", "solidgreen");
+      // this.showAlert("ok");
+      this.saveFile(spData, "./api/img-upload.php", "config");
+    }
+  }
+
+  saveClock = () => {
+    spData.clockColor = this.hexToRgb(tempColor) + ", " + tempOpacity + ")";
+    spData.clockOpacity = parseFloat(tempOpacity.replace(/,/g, "."));
+    spData.clockTextColor = this.hexToRgb(tempTextColor) + ", 1)";
+    spData.clockColW = tempColW;
+    if (blockHide !== "none") {
+      spData.clockShow = blockHide;
+    }
+    blockHide = "none";
+    this.fireAlert("Changes Made!", "solidgreen");
+    // this.showAlert("ok");
+    this.saveFile(spData, "./api/img-upload.php", "config");
+  }
+
+  saveBack = () => {
+    var changes = false;
+
+    if (fileImg !== null) {
+      tempIcon = spData.backgroundImage;
+      this.saveImgFile(fileImg, "back", "edit");
+      changes = true;
+    }
+
+    console.log("Tempopacity:", tempOpacity);
+    console.log("BackgroundOpacity:", spData.backgroundOpacity.toString());
+    console.log("Tempopacity1:", tempOpacity1);
+    console.log("CatBackgroundOpacity:", spData.catOpacity.toString());
+
+    if (tempColor !== this.rgbToHex(spData.backgroundColor)
+      || tempOpacity !== spData.backgroundOpacity.toString() || disable1 !== "none") {
+      if (disable1 !== "none") {
+        spData.noBackImage = disable1;
+      }
+      spData.backgroundColor = this.hexToRgb(tempColor) + ", " + tempOpacity + ")";
+      spData.backgroundOpacity = parseFloat(tempOpacity.replace(/,/g, "."));
+      this.setState({
+        activityChanged: true
+      })
+
+      if (spData.noBackImage) {
+        this.setState({
+          backStyle: {
+            backgroundImage: "none",
+            backgroundColor: spData.backgroundColor,
+            backgroundPosition: 'center',
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat',
+            backgroundAttachment: "fixed",
+            position: "fixed",
+            padding: "0",
+            margin: "0",
+            top: "0",
+            left: "0",
+            width: "100%",
+            height: "100%",
+            filter: "brightness(" + spData.backgroundOpacity.toString() + "%)",
+            zIndex: "-1"
+          }
+        });
+      } else {
+        this.setState({
+          backStyle: {
+            backgroundImage: "url(" + spData.backgroundImage + ")",
+            backgroundColor: spData.backgroundColor,
+            backgroundPosition: 'center',
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat',
+            backgroundAttachment: "fixed",
+            position: "fixed",
+            padding: "0",
+            margin: "0",
+            top: "0",
+            left: "0",
+            width: "100%",
+            height: "100%",
+            filter: "brightness(" + spData.backgroundOpacity.toString() + "%)",
+            zIndex: "-1"
+          }
+        });
+      }
+      changes = true;
+    }
+
+    if (fileCatImg !== null) {
+      tempCatIcon = spData.catImage;
+      this.saveImgFile(fileCatImg, "backcat", "edit");
+      changes = true;
+    }
+
+    if (tempCatColor !== this.rgbToHex(spData.catColor)
+      || tempOpacity1 !== spData.catOpacity.toString() || disable2 !== "none") {
+      if (disable2 !== "none") {
+        spData.noCatImage = disable2;
+      }
+      spData.catColor = this.hexToRgb(tempCatColor) + ", " + tempOpacity1 + ")";
+      spData.catOpacity = parseFloat(tempOpacity1.replace(/,/g, "."));
+      this.setState({
+        activityChanged: true
+      })
+      if (spData.noCatImage === true) {
+        this.setState({
+          catStyle: {
+            backgroundImage: "none",
+            backgroundColor: spData.catColor,
+            backgroundPosition: 'center',
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat',
+            backgroundAttachment: "fixed",
+            position: "fixed",
+            padding: "0",
+            margin: "0",
+            top: "0",
+            left: "0",
+            width: "100%",
+            height: "100%",
+            opacity: spData.catOpacity.toString(),
+            zIndex: "-1"
+          }
+        });
+      } else {
+        this.setState({
+          catStyle: {
+            backgroundImage: "url(" + spData.catImage + ")",
+            backgroundColor: spData.catColor,
+            backgroundPosition: 'center',
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat',
+            backgroundAttachment: "fixed",
+            position: "fixed",
+            padding: "0",
+            margin: "0",
+            top: "0",
+            left: "0",
+            width: "100%",
+            height: "100%",
+            opacity: spData.catOpacity.toString(),
+            zIndex: "-1"
+          }
+        });
+      }
+      changes = true;
+    }
+
+    if (categoryFirst !== "none") {
+      spData.catFirst = categoryFirst;
+      this.setState({
+        catFirst: categoryFirst
+      })
+      changes = true;
+    }
+
+    if (!changes) {
+      this.fireAlert("No changes made!", "solidblue");
+      // this.showAlert("err");
+    } else {
+      this.fireAlert("Changes Made!", "solidgreen");
+      // this.showAlert("ok");
+      this.saveFile(spData, "./api/img-upload.php", "config");
+    }
   }
 
   saveInfo = () => {
@@ -2812,6 +2985,8 @@ class Main extends React.Component {
     this.saveFile(spData, "./api/img-upload.php", "config");
   }
 
+  // ITEM-CAT-CREDITS ACTIONS
+  
   applyItemEdit = () => {
     array = [...this.state.items];
     catArray = [...this.state.catItems];
@@ -2881,7 +3056,8 @@ class Main extends React.Component {
     }
   }
 
-  applyItemAdd = () => {
+  applyItemAdd = (argo) => {
+    console.log("Argo: ", argo);
     array = [...this.state.items];
     tempIcon = "";
     if (noDescr === true) {
@@ -2940,14 +3116,6 @@ class Main extends React.Component {
     // this.setState({
     //   activityChanged: true
     // });
-  }
-
-  addAfter(array, index, newItem) {
-    return [
-      ...array.slice(0, index),
-      newItem,
-      ...array.slice(index)
-    ];
   }
 
   applyCatEdit = () => {
@@ -3104,20 +3272,20 @@ class Main extends React.Component {
           activityChanged: true
         });
       }
-      console.log("fileImg: ", fileImg);
-      console.log("temp: ", temp);
-      console.log("temp2: ", temp2);
-      console.log("temp3: ", temp3);
-      console.log("temp4: ", temp4);
-      console.log("tempItemVideo: ", tempItemVideo);
-      console.log("temp5: ", temp5);
-      console.log("tempCatTitle: ", tempCatTitle);
-      console.log("temp6: ", temp6);
-      console.log("tempItemDescr: ", tempItemDescr);
-      console.log("cgPos: ", cgPos);
-      console.log("inPos: ", inPos);
-      console.log("blockHide: ", blockHide);
-      console.log("tempItemHide: ", tempItemHide);
+      // console.log("fileImg: ", fileImg);
+      // console.log("temp: ", temp);
+      // console.log("temp2: ", temp2);
+      // console.log("temp3: ", temp3);
+      // console.log("temp4: ", temp4);
+      // console.log("tempItemVideo: ", tempItemVideo);
+      // console.log("temp5: ", temp5);
+      // console.log("tempCatTitle: ", tempCatTitle);
+      // console.log("temp6: ", temp6);
+      // console.log("tempItemDescr: ", tempItemDescr);
+      // console.log("cgPos: ", cgPos);
+      // console.log("inPos: ", inPos);
+      // console.log("blockHide: ", blockHide);
+      // console.log("tempItemHide: ", tempItemHide);
     } else {
       this.fireAlert("Fill in all fields!", "brick");
       // this.showAlert("err");
@@ -3148,177 +3316,7 @@ class Main extends React.Component {
     // });
   }
 
-  saveBack = () => {
-    var changes = false;
-
-    if (fileImg !== null) {
-      tempIcon = spData.backgroundImage;
-      this.saveImgFile(fileImg, "back", "edit");
-      changes = true;
-    }
-
-    console.log("Tempopacity:", tempOpacity);
-    console.log("BackgroundOpacity:", spData.backgroundOpacity.toString());
-    console.log("Tempopacity1:", tempOpacity1);
-    console.log("CatBackgroundOpacity:", spData.catOpacity.toString());
-
-    if (tempColor !== this.rgbToHex(spData.backgroundColor)
-      || tempOpacity !== spData.backgroundOpacity.toString() || disable1 !== "none") {
-      if (disable1 !== "none") {
-        spData.noBackImage = disable1;
-      }
-      spData.backgroundColor = this.hexToRgb(tempColor) + ", " + tempOpacity + ")";
-      spData.backgroundOpacity = parseFloat(tempOpacity.replace(/,/g, "."));
-      this.setState({
-        activityChanged: true
-      })
-
-      if (spData.noBackImage) {
-        this.setState({
-          backStyle: {
-            backgroundImage: "none",
-            backgroundColor: spData.backgroundColor,
-            backgroundPosition: 'center',
-            backgroundSize: 'cover',
-            backgroundRepeat: 'no-repeat',
-            backgroundAttachment: "fixed",
-            position: "fixed",
-            padding: "0",
-            margin: "0",
-            top: "0",
-            left: "0",
-            width: "100%",
-            height: "100%",
-            filter: "brightness(" + spData.backgroundOpacity.toString() + "%)",
-            zIndex: "-1"
-          }
-        });
-      } else {
-        this.setState({
-          backStyle: {
-            backgroundImage: "url(" + spData.backgroundImage + ")",
-            backgroundColor: spData.backgroundColor,
-            backgroundPosition: 'center',
-            backgroundSize: 'cover',
-            backgroundRepeat: 'no-repeat',
-            backgroundAttachment: "fixed",
-            position: "fixed",
-            padding: "0",
-            margin: "0",
-            top: "0",
-            left: "0",
-            width: "100%",
-            height: "100%",
-            filter: "brightness(" + spData.backgroundOpacity.toString() + "%)",
-            zIndex: "-1"
-          }
-        });
-      }
-      changes = true;
-    }
-
-    if (fileCatImg !== null) {
-      tempCatIcon = spData.catImage;
-      this.saveImgFile(fileCatImg, "backcat", "edit");
-      changes = true;
-    }
-
-    if (tempCatColor !== this.rgbToHex(spData.catColor)
-      || tempOpacity1 !== spData.catOpacity.toString() || disable2 !== "none") {
-      if (disable2 !== "none") {
-        spData.noCatImage = disable2;
-      }
-      spData.catColor = this.hexToRgb(tempCatColor) + ", " + tempOpacity1 + ")";
-      spData.catOpacity = parseFloat(tempOpacity1.replace(/,/g, "."));
-      this.setState({
-        activityChanged: true
-      })
-      if (spData.noCatImage === true) {
-        this.setState({
-          catStyle: {
-            backgroundImage: "none",
-            backgroundColor: spData.catColor,
-            backgroundPosition: 'center',
-            backgroundSize: 'cover',
-            backgroundRepeat: 'no-repeat',
-            backgroundAttachment: "fixed",
-            position: "fixed",
-            padding: "0",
-            margin: "0",
-            top: "0",
-            left: "0",
-            width: "100%",
-            height: "100%",
-            opacity: spData.catOpacity.toString(),
-            zIndex: "-1"
-          }
-        });
-      } else {
-        this.setState({
-          catStyle: {
-            backgroundImage: "url(" + spData.catImage + ")",
-            backgroundColor: spData.catColor,
-            backgroundPosition: 'center',
-            backgroundSize: 'cover',
-            backgroundRepeat: 'no-repeat',
-            backgroundAttachment: "fixed",
-            position: "fixed",
-            padding: "0",
-            margin: "0",
-            top: "0",
-            left: "0",
-            width: "100%",
-            height: "100%",
-            opacity: spData.catOpacity.toString(),
-            zIndex: "-1"
-          }
-        });
-      }
-      changes = true;
-    }
-
-    if (categoryFirst !== "none") {
-      spData.catFirst = categoryFirst;
-      this.setState({
-        catFirst: categoryFirst
-      })
-      changes = true;
-    }
-
-    if (!changes) {
-      this.fireAlert("No changes made!", "solidblue");
-      // this.showAlert("err");
-    } else {
-      this.fireAlert("Changes Made!", "solidgreen");
-      // this.showAlert("ok");
-      this.saveFile(spData, "./api/img-upload.php", "config");
-    }
-  }
-
-  saveLogo = () => {
-    if (fileImg !== null) {
-      tempIcon = spData.LogoIcon;
-      this.saveImgFile(fileImg, "logo", "edit");
-      spData.logoColor = this.hexToRgb(tempColor) + ", " + tempOpacity + ")";
-      spData.logoOpacity = parseFloat(tempOpacity.replace(/,/g, "."));
-      spData.logoColW = tempColW;
-      if (blockHide !== "none") {
-        spData.logoShow = blockHide;
-      }
-      blockHide = "none";
-    } else {
-      spData.logoColor = this.hexToRgb(tempColor) + ", " + tempOpacity + ")";
-      spData.logoOpacity = parseFloat(tempOpacity.replace(/,/g, "."));
-      spData.logoColW = tempColW;
-      if (blockHide !== "none") {
-        spData.logoShow = blockHide;
-      }
-      blockHide = "none";
-      this.fireAlert("Changes Made!", "solidgreen");
-      // this.showAlert("ok");
-      this.saveFile(spData, "./api/img-upload.php", "config");
-    }
-  }
+  // LOGIN ACTIONS
 
   loginSession(id) {
     if (login === false) {
@@ -3328,19 +3326,6 @@ class Main extends React.Component {
     } else {
       this.showMainButtons();
     }
-  }
-
-  loginEditSession(id) {
-    this.showModal("loginEdit");
-  }
-
-  fireAlert = (msg, color) => {
-    this.setState({
-      alertMsg: msg,
-      alertCol: color,
-      alertShow: true
-    });
-    setTimeout(() => this.setState({ alertShow: false }), 1500);
   }
 
   loginCheck = () => {
@@ -3417,6 +3402,27 @@ class Main extends React.Component {
       this.fireAlert("Changes Made!", "solidgreen");
       // this.showAlert("altok");
     }
+  }
+
+  // loginEditSession(id) {
+  //   this.showModal("loginEdit");
+  // }
+
+  fireAlert = (msg, color) => {
+    this.setState({
+      alertMsg: msg,
+      alertCol: color,
+      alertShow: true
+    });
+    setTimeout(() => this.setState({ alertShow: false }), 1500);
+  }
+
+  addAfter(array, index, newItem) {
+    return [
+      ...array.slice(0, index),
+      newItem,
+      ...array.slice(index)
+    ];
   }
 
   // SHOW MODALS
@@ -4234,10 +4240,13 @@ class Main extends React.Component {
               {/* </Clock> */}
             </Element>
             {/* SETTINGS */}
-            <Set mainBtn={this.state.mainBtn}>
+            <Element eleShow={true} mainBtn={this.state.mainBtn} id="HeadSettings"
+              sfondo={spData.loginColor} colore={""} z={""}
+              colW="col-md-1">
+              {/* <Set mainBtn={this.state.mainBtn}> */}
               <LoginGear handleShowButtons={this.loginSession} />
               <EditElement editEleShow={this.state.mainBtn} hidden={true}>
-                <button className="col latowhite flexbutton solidgreen m-1" onClick={() => this.loginEditSession("LoginEdit")}>
+                <button className="col latowhite flexbutton solidgreen m-1" onClick={() => this.showModal("loginEdit")}>
                   Edit Login
                 </button>
               </EditElement>
@@ -4246,7 +4255,8 @@ class Main extends React.Component {
                   Edit Login
                 </button>
               </EditSet> */}
-            </Set>
+              {/* </Set> */}
+            </Element>
           </div>
         </div>
       </div>
@@ -4389,7 +4399,12 @@ class Main extends React.Component {
         <div class="contenitore">
           <section>
             {/* LOGIN DIALOG */}
-            <LoginDialog loginDiaShow={this.state.loginDiaShow} handleClose={() => this.hideModal("login")} handleLogin={this.loginCheck}>
+            <EleDialog mainTheme="modal-main" footTheme="modal-footer" hideMidBtn={true} hideApply={false} hideClose={false}
+              activityChanged={false} eleDiaShow={this.state.loginDiaShow}
+              handleClose={() => this.hideModal("login")} handleSave={this.loginCheck}
+              saveLabel="Apply">
+              {/* <LoginDialog loginDiaShow={this.state.loginDiaShow}
+                handleClose={() => this.hideModal("login")} handleLogin={this.loginCheck}> */}
               <div className="modal-content">
 
                 <ModalTitle title="Login"></ModalTitle>
@@ -4435,9 +4450,15 @@ class Main extends React.Component {
                   </form>
                 </div>
               </div>
-            </LoginDialog>
+              {/* </LoginDialog> */}
+            </EleDialog>
             {/* LOGIN EDIT DIALOG */}
-            <LoginEditDialog loginEditDiaShow={this.state.loginEditDiaShow} handleClose={() => this.hideModal("loginedit")} handleEditLogin={this.loginEditCheck}>
+            <EleDialog mainTheme="modal-main" footTheme="modal-footer" hideMidBtn={true} hideApply={false} hideClose={false}
+              activityChanged={false} eleDiaShow={this.state.loginEditDiaShow}
+              handleClose={() => this.hideModal("loginedit")} handleSave={this.loginEditCheck}
+              saveLabel="Apply">
+              {/* <LoginEditDialog loginEditDiaShow={this.state.loginEditDiaShow}
+                handleClose={() => this.hideModal("loginedit")} handleEditLogin={this.loginEditCheck}> */}
               <div className="modal-content noborder">
 
                 <ModalTitle title="Edit Login"></ModalTitle>
@@ -4537,7 +4558,8 @@ class Main extends React.Component {
                   </form>
                 </div>
               </div>
-            </LoginEditDialog>
+              {/* </LoginEditDialog> */}
+            </EleDialog>
             {/* MENU DIALOG */}
             <EleDialog mainTheme="modal-main" footTheme="modal-footer" hideMidBtn={true} hideApply={false} hideClose={false}
               activityChanged={false} eleDiaShow={this.state.menuDiaShow}
@@ -6365,7 +6387,7 @@ class Main extends React.Component {
             {/* ITEM ADD DIALOG */}
             <EleDialog mainTheme="modal-main" footTheme="modal-footer" hideMidBtn={true} hideApply={false} hideClose={false}
               activityChanged={false} eleDiaShow={this.state.itemAddDiaShow}
-              handleClose={() => this.hideModal("itemAdd")} handleSave={this.applyItemAdd}
+              handleClose={() => this.hideModal("itemAdd")} handleSave={() => this.applyItemAdd("test")}
               saveLabel="Add">
               {/* <ItemAddDialog itemAddDiaShow={this.state.itemAddDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("itemAdd")} handleSave={this.applyItemAdd}> */}
               <div className="modal-content noborder">
