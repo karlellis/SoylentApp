@@ -156,7 +156,7 @@ const Item = ({ showItemsBtn, pos, id, title, link, descr, icon, video, hidden, 
             Edit
           </button>
           <button className="col-1 itembutton black m-1 pad01">
-            {pos + 1} {/* {this.props.id} */}
+            {pos + 1}
           </button>
           <button className="col itembutton solidbrick m-1" onClick={() => itemEditDel("itemDel", id, pos)}>
             Remove
@@ -321,175 +321,6 @@ const EditElement = ({ editEleShow, children, hidden }) => {
   );
 };
 
-const Set = ({ children, mainBtn }) => {
-  const justifyCenterEnd = mainBtn ? "justify-content-end" : "justify-content-center";
-  return (
-    <section id="HeadSettings" style={{ backgroundColor: spData.loginColor }} className={justifyCenterEnd + " col-md-1 indaco d-flex flex-column align-items-center"}>
-      {children}
-    </section>
-  );
-};
-
-const SettingsGear = ({ showItemsBtn }) => {
-  const whiteOrCol = showItemsBtn ? "./img/colGear.svg" : "./img/gear.svg"
-  return (
-    <img className="gear mt-2 mb-2" alt="Settings" title="Settings" src={whiteOrCol} />
-  );
-}
-
-const Alert = ({ alertShow, alertMsg, alertCol, children }) => {
-  return (
-    <div className={`mb-2 ${alertShow ? 'alert-shown' : 'alert-hidden'}`} >
-      <div className="row text-center pt-2">
-        <div className="col">
-          <div className="row">
-            <section className={"col pt-2 contenitore " + alertCol + " latowhite d-flex justify-content-center align-items-center "}>
-              <div>
-                <p className="norfont">{alertMsg}</p>
-              </div>
-            </section>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-const Menu = ({ menuShow, children, mainBtn }) => {
-  const showHideClassName = menuShow ? "d-block" : "d-none";
-  const justifyCenterEnd = mainBtn ? "justify-content-end" : "justify-content-center";
-  return (
-    <section id="HeadMenu" style={{ backgroundColor: spData.menuColor, color: spData.menuTextColor, zIndex: 1 }}
-      className={showHideClassName + " " + justifyCenterEnd + " col-md-1 d-flex flex-column align-items-center"}>
-      {children}
-    </section>
-  );
-};
-
-const EditMenu = ({ editMenuShow, children, hidden }) => {
-  const showHideClassName = editMenuShow ? "d-block" : "d-none";
-  const hide = hidden ? "" : <RedPoint />
-  return (
-    <div className={showHideClassName + " stretch d-flex justify-content-center align-items-center"}>
-      {children} {hide}
-    </div>
-  );
-};
-
-const Info = ({ infoShow, children, mainBtn }) => {
-  const showHideClassName = infoShow ? "d-block" : "d-none";
-  const justifyCenterEnd = mainBtn ? "justify-content-end" : "justify-content-center";
-  return (
-    <section id="FootInfo" style={{ backgroundColor: spData.footInfoColor, color: spData.footInfoTextColor }}
-      className={showHideClassName + " " + justifyCenterEnd + " " + spData.footInfoColW + " latoplain d-flex flex-column align-items-center"}>
-      {children}
-    </section>
-  );
-};
-
-const EditInfo = ({ editInfoShow, children, hidden }) => {
-  const showHideClassName = editInfoShow ? "d-block" : "d-none";
-  const hide = hidden ? "" : <RedPoint />
-  return (
-    <div className={showHideClassName + " stretch d-flex justify-content-center align-items-center"}>
-      {children} {hide}
-    </div>
-  );
-};
-
-const AddInfo = ({ addInfoShow, children, mainBtn }) => {
-  const showHideClassName = addInfoShow ? "d-block" : "d-none";
-  const justifyCenterEnd = mainBtn ? "justify-content-end" : "justify-content-center";
-  return (
-    <section id="FootAddInfo" style={{ backgroundColor: spData.footAddColor, color: spData.footAddTextColor }}
-      className={showHideClassName + " " + justifyCenterEnd + " " + spData.footAddColW + " latoplain d-flex flex-column align-items-center"}>
-      {children}
-    </section>
-  );
-};
-
-const EditAddInfo = ({ editAddInfoShow, children, hidden }) => {
-  const showHideClassName = editAddInfoShow ? "d-block" : "d-none";
-  const hide = hidden ? "" : <RedPoint />
-  return (
-    <div className={showHideClassName + " stretch d-flex justify-content-center align-items-center"}>
-      {children} {hide}
-    </div>
-  );
-};
-
-const Titolo = ({ titleShow, children, mainBtn }) => {
-  const showHideClassName = titleShow ? "d-block" : "d-none";
-  const justifyCenterEnd = mainBtn ? "justify-content-end" : "justify-content-center";
-  return (
-    <section id="HeadTitle" style={{ backgroundColor: spData.headColor, color: spData.headTextColor }}
-      className={showHideClassName + " " + justifyCenterEnd + " " + spData.headColW + " latoplain d-flex flex-column align-items-center"}>
-      {children}
-    </section>
-  );
-};
-
-const EditTitolo = ({ editTitleShow, children, hidden }) => {
-  const showHideClassName = editTitleShow ? "d-block" : "d-none";
-  const hide = hidden ? "" : <RedPoint />
-  return (
-    <div className={showHideClassName + " stretch d-flex justify-content-center align-items-center"}>
-      {children} {hide}
-    </div>
-  );
-};
-
-const Logo = ({ logoShow, children, mainBtn }) => {
-  const showHideClassName = logoShow ? "d-block" : "d-none";
-  const justifyCenterEnd = mainBtn ? "justify-content-end" : "justify-content-center";
-  return (
-    <section id="HeadLogo" style={{ backgroundColor: spData.logoColor }}
-      className={showHideClassName + " " + justifyCenterEnd + " " + spData.logoColW + " d-flex flex-column justify-content-end align-items-center"}>
-      {children}
-    </section>
-  );
-};
-
-const EditLogo = ({ editLogoShow, children, hidden }) => {
-  const showHideClassName = editLogoShow ? "d-block" : "d-none";
-  const hide = hidden ? "" : <RedPoint />
-  return (
-    <div className={showHideClassName + " stretch d-flex justify-content-center align-items-center"}>
-      {children} {hide}
-    </div>
-  );
-};
-
-const Clock = ({ clockShow, children, mainBtn }) => {
-  const showHideClassName = clockShow ? "d-block" : "d-none";
-  const justifyCenterEnd = mainBtn ? "justify-content-end" : "justify-content-center";
-  return (
-    <section id="HeadDate" style={{ backgroundColor: spData.clockColor, color: spData.clockTextColor }}
-      className={showHideClassName + " " + justifyCenterEnd + " " + spData.clockColW + " latoplain d-flex flex-column align-items-center"}>
-      {children}
-    </section>
-  );
-};
-
-const EditClock = ({ editClockShow, children, hidden }) => {
-  const showHideClassName = editClockShow ? "d-block" : "d-none";
-  const hide = hidden ? "" : <RedPoint />
-  return (
-    <div className={showHideClassName + " stretch d-flex justify-content-center align-items-center"}>
-      {children} {hide}
-    </div>
-  );
-};
-
-const EditSet = ({ editSetShow, children }) => {
-  const showHideClassName = editSetShow ? "d-block" : "d-none";
-  return (
-    <div className={showHideClassName + " stretch d-flex justify-content-center align-items-center"}>
-      {children}
-    </div>
-  );
-};
-
 // DIALOGS
 
 const EleDialog = ({ handleSave, handleMidBtn, handleClose, eleDiaShow, children, saveLabel, midBtnLabel,
@@ -504,7 +335,7 @@ const EleDialog = ({ handleSave, handleMidBtn, handleClose, eleDiaShow, children
         {children}
         <div className={footTheme}>
           <button type="button" disabled={(activityChanged) ? true : false} className={showHideApply + " btn btn-primary"} onClick={handleSave}>{saveLabel}</button>
-          <button type="button" /* disabled={(activityChanged) ? true : false} */ className={showHideMidBtn + " btn btn-success"} onClick={handleMidBtn}>{midBtnLabel}</button>
+          <button type="button" className={showHideMidBtn + " btn btn-success"} onClick={handleMidBtn}>{midBtnLabel}</button>
           <button type="button" className={showHideClose + " btn btn-secondary"} data-dismiss="modal" onClick={handleClose}>Close</button>
         </div>
       </section>
@@ -512,351 +343,7 @@ const EleDialog = ({ handleSave, handleMidBtn, handleClose, eleDiaShow, children
   );
 };
 
-const LoginEditDialog = ({ handleEditLogin, handleClose, loginEditDiaShow, children }) => {
-  const showHideClassName = loginEditDiaShow ? "modal display-block" : "modal display-none";
-  return (
-    <div className={showHideClassName}>
-      <section className="modal-main">
-        {children}
-        <div className="modal-footer">
-          <button type="button" className="btn btn-primary" onClick={handleEditLogin}>Apply</button>
-          <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={handleClose}>Close</button>
-        </div>
-      </section>
-    </div>
-  );
-};
-
-const LoginDialog = ({ handleLogin, handleClose, loginDiaShow, children }) => {
-  const showHideClassName = loginDiaShow ? "modal display-block" : "modal display-none";
-  return (
-    <div className={showHideClassName}>
-      <section className="modal-main">
-        {children}
-        <div className="modal-footer">
-          <button type="button" className="btn btn-primary" onClick={handleLogin}>Login</button>
-          <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={handleClose}>Close</button>
-        </div>
-      </section>
-    </div>
-  );
-};
-
-const ItemOrCatDialog = ({ handleItem, handleCat, handleClose, iocDiaShow, children }) => {
-  const showHideClassName = iocDiaShow ? "modal display-block" : "modal display-none";
-  return (
-    <div className={showHideClassName}>
-      <section className="modal-main">
-        {children}
-        <div className="modal-footer">
-          <button type="button" className="btn btn-primary" data-dismiss="modal" onClick={handleItem}>Item</button>
-          <button type="button" className="btn btn-success" data-dismiss="modal" onClick={handleCat}>Category</button>
-          <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={handleClose}>Close</button>
-        </div>
-      </section>
-    </div>
-  );
-};
-
-const TitleDialog = ({ handleSave, handleClose, titleDiaShow, children }) => {
-  const showHideClassName = titleDiaShow ? "modal display-block" : "modal display-none";
-  return (
-    <div className={showHideClassName}>
-      <section className="modal-main">
-        {children}
-        <div className="modal-footer">
-          <button type="button" className="btn btn-primary" onClick={handleSave}>Apply</button>
-          <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={handleClose}>Close</button>
-        </div>
-      </section>
-    </div>
-  );
-};
-
-const MenuDialog = ({ handleSave, handleClose, menuDiaShow, children }) => {
-  const showHideClassName = menuDiaShow ? "modal display-block" : "modal display-none";
-  return (
-    <div className={showHideClassName}>
-      <section className="modal-main">
-        {children}
-        <div className="modal-footer">
-          <button type="button" className="btn btn-primary" onClick={handleSave}>Apply</button>
-          <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={handleClose}>Close</button>
-        </div>
-      </section>
-    </div>
-  );
-};
-
-const ClockDialog = ({ handleSave, handleClose, clockDiaShow, children }) => {
-  const showHideClassName = clockDiaShow ? "modal display-block" : "modal display-none";
-  return (
-    <div className={showHideClassName}>
-      <section className="modal-main">
-        {children}
-        <div className="modal-footer">
-          <button type="button" className="btn btn-primary" onClick={handleSave}>Apply</button>
-          <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={handleClose}>Close</button>
-        </div>
-      </section>
-    </div>
-  );
-};
-
-const InfoDialog = ({ handleSave, handleClose, infoDiaShow, children }) => {
-  const showHideClassName = infoDiaShow ? "modal display-block" : "modal display-none";
-  return (
-    <div className={showHideClassName}>
-      <section className="modal-main">
-        {children}
-        <div className="modal-footer">
-          <button type="button" className="btn btn-primary" onClick={handleSave}>Apply</button>
-          <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={handleClose}>Close</button>
-        </div>
-      </section>
-    </div>
-  );
-};
-
-const BackEditDialog = ({ handleSave, handleClose, backEditDiaShow, children, activityChanged }) => {
-  const showHideClassName = backEditDiaShow ? "modal display-block" : "modal display-none";
-  return (
-    <div className={showHideClassName}>
-      <section className="modal-main">
-        {children}
-        <div className="modal-footer">
-          <button type="button" disabled={(activityChanged) ? true : false} className="btn btn-primary" onClick={handleSave}>Apply</button>
-          <button type="button" /* disabled={(activityChanged) ? true : false} */ className="btn btn-secondary" data-dismiss="modal" onClick={handleClose}>Close</button>
-        </div>
-      </section>
-    </div>
-  );
-};
-
-const ItemVideoDialog = ({ handleClose, itemVideoDiaShow, children, activityChanged }) => {
-  const showHideClassName = itemVideoDiaShow ? "modal display-block" : "modal display-none";
-  return (
-    <div className={showHideClassName}>
-      <section className="modal-main darkBG">
-        {children}
-        <div className="modal-footer-dark">
-          <button type="button" /* disabled={(activityChanged) ? true : false} */ className="btn btn-secondary" data-dismiss="modal" onClick={handleClose}>Close</button>
-        </div>
-      </section>
-    </div>
-  );
-};
-
-const CrsDialog = ({ handleClose, crsDiaShow, children, activityChanged }) => {
-  const showHideClassName = crsDiaShow ? "modal display-block" : "modal display-none";
-  return (
-    <div className={showHideClassName}>
-      <section className="modal-main-dark">
-        {children}
-        <div className="modal-footer-dark">
-          <button type="button" /* disabled={(activityChanged) ? true : false} */ className="btn btn-secondary" data-dismiss="modal" onClick={handleClose}>Close</button>
-        </div>
-      </section>
-    </div>
-  );
-};
-
-const CatDialog = ({ handleClose, catDiaShow, children, activityChanged }) => {
-  const showHideClassName = catDiaShow ? "modal display-block" : "modal display-none";
-  return (
-    <div className={showHideClassName}>
-      <section className="modal-main-dark">
-        {children}
-        <div className="modal-footer-dark">
-          <button type="button" /* disabled={(activityChanged) ? true : false} */ className="btn btn-secondary" data-dismiss="modal" onClick={handleClose}>Close</button>
-        </div>
-      </section>
-    </div>
-  );
-};
-
-const SearchDialog = ({ handleClose, handleSave, handleReset, searchDiaShow, children, activityChanged }) => {
-  const showHideClassName = searchDiaShow ? "modal display-block" : "modal display-none";
-  return (
-    <div className={showHideClassName}>
-      <section className="modal-main-dark">
-        {children}
-        <div className="modal-footer darkBG">
-          <button type="button" disabled={(activityChanged) ? true : false} className="btn btn-primary" onClick={handleSave}>Search</button>
-          <button type="button" /* disabled={(activityChanged) ? true : false} */ className="btn btn-primary" onClick={handleReset}>Reset</button>
-          <button type="button"/*  disabled={(activityChanged) ? true : false} */ className="btn btn-secondary" data-dismiss="modal" onClick={handleClose}>Close</button>
-        </div>
-      </section>
-    </div>
-  );
-};
-
-const ItemEditDialog = ({ handleSave, handleClose, itemEditDiaShow, children, activityChanged }) => {
-  const showHideClassName = itemEditDiaShow ? "modal display-block" : "modal display-none";
-  return (
-    <div className={showHideClassName}>
-      <section className="modal-main">
-        {children}
-        <div className="modal-footer">
-          <button type="button" disabled={(activityChanged) ? true : false} className="btn btn-primary" onClick={handleSave}>Edit</button>
-          <button type="button" /* disabled={(activityChanged) ? true : false} */ className="btn btn-secondary" data-dismiss="modal" onClick={handleClose}>Close</button>
-        </div>
-      </section>
-    </div>
-  );
-};
-
-const ItemDelDialog = ({ handleSave, handleClose, itemDelDiaShow, children, activityChanged }) => {
-  const showHideClassName = itemDelDiaShow ? "modal display-block" : "modal display-none";
-  return (
-    <div className={showHideClassName}>
-      <section className="modal-main">
-        {children}
-        <div className="modal-footer">
-          <button type="button" disabled={(activityChanged) ? true : false} className="btn btn-primary" onClick={handleSave}>Remove</button>
-          <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={handleClose}>Close</button>
-        </div>
-      </section>
-    </div>
-  );
-};
-
-const ItemAddDialog = ({ handleSave, handleClose, itemAddDiaShow, children, activityChanged }) => {
-  const showHideClassName = itemAddDiaShow ? "modal display-block" : "modal display-none";
-  return (
-    <div className={showHideClassName}>
-      <section className="modal-main">
-        {children}
-        <div className="modal-footer">
-          <button type="button" disabled={(activityChanged) ? true : false} className="btn btn-primary" onClick={handleSave}>Add</button>
-          <button type="button" /* disabled={(activityChanged) ? true : false} */ className="btn btn-secondary" data-dismiss="modal" onClick={handleClose}>Close</button>
-        </div>
-      </section>
-    </div>
-  );
-};
-
-const CatEditDialog = ({ handleSave, handleClose, catEditDiaShow, children, activityChanged }) => {
-  const showHideClassName = catEditDiaShow ? "modal display-block" : "modal display-none";
-  return (
-    <div className={showHideClassName}>
-      <section className="modal-main">
-        {children}
-        <div className="modal-footer">
-          <button type="button" disabled={(activityChanged) ? true : false} className="btn btn-primary" onClick={handleSave}>Edit</button>
-          <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={handleClose}>Close</button>
-        </div>
-      </section>
-    </div>
-  );
-};
-
-const CatDelDialog = ({ handleSave, handleClose, catDelDiaShow, children, activityChanged }) => {
-  const showHideClassName = catDelDiaShow ? "modal display-block" : "modal display-none";
-  return (
-    <div className={showHideClassName}>
-      <section className="modal-main">
-        {children}
-        <div className="modal-footer">
-          <button type="button" disabled={(activityChanged) ? true : false} className="btn btn-primary" onClick={handleSave}>Remove</button>
-          <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={handleClose}>Close</button>
-        </div>
-      </section>
-    </div>
-  );
-};
-
-const CatAddDialog = ({ handleSave, handleClose, catAddDiaShow, children, activityChanged }) => {
-  const showHideClassName = catAddDiaShow ? "modal display-block" : "modal display-none";
-  return (
-    <div className={showHideClassName}>
-      <section className="modal-main">
-        {children}
-        <div className="modal-footer">
-          <button type="button" disabled={(activityChanged) ? true : false} className="btn btn-primary" onClick={handleSave}>Add</button>
-          <button type="button" /* disabled={(activityChanged) ? true : false} */ className="btn btn-secondary" data-dismiss="modal" onClick={handleClose}>Close</button>
-        </div>
-      </section>
-    </div>
-  );
-};
-
-const CrsEditDialog = ({ handleSave, handleClose, crsEditDiaShow, children, activityChanged }) => {
-  const showHideClassName = crsEditDiaShow ? "modal display-block" : "modal display-none";
-  return (
-    <div className={showHideClassName}>
-      <section className="modal-main">
-        {children}
-        <div className="modal-footer">
-          <button type="button" disabled={(activityChanged) ? true : false} className="btn btn-primary" onClick={handleSave}>Edit</button>
-          <button type="button" /* disabled={(activityChanged) ? true : false} */ className="btn btn-secondary" data-dismiss="modal" onClick={handleClose}>Close</button>
-        </div>
-      </section>
-    </div>
-  );
-};
-
-const CrsDelDialog = ({ handleSave, handleClose, crsDelDiaShow, children, activityChanged }) => {
-  const showHideClassName = crsDelDiaShow ? "modal display-block" : "modal display-none";
-  return (
-    <div className={showHideClassName}>
-      <section className="modal-main">
-        {children}
-        <div className="modal-footer">
-          <button type="button" disabled={(activityChanged) ? true : false} className="btn btn-primary" onClick={handleSave}>Remove</button>
-          <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={handleClose}>Close</button>
-        </div>
-      </section>
-    </div>
-  );
-};
-
-const CrsAddDialog = ({ handleSave, handleClose, crsAddDiaShow, children, activityChanged }) => {
-  const showHideClassName = crsAddDiaShow ? "modal display-block" : "modal display-none";
-  return (
-    <div className={showHideClassName}>
-      <section className="modal-main">
-        {children}
-        <div className="modal-footer">
-          <button type="button" disabled={(activityChanged) ? true : false} className="btn btn-primary" onClick={handleSave}>Add</button>
-          <button type="button" /* disabled={(activityChanged) ? true : false} */ className="btn btn-secondary" data-dismiss="modal" onClick={handleClose}>Close</button>
-        </div>
-      </section>
-    </div>
-  );
-};
-
-const AddInfoDialog = ({ handleSave, handleClose, addInfoDiaShow, children }) => {
-  const showHideClassName = addInfoDiaShow ? "modal display-block" : "modal display-none";
-  return (
-    <div className={showHideClassName}>
-      <section className="modal-main">
-        {children}
-        <div className="modal-footer">
-          <button type="button" className="btn btn-primary" onClick={handleSave}>Apply</button>
-          <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={handleClose}>Close</button>
-        </div>
-      </section>
-    </div>
-  );
-};
-
-const LogoDialog = ({ handleUpload, handleClose, logoDiaShow, children, activityChanged }) => {
-  const showHideClassName = logoDiaShow ? "modal display-block" : "modal display-none";
-  return (
-    <div className={showHideClassName}>
-      <section className="modal-main">
-        {children}
-        <div className="modal-footer">
-          <button type="button" disabled={(activityChanged) ? true : false} className="btn btn-primary" onClick={handleUpload}>Apply</button>
-          <button type="button" /* disabled={(activityChanged) ? true : false} */ className="btn btn-secondary" data-dismiss="modal" onClick={handleClose}>Close</button>
-        </div>
-      </section>
-    </div>
-  );
-};
-
-// MODAL SIMPLE COMPONENTES
+// SIMPLE COMPONENTES
 
 const ModalTitle = ({ title }) => {
   return (
@@ -1065,46 +552,22 @@ const InputWidth = ({ idAuto, idCol1, idCol2, idCol3, idCol4, idCol5,
   )
 }
 
-const InputBackColor = ({ backColor }) => {
-
-  function rgbToHex(rgb) {
-    // console.log("spData: ", spData);
-    // console.log("loginColor: ", spData.loginColor);
-    // console.log("logoColor: ", spData.logoColor);
-    rgb = rgb.replace(/[^\d,]/g, '').split(',');
-    var r = parseInt(rgb[0]);
-    var g = parseInt(rgb[1]);
-    var b = parseInt(rgb[2]);
-    return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
-  }
-
+const InputBackColor = ({ backColor, rgbToHex, bcLabel, tempo }) => {
   return (
     <div className="col">
       <div className="row border">
         <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
-          <label>Back color</label>
+          <label>{bcLabel}</label>
         </div>
         <div className="col d-flex flex-column justify-content-center align-items-center">
-          <input type="color" className="form-control border-0 p-0" defaultValue={rgbToHex(backColor)} onChange={e => tempColor = e.target.value} />
+          <input type="color" className="form-control border-0 p-0" defaultValue={rgbToHex(backColor)} onChange={tempo} />
         </div>
       </div>
     </div>
   )
 }
 
-const InputTextColor = ({ textColor }) => {
-
-  function rgbToHex(rgb) {
-    // console.log("spData: ", spData);
-    // console.log("loginColor: ", spData.loginColor);
-    // console.log("logoColor: ", spData.logoColor);
-    rgb = rgb.replace(/[^\d,]/g, '').split(',');
-    var r = parseInt(rgb[0]);
-    var g = parseInt(rgb[1]);
-    var b = parseInt(rgb[2]);
-    return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
-  }
-
+const InputTextColor = ({ textColor, rgbToHex }) => {
   return (
     <div className="col">
       <div className="row border">
@@ -1226,13 +689,14 @@ const InputHideBlocks = ({ hideSwitch }) => {
             </div>
             <div className="col d-flex flex-column justify-content-center align-items-center">
               <label class="switch">
-                <input type="checkbox" className="form-control" defaultChecked={!hideSwitch} onClick={e => {
-                  if (hideSwitch === false) {
-                    blockHide = true;
-                  } else {
-                    blockHide = false;
-                  }
-                }} />
+                <input type="checkbox" className="form-control" defaultChecked={!hideSwitch}
+                  onClick={e => {
+                    if (hideSwitch === false) {
+                      blockHide = true;
+                    } else {
+                      blockHide = false;
+                    }
+                  }} />
                 <span class="slider round" title="Hide"></span>
               </label>
             </div>
@@ -1246,24 +710,25 @@ const InputHideBlocks = ({ hideSwitch }) => {
   )
 }
 
-const InputHide = ({ hideSwitch }) => {
+const InputSwitch = ({ hSwitch, dSwitch, swLabel }) => {
   return (
     <div className="form-group">
       <div className="row mb-1 m-auto">
         <div className="col">
           <div className="row border">
             <div className="col col pt-1 pb-1 padlr latomenu d-flex flex-column justify-content-center align-items-center">
-              <label>Hide</label>
+              <label>{swLabel}</label>
             </div>
             <div className="col d-flex flex-column justify-content-center align-items-center">
               <label class="switch">
-                <input type="checkbox" className="form-control" defaultChecked={hideSwitch} onClick={e => {
-                  if (hideSwitch === false) {
-                    blockHide = true;
-                  } else {
-                    blockHide = false;
-                  }
-                }} />
+                <input type="checkbox" className="form-control" defaultChecked={hSwitch}
+                  onClick={e => {
+                    if (hSwitch === false) {
+                      dSwitch = true;
+                    } else {
+                      dSwitch = false;
+                    }
+                  }} />
                 <span class="slider round"></span>
               </label>
             </div>
@@ -1371,19 +836,19 @@ const LoginGear = ({ handleShowButtons }) => {
   );
 }
 
-const OverlayImg = ({ }) => {
+const OverlayImg = () => {
   return (
     <img className="overlay" alt="Overlay" src={spData.LogoIcon} />
   );
 }
 
-const RedPoint = ({ }) => {
+const RedPoint = () => {
   return (
     <img className="gear menux mt-2 mb-2" title="Hidden" alt="Hidden" src="./img/point.svg" />
   );
 }
 
-const ItemRedPoint = ({ }) => {
+const ItemRedPoint = () => {
   return (
     <div class="col-2 borderleft itemx d-flex flex-column justify-content-center align-items-center">
       <img className="itemx mt-2 mb-2" title="Hidden" alt="Hidden" src="./img/point.svg" />
@@ -1391,189 +856,37 @@ const ItemRedPoint = ({ }) => {
   );
 }
 
-const LogoImg = ({ }) => {
+const LogoImg = () => {
   return (
     <img className="logo mt-2 mb-2" title="Home" alt="Logo" src={spData.LogoIcon}
       onClick={() => window.location.href = spData.homeLink} />
   );
 }
 
-// class RedPoint extends React.Component {
-//   render() {
-//     return (
-//       <img className="gear menux mt-2 mb-2" title="Hidden" alt="Hidden" src="./img/point.svg" />
-//     );
-//   }
-// }
+const SettingsGear = ({ showItemsBtn }) => {
+  const whiteOrCol = showItemsBtn ? "./img/colGear.svg" : "./img/gear.svg"
+  return (
+    <img className="gear mt-2 mb-2" alt="Settings" title="Settings" src={whiteOrCol} />
+  );
+}
 
-// class ItemRedPoint extends React.Component {
-//   render() {
-//     return (
-//       <div class="col-2 borderleft itemx d-flex flex-column justify-content-center align-items-center">
-//         <img className="itemx mt-2 mb-2" title="Hidden" alt="Hidden" src="./img/point.svg" />
-//       </div>
-//     );
-//   }
-// }
-
-// class LogoImg extends React.Component {
-//   link = spData.homeLink;
-//   render() {
-//     const logoClick = () => {
-//       window.location.href = spData.homeLink;
-//     }
-//     return (
-//       <img className="logo mt-2 mb-2" title="Home" alt="Logo" src={spData.LogoIcon}
-//         onClick={() => logoClick()} />
-//     );
-//   }
-// }
-
-// class OverlayImg extends React.Component {
-
-//   render() {
-//     return (
-//       <img className="overlay" alt="Overlay" src={spData.LogoIcon} />
-//     );
-//   }
-// }
-
-// class LoginGear extends React.Component {
-//   // constructor(props) {
-//   //   super(props);
-//   // }
-//   render() {
-//     const gearClick = () => {
-//       this.props.handleShowButtons(true);
-//     }
-//     return (
-//       <img className="gear mt-2 mb-2" alt="Login" src="./img/gears.svg" onClick={() => gearClick()} />
-//     );
-//   }
-// }
-
-// class DropdownCat extends React.Component {
-//   changeText(selected) {
-//     this.setState({ selCat: selected });
-//   }
-
-//   toggleOpen = () => {
-//     catDropDownIsOpen = !catDropDownIsOpen;
-//   }
-
-//   render() {
-//     const menuClass = `dropdown-menu${/* this.state.isOpen */
-//       catDropDownIsOpen ? " show d-flex flex-column justify-content-start align-items-center" :
-//         " disNone"}`;
-
-//     return (
-//       <div className="dropdown" onClick={this.toggleOpen}>
-
-//         <button
-//           className="button indaco m-1 dropdown-toggle"
-//           id={this.props.id}
-//           type="button"
-//           data-toggle="dropdown"
-//           aria-haspopup="true"
-//         >
-//           {this.props.catName}
-//         </button>
-//         <div className={menuClass + " menuBG"}>
-//           <button className="col menuItem green m-1"
-//             onClick={(e) => {
-//               this.changeText("Root")
-//               this.props.setCat("Root", e);
-//             }}>
-//             Root
-//           </button>
-//           {
-//             this.props.items.map(({ id, title, icon }, i) => {
-//               return (
-//                 <button className="col menuItem green m-1"
-//                   onClick={(e) => {
-//                     this.changeText(title)
-//                     this.props.setCat(title, e);
-//                   }}>
-//                   {title}
-//                 </button>
-//               )
-//             })
-//           }
-//         </div>
-//       </div>
-//     );
-//   }
-// }
-
-// class Dropdown extends React.Component {
-//   toggleOpen = () => {
-//     dropDownIsOpen = !dropDownIsOpen;
-//   }
-//   render() {
-//     const showHideSearch = spData.noMenuSearch ? "d-none" : "d-block";
-//     const showHideCredits = spData.noMenuCredits ? "d-none" : "d-block";
-//     const menuClass = `dropdown-menu${dropDownIsOpen ? " show d-flex flex-column justify-content-center align-items-center" : " disNone"}`;
-//     return (
-//       <div className="dropdown" onClick={this.toggleOpen}>
-
-//         <button
-//           className="button indaco m-1 dropdown-toggle"
-//           id="menuButton"
-//           type="button"
-//           data-toggle="dropdown"
-//           aria-haspopup="true"
-//         >
-//           Menu
-//         </button>
-//         <div className={menuClass + " menuBG"} >
-
-//           <button className={showHideSearch + " col menuItem green m-1"}
-//             onClick={() => {
-//               this.props.search();
-//             }}>
-//             {spData.menuSearchLabel}
-//           </button>
-//           <button className={showHideCredits + " col menuItem blue m-1"}
-//             onClick={() => {
-//               this.props.crsShow();
-//             }}>
-//             {spData.menuCreditsLabel}
-//           </button>
-//         </div>
-//       </div>
-//     );
-//   }
-// }
-
-// class CrsAdd extends React.Component {
-//   // constructor(props) {
-//   //   super(props);
-//   // }
-//   render() {
-//     let crsBtn = ""
-//     if (this.props.showItemsBtn === "ShowItemBtn") {
-//       crsBtn = (
-
-//         <div className="row stickydivtop">
-//           <button className="col extcredits solidgreen m-1"
-//             onClick={() => this.props.addItem()}>
-//             <img className="gear mt-2 mb-1" title="Add Item" alt="Add Item" src="./itemicons/plus.svg" />
-//             {/* <img className="plus mt-2 mb-1" title="Add Item" alt="Add Item" src="./itemicons/plus.svg" /> */}
-//             {/* <h5><font color="Chartreuse">Add Item</font></h5> */}
-//           </button>
-//         </div>
-
-//       )
-//     } else {
-//       crsBtn = "";
-//     }
-//     return (
-//       <>
-//         {crsBtn}
-//       </>
-//     );
-//   }
-// }
+const Alert = ({ alertShow, alertMsg, alertCol, children }) => {
+  return (
+    <div className={`mb-2 ${alertShow ? 'alert-shown' : 'alert-hidden'}`} >
+      <div className="row text-center pt-2">
+        <div className="col">
+          <div className="row">
+            <section className={"col pt-2 contenitore " + alertCol + " latowhite d-flex justify-content-center align-items-center "}>
+              <div>
+                <p className="norfont">{alertMsg}</p>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 // FUNCTIONS
 
@@ -1581,7 +894,6 @@ async function fetchUpPHP(file, url, key) {
   // console.log("fetchUpPHP...");
   var data = new FormData()
   data.append(key, file)
-  // const response = await fetch(url, {
   await fetch(url, {
     method: 'POST',
     headers: {
@@ -1598,7 +910,6 @@ async function fetchUpPHP(file, url, key) {
 async function fetchUpConfig(file, url, key) {
   var data = new FormData()
   data.append(key, JSON.stringify(file))
-  // const response = await fetch(url, {
   await fetch(url, {
     method: 'POST',
     headers: {
@@ -1612,7 +923,6 @@ async function fetchUpConfig(file, url, key) {
 }
 
 async function fetchDownCredentials(url) {
-  // const response = await fetch(url, {
   await fetch(url, {
     method: 'GET',
     headers: {
@@ -1629,7 +939,6 @@ async function fetchDownCredentials(url) {
 async function fetchDelPHP(itemIcon, url, key) {
   var data = new FormData()
   data.append(key, itemIcon)
-  // const response = await fetch(url, {
   await fetch(url, {
     method: 'POST',
     headers: {
@@ -1791,26 +1100,23 @@ class Main extends React.Component {
     }
     this.itemEditDel = this.itemEditDel.bind(this);
     this.addItem = this.addItem.bind(this);
-    this.itemOrCat = this.itemOrCat.bind(this);
+    // this.itemOrCat = this.itemOrCat.bind(this);
     this.catEditDel = this.catEditDel.bind(this);
     this.catAddItem = this.catAddItem.bind(this);
     this.crsEditDel = this.crsEditDel.bind(this);
     this.crsAddItem = this.crsAddItem.bind(this);
     this.itemVideo = this.itemVideo.bind(this);
     this.catCont = this.catCont.bind(this);
-    this.crsShow = this.crsShow.bind(this);
     this.search = this.search.bind(this);
     this.setCat = this.setCat.bind(this);
     this.showMainButtons = this.showMainButtons.bind(this);
     this.showModal = this.showModal.bind(this);
     this.hideModal = this.hideModal.bind(this);
     this.loginSession = this.loginSession.bind(this);
-    // this.loginEditSession = this.loginEditSession.bind(this);
   }
 
   componentDidMount() {
     fetch('./config/data.json').then(response => {
-      // fetch('./config/data.json?' + new Date().getTime()).then(response => {
       response.json().then(settings => {
         // console.log(settings);
         spData = settings;
@@ -1932,7 +1238,7 @@ class Main extends React.Component {
           });
         }
 
-        // Reset form states to current settings
+        // RESET FORMS TO CURRENT SETTINGS
         document.getElementById('loginForm').reset();
         document.getElementById('loginEditForm').reset();
         document.getElementById('titleForm').reset();
@@ -1965,11 +1271,6 @@ class Main extends React.Component {
           console.error("Errore: ", error);
         });
     })
-    // window.addEventListener("click", this.hideDropdown);
-    // document.addEventListener('click', e => {
-    //   currElement = document.elementFromPoint(e.clientX, e.clientY).id;
-    //   this.hideDropdown();
-    // }, { passive: true });
   }
 
   componentDidUpdate() {
@@ -2011,7 +1312,6 @@ class Main extends React.Component {
     tempIcon = "";
     tempCatIcon = "";
     this.fireAlert("Loading data... Please wait.", "solidblue");
-    // this.showAlert("up");
     this.setState({
       activityChanged: true
     })
@@ -2020,7 +1320,6 @@ class Main extends React.Component {
         if (url === "logo" && op === "edit") {
           spData.LogoIcon = "./img/" + nome;
           this.fireAlert("Changes Made!", "solidgreen");
-          // this.showAlert("ok");
           this.setState({
             activityChanged: false
           });
@@ -2078,9 +1377,6 @@ class Main extends React.Component {
               spData.items = noAddArray;
               console.log("index > temp = ", (index));
               this.itemEditDel("itemEdit", newItem.id, (index))
-              // document.getElementById('clearitemswitchpos').value = ""; //ADDED FOR MULTIEDIT
-              // document.getElementById('clearitemswitchpos').placeholder = 99;
-
             } else {
               array = this.addAfter(array, index, newItem);
               for (let i = (index + 1); i < array.length; i++) {
@@ -2096,9 +1392,6 @@ class Main extends React.Component {
               spData.items = noAddArray;
               console.log("Index = ", index);
               this.itemEditDel("itemEdit", newItem.id, index)
-              // document.getElementById('clearitemswitchpos').value = ""; //ADDED FOR MULTIEDIT
-              // document.getElementById('clearitemswitchpos').placeholder = 99;
-
             }
 
             newItem = {
@@ -2112,12 +1405,9 @@ class Main extends React.Component {
               "hidden": false
             };
           }
-
-          // this.itemEditDel("itemEdit", array[temp].id, currPos)
           inPos = "";
           cgPos = "";
           currPos = "";
-          // temp = ""; // TO KEEP APPLY ACTIVE
           temp2 = "";
           temp3 = "";
           temp4 = "";
@@ -2126,7 +1416,6 @@ class Main extends React.Component {
           blockHide = "none";
 
           this.fireAlert("Changes Made!", "solidgreen");
-          // this.showAlert("ok");
         } else if (url === "icon" && op === "add") {
           // console.log("Icon add TEMP4: ", temp4);
           newItem.icon = "./itemicons/" + nome;
@@ -2180,7 +1469,6 @@ class Main extends React.Component {
           this.setState({ disFieldIA: true });
           document.getElementById('itemAddForm').reset();
           this.fireAlert("Item added!", "solidgreen");
-          // this.showAlert("ok");
         } else if (url === "icon" && op === "addlast") {
           // console.log("Icon addLast TEMP4: ", temp4);
           newItem.icon = "./itemicons/" + nome;
@@ -2227,7 +1515,6 @@ class Main extends React.Component {
           this.setState({ disFieldIA: true });
           document.getElementById('itemAddForm').reset();
           this.fireAlert("Item added!", "solidgreen");
-          // this.showAlert("ok");
         } else if (url === "cat" && op === "edit") {
           if (fileImg !== null) {
             // console.log("Cat edit!");
@@ -2276,7 +1563,6 @@ class Main extends React.Component {
             "hidden": false
           };
           this.fireAlert("Changes Made!", "solidgreen");
-          // this.showAlert("ok");
         } else if (url === "cat" && op === "add") {
           // console.log("CatAdd in Pos: ", inPos);
           catNewItem.icon = "./itemicons/" + nome;
@@ -2302,7 +1588,6 @@ class Main extends React.Component {
           };
           document.getElementById('catAddForm').reset();
           this.fireAlert("Cat added!", "solidgreen");
-          // this.showAlert("ok");
         } else if (url === "cat" && op === "addlast") {
           // console.log("CatAddLast...");
           catNewItem.icon = "./itemicons/" + nome;
@@ -2333,7 +1618,6 @@ class Main extends React.Component {
           };
           document.getElementById('catAddForm').reset();
           this.fireAlert("Cat added!", "solidgreen");
-          // this.showAlert("ok");
         } else if (url === "back" && op === "edit") {
           spData.backgroundImage = "./img/" + nome;
           spData.backgroundColor = this.hexToRgb(tempColor) + ", 1)";
@@ -2357,7 +1641,6 @@ class Main extends React.Component {
             }
           });
           this.fireAlert("Changes Made!", "solidgreen");
-          // this.showAlert("ok");
           this.setState({
             activityChanged: false
           });
@@ -2384,7 +1667,6 @@ class Main extends React.Component {
             }
           });
           this.fireAlert("Changes Made!", "solidgreen");
-          // this.showAlert("ok");
           this.setState({
             activityChanged: false
           });
@@ -2403,16 +1685,6 @@ class Main extends React.Component {
       arrayAdd = this.addAfter(array, inPos, CrsNewItem);
       this.setState({ creditsItems: arrayAdd });
       spData.creditsItems = arrayAdd;
-      // arrayAdd = [];
-      // temp2 = "";
-      // temp3 = "";
-      // temp4 = "";
-      // temp = "";
-      // CrsNewItem = {
-      //   "title": "",
-      //   "link": "",
-      //   "descr": ""
-      // };
       document.getElementById('crsAddForm').reset();
     } else if (url === "crs" && op === "addlast") {
       CrsNewItem.title = temp2;
@@ -2422,16 +1694,6 @@ class Main extends React.Component {
       arrayAdd = this.addAfter(array, inPos, CrsNewItem);
       this.setState({ creditsItems: arrayAdd });
       spData.creditsItems = arrayAdd;
-      // arrayAdd = [];
-      // temp2 = "";
-      // temp3 = "";
-      // temp4 = "";
-      // temp = "";
-      // CrsNewItem = {
-      //   "title": "",
-      //   "link": "",
-      //   "descr": ""
-      // };
       document.getElementById('crsAddForm').reset();
     } else if (url === "crs" && op === "edit") {
       if (temp2 !== "") {
@@ -2461,25 +1723,6 @@ class Main extends React.Component {
           spData.creditsItems = arrayAdd;
         }
       }
-      // array = [...this.state.creditsItems];
-      // arrayLength = (array.length);
-      // document.getElementById('clearcrspos').value = "";
-      // document.getElementById('clearcrstitle').value = "";
-      // document.getElementById('clearcrslink').value = "";
-      // document.getElementById('clearcrsdescr').value = "";
-
-      // arrayAdd = [];
-      // temp2 = "";
-      // temp3 = "";
-      // temp4 = "";
-      // cgPos = "";
-      // inPos = "";
-      // CrsNewItem = {
-      //   "title": "",
-      //   "link": "",
-      //   "descr": ""
-      // };
-      // this.showAlert("ok");
     }
     arrayAdd = [];
     temp = "";
@@ -2502,7 +1745,6 @@ class Main extends React.Component {
     var r = (bigint >> 16) & 255;
     var g = (bigint >> 8) & 255;
     var b = bigint & 255;
-
     return "rgba(" + r + ", " + g + ", " + b;
   }
 
@@ -2518,7 +1760,6 @@ class Main extends React.Component {
   }
 
   itemSearchReset = () => {
-    // this.showAlert("all");
     document.getElementById('searchForm').reset();
     this.setState({ resItems: [] });
     temp = "";
@@ -2529,44 +1770,6 @@ class Main extends React.Component {
       activityChanged: false
     })
   }
-
-  // showAlert(id) {
-  //   switch (id) {
-  //     case "ok":
-  //       this.setState({ altOkShow: false });
-  //       this.setState({ okShow: true });
-  //       this.setState({ errShow: false });
-  //       this.setState({ upShow: false });
-  //       setTimeout(() => this.setState({ okShow: false }), 1000);
-  //       break;
-  //     case "altok":
-  //       this.setState({ altOkShow: true });
-  //       this.setState({ okShow: false });
-  //       this.setState({ errShow: false });
-  //       this.setState({ upShow: false });
-  //       setTimeout(() => this.setState({ altOkShow: false }), 1000);
-  //       break;
-  //     case "err":
-  //       this.setState({ altOkShow: false });
-  //       this.setState({ errShow: true });
-  //       this.setState({ okShow: false });
-  //       this.setState({ upShow: false });
-  //       setTimeout(() => this.setState({ errShow: false }), 1000);
-  //       break;
-  //     case "up":
-  //       this.setState({ altOkShow: false });
-  //       this.setState({ errShow: false });
-  //       this.setState({ okShow: false });
-  //       this.setState({ upShow: true });
-  //       break;
-  //     case "all":
-  //       this.setState({ altOkShow: false });
-  //       this.setState({ errShow: false });
-  //       this.setState({ okShow: false });
-  //       this.setState({ upShow: false });
-  //       break;
-  //   }
-  // }
 
   itemSearch = () => {
     if (temp !== "") {
@@ -2611,7 +1814,6 @@ class Main extends React.Component {
         "hidden": false
       };
       this.fireAlert("Search results:", "solidgreen");
-      // this.showAlert("ok");
       this.setState({
         onlyRead: true
       })
@@ -2620,7 +1822,6 @@ class Main extends React.Component {
       })
     } else {
       this.fireAlert("Enter at least one character.", "brick");
-      // this.showAlert("err");
     }
   }
 
@@ -2671,6 +1872,23 @@ class Main extends React.Component {
     }
   }
 
+  fireAlert = (msg, color) => {
+    this.setState({
+      alertMsg: msg,
+      alertCol: color,
+      alertShow: true
+    });
+    setTimeout(() => this.setState({ alertShow: false }), 1500);
+  }
+
+  addAfter(array, index, newItem) {
+    return [
+      ...array.slice(0, index),
+      newItem,
+      ...array.slice(index)
+    ];
+  }
+
   // HEAD ACTIONS
 
   saveMenu = () => {
@@ -2692,7 +1910,6 @@ class Main extends React.Component {
       spData.menuShow = blockHide;
     }
     this.fireAlert("Changes Made!", "solidgreen");
-    // this.showAlert("ok");
     this.saveFile(spData, "./api/img-upload.php", "config");
     temp = "";
     temp2 = "";
@@ -2718,7 +1935,6 @@ class Main extends React.Component {
     blockHide = "none";
     temp = "";
     this.fireAlert("Changes Made!", "solidgreen");
-    // this.showAlert("ok");
     this.saveFile(spData, "./api/img-upload.php", "config");
   }
 
@@ -2742,7 +1958,6 @@ class Main extends React.Component {
       }
       blockHide = "none";
       this.fireAlert("Changes Made!", "solidgreen");
-      // this.showAlert("ok");
       this.saveFile(spData, "./api/img-upload.php", "config");
     }
   }
@@ -2757,7 +1972,6 @@ class Main extends React.Component {
     }
     blockHide = "none";
     this.fireAlert("Changes Made!", "solidgreen");
-    // this.showAlert("ok");
     this.saveFile(spData, "./api/img-upload.php", "config");
   }
 
@@ -2900,10 +2114,8 @@ class Main extends React.Component {
 
     if (!changes) {
       this.fireAlert("No changes made!", "solidblue");
-      // this.showAlert("err");
     } else {
       this.fireAlert("Changes Made!", "solidgreen");
-      // this.showAlert("ok");
       this.saveFile(spData, "./api/img-upload.php", "config");
     }
   }
@@ -2942,7 +2154,6 @@ class Main extends React.Component {
     disable2 = "none";
     disable3 = "none";
     this.fireAlert("Changes Made!", "solidgreen");
-    // this.showAlert("ok");
     this.saveFile(spData, "./api/img-upload.php", "config");
   }
 
@@ -2981,12 +2192,11 @@ class Main extends React.Component {
     disable2 = "none";
     disable3 = "none";
     this.fireAlert("Changes Made!", "solidgreen");
-    // this.showAlert("ok");
     this.saveFile(spData, "./api/img-upload.php", "config");
   }
 
-  // ITEM-CAT-CREDITS ACTIONS
-  
+  // ITEM ACTIONS
+
   applyItemEdit = () => {
     array = [...this.state.items];
     catArray = [...this.state.catItems];
@@ -2994,23 +2204,22 @@ class Main extends React.Component {
       temp6 = "";
     }
 
-    console.log("fileImg: ", fileImg);
-    console.log("temp2: ", temp2);
-    console.log("temp3: ", temp3);
-    console.log("temp4: ", temp4);
-    console.log("tempItemVideo: ", tempItemVideo);
-    console.log("temp5: ", temp5);
-    console.log("tempCatTitle: ", tempCatTitle);
-    console.log("temp6: ", temp6);
-    console.log("tempItemDescr: ", tempItemDescr);
-    console.log("cgPos: ", cgPos);
-    console.log("blockHide: ", blockHide);
-    console.log("tempItemHide: ", tempItemHide);
+    // console.log("fileImg: ", fileImg);
+    // console.log("temp2: ", temp2);
+    // console.log("temp3: ", temp3);
+    // console.log("temp4: ", temp4);
+    // console.log("tempItemVideo: ", tempItemVideo);
+    // console.log("temp5: ", temp5);
+    // console.log("tempCatTitle: ", tempCatTitle);
+    // console.log("temp6: ", temp6);
+    // console.log("tempItemDescr: ", tempItemDescr);
+    // console.log("cgPos: ", cgPos);
+    // console.log("blockHide: ", blockHide);
+    // console.log("tempItemHide: ", tempItemHide);
 
     if (fileImg !== null || temp2 !== "" || temp3 !== "" || temp4 !== tempItemVideo ||
       temp5 !== tempCatTitle || temp6 !== tempItemDescr || cgPos !== "" ||
       blockHide !== tempItemHide) {
-      // if (cgPos !== "" && temp5 !== tempCatTitle) {
       if (cgPos !== "") {
         if (temp5 === tempCatTitle) {
           inPos = parseInt(cgPos) - 1;
@@ -3020,10 +2229,7 @@ class Main extends React.Component {
               this.saveImgFile(fileImg, "icon", "edit");
             } else {
               cgPos = "";
-              // document.getElementById('clearitemswitchpos').value = ""; //ADDED FOR MULTIEDIT
-              // document.getElementById('clearitemswitchpos').placeholder = currPos;
               this.fireAlert("Check position!", "brick");
-              // this.showAlert("err");
             }
           } else {
             catArrayLength = catArray.length;
@@ -3032,14 +2238,10 @@ class Main extends React.Component {
               this.saveImgFile(fileImg, "icon", "edit");
             } else {
               cgPos = "";
-              // document.getElementById('clearitemswitchpos').value = ""; //ADDED FOR MULTIEDIT
-              // document.getElementById('clearitemswitchpos').placeholder = currPos;
               this.fireAlert("Check position!", "brick");
-              // this.showAlert("err");
             }
           }
         } else {
-          // cgPos = "";
           this.setState({
             cPos: currPos
           })
@@ -3052,7 +2254,6 @@ class Main extends React.Component {
     } else {
       // console.log("fileImg - temp2 - temp3 are Null!!!");
       this.fireAlert("No changes made!", "solidblue");
-      // this.showAlert("err");
     }
   }
 
@@ -3073,14 +2274,12 @@ class Main extends React.Component {
           this.saveImgFile(fileImg, "icon", "add");
         } else {
           this.fireAlert("Fill in all fields / Check position.", "brick");
-          // this.showAlert("err");
         }
       } else {
         this.saveImgFile(fileImg, "icon", "addlast");
       }
     } else {
       this.fireAlert("Fill in all fields / Check position.", "brick");
-      // this.showAlert("err");
     }
   }
 
@@ -3108,15 +2307,11 @@ class Main extends React.Component {
     temp2 = "";
     temp3 = "";
     this.fireAlert("Item removed!", "solidgreen");
-    // this.showAlert("ok");
     this.saveFile(spData, "./api/img-upload.php", "config");
     setTimeout(() => this.setState({ itemDelDiaShow: false }), 1750);
-    // this.setState({ itemDelDiaShow: false });
-
-    // this.setState({
-    //   activityChanged: true
-    // });
   }
+
+  // CAT ACTIONS
 
   applyCatEdit = () => {
     if (fileImg !== null || temp2 !== "" || temp !== "" || blockHide !== tempItemHide) {
@@ -3134,20 +2329,17 @@ class Main extends React.Component {
           this.saveImgFile(fileImg, "cat", "edit");
         } else {
           this.fireAlert("No changes made or CAT name duplicated!", "solidblue");
-          // this.showAlert("err");
         }
       } else {
         if (!dup) {
           this.saveImgFile(fileImg, "cat", "edit");
         } else {
           this.fireAlert("No changes made or CAT name duplicated!", "solidblue");
-          // this.showAlert("err");
         }
       }
     } else {
       // console.log("fileImg - temp2 - temp are \"\"");
       this.fireAlert("No changes made or CAT name duplicated!", "solidblue");
-      // this.showAlert("err");
     }
   }
 
@@ -3169,7 +2361,6 @@ class Main extends React.Component {
           this.saveImgFile(fileImg, "cat", "add");
         } else {
           this.fireAlert("Check Position!", "brick");
-          // this.showAlert("err");
         }
       } else {
         // console.log("AddCat (temp Empty) inPos: ", inPos);
@@ -3177,13 +2368,11 @@ class Main extends React.Component {
           this.saveImgFile(fileImg, "cat", "addlast");
         } else {
           this.fireAlert("CAT name duplicated!", "brick");
-          // this.showAlert("err");
         }
       }
       // console.log("AddCat InPos (out temp check): ", inPos);
     } else {
       this.fireAlert("Empty Icon or Title!", "brick");
-      // this.showAlert("err");
     }
   }
 
@@ -3207,13 +2396,11 @@ class Main extends React.Component {
     temp2 = "";
     temp3 = "";
     this.fireAlert("Category removed!", "solidgreen");
-    // this.showAlert("ok");
     this.saveFile(spData, "./api/img-upload.php", "config");
     setTimeout(() => this.setState({ catDelDiaShow: false }), 1750);
-    // this.setState({
-    //   activityChanged: true
-    // });
   }
+
+  // CREDITS ACTIONS
 
   applyCrsEdit = () => {
     if (temp2 !== tempCrsTitle || temp3 !== tempCrsLink || temp4 !== tempCrsDescr || cgPos !== "") {
@@ -3223,18 +2410,15 @@ class Main extends React.Component {
         if (inPos < arrayLength && inPos >= 0 && inPos !== currPos) {
           this.saveCrs("crs", "edit");
           this.fireAlert("Changes Made!", "solidgreen");
-          // this.showAlert("ok");
           this.setState({
             activityChanged: true
           });
         } else {
           this.fireAlert("No changes made!", "solidblue");
-          // this.showAlert("err");
         }
       } else {
         this.saveCrs("crs", "edit");
         this.fireAlert("Changes Made!", "solidgreen");
-        // this.showAlert("ok");
         this.setState({
           activityChanged: true
         });
@@ -3242,7 +2426,6 @@ class Main extends React.Component {
     } else {
       // console.log("fileImg - temp2 - temp are \"\"");
       this.fireAlert("No changes made!", "solidblue");
-      // this.showAlert("err");
     }
   }
 
@@ -3256,18 +2439,15 @@ class Main extends React.Component {
         if (inPos < arrayLength/*  && !dup */) {
           this.saveCrs("crs", "add");
           this.fireAlert("Credit added!", "solidgreen");
-          // this.showAlert("ok");
           this.setState({
             activityChanged: true
           });
         } else {
           this.fireAlert("Fill in all fields!", "brick");
-          // this.showAlert("err");
         }
       } else {
         this.saveCrs("crs", "addlast");
         this.fireAlert("Credit added!", "solidgreen");
-        // this.showAlert("ok");
         this.setState({
           activityChanged: true
         });
@@ -3288,7 +2468,6 @@ class Main extends React.Component {
       // console.log("tempItemHide: ", tempItemHide);
     } else {
       this.fireAlert("Fill in all fields!", "brick");
-      // this.showAlert("err");
     }
   }
 
@@ -3308,12 +2487,8 @@ class Main extends React.Component {
     temp4 = "";
 
     this.fireAlert("Credit removed!", "solidgreen");
-    // this.showAlert("ok");
     this.saveFile(spData, "./api/img-upload.php", "config");
     setTimeout(() => this.setState({ crsDelDiaShow: false }), 1750);
-    // this.setState({
-    //   activityChanged: true
-    // });
   }
 
   // LOGIN ACTIONS
@@ -3351,15 +2526,6 @@ class Main extends React.Component {
               // console.log("WRONG Psw: " + pswTmp)
               // }
               this.fireAlert("Wrong user name or password!", "brick");
-
-              // this.setState({
-              //   alertMsg: "Wrong user name or password!",
-              //   alertCol: "brick",
-              //   alertShow: true
-              // });
-              // setTimeout(() => this.setState({ alertShow: false }), 1000);
-
-              // this.showAlert("err");
               login = false;
             }
           })
@@ -3389,8 +2555,6 @@ class Main extends React.Component {
           pswTmp = "";
           this.saveFile(spData, "./api/img-upload.php", "config");
           this.fireAlert("Username and password changed successfully!", "solidgreen");
-
-          // this.showAlert("ok");
         })
         .catch(err => {
           console.log(err)
@@ -3400,29 +2564,7 @@ class Main extends React.Component {
       spData.loginOpacity = parseFloat(tempOpacity.replace(/,/g, "."));
       this.saveFile(spData, "./api/img-upload.php", "config");
       this.fireAlert("Changes Made!", "solidgreen");
-      // this.showAlert("altok");
     }
-  }
-
-  // loginEditSession(id) {
-  //   this.showModal("loginEdit");
-  // }
-
-  fireAlert = (msg, color) => {
-    this.setState({
-      alertMsg: msg,
-      alertCol: color,
-      alertShow: true
-    });
-    setTimeout(() => this.setState({ alertShow: false }), 1500);
-  }
-
-  addAfter(array, index, newItem) {
-    return [
-      ...array.slice(0, index),
-      newItem,
-      ...array.slice(index)
-    ];
   }
 
   // SHOW MODALS
@@ -3835,7 +2977,6 @@ class Main extends React.Component {
       default:
       // will NOT execute because of the line preceding the switch.
     }
-    // this.showAlert("all");
     tempColor = "";
     tempTextColor = "";
     tempColW = "";
@@ -3893,8 +3034,17 @@ class Main extends React.Component {
     }
   }
 
-  itemOrCat() {
-    this.showModal("itemOrCatAdd");
+  // CATS OPERATION DIALOGS
+
+  catAddItem() {
+    this.hideModal("itemorcat");
+    array = [...this.state.cats];
+    arrayLength = (array.length);
+    tempItemHide = false;
+    // temp4 = false;
+    document.getElementById('clearcatpos').value = "";
+    document.getElementById('clearcattitle').value = "";
+    this.showModal("catAdd");
   }
 
   catEditDel(op, pos) {
@@ -3915,21 +3065,11 @@ class Main extends React.Component {
     }
   }
 
-  catAddItem() {
-    this.hideModal("itemorcat");
-    array = [...this.state.cats];
-    arrayLength = (array.length);
-    tempItemHide = false;
-    // temp4 = false;
-    document.getElementById('clearcatpos').value = "";
-    document.getElementById('clearcattitle').value = "";
-    this.showModal("catAdd");
-  }
+  // CREDITS OPERATION DIALOGS
 
   crsAddItem() {
     array = [...this.state.creditsItems];
     arrayLength = (array.length);
-    // temp4 = false;
     document.getElementById('clearcrspos').value = "";
     document.getElementById('clearcrstitle').value = "";
     document.getElementById('clearcrslink').value = "";
@@ -3953,6 +3093,8 @@ class Main extends React.Component {
     }
   }
 
+  // ITEMS OPERATION DIALOGS
+
   addItem() {
     this.hideModal("itemorcat");
     noDescr = true;
@@ -3967,7 +3109,6 @@ class Main extends React.Component {
     tempCatTitle = temp5;
     tempItemHide = false;
     document.getElementById('clearitempos').value = "";
-    // document.getElementById('clearitemswitchpos').value = "";
     document.getElementById('clearitemdescr').value = "";
     document.getElementById('clearitemtitle').value = "";
     document.getElementById('clearitemlink').value = "";
@@ -4021,24 +3162,13 @@ class Main extends React.Component {
 
     if (op === "itemEdit") {
       document.getElementById('clearitemswitchpos').value = "";
-      // this.hideModal("itemEdit");
-      // document.getElementById('clearitemswitchpos').placeholder = currPos + 1;
-      // document.getElementById('clearitemswitchpos').refresh();
       this.showModal("itemEdit");
     } else {
       this.showModal("itemDel");
     }
   }
 
-  catCont(pos) {
-    array = [...this.state.cats];
-    // console.log("Cat Array: ", array);
-    tempCatTitle = array[pos].title;
-    temp5 = tempCatTitle;
-    // console.log("Current Cat In: ", tempCatTitle);
-    this.itemCatSel(array[pos].title, this.state.items);
-    this.showModal("cat");
-  }
+  // ITEM DIALOG
 
   itemVideo(id, cat) {
     temp3 = id;
@@ -4059,30 +3189,6 @@ class Main extends React.Component {
     }
     // console.log(id, " for ", pos);
     this.showModal("itemVideo");
-  }
-
-  crsShow() {
-    this.showModal("exCrs");
-  }
-
-  setCat(catName, e) {
-    e.preventDefault();
-    temp5 = catName;
-    this.setState({
-      catSel: catName
-    })
-    // console.log("CatName: ", catName);
-  }
-
-  search() {
-    this.showModal("search");
-    this.searchInput.focus();
-  }
-
-  stopVideos = () => {
-    this.setState({
-      videoLink: ""
-    })
   }
 
   // SERVICE FUNCTIONS
@@ -4126,6 +3232,36 @@ class Main extends React.Component {
     }
   }
 
+  setCat(catName, e) {
+    e.preventDefault();
+    temp5 = catName;
+    this.setState({
+      catSel: catName
+    })
+    // console.log("CatName: ", catName);
+  }
+
+  search() {
+    this.showModal("search");
+    this.searchInput.focus();
+  }
+
+  stopVideos = () => {
+    this.setState({
+      videoLink: ""
+    })
+  }
+
+  catCont(pos) {
+    array = [...this.state.cats];
+    // console.log("Cat Array: ", array);
+    tempCatTitle = array[pos].title;
+    temp5 = tempCatTitle;
+    // console.log("Current Cat In: ", tempCatTitle);
+    this.itemCatSel(array[pos].title, this.state.items);
+    this.showModal("cat");
+  }
+
   // PAGE RENDER
 
   render() {
@@ -4158,23 +3294,27 @@ class Main extends React.Component {
 
     let menuButtons = (
       <>
-        <Dropdown search={this.search} crsShow={this.crsShow} refresh={this.state.refresh} />
+        <Dropdown search={this.search} crsShow={() => this.showModal("exCrs")}
+          refresh={this.state.refresh} />
       </>
     );
 
     let eCatMenuButtons = (
-      <DropdownCat items={this.state.cats} catName={this.state.catSel} id="editCatMenuButton" setCat={this.setCat} refresh={this.state.refresh} />
+      <DropdownCat items={this.state.cats} catName={this.state.catSel} id="editCatMenuButton"
+        setCat={this.setCat} refresh={this.state.refresh} />
     )
 
     let aCatMenuButtons = (
-      <DropdownCat items={this.state.cats} catName={this.state.catSel} id="addCatMenuButton" setCat={this.setCat} refresh={this.state.refresh} />
+      <DropdownCat items={this.state.cats} catName={this.state.catSel} id="addCatMenuButton"
+        setCat={this.setCat} refresh={this.state.refresh} />
     )
+
+    // PAGE HEAD
 
     let head = (
       <div className="row text-center mt-2 mb-2">
         <div className="col">
           <div className="row">
-            {/* <Menu menuShow={this.state.menuShow} mainBtn={this.state.mainBtn}> */}
             {/* MENU */}
             <Element eleShow={this.state.menuShow} mainBtn={this.state.mainBtn} id="HeadMenu" sfondo={spData.menuColor} colore={spData.menuTextColor} z={1} colW="col-md-1">
               {menuButtons}
@@ -4183,16 +3323,9 @@ class Main extends React.Component {
                   Edit Menu
                 </button>
               </EditElement>
-              {/* <EditMenu editMenuShow={this.state.mainBtn} hidden={spData.menuShow}>
-                <button className="col flexbutton solidgreen m-1" onClick={() => this.showModal("menu")}>
-                  Edit Menu
-                </button>
-              </EditMenu> */}
             </Element>
-            {/* </Menu> */}
             {/* TITOLO */}
             <Element eleShow={this.state.titleShow} mainBtn={this.state.mainBtn} id="HeadTitle" sfondo={spData.headColor} colore={spData.headTextColor} z={""} colW={spData.headColW}>
-              {/* <Titolo titleShow={this.state.titleShow} mainBtn={this.state.mainBtn}> */}
               <div>
                 <p className="medfont">{spData.headTitle}</p>
               </div>
@@ -4201,30 +3334,17 @@ class Main extends React.Component {
                   Edit Title
                 </button>
               </EditElement>
-              {/* <EditTitolo editTitleShow={this.state.mainBtn} hidden={spData.titleShow}>
-                <button className="col flexbutton solidgreen m-1" onClick={() => this.showModal("title")}>
-                  Edit Title
-                </button>
-              </EditTitolo> */}
             </Element>
-            {/* </Titolo> */}
             {/* LOGO */}
             <Element eleShow={this.state.logoShow} mainBtn={this.state.mainBtn} id="HeadLogo" sfondo={spData.logoColor} colore="white" z={""} colW={spData.logoColW}>
-              {/* <Logo logoShow={this.state.logoShow} mainBtn={this.state.mainBtn}> */}
               <LogoImg />
               <EditElement editEleShow={this.state.mainBtn} hidden={spData.logoShow}>
                 <button className="col latowhite flexbutton solidgreen m-1" onClick={() => this.showModal("logo")}>
                   Edit Logo
                 </button>
               </EditElement>
-              {/* <EditLogo editLogoShow={this.state.mainBtn} hidden={spData.logoShow}>
-                <button className="col latowhite flexbutton solidgreen m-1" onClick={() => this.showModal("logo")}>
-                  Edit Logo
-                </button>
-              </EditLogo> */}
             </Element>
             {/* OROLOGIO */}
-            {/* <Clock clockShow={this.state.clockShow} mainBtn={this.state.mainBtn}> */}
             <Element eleShow={this.state.clockShow} mainBtn={this.state.mainBtn} id="HeadDate" sfondo={spData.clockColor} colore={spData.clockTextColor} z={""} colW={spData.clockColW}>
               <Orologio />
               <EditElement editEleShow={this.state.mainBtn} hidden={spData.clockShow}>
@@ -4232,35 +3352,24 @@ class Main extends React.Component {
                   Edit Clock
                 </button>
               </EditElement>
-              {/* <EditClock editClockShow={this.state.mainBtn} hidden={spData.clockShow}>
-                <button className="col flexbutton solidgreen m-1" onClick={() => this.showModal("clock")}>
-                  Edit Clock
-                </button>
-              </EditClock> */}
-              {/* </Clock> */}
             </Element>
             {/* SETTINGS */}
             <Element eleShow={true} mainBtn={this.state.mainBtn} id="HeadSettings"
               sfondo={spData.loginColor} colore={""} z={""}
               colW="col-md-1">
-              {/* <Set mainBtn={this.state.mainBtn}> */}
               <LoginGear handleShowButtons={this.loginSession} />
               <EditElement editEleShow={this.state.mainBtn} hidden={true}>
                 <button className="col latowhite flexbutton solidgreen m-1" onClick={() => this.showModal("loginEdit")}>
                   Edit Login
                 </button>
               </EditElement>
-              {/* <EditSet editSetShow={this.state.mainBtn}>
-                <button className="col latowhite flexbutton solidgreen m-1" onClick={() => this.loginEditSession("LoginEdit")}>
-                  Edit Login
-                </button>
-              </EditSet> */}
-              {/* </Set> */}
             </Element>
           </div>
         </div>
       </div>
     )
+
+    // PAGE MAIN BUTTONS
 
     if (mainBtn === false) {
       buttons = ""
@@ -4272,10 +3381,8 @@ class Main extends React.Component {
               onClick={() => this.itemsButtonShow("ShowItemBtn")}>
               <SettingsGear showItemsBtn={this.state.itemsBtnShow} />
             </button>
-
-            <AddSym showItemsBtn={this.state.itemsBtnShow} addItem={this.itemOrCat} addLabel={"Add Item or Category"} />
-
-            {/* <ItemAdd className="col" showItemsBtn={this.state.itemsBtnShow} addItem={this.itemOrCat} /> */}
+            <AddSym showItemsBtn={this.state.itemsBtnShow} addItem={() => this.showModal("itemOrCatAdd")}
+              addLabel={"Add Item or Category"} />
             <button className="col button solidbrick m-1"
               onClick={() => this.showModal("back")}>
               Preferences
@@ -4284,6 +3391,8 @@ class Main extends React.Component {
         </>
       )
     }
+
+    // PAGE BODY
 
     if (catFirst === true) {
       // console.log("CateFirst= ", catFirst)
@@ -4339,13 +3448,13 @@ class Main extends React.Component {
       )
     }
 
+    // PAGE FOOTER
     let foot = (
       <div className="row mt-2 mb-2 zindex1">
         <div className="col">
           <div className="row">
             {/* INFO */}
             <Element eleShow={this.state.infoShow} mainBtn={this.state.mainBtn} id="FootInfo" sfondo={spData.footInfoColor} colore={spData.footInfoTextColor} z={""} colW={spData.footInfoColW}>
-              {/* <Info infoShow={this.state.infoShow} mainBtn={this.state.mainBtn}> */}
               <div>
                 <p className={showHideFootTitle + " medfont"}>{spData.footTitle}</p>
                 <p className={showHideFootSub + " smallfont"}>{spData.footSubtitle}</p>
@@ -4356,17 +3465,9 @@ class Main extends React.Component {
                   Edit Info
                 </button>
               </EditElement>
-              {/* <EditInfo editInfoShow={this.state.mainBtn} hidden={spData.infoShow}>
-                <button className="col flexbutton solidgreen m-1" onClick={() => this.showModal("info")}>
-                  Edit Info
-                </button>
-              </EditInfo> */}
             </Element>
-            {/* </Info> */}
-            {/* CREDITI */}
             {/* CREDITI */}
             <Element eleShow={this.state.addInfoShow} mainBtn={this.state.mainBtn} id="FootAddInfo" sfondo={spData.footAddColor} colore={spData.footAddTextColor} z={""} colW={spData.footAddColW}>
-              {/* <AddInfo addInfoShow={this.state.addInfoShow} infoShow={this.state.infoShow} mainBtn={this.state.mainBtn}> */}
               <div>
                 <p className={showHideCrTitle + " smallfont"}>{spData.footAddTitle}</p>
                 <p className={showHideCrSub + " smallfont"}><i>{spData.footAddSubtitle}</i></p>
@@ -4377,13 +3478,7 @@ class Main extends React.Component {
                   Edit Add Info
                 </button>
               </EditElement>
-              {/* <EditAddInfo editAddInfoShow={this.state.mainBtn} hidden={spData.addInfoShow}>
-                <button className="col flexbutton brick m-1" onClick={() => this.showModal("addInfo")}>
-                  Edit Add Info
-                </button>
-              </EditAddInfo> */}
             </Element>
-            {/* </AddInfo> */}
           </div>
         </div>
       </div >
@@ -4392,7 +3487,6 @@ class Main extends React.Component {
     // HTML ELEMENTS
 
     return (
-
       <>
         <noscript>You need to enable JavaScript to run this app.</noscript>
         <div style={this.state.backStyle}></div>
@@ -4403,15 +3497,10 @@ class Main extends React.Component {
               activityChanged={false} eleDiaShow={this.state.loginDiaShow}
               handleClose={() => this.hideModal("login")} handleSave={this.loginCheck}
               saveLabel="Apply">
-              {/* <LoginDialog loginDiaShow={this.state.loginDiaShow}
-                handleClose={() => this.hideModal("login")} handleLogin={this.loginCheck}> */}
               <div className="modal-content">
-
                 <ModalTitle title="Login"></ModalTitle>
-
                 <div className="modal-body">
                   <form id="loginForm">
-
                     {/* User */}
                     <div className="form-group">
                       <div className="row text-center mb-1 m-auto">
@@ -4428,7 +3517,6 @@ class Main extends React.Component {
                         </div>
                       </div>
                     </div>
-
                     {/* Password */}
                     <div className="form-group">
                       <div className="row text-center mb-1 m-auto">
@@ -4444,28 +3532,20 @@ class Main extends React.Component {
                         </div>
                       </div>
                     </div>
-
                     <Alert alertShow={this.state.alertShow} alertMsg={this.state.alertMsg} alertCol={this.state.alertCol}></Alert>
-
                   </form>
                 </div>
               </div>
-              {/* </LoginDialog> */}
             </EleDialog>
             {/* LOGIN EDIT DIALOG */}
             <EleDialog mainTheme="modal-main" footTheme="modal-footer" hideMidBtn={true} hideApply={false} hideClose={false}
               activityChanged={false} eleDiaShow={this.state.loginEditDiaShow}
               handleClose={() => this.hideModal("loginedit")} handleSave={this.loginEditCheck}
               saveLabel="Apply">
-              {/* <LoginEditDialog loginEditDiaShow={this.state.loginEditDiaShow}
-                handleClose={() => this.hideModal("loginedit")} handleEditLogin={this.loginEditCheck}> */}
               <div className="modal-content noborder">
-
                 <ModalTitle title="Edit Login"></ModalTitle>
-
                 <div className="modal-body">
                   <form id="loginEditForm" autocomplete="off">
-
                     {/* User */}
                     <div className="form-group">
                       <div className="row text-center mb-1 m-auto">
@@ -4482,7 +3562,6 @@ class Main extends React.Component {
                         </div>
                       </div>
                     </div>
-
                     {/* Password */}
                     <div className="form-group">
                       <div className="row text-center mb-1 m-auto">
@@ -4498,81 +3577,28 @@ class Main extends React.Component {
                         </div>
                       </div>
                     </div>
-
                     {/* Back color */}
                     <div className="form-group">
                       <div className="row mb-1 m-auto">
-
-                        <InputBackColor backColor={spData.loginColor}></InputBackColor>
-
-                        {/* <div className="col">
-                          <div className="row border">
-                            <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
-                              <label>Back color</label>
-                            </div>
-                            <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="color" className="form-control border-0 p-0" defaultValue={this.rgbToHex(spData.loginColor)} onChange={e => tempColor = e.target.value} />
-                            </div>
-                          </div>
-                        </div> */}
-
+                        <InputBackColor bcLabel="Back color" backColor={spData.loginColor}
+                          rgbToHex={this.rgbToHex} tempo={e => tempColor = e.target.value}></InputBackColor>
                       </div>
                     </div>
-
                     <InputOpacity opacity={spData.loginOpacity} id="loginOpRange" tempo={e => tempOpacity = e.target.value}></InputOpacity>
-
-                    {/* <div className="form-group">
-                      <div className="row mb-1 m-auto">
-                        <div className="col">
-                          <div className="row border">
-                            <div className="col pt-1 pb-1 p-0 latomenu d-flex flex-column justify-content-center align-items-center">
-                              <label>Opacity</label>
-                            </div>
-                            <div className="col d-flex flex-column justify-content-center align-items-center p-0">
-                              <div className="row" style={{ width: "100%" }}>
-                                <div className="col-1 d-flex flex-column justify-content-center align-items-center">
-                                  <img className="plusminus" title="0" alt="0" src="./itemicons/rangeZero.svg" />
-                                </div>
-                                <div className="col d-flex flex-column justify-content-center align-items-center">
-                                  <input type="range" class="form-range border-0 p-0" min="0" max="1" step="0.1" list="optickmarks" defaultValue={spData.loginOpacity} id="loginOpRange" onChange={e => tempOpacity = e.target.value} ></input>
-                                  <datalist id="optickmarks">
-                                    <option value={"0"}></option>
-                                    <option value={"0.25"}></option>
-                                    <option className="tick" value={"0.5"}></option>
-                                    <option value={"0.75"}></option>
-                                    <option value={"1"}></option>
-                                  </datalist>
-                                </div>
-                                <div className="col-1 d-flex flex-column justify-content-center align-items-center">
-                                  <img className="plusminus" title="1" alt="1" src="./itemicons/rangeOne.svg" />
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div> */}
-
                     <Alert alertShow={this.state.alertShow} alertMsg={this.state.alertMsg} alertCol={this.state.alertCol}></Alert>
-
                   </form>
                 </div>
               </div>
-              {/* </LoginEditDialog> */}
             </EleDialog>
             {/* MENU DIALOG */}
             <EleDialog mainTheme="modal-main" footTheme="modal-footer" hideMidBtn={true} hideApply={false} hideClose={false}
               activityChanged={false} eleDiaShow={this.state.menuDiaShow}
               handleClose={() => this.hideModal("menu")} handleSave={this.saveMenu}
               saveLabel="Apply">
-              {/* <MenuDialog menuDiaShow={this.state.menuDiaShow} handleClose={() => this.hideModal("menu")} handleSave={this.saveMenu}> */}
               <div className="modal-content noborder">
-
                 <ModalTitle title="Edit Menu"></ModalTitle>
-
                 <div className="modal-body">
                   <form id="menuForm">
-
                     {/* Search */}
                     <InputInfos label="Search"
                       disField={disFieldMS}
@@ -4593,40 +3619,6 @@ class Main extends React.Component {
                       hideSwitch={spData.noMenuSearch}
                       tempo={e => temp = e.target.value}>
                     </InputInfos>
-
-                    {/* <div className="form-group">
-                      <div className="row text-center mb-1 m-auto">
-                        <div className="col">
-                          <div className="row border">
-                            <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
-                              <label>Search</label>
-                            </div>
-                            <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="text" disabled={disFieldMS} className="form-control border-0" defaultValue={spData.menuSearchLabel} onChange={e => temp = e.target.value} />
-                            </div>
-                            <div className="col-2 border d-flex flex-column justify-content-center align-items-center">
-                              <label className="switch">
-                                <input type="checkbox" className="form-control" defaultChecked={spData.noMenuSearch} onClick={e => {
-                                  if (this.state.disFieldMS === false) {
-                                    this.setState({
-                                      disFieldMS: true
-                                    });
-                                    disable1 = true;
-                                  } else {
-                                    this.setState({
-                                      disFieldMS: false
-                                    });
-                                    disable1 = false;
-                                  }
-                                }} />
-                                <span class="slider round" title="Hide"></span>
-                              </label>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div> */}
-
                     {/* Credit */}
                     <InputInfos label="Credits"
                       disField={disFieldMC}
@@ -4647,129 +3639,16 @@ class Main extends React.Component {
                       hideSwitch={spData.noMenuCredits}
                       tempo={e => temp2 = e.target.value}>
                     </InputInfos>
-
-                    {/* <div className="form-group">
-                      <div className="row text-center mb-1 m-auto">
-                        <div className="col">
-                          <div className="row border">
-                            <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
-                              <label>Credit</label>
-                            </div>
-                            <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="text" disabled={disFieldMC} className="form-control border-0" defaultValue={spData.menuCreditsLabel} onChange={e => temp2 = e.target.value} />
-                            </div>
-                            <div className="col-2 border d-flex flex-column justify-content-center align-items-center">
-                              <label className="switch">
-                                <input type="checkbox" className="form-control" defaultChecked={spData.noMenuCredits} onClick={e => {
-                                  if (this.state.disFieldMC === false) {
-                                    this.setState({
-                                      disFieldMC: true
-                                    });
-                                    disable2 = true;
-                                  } else {
-                                    this.setState({
-                                      disFieldMC: false
-                                    });
-                                    disable2 = false;
-                                  }
-                                }} />
-                                <span class="slider round" title="Hide"></span>
-                              </label>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div> */}
-
                     {/* Back color */}
                     <div className="form-group">
                       <div className="row mb-1 m-auto">
-
-                        <InputBackColor backColor={spData.menuColor}></InputBackColor>
-
-                        {/* <div className="col">
-                          <div className="row border">
-                            <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
-                              <label>Back color</label>
-                            </div>
-                            <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="color" className="form-control border-0 p-0" defaultValue={this.rgbToHex(spData.menuColor)} onChange={e => tempColor = e.target.value} />
-                            </div>
-                          </div>
-                        </div> */}
-
+                        <InputBackColor bcLabel="Back color" backColor={spData.menuColor}
+                          rgbToHex={this.rgbToHex} tempo={e => tempColor = e.target.value}></InputBackColor>
                       </div>
                     </div>
-
                     <InputOpacity opacity={spData.menuOpacity} id="menuOpRange" tempo={e => tempOpacity = e.target.value}></InputOpacity>
-
-                    {/* <div className="form-group">
-                      <div className="row mb-1 m-auto">
-                        <div className="col">
-                          <div className="row border">
-                            <div className="col pt-1 pb-1 p-0 latomenu d-flex flex-column justify-content-center align-items-center">
-                              <label>Opacity</label>
-                            </div>
-
-                            <div className="col d-flex flex-column justify-content-center align-items-center p-0">
-                              <div className="row" style={{ width: "100%" }}>
-
-                                <div className="col-1 d-flex flex-column justify-content-center align-items-center">
-                                  <img className="plusminus" title="0" alt="0" src="./itemicons/rangeZero.svg" />
-                                </div>
-                                <div className="col d-flex flex-column justify-content-center align-items-center">
-                                  <input type="range" class="form-range border-0 p-0" min="0" max="1" step="0.1" list="optickmarks" defaultValue={spData.menuOpacity} id="menuOpRange" onChange={e => tempOpacity = e.target.value} ></input>
-                                  <datalist id="optickmarks">
-                                    <option value={"0"}></option>
-                                    <option value={"0.25"}></option>
-                                    <option className="tick" value={"0.5"}></option>
-                                    <option value={"0.75"}></option>
-                                    <option value={"1"}></option>
-                                  </datalist>
-                                </div>
-                                <div className="col-1 d-flex flex-column justify-content-center align-items-center">
-                                  <img className="plusminus" title="1" alt="1" src="./itemicons/rangeOne.svg" />
-                                </div>
-
-                              </div>
-                            </div>
-
-                          </div>
-                        </div>
-                      </div>
-                    </div> */}
-
                     <InputHideBlocks hideSwitch={spData.menuShow}></InputHideBlocks>
-
-                    {/* <div className="form-group">
-                      <div className="row mb-1 m-auto">
-                        <div className="col">
-                          <div className="row border">
-                            <div className="col col pt-1 pb-1 padlr latomenu d-flex flex-column justify-content-center align-items-center">
-                              <label>Hide</label>
-                            </div>
-                            <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <label class="switch">
-                                <input type="checkbox" className="form-control" defaultChecked={!spData.menuShow} onClick={e => {
-                                  if (spData.menuShow === false) {
-                                    blockHide = true;
-                                  } else {
-                                    blockHide = false;
-                                  }
-                                }} />
-                                <span class="slider round" title="Hide"></span>
-                              </label>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="col-1"></div>
-                        <div className="col">
-                        </div>
-                      </div>
-                    </div> */}
-
                     <Alert alertShow={this.state.alertShow} alertMsg={this.state.alertMsg} alertCol={this.state.alertCol}></Alert>
-
                   </form>
                 </div>
               </div>
@@ -4780,174 +3659,26 @@ class Main extends React.Component {
               activityChanged={false} eleDiaShow={this.state.titleDiaShow}
               handleClose={() => this.hideModal("title")} handleSave={this.saveTitle}
               saveLabel="Apply">
-              {/* <TitleDialog titleDiaShow={this.state.titleDiaShow} handleClose={() => this.hideModal("title")} handleSave={this.saveTitle}> */}
               <div className="modal-content noborder">
-
                 <ModalTitle title="Edit Title (Site name)"></ModalTitle>
-
                 <div className="modal-body">
                   <form id="titleForm" onKeyDown={this.handleKeyDown}>
-
-
                     <InputTitle label="Name" edit="Edit Item" tempTitle={spData.headTitle}
                       tempo={e => temp = e.target.value} >
                     </InputTitle>
-
-                    {/* <div className="form-group">
-                      <div className="row text-center mb-1 m-auto">
-                        <div className="col">
-                          <div className="row border">
-                            <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
-                              <label>Name</label>
-                            </div>
-                            <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="text" className="form-control border-0" defaultValue={spData.headTitle} onChange={e => temp = e.target.value} />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div> */}
-
                     <InputWidth idAuto="headColAuto" idCol1="headCol1" idCol2="headCol2" idCol3="headCol3" idCol4="headCol4" idCol5="headCol5"
                       valAuto="col" valCol1="col-1" valCol2="col-2" valCol3="col-3" valCol4="col-4" valCol5="col-5"></InputWidth>
-
-                    {/* <div class="form-group" >
-                      <div className="row text-center mb-1 m-auto">
-                        <div className="col">
-                          <div className="row border">
-                            <div className="col-2 col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
-                              <label>Width</label>
-                            </div>
-                            <div className="col pt-1 pb-1">
-                              <div className="row m-auto">
-                                <div className="col radio">
-                                  <label class="radio-inline"> <input type="radio" name="blockWidth" id="headColAuto" value="col" onChange={e => tempColW = e.target.value} /> Auto </label>
-                                </div>
-                                <div className="col radio">
-                                  <label class="radio-inline"> <input type="radio" name="blockWidth" id="headCol1" value="col-1" onChange={e => tempColW = e.target.value} /> 1 </label>
-                                </div>
-                                <div className="col radio">
-                                  <label class="radio-inline"> <input type="radio" name="blockWidth" id="headCol2" value="col-2" onChange={e => tempColW = e.target.value} /> 2 </label>
-                                </div>
-                                <div className="col radio">
-                                  <label class="radio-inline"> <input type="radio" name="blockWidth" id="headCol3" value="col-3" onChange={e => tempColW = e.target.value} /> 3 </label>
-                                </div>
-                                <div className="col radio">
-                                  <label class="radio-inline"> <input type="radio" name="blockWidth" id="headCol4" value="col-4" onChange={e => tempColW = e.target.value} /> 4 </label>
-                                </div>
-                                <div className="col radio">
-                                  <label class="radio-inline"> <input type="radio" name="blockWidth" id="headCol5" value="col-5" onChange={e => tempColW = e.target.value} /> 5 </label>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div> */}
-
                     <div className="form-group">
                       <div className="row mb-1 m-auto">
-
-                        <InputBackColor backColor={spData.headColor}></InputBackColor>
-
-                        {/* <div className="col">
-                          <div className="row border">
-                            <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
-                              <label>Back color</label>
-                            </div>
-                            <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="color" className="form-control border-0 p-0" defaultValue={this.rgbToHex(spData.headColor)} onChange={e => tempColor = e.target.value} />
-                            </div>
-                          </div>
-                        </div> */}
-
+                        <InputBackColor bcLabel="Back color" backColor={spData.headColor}
+                          rgbToHex={this.rgbToHex} tempo={e => tempColor = e.target.value}></InputBackColor>
                         <div className="col-1"></div>
-
-                        <InputTextColor textColor={spData.headTextColor}></InputTextColor>
-
-                        {/* <div className="col">
-                          <div className="row border">
-                            <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
-                              <label>Text color</label>
-                            </div>
-                            <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="color" className="form-control border-0 p-0" defaultValue={this.rgbToHex(spData.headTextColor)} onChange={e => tempTextColor = e.target.value} />
-                            </div>
-                          </div>
-                        </div> */}
-
+                        <InputTextColor textColor={spData.headTextColor} rgbToHex={this.rgbToHex}></InputTextColor>
                       </div>
                     </div>
-
                     <InputOpacity opacity={spData.headOpacity} id="titleOpRange" tempo={e => tempOpacity = e.target.value}></InputOpacity>
-
-                    {/* <div className="form-group">
-                      <div className="row mb-1 m-auto">
-                        <div className="col">
-                          <div className="row border">
-                            <div className="col pt-1 pb-1 p-0 latomenu d-flex flex-column justify-content-center align-items-center">
-                              <label>Opacity</label>
-                            </div>
-
-                            <div className="col d-flex flex-column justify-content-center align-items-center p-0">
-                              <div className="row" style={{ width: "100%" }}>
-
-                                <div className="col-1 d-flex flex-column justify-content-center align-items-center">
-                                  <img className="plusminus" title="0" alt="0" src="./itemicons/rangeZero.svg" />
-                                </div>
-                                <div className="col d-flex flex-column justify-content-center align-items-center">
-                                  <input type="range" class="form-range border-0 p-0" min="0" max="1" step="0.1" list="optickmarks" defaultValue={spData.headOpacity} id="titleOpRange" onChange={e => tempOpacity = e.target.value} ></input>
-                                  <datalist id="optickmarks">
-                                    <option value={"0"}></option>
-                                    <option value={"0.25"}></option>
-                                    <option className="tick" value={"0.5"}></option>
-                                    <option value={"0.75"}></option>
-                                    <option value={"1"}></option>
-                                  </datalist>
-                                </div>
-                                <div className="col-1 d-flex flex-column justify-content-center align-items-center">
-                                  <img className="plusminus" title="1" alt="1" src="./itemicons/rangeOne.svg" />
-                                </div>
-
-                              </div>
-                            </div>
-
-                          </div>
-                        </div>
-                      </div>
-                    </div> */}
-
                     <InputHideBlocks hideSwitch={spData.titleShow}></InputHideBlocks>
-
-                    {/* <div className="form-group">
-                      <div className="row mb-1 m-auto">
-                        <div className="col">
-                          <div className="row border">
-                            <div className="col col pt-1 pb-1 padlr latomenu d-flex flex-column justify-content-center align-items-center">
-                              <label>Hide</label>
-                            </div>
-                            <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <label class="switch">
-                                <input type="checkbox" className="form-control" defaultChecked={!spData.titleShow} onClick={e => {
-                                  if (spData.titleShow === false) {
-                                    blockHide = true;
-                                  } else {
-                                    blockHide = false;
-                                  }
-                                }} />
-                                <span class="slider round" title="Hide"></span>
-                              </label>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="col-1"></div>
-                        <div className="col">
-                        </div>
-                      </div>
-                    </div> */}
-
                     <Alert alertShow={this.state.alertShow} alertMsg={this.state.alertMsg} alertCol={this.state.alertCol}></Alert>
-
                   </form>
                 </div>
               </div>
@@ -4958,333 +3689,63 @@ class Main extends React.Component {
               activityChanged={false} eleDiaShow={this.state.clockDiaShow}
               handleClose={() => this.hideModal("clock")} handleSave={this.saveClock}
               saveLabel="Apply">
-              {/* <ClockDialog clockDiaShow={this.state.clockDiaShow} handleClose={() => this.hideModal("clock")} handleSave={this.saveClock}> */}
               <div className="modal-content noborder">
-
                 <ModalTitle title="Edit Clock"></ModalTitle>
-
                 <div className="modal-body">
                   <form id="clockForm">
-
                     <InputWidth idAuto="clockColAuto" idCol1="clockCol1" idCol2="clockCol2" idCol3="clockCol3" idCol4="clockCol4" idCol5="clockCol5"
                       valAuto="col-md" valCol1="col-md-1" valCol2="col-md-2" valCol3="col-md-3" valCol4="col-md-4" valCol5="col-md-5"></InputWidth>
-
-                    {/* <div class="form-group" >
-                      <div className="row text-center mb-1 m-auto">
-                        <div className="col">
-                          <div className="row border">
-                            <div className="col-2 col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
-                              <label>Width</label>
-                            </div>
-                            <div className="col pt-1 pb-1">
-                              <div className="row m-auto">
-
-                                <div className="col radio">
-                                  <label class="radio-inline"> <input type="radio" name="blockWidth" id="clockColAuto" value="col-md" onChange={e => tempColW = e.target.value} /> Auto </label>
-                                </div>
-                                <div className="col radio">
-                                  <label class="radio-inline"> <input type="radio" name="blockWidth" id="clockCol1" value="col-md-1" onChange={e => tempColW = e.target.value} /> 1 </label>
-                                </div>
-                                <div className="col radio">
-                                  <label class="radio-inline"> <input type="radio" name="blockWidth" id="clockCol2" value="col-md-2" onChange={e => tempColW = e.target.value} /> 2 </label>
-                                </div>
-                                <div className="col radio">
-                                  <label class="radio-inline"> <input type="radio" name="blockWidth" id="clockCol3" value="col-md-3" onChange={e => tempColW = e.target.value} /> 3 </label>
-                                </div>
-                                <div className="col radio">
-                                  <label class="radio-inline"> <input type="radio" name="blockWidth" id="clockCol4" value="col-md-4" onChange={e => tempColW = e.target.value} /> 4 </label>
-                                </div>
-                                <div className="col radio">
-                                  <label class="radio-inline"> <input type="radio" name="blockWidth" id="clockCol5" value="col-md-5" onChange={e => tempColW = e.target.value} /> 5 </label>
-                                </div>
-
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div> */}
-
                     {/* Back & Text colors */}
                     <div className="form-group">
                       <div className="row mb-1 m-auto">
-
-                        <InputBackColor backColor={spData.clockColor}></InputBackColor>
-
-                        {/* <div className="col">
-                          <div className="row border">
-                            <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
-                              <label>Back color</label>
-                            </div>
-                            <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="color" className="form-control border-0 p-0" defaultValue={this.rgbToHex(spData.clockColor)} onChange={e => tempColor = e.target.value} />
-                            </div>
-                          </div>
-                        </div> */}
-
+                        <InputBackColor bcLabel="Back color" backColor={spData.clockColor}
+                          rgbToHex={this.rgbToHex} tempo={e => tempColor = e.target.value}></InputBackColor>
                         <div className="col-1"></div>
-
-                        <InputTextColor textColor={spData.clockTextColor}></InputTextColor>
-
-                        {/* <div className="col">
-                          <div className="row border">
-                            <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
-                              <label>Text color</label>
-                            </div>
-                            <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="color" className="form-control border-0 p-0" defaultValue={this.rgbToHex(spData.clockTextColor)} onChange={e => tempTextColor = e.target.value} />
-                            </div>
-                          </div>
-                        </div> */}
-
+                        <InputTextColor textColor={spData.clockTextColor} rgbToHex={this.rgbToHex}></InputTextColor>
                       </div>
                     </div>
-
                     <InputOpacity opacity={spData.clockOpacity} id="clockOpRange" tempo={e => tempOpacity = e.target.value}></InputOpacity>
-
-                    {/* <div className="form-group">
-                      <div className="row mb-1 m-auto">
-                        <div className="col">
-                          <div className="row border">
-                            <div className="col pt-1 pb-1 p-0 latomenu d-flex flex-column justify-content-center align-items-center">
-                              <label>Opacity</label>
-                            </div>
-
-                            <div className="col d-flex flex-column justify-content-center align-items-center p-0">
-                              <div className="row" style={{ width: "100%" }}>
-
-                                <div className="col-1 d-flex flex-column justify-content-center align-items-center">
-                                  <img className="plusminus" title="0" alt="0" src="./itemicons/rangeZero.svg" />
-                                </div>
-                                <div className="col d-flex flex-column justify-content-center align-items-center">
-                                  <input type="range" class="form-range border-0 p-0" min="0" max="1" step="0.1" list="optickmarks" defaultValue={spData.clockOpacity} id="clockOpRange" onChange={e => tempOpacity = e.target.value} ></input>
-                                  <datalist id="optickmarks">
-                                    <option value={"0"}></option>
-                                    <option value={"0.25"}></option>
-                                    <option className="tick" value={"0.5"}></option>
-                                    <option value={"0.75"}></option>
-                                    <option value={"1"}></option>
-                                  </datalist>
-                                </div>
-                                <div className="col-1 d-flex flex-column justify-content-center align-items-center">
-                                  <img className="plusminus" title="1" alt="1" src="./itemicons/rangeOne.svg" />
-                                </div>
-
-                              </div>
-                            </div>
-
-                          </div>
-                        </div>
-                      </div>
-                    </div> */}
-
                     <InputHideBlocks hideSwitch={spData.clockShow}></InputHideBlocks>
-
-                    {/* <div className="form-group">
-                      <div className="row mb-1 m-auto">
-                        <div className="col">
-                          <div className="row border">
-                            <div className="col col pt-1 pb-1 padlr latomenu d-flex flex-column justify-content-center align-items-center">
-                              <label>Hide</label>
-                            </div>
-                            <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <label class="switch">
-                                <input type="checkbox" className="form-control" defaultChecked={!spData.clockShow} onClick={e => {
-                                  if (spData.clockShow === false) {
-                                    blockHide = true;
-                                  } else {
-                                    blockHide = false;
-                                  }
-                                }} />
-                                <span class="slider round"></span>
-                              </label>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="col-1"></div>
-                        <div className="col">
-                        </div>
-                      </div>
-                    </div> */}
-
                     <Alert alertShow={this.state.alertShow} alertMsg={this.state.alertMsg} alertCol={this.state.alertCol}></Alert>
-
                   </form>
                 </div>
               </div>
-              {/* </ClockDialog> */}
             </EleDialog>
             {/* LOGO DIALOG (Removed ActivityChanged)*/}
             <EleDialog mainTheme="modal-main" footTheme="modal-footer" hideMidBtn={true} hideApply={false} hideClose={false}
               activityChanged={false} eleDiaShow={this.state.logoDiaShow}
               handleClose={() => this.hideModal("logo")} handleSave={this.saveLogo}
               saveLabel="Apply">
-              {/* <LogoDialog logoDiaShow={this.state.logoDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("logo")} handleUpload={this.saveLogo}> */}
               <div className="modal-content noborder">
-
                 <ModalTitle title="Edit Logo"></ModalTitle>
-
                 <div className="modal-body">
                   <form id="logoForm">
-
                     <InputFile></InputFile>
-
-                    {/* <div className="form-group">
-                      <div className="row text-center mb-1 m-auto">
-                        <div className="col">
-                          <div className="row border">
-                            <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="file" className="form-control boxs border-0" name="image" onChange={e => fileImg = e.target.files[0]} />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div> */}
-
                     <InputWidth idAuto="logoColAuto" idCol1="logoCol1" idCol2="logoCol2" idCol3="logoCol3" idCol4="logoCol4" idCol5="logoCol5"
                       valAuto="col" valCol1="col-1" valCol2="col-2" valCol3="col-3" valCol4="col-4" valCol5="col-5"></InputWidth>
-
-                    {/* <div class="form-group" >
-                      <div className="row text-center mb-1 m-auto">
-                        <div className="col">
-                          <div className="row border">
-                            <div className="col-2 col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
-                              <label>Width</label>
-                            </div>
-                            <div className="col pt-1 pb-1">
-                              <div className="row m-auto">
-                                <div className="col radio">
-                                  <label class="radio-inline"> <input type="radio" name="blockWidth" id="logoColAuto" value="col" onChange={e => tempColW = e.target.value} /> Auto </label>
-                                </div>
-                                <div className="col radio">
-                                  <label class="radio-inline"> <input type="radio" name="blockWidth" id="logoCol1" value="col-1" onChange={e => tempColW = e.target.value} /> 1 </label>
-                                </div>
-                                <div className="col radio">
-                                  <label class="radio-inline"> <input type="radio" name="blockWidth" id="logoCol2" value="col-2" onChange={e => tempColW = e.target.value} /> 2 </label>
-                                </div>
-                                <div className="col radio">
-                                  <label class="radio-inline"> <input type="radio" name="blockWidth" id="logoCol3" value="col-3" onChange={e => tempColW = e.target.value} /> 3 </label>
-                                </div>
-                                <div className="col radio">
-                                  <label class="radio-inline"> <input type="radio" name="blockWidth" id="logoCol4" value="col-4" onChange={e => tempColW = e.target.value} /> 4 </label>
-                                </div>
-                                <div className="col radio">
-                                  <label class="radio-inline"> <input type="radio" name="blockWidth" id="logoCol5" value="col-5" onChange={e => tempColW = e.target.value} /> 5 </label>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div> */}
-
                     {/* Back color */}
                     <div className="form-group">
                       <div className="row mb-1 m-auto">
-
-                        <InputBackColor backColor={spData.logoColor}></InputBackColor>
-
-                        {/* <div className="col">
-                          <div className="row border">
-                            <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
-                              <label>Back color</label>
-                            </div>
-                            <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="color" className="form-control border-0 p-0" defaultValue={this.rgbToHex(spData.logoColor)} onChange={e => tempColor = e.target.value} />
-                            </div>
-                          </div>
-                        </div> */}
-
+                        <InputBackColor bcLabel="Back color" backColor={spData.logoColor}
+                          rgbToHex={this.rgbToHex} tempo={e => tempColor = e.target.value}></InputBackColor>
                       </div>
                     </div>
-
                     <InputOpacity opacity={spData.logoOpacity} id="logoOpRange" tempo={e => tempOpacity = e.target.value}></InputOpacity>
-
-                    {/* <div className="form-group">
-                      <div className="row mb-1 m-auto">
-                        <div className="col">
-                          <div className="row border">
-                            <div className="col pt-1 pb-1 p-0 latomenu d-flex flex-column justify-content-center align-items-center">
-                              <label>Opacity</label>
-                            </div>
-
-                            <div className="col d-flex flex-column justify-content-center align-items-center p-0">
-                              <div className="row" style={{ width: "100%" }}>
-
-                                <div className="col-1 d-flex flex-column justify-content-center align-items-center">
-                                  <img className="plusminus" title="0" alt="0" src="./itemicons/rangeZero.svg" />
-                                </div>
-                                <div className="col d-flex flex-column justify-content-center align-items-center">
-                                  <input type="range" class="form-range border-0 p-0" min="0" max="1" step="0.1" list="optickmarks" defaultValue={spData.logoOpacity} id="logoOpRange" onChange={e => tempOpacity = e.target.value} ></input>
-                                  <datalist id="optickmarks">
-                                    <option value={"0"}></option>
-                                    <option value={"0.25"}></option>
-                                    <option className="tick" value={"0.5"}></option>
-                                    <option value={"0.75"}></option>
-                                    <option value={"1"}></option>
-                                  </datalist>
-                                </div>
-                                <div className="col-1 d-flex flex-column justify-content-center align-items-center">
-                                  <img className="plusminus" title="1" alt="1" src="./itemicons/rangeOne.svg" />
-                                </div>
-
-                              </div>
-                            </div>
-
-                          </div>
-                        </div>
-                      </div>
-                    </div> */}
-
                     <InputHideBlocks hideSwitch={spData.logoShow}></InputHideBlocks>
-
-                    {/* <div className="form-group">
-                      <div className="row mb-1 m-auto">
-                        <div className="col">
-                          <div className="row border">
-                            <div className="col col pt-1 pb-1 padlr latomenu d-flex flex-column justify-content-center align-items-center">
-                              <label>Hide</label>
-                            </div>
-                            <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <label class="switch">
-                                <input type="checkbox" className="form-control" defaultChecked={!spData.logoShow} onClick={e => {
-                                  if (spData.logoShow === false) {
-                                    blockHide = true;
-                                  } else {
-                                    blockHide = false;
-                                  }
-                                }} />
-                                <span class="slider round"></span>
-                              </label>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="col-1"></div>
-                        <div className="col">
-                        </div>
-                      </div>
-                    </div> */}
-
                     <Alert alertShow={this.state.alertShow} alertMsg={this.state.alertMsg} alertCol={this.state.alertCol}></Alert>
-
                   </form>
                 </div>
               </div>
-              {/* </LogoDialog> */}
             </EleDialog>
             {/* INFO DIALOG */}
             <EleDialog mainTheme="modal-main" footTheme="modal-footer" hideMidBtn={true} hideApply={false} hideClose={false}
               activityChanged={false} eleDiaShow={this.state.infoDiaShow}
               handleClose={() => this.hideModal("info")} handleSave={this.saveInfo}
               saveLabel="Apply">
-              {/* <InfoDialog infoDiaShow={this.state.infoDiaShow} handleClose={() => this.hideModal("info")} handleSave={this.saveInfo}> */}
               <div className="modal-content noborder">
-
                 <ModalTitle title="Edit Foot Info"></ModalTitle>
-
                 <div className="modal-body">
                   <form id="infoForm">
-
                     <InputInfos label="Info"
                       disField={disFieldT}
                       stateDisBlk={e => {
@@ -5304,40 +3765,6 @@ class Main extends React.Component {
                       hideSwitch={spData.noFootTitle}
                       tempo={e => temp = e.target.value}>
                     </InputInfos>
-
-                    {/* <div className="form-group">
-                      <div className="row text-center mb-1 m-auto">
-                        <div className="col">
-                          <div className="row border">
-                            <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
-                              <label>Info</label>
-                            </div>
-                            <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="text" disabled={disFieldT} className="form-control border-0" defaultValue={spData.footTitle} onChange={e => temp = e.target.value} />
-                            </div>
-                            <div className="col-2 border d-flex flex-column justify-content-center align-items-center">
-                              <label className="switch">
-                                <input type="checkbox" className="form-control" defaultChecked={spData.noFootTitle} onClick={e => {
-                                  if (this.state.disFieldT === false) {
-                                    this.setState({
-                                      disFieldT: true
-                                    });
-                                    disable1 = true;
-                                  } else {
-                                    this.setState({
-                                      disFieldT: false
-                                    });
-                                    disable1 = false;
-                                  }
-                                }} />
-                                <span class="slider round" title="Hide"></span>
-                              </label>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div> */}
-
                     <InputInfos label="Info #2"
                       disField={disFieldT2}
                       stateDisBlk={e => {
@@ -5357,40 +3784,6 @@ class Main extends React.Component {
                       hideSwitch={spData.noFootSubtitle}
                       tempo={e => temp2 = e.target.value}>
                     </InputInfos>
-
-                    {/* <div className="form-group">
-                      <div className="row text-center mb-1 m-auto">
-                        <div className="col">
-                          <div className="row border">
-                            <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
-                              <label>Info #2</label>
-                            </div>
-                            <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="text" disabled={disFieldT2} className="form-control border-0" defaultValue={spData.footSubtitle} onChange={e => temp2 = e.target.value} />
-                            </div>
-                            <div className="col-2 border d-flex flex-column justify-content-center align-items-center">
-                              <label class="switch">
-                                <input type="checkbox" className="form-control" defaultChecked={spData.noFootSubtitle} onClick={e => {
-                                  if (this.state.disFieldT2 === false) {
-                                    this.setState({
-                                      disFieldT2: true
-                                    });
-                                    disable2 = true;
-                                  } else {
-                                    this.setState({
-                                      disFieldT2: false
-                                    });
-                                    disable2 = false;
-                                  }
-                                }} />
-                                <span class="slider round" title="Hide"></span>
-                              </label>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div> */}
-
                     <InputInfos label="Info #3"
                       disField={disFieldT3}
                       stateDisBlk={e => {
@@ -5410,197 +3803,32 @@ class Main extends React.Component {
                       hideSwitch={spData.noFootSubtitle2}
                       tempo={e => temp3 = e.target.value}>
                     </InputInfos>
-
-                    {/* <div className="form-group">
-                      <div className="row text-center mb-1 m-auto">
-                        <div className="col">
-                          <div className="row border">
-                            <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
-                              <label>Info #3</label>
-                            </div>
-                            <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="text" disabled={disFieldT3} className="form-control border-0" defaultValue={spData.footSubtitle2} onChange={e => temp3 = e.target.value} />
-                            </div>
-                            <div className="col-2 border d-flex flex-column justify-content-center align-items-center">
-                              <label class="switch">
-                                <input type="checkbox" className="form-control" defaultChecked={spData.noFootSubtitle2} onClick={e => {
-                                  if (this.state.disFieldT3 === false) {
-                                    this.setState({
-                                      disFieldT3: true
-                                    });
-                                    disable3 = true;
-                                  } else {
-                                    this.setState({
-                                      disFieldT3: false
-                                    });
-                                    disable3 = false;
-                                  }
-                                }} />
-                                <span class="slider round" title="Hide"></span>
-                              </label>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div> */}
-
                     <InputWidth idAuto="infoColAuto" idCol1="infoCol1" idCol2="infoCol2" idCol3="infoCol3" idCol4="infoCol4" idCol5="infoCol5"
                       valAuto="col" valCol1="col-1" valCol2="col-2" valCol3="col-3" valCol4="col-4" valCol5="col-5"></InputWidth>
-
-                    {/* <div class="form-group" >
-                      <div className="row text-center mb-1 m-auto">
-                        <div className="col">
-                          <div className="row border">
-                            <div className="col-2 pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
-                              <label>Width</label>
-                            </div>
-                            <div className="col pt-1 pb-1">
-                              <div className="row m-auto">
-                                <div className="col radio">
-                                  <label class="radio-inline"> <input type="radio" name="blockWidth" id="infoColAuto" value="col" onChange={e => tempColW = e.target.value} /> Auto </label>
-                                </div>
-                                <div className="col radio">
-                                  <label class="radio-inline"> <input type="radio" name="blockWidth" id="infoCol1" value="col-1" onChange={e => tempColW = e.target.value} /> 1 </label>
-                                </div>
-                                <div className="col radio">
-                                  <label class="radio-inline"> <input type="radio" name="blockWidth" id="infoCol2" value="col-2" onChange={e => tempColW = e.target.value} /> 2 </label>
-                                </div>
-                                <div className="col radio">
-                                  <label class="radio-inline"> <input type="radio" name="blockWidth" id="infoCol3" value="col-3" onChange={e => tempColW = e.target.value} /> 3 </label>
-                                </div>
-                                <div className="col radio">
-                                  <label class="radio-inline"> <input type="radio" name="blockWidth" id="infoCol4" value="col-4" onChange={e => tempColW = e.target.value} /> 4 </label>
-                                </div>
-                                <div className="col radio">
-                                  <label class="radio-inline"> <input type="radio" name="blockWidth" id="infoCol5" value="col-5" onChange={e => tempColW = e.target.value} /> 5 </label>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div> */}
-
                     <div className="form-group">
                       <div className="row mb-1 m-auto">
-
-                        <InputBackColor backColor={spData.footInfoColor}></InputBackColor>
-
-                        {/* <div className="col">
-                          <div className="row border">
-                            <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
-                              <label>Back color</label>
-                            </div>
-                            <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="color" className="form-control border-0 p-0" defaultValue={this.rgbToHex(spData.footInfoColor)} onChange={e => tempColor = e.target.value} />
-                            </div>
-                          </div>
-                        </div> */}
-
+                        <InputBackColor bcLabel="Back color" backColor={spData.footInfoColor}
+                          rgbToHex={this.rgbToHex} tempo={e => tempColor = e.target.value}></InputBackColor>
                         <div className="col-1"></div>
-
-                        <InputTextColor textColor={spData.footInfoTextColor}></InputTextColor>
-
-                        {/* <div className="col">
-                          <div className="row border">
-                            <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
-                              <label>Text color</label>
-                            </div>
-                            <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="color" className="form-control border-0 p-0" defaultValue={this.rgbToHex(spData.footInfoTextColor)} onChange={e => tempTextColor = e.target.value} />
-                            </div>
-                          </div>
-                        </div> */}
-
+                        <InputTextColor textColor={spData.footInfoTextColor} rgbToHex={this.rgbToHex}></InputTextColor>
                       </div>
                     </div>
-
                     <InputOpacity opacity={spData.footInfoOpacity} id="infoOpRange" tempo={e => tempOpacity = e.target.value}></InputOpacity>
-
-                    {/* <div className="form-group">
-                      <div className="row mb-1 m-auto">
-                        <div className="col">
-                          <div className="row border">
-                            <div className="col pt-1 pb-1 p-0 latomenu d-flex flex-column justify-content-center align-items-center">
-                              <label>Opacity</label>
-                            </div>
-
-                            <div className="col d-flex flex-column justify-content-center align-items-center p-0">
-                              <div className="row" style={{ width: "100%" }}>
-
-                                <div className="col-1 d-flex flex-column justify-content-center align-items-center">
-                                  <img className="plusminus" title="0" alt="0" src="./itemicons/rangeZero.svg" />
-                                </div>
-                                <div className="col d-flex flex-column justify-content-center align-items-center">
-                                  <input type="range" class="form-range border-0 p-0" min="0" max="1" step="0.1" list="optickmarks" defaultValue={spData.footInfoOpacity} id="infoOpRange" onChange={e => tempOpacity = e.target.value} ></input>
-                                  <datalist id="optickmarks">
-                                    <option value={"0"}></option>
-                                    <option value={"0.25"}></option>
-                                    <option className="tick" value={"0.5"}></option>
-                                    <option value={"0.75"}></option>
-                                    <option value={"1"}></option>
-                                  </datalist>
-                                </div>
-                                <div className="col-1 d-flex flex-column justify-content-center align-items-center">
-                                  <img className="plusminus" title="1" alt="1" src="./itemicons/rangeOne.svg" />
-                                </div>
-
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div> */}
-
                     <InputHideBlocks hideSwitch={spData.infoShow}></InputHideBlocks>
-
-                    {/* <div className="form-group">
-                      <div className="row mb-1 m-auto">
-                        <div className="col">
-                          <div className="row border">
-                            <div className="col pt-1 pb-1 padlr latomenu d-flex flex-column justify-content-center align-items-center">
-                              <label>Hide</label>
-                            </div>
-                            <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <label class="switch">
-                                <input type="checkbox" className="form-control" defaultChecked={!spData.infoShow} onClick={e => {
-                                  if (spData.infoShow === false) {
-                                    blockHide = true;
-                                  } else {
-                                    blockHide = false;
-                                  }
-                                }} />
-                                <span class="slider round" title="Hide"></span>
-                              </label>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="col-1"></div>
-                        <div className="col">
-                        </div>
-                      </div>
-                    </div> */}
-
                     <Alert alertShow={this.state.alertShow} alertMsg={this.state.alertMsg} alertCol={this.state.alertCol}></Alert>
-
                   </form>
                 </div>
               </div>
-              {/* </InfoDialog> */}
             </EleDialog>
             {/* ADDINFO DIALOG */}
             <EleDialog mainTheme="modal-main" footTheme="modal-footer" hideMidBtn={true} hideApply={false} hideClose={false}
               activityChanged={false} eleDiaShow={this.state.addInfoDiaShow}
               handleClose={() => this.hideModal("addInfo")} handleSave={this.saveAddInfo}
               saveLabel="Apply">
-              {/* <AddInfoDialog addInfoDiaShow={this.state.addInfoDiaShow} handleClose={() => this.hideModal("addInfo")} handleSave={this.saveAddInfo}> */}
               <div className="modal-content noborder">
-
                 <ModalTitle title="Edit Foot additional Info"></ModalTitle>
-
                 <div className="modal-body">
                   <form id="creditForm">
-
                     <InputInfos label="Add Info"
                       disField={disFieldC}
                       stateDisBlk={e => {
@@ -5620,41 +3848,6 @@ class Main extends React.Component {
                       hideSwitch={spData.noFootAddTitle}
                       tempo={e => temp = e.target.value}>
                     </InputInfos>
-
-                    {/* <div className="form-group">
-                      <div className="row text-center mb-1 m-auto">
-                        <div className="col">
-                          <div className="row border">
-                            <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
-                              <label>Add Info</label>
-                            </div>
-
-                            <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="text" disabled={disFieldC} className="form-control border-0" defaultValue={spData.footAddTitle} onChange={e => temp = e.target.value} />
-                            </div>
-                            <div className="col-2 border d-flex flex-column justify-content-center align-items-center">
-                              <label class="switch">
-                                <input type="checkbox" className="form-control" defaultChecked={spData.noFootAddTitle} onClick={e => {
-                                  if (this.state.disFieldC === false) {
-                                    this.setState({
-                                      disFieldC: true
-                                    });
-                                    disable1 = true;
-                                  } else {
-                                    this.setState({
-                                      disFieldC: false
-                                    });
-                                    disable1 = false;
-                                  }
-                                }} />
-                                <span class="slider round" title="Hide"></span>
-                              </label>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div> */}
-
                     <InputInfos label="Add Info #2"
                       disField={disFieldC2}
                       stateDisBlk={e => {
@@ -5674,41 +3867,6 @@ class Main extends React.Component {
                       hideSwitch={spData.noFootAddSubtitle}
                       tempo={e => temp2 = e.target.value}>
                     </InputInfos>
-
-                    {/* <div className="form-group">
-                      <div className="row text-center mb-1 m-auto">
-                        <div className="col">
-                          <div className="row border">
-                            <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
-                              <label>Add Info #2</label>
-                            </div>
-
-                            <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="text" disabled={disFieldC2} className="form-control border-0" defaultValue={spData.footAddSubtitle} onChange={e => temp2 = e.target.value} />
-                            </div>
-                            <div className="col-2 border d-flex flex-column justify-content-center align-items-center">
-                              <label class="switch">
-                                <input type="checkbox" className="form-control" defaultChecked={spData.noFootAddSubtitle} onClick={e => {
-                                  if (this.state.disFieldC2 === false) {
-                                    this.setState({
-                                      disFieldC2: true
-                                    });
-                                    disable2 = true;
-                                  } else {
-                                    this.setState({
-                                      disFieldC2: false
-                                    });
-                                    disable2 = false;
-                                  }
-                                }} />
-                                <span class="slider round" title="Hide"></span>
-                              </label>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div> */}
-
                     <InputInfos label="Add Info #3"
                       disField={disFieldC3}
                       stateDisBlk={e => {
@@ -5728,200 +3886,33 @@ class Main extends React.Component {
                       hideSwitch={spData.noFootAddSubtitle2}
                       tempo={e => temp3 = e.target.value}>
                     </InputInfos>
-
-                    {/* <div className="form-group">
-                      <div className="row text-center mb-1 m-auto">
-                        <div className="col">
-                          <div className="row border">
-                            <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
-                              <label>Add Info #3</label>
-                            </div>
-
-                            <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="text" disabled={disFieldC3} className="form-control border-0" defaultValue={spData.footAddSubtitle2} onChange={e => temp3 = e.target.value} />
-                            </div>
-                            <div className="col-2 border d-flex flex-column justify-content-center align-items-center">
-                              <label class="switch">
-                                <input type="checkbox" className="form-control" defaultChecked={spData.noFootAddSubtitle2} onClick={e => {
-                                  if (this.state.disFieldC3 === false) {
-                                    this.setState({
-                                      disFieldC3: true
-                                    });
-                                    disable3 = true;
-                                  } else {
-                                    this.setState({
-                                      disFieldC3: false
-                                    });
-                                    disable3 = false;
-                                  }
-                                }} />
-                                <span class="slider round" title="Hide"></span>
-                              </label>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div> */}
-
                     <InputWidth idAuto="addInfoColAuto" idCol1="addInfoCol1" idCol2="addInfoCol2" idCol3="addInfoCol3" idCol4="addInfoCol4" idCol5="addInfoCol5"
                       valAuto="col-md" valCol1="col-md-1" valCol2="col-md-2" valCol3="col-md-3" valCol4="col-md-4" valCol5="col-md-5"></InputWidth>
-
-                    {/* <div class="form-group" >
-                      <div className="row text-center mb-1 m-auto">
-                        <div className="col">
-                          <div className="row border">
-                            <div className="col-2 pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
-                              <label>Width</label>
-                            </div>
-                            <div className="col pt-1 pb-1">
-                              <div className="row m-auto">
-                                <div className="col radio">
-                                  <label class="radio-inline"> <input type="radio" name="blockWidth" id="creditColAuto" value="col-md" onChange={e => tempColW = e.target.value} /> Auto </label>
-                                </div>
-                                <div className="col radio">
-                                  <label class="radio-inline"> <input type="radio" name="blockWidth" id="creditCol1" value="col-md-1" onChange={e => tempColW = e.target.value} /> 1 </label>
-                                </div>
-                                <div className="col radio">
-                                  <label class="radio-inline"> <input type="radio" name="blockWidth" id="creditCol2" value="col-md-2" onChange={e => tempColW = e.target.value} /> 2 </label>
-                                </div>
-                                <div className="col radio">
-                                  <label class="radio-inline"> <input type="radio" name="blockWidth" id="creditCol3" value="col-md-3" onChange={e => tempColW = e.target.value} /> 3 </label>
-                                </div>
-                                <div className="col radio">
-                                  <label class="radio-inline"> <input type="radio" name="blockWidth" id="creditCol4" value="col-md-4" onChange={e => tempColW = e.target.value} /> 4 </label>
-                                </div>
-                                <div className="col radio">
-                                  <label class="radio-inline"> <input type="radio" name="blockWidth" id="creditCol5" value="col-md-5" onChange={e => tempColW = e.target.value} /> 5 </label>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div> */}
-
                     <div className="form-group">
                       <div className="row mb-1 m-auto">
-
-                        <InputBackColor backColor={spData.footAddColor}></InputBackColor>
-
-                        {/* <div className="col">
-                          <div className="row border">
-                            <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
-                              <label>Back color</label>
-                            </div>
-                            <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="color" className="form-control border-0 p-0" defaultValue={this.rgbToHex(spData.footAddColor)} onChange={e => tempColor = e.target.value} />
-                            </div>
-                          </div>
-                        </div> */}
-
+                        <InputBackColor bcLabel="Back color" backColor={spData.footAddColor}
+                          rgbToHex={this.rgbToHex} tempo={e => tempColor = e.target.value}></InputBackColor>
                         <div className="col-1"></div>
-
-                        <InputTextColor textColor={spData.footAddTextColor}></InputTextColor>
-
-                        {/* <div className="col">
-                          <div className="row border">
-                            <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
-                              <label>Text color</label>
-                            </div>
-                            <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="color" className="form-control border-0 p-0" defaultValue={this.rgbToHex(spData.footAddTextColor)} onChange={e => tempTextColor = e.target.value} />
-                            </div>
-                          </div>
-                        </div> */}
-
+                        <InputTextColor textColor={spData.footAddTextColor} rgbToHex={this.rgbToHex}></InputTextColor>
                       </div>
                     </div>
-
                     <InputOpacity opacity={spData.footAddOpacity} id="addInfoOpRange" tempo={e => tempOpacity = e.target.value}></InputOpacity>
-
-                    {/* <div className="form-group">
-                      <div className="row mb-1 m-auto">
-                        <div className="col">
-                          <div className="row border">
-                            <div className="col pt-1 pb-1 p-0 latomenu d-flex flex-column justify-content-center align-items-center">
-                              <label>Opacity</label>
-                            </div>
-
-                            <div className="col d-flex flex-column justify-content-center align-items-center p-0">
-                              <div className="row" style={{ width: "100%" }}>
-
-                                <div className="col-1 d-flex flex-column justify-content-center align-items-center">
-                                  <img className="plusminus" title="0" alt="0" src="./itemicons/rangeZero.svg" />
-                                </div>
-                                <div className="col d-flex flex-column justify-content-center align-items-center">
-                                  <input type="range" class="form-range border-0 p-0" min="0" max="1" step="0.1" list="optickmarks" defaultValue={spData.footAddOpacity} id="addInfoOpRange" onChange={e => tempOpacity = e.target.value} ></input>
-                                  <datalist id="optickmarks">
-                                    <option value={"0"}></option>
-                                    <option value={"0.25"}></option>
-                                    <option className="tick" value={"0.5"}></option>
-                                    <option value={"0.75"}></option>
-                                    <option value={"1"}></option>
-                                  </datalist>
-                                </div>
-                                <div className="col-1 d-flex flex-column justify-content-center align-items-center">
-                                  <img className="plusminus" title="1" alt="1" src="./itemicons/rangeOne.svg" />
-                                </div>
-
-                              </div>
-                            </div>
-
-                          </div>
-                        </div>
-                      </div>
-                    </div> */}
-
                     <InputHideBlocks hideSwitch={spData.addInfoShow}></InputHideBlocks>
-
-                    {/* <div className="form-group">
-                      <div className="row mb-1 m-auto">
-                        <div className="col">
-                          <div className="row border">
-                            <div className="col pt-1 pb-1 padlr latomenu d-flex flex-column justify-content-center align-items-center">
-                              <label>Hide</label>
-                            </div>
-                            <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <label class="switch">
-
-                                <input type="checkbox" className="form-control" defaultChecked={!spData.addInfoShow} onClick={e => {
-                                  if (spData.addInfoShow === false) {
-                                    blockHide = true;
-                                  } else {
-                                    blockHide = false;
-                                  }
-                                }} />
-                                <span class="slider round" title="Hide"></span>
-                              </label>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="col-1"></div>
-                        <div className="col">
-                        </div>
-                      </div>
-                    </div> */}
-
                     <Alert alertShow={this.state.alertShow} alertMsg={this.state.alertMsg} alertCol={this.state.alertCol}></Alert>
-
                   </form>
                 </div>
               </div>
-              {/* </AddInfoDialog> */}
             </EleDialog>
-            {/* BACKEDIT DIALOG */}
+            {/* BACKEDIT DIALOG ****** CHECK FOR ELEMENTS */}
             <EleDialog mainTheme="modal-main" footTheme="modal-footer" hideMidBtn={true} hideApply={false} hideClose={false}
               activityChanged={false} eleDiaShow={this.state.backEditDiaShow}
               handleClose={() => this.hideModal("back")} handleSave={this.saveBack}
               saveLabel="Apply">
-              {/* <BackEditDialog backEditDiaShow={this.state.backEditDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("back")} handleSave={this.saveBack}> */}
               <div className="modal-content noborder">
-
                 <ModalTitle title="Edit Preferences"></ModalTitle>
-
                 <div className="modal-body">
                   <form id="backEditForm">
-
+                    {/* MAIN PIC */}
                     <div className="form-group">
                       <div className="row text-center mb-1 m-auto">
                         <div className="col">
@@ -5956,7 +3947,7 @@ class Main extends React.Component {
                         </div>
                       </div>
                     </div>
-
+                    {/* CAT CREDIT PIC */}
                     <div className="form-group">
                       <div className="row text-center mb-1 m-auto">
                         <div className="col">
@@ -5967,7 +3958,6 @@ class Main extends React.Component {
                             <div className="col d-flex flex-column justify-content-center align-items-center">
                               <input type="file" disabled={disFieldBC} id="catfiles" className="form-control boxs border-0" name="icon" onChange={e => fileCatImg = e.target.files[0]} />
                             </div>
-
                             <div className="col-2 border d-flex flex-column justify-content-center align-items-center">
                               <label class="switch">
                                 <input type="checkbox" className="form-control" defaultChecked={spData.noCatImage} onClick={e => {
@@ -5986,27 +3976,18 @@ class Main extends React.Component {
                                 <span class="slider round" title="No image"></span>
                               </label>
                             </div>
-
                           </div>
                         </div>
                       </div>
                     </div>
-
+                    {/* MAIN BACK COLOR */}
                     <div className="form-group">
                       <div className="row mb-1 m-auto">
-                        <div className="col">
-                          <div className="row border">
-                            <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
-                              <label>Main back color</label>
-                            </div>
-                            <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="color" className="form-control border-0 p-0" defaultValue={this.rgbToHex(spData.backgroundColor)} onChange={e => tempColor = e.target.value} />
-                            </div>
-                          </div>
-                        </div>
+                        <InputBackColor bcLabel="Main back color" backColor={spData.backgroundColor}
+                          rgbToHex={this.rgbToHex} tempo={e => tempColor = e.target.value}></InputBackColor>
                       </div>
                     </div>
-
+                    {/* MAIN BRIGHTNESS */}
                     <div className="form-group">
                       <div className="row mb-1 m-auto">
                         <div className="col">
@@ -6042,100 +4023,26 @@ class Main extends React.Component {
                         </div>
                       </div>
                     </div>
-
+                    {/* CAT CREDIT BACK COLOR */}
                     <div className="form-group">
                       <div className="row mb-1 m-auto">
-                        <div className="col">
-                          <div className="row border">
-                            <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
-                              <label>Cat/Credit back color</label>
-                            </div>
-                            <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="color" className="form-control border-0 p-0" defaultValue={this.rgbToHex(spData.catColor)} onChange={e => tempCatColor = e.target.value} />
-                            </div>
-                          </div>
-                        </div>
+                        <InputBackColor bcLabel="Cat/Credit back color" backColor={spData.catColor}
+                          rgbToHex={this.rgbToHex} tempo={e => tempCatColor = e.target.value}></InputBackColor>
                       </div>
                     </div>
-
+                    {/* CAT BACK OPACITY */}
                     <InputOpacity opacity={spData.catOpacity} id="catOpRange" tempo={e => tempOpacity1 = e.target.value}></InputOpacity>
-
-                    {/* <div className="form-group">
-                      <div className="row mb-1 m-auto">
-                        <div className="col">
-                          <div className="row border">
-                            <div className="col pt-1 pb-1 p-0 latomenu d-flex flex-column justify-content-center align-items-center">
-                              <label>Opacity</label>
-                            </div>
-
-                            <div className="col d-flex flex-column justify-content-center align-items-center p-0">
-                              <div className="row" style={{ width: "100%" }}>
-
-                                <div className="col-1 d-flex flex-column justify-content-center align-items-center">
-                                  <img className="plusminus" title="0" alt="0" src="./itemicons/rangeZero.svg" />
-                                </div>
-                                <div className="col d-flex flex-column justify-content-center align-items-center">
-                                  <input type="range" class="form-range border-0 p-0" min="0" max="1" step="0.1" list="optickmarks" defaultValue={spData.catOpacity} id="catOpRange" onChange={e => tempOpacity1 = e.target.value} ></input>
-                                  <datalist id="optickmarks">
-                                    <option value={"0"}></option>
-                                    <option value={"0.25"}></option>
-                                    <option className="tick" value={"0.5"}></option>
-                                    <option value={"0.75"}></option>
-                                    <option value={"1"}></option>
-                                  </datalist>
-                                </div>
-                                <div className="col-1 d-flex flex-column justify-content-center align-items-center">
-                                  <img className="plusminus" title="1" alt="1" src="./itemicons/rangeOne.svg" />
-                                </div>
-
-                              </div>
-                            </div>
-
-                          </div>
-                        </div>
-
-                      </div>
-                    </div> */}
-
-                    <div className="form-group">
-                      <div className="row mb-1 m-auto">
-                        <div className="col">
-                          <div className="row border">
-                            <div className="col col pt-1 pb-1 padlr latomenu d-flex flex-column justify-content-center align-items-center">
-                              <label>Category before Items</label>
-                            </div>
-                            <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <label class="switch">
-                                <input type="checkbox" className="form-control" defaultChecked={spData.catFirst} onClick={e => {
-                                  if (spData.catFirst === false) {
-                                    categoryFirst = true;
-                                  } else {
-                                    categoryFirst = false;
-                                  }
-                                }} />
-                                <span class="slider round"></span>
-                              </label>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="col-1"></div>
-                        <div className="col">
-                        </div>
-                      </div>
-                    </div>
-
+                    {/* CAT BEFORE ITEMS */}
+                    <InputSwitch hSwitch={spData.catFirst} dSwitch={categoryFirst} swLabel={"Category before Items"}></InputSwitch>
                     <Alert alertShow={this.state.alertShow} alertMsg={this.state.alertMsg} alertCol={this.state.alertCol}></Alert>
-
                   </form>
                 </div>
               </div>
-              {/* </BackEditDialog> */}
             </EleDialog>
             {/* CAT DIALOG */}
             <EleDialog mainTheme="modal-main-dark" footTheme="modal-footer-dark" hideMidBtn={true} hideApply={true} hideClose={false}
               activityChanged={false} eleDiaShow={this.state.catDiaShow}
               handleClose={() => this.hideModal("cat")}>
-              {/* <CatDialog catDiaShow={this.state.catDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("cat")}> */}
               <div className="modal-content noBG">
                 <div className="modal-header darkBG">
                   <h5 className="modal-title latowhite" >{tempCatTitle}</h5>
@@ -6146,7 +4053,6 @@ class Main extends React.Component {
                     <div className="row stickydivtop">
                       <AddSym showItemsBtn={this.state.itemsBtnShow} addItem={this.addItem} addLabel={"Add Item"} />
                     </div>
-                    {/* <ItmAdd showItemsBtn={this.state.itemsBtnShow} addItem={this.addItem} /> */}
                     {
                       this.state.catItems.map(({ id, title, link, descr, cat, icon, video, hidden }, i) => {
                         return (
@@ -6159,82 +4065,24 @@ class Main extends React.Component {
                   </div>
                 </div>
               </div>
-              {/* </CatDialog> */}
             </EleDialog>
             {/* ITEM EDIT DIALOG */}
             <EleDialog mainTheme="modal-main" footTheme="modal-footer" hideMidBtn={true} hideApply={false} hideClose={false}
               activityChanged={false} eleDiaShow={this.state.itemEditDiaShow}
               handleClose={() => this.hideModal("itemEdit")} handleSave={this.applyItemEdit}
               saveLabel="Edit">
-              {/* <ItemEditDialog itemEditDiaShow={this.state.itemEditDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("itemEdit")} handleSave={this.applyItemEdit}> */}
               <div className="modal-content noborder">
-
                 <ModalTitle title="Edit Item"></ModalTitle>
-
                 <div className="modal-body">
                   <form id="itemEditForm">
-
                     <InputFile></InputFile>
-
                     <InputPosition edit="Edit Item" pos={this.state.cPos} id="clearitemswitchpos" ></InputPosition>
-
-                    {/* <div className="form-group">
-                      <div className="row text-center mb-1 m-auto">
-                        <div className="col">
-                          <div className="row border">
-                            <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
-                              <label>Pos</label>
-                            </div>
-                            <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="text" className="form-control border-0" placeholder={currPos + 1} id="clearitemswitchpos"
-                                onChange={e => {
-                                  cgPos = e.target.value;
-                                }
-                                } />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div> */}
 
                     <InputTitle label="Title" edit="Edit Item" tempTitle={tempItemTitle}
                       tempo={e => temp2 = e.target.value} >
                     </InputTitle>
-
-                    {/* <div className="form-group">
-                      <div className="row text-center mb-1 m-auto">
-                        <div className="col">
-                          <div className="row border">
-                            <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
-                              <label>Title</label>
-                            </div>
-                            <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="text" className="form-control border-0" defaultValue={tempItemTitle} onChange={e => temp2 = e.target.value} />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div> */}
-
                     <InputLink edit="Edit Item" tempLink={tempItemLink} ></InputLink>
-
-                    {/* <div className="form-group">
-                      <div className="row text-center mb-1 m-auto">
-                        <div className="col">
-                          <div className="row border">
-                            <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
-                              <label>Link</label>
-                            </div>
-                            <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="text" className="form-control border-0" defaultValue={tempItemLink} onChange={e => temp3 = e.target.value} />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div> */}
-
                     {/* Descr. */}
-
                     <InputInfos label="Descr."
                       disField={disFieldIE}
                       stateDisBlk={e => {
@@ -6254,216 +4102,34 @@ class Main extends React.Component {
                       hideSwitch={noDescr}
                       tempo={e => temp6 = e.target.value}>
                     </InputInfos>
-
-                    {/* <div className="form-group">
-                      <div className="row text-center mb-1 m-auto">
-                        <div className="col">
-                          <div className="row border">
-                            <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
-                              <label>Descr.</label>
-                            </div>
-
-                            <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="text" disabled={disFieldIE} className="form-control border-0" defaultValue={tempItemDescr} onChange={e => temp6 = e.target.value} />
-                            </div>
-                            <div className="col-2 border d-flex flex-column justify-content-center align-items-center">
-                              <label class="switch">
-                                <input type="checkbox" className="form-control" defaultChecked={noDescr} onClick={e => {
-                                  if (this.state.disFieldIE === false) {
-                                    this.setState({
-                                      disFieldIE: true
-                                    });
-                                    noDescr = true;
-                                  } else {
-                                    this.setState({
-                                      disFieldIE: false
-                                    });
-                                    noDescr = false;
-                                  }
-                                }} />
-                                <span class="slider round" title="Hide"></span>
-                              </label>
-                            </div>
-
-                          </div>
-                        </div>
-                      </div>
-                    </div> */}
-
                     <InputVideo></InputVideo>
-
-                    {/* <div className="form-group">
-                      <div className="row mb-1 m-auto">
-                        <div className="col">
-                          <div className="row border">
-                            <div className="col pt-1 pb-1 padlr latomenu d-flex flex-column justify-content-center align-items-center">
-                              <label>Video</label>
-                            </div>
-
-                            <div className="col d-flex flex-column justify-content-center 
-                            align-items-center">
-                              <label class="switch">
-                                <input type="checkbox" className="form-control"
-                                  defaultChecked={tempItemVideo} onClick={e => {
-                                    if (tempItemVideo === false) {
-                                      temp4 = true;
-                                    } else {
-                                      temp4 = false;
-                                    }
-                                  }} />
-                                <span class="slider round" title="Video Player"></span>
-                              </label>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="col-1"></div>
-                        <div className="col">
-                        </div>
-                      </div>
-                    </div> */}
-
-                    {/* <div className="form-group">
-                      <div className="row mb-1 m-auto">
-                        <div className="col">
-                          <div className="row border">
-                            <div className="col col pt-1 pb-1 padlr latomenu d-flex flex-column 
-                            justify-content-center align-items-center">
-                              <label>Hide</label>
-                            </div> */}
-
-                    <InputHide hideSwitch={tempItemHide}></InputHide>
-
-                    {/* <div className="col d-flex flex-column justify-content-center 
-                            align-items-center">
-                              <label class="switch">
-                                <input type="checkbox" className="form-control"
-                                  defaultChecked={tempItemHide} onClick={e => {
-                                    if (tempItemHide === false) {
-                                      blockHide = true;
-                                    } else {
-                                      blockHide = false;
-                                    }
-                                  }} />
-                                <span class="slider round"></span>
-                              </label>
-                            </div> */}
-
-                    {/* </div>
-                        </div>
-                        <div className="col-1"></div>
-                        <div className="col">
-                        </div>
-                      </div>
-                    </div> */}
-
+                    <InputSwitch hSwitch={tempItemHide} dSwitch={blockHide} swLabel={"Hide"}></InputSwitch>
                     {/* Category */}
                     <InputCat catMenuB={eCatMenuButtons}></InputCat>
-
-                    {/* <div className="form-group">
-                      <div className="row mb-1 m-auto">
-                        <div className="col">
-                          <div className="row border">
-                            <div className="col pt-1 pb-1 padlr latomenu d-flex flex-column justify-content-center align-items-center">
-                              <label>Category</label>
-                            </div>
-                            <div className="col d-flex flex-column justify-content-center align-items-center">
-                              {eCatMenuButtons}
-                            </div>
-                          </div>
-                        </div>
-                        <div className="col-1"></div>
-                        <div className="col">
-                        </div>
-                      </div>
-                    </div> */}
-
                     <Alert alertShow={this.state.alertShow} alertMsg={this.state.alertMsg} alertCol={this.state.alertCol}></Alert>
-
                   </form>
                 </div>
               </div>
-              {/* </ItemEditDialog> */}
             </EleDialog>
             {/* ITEM ADD DIALOG */}
             <EleDialog mainTheme="modal-main" footTheme="modal-footer" hideMidBtn={true} hideApply={false} hideClose={false}
               activityChanged={false} eleDiaShow={this.state.itemAddDiaShow}
               handleClose={() => this.hideModal("itemAdd")} handleSave={() => this.applyItemAdd("test")}
               saveLabel="Add">
-              {/* <ItemAddDialog itemAddDiaShow={this.state.itemAddDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("itemAdd")} handleSave={this.applyItemAdd}> */}
               <div className="modal-content noborder">
-
                 <ModalTitle title="Add Item"></ModalTitle>
-
                 <div className="modal-body">
                   <form id="itemAddForm">
-
                     <InputFile></InputFile>
-
                     {/* Position */}
-
                     <InputPosition edit="Add Item" pos={currPos} id="clearitempos" ></InputPosition>
-
-                    {/* <div className="form-group">
-                      <div className="row text-center mb-1 m-auto">
-                        <div className="col">
-                          <div className="row border">
-                            <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
-                              <label>Pos</label>
-                            </div>
-                            <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="text" placeholder="Leave blank for last..." id="clearitempos" className="form-control border-0"
-                                onChange={e => {
-                                  temp = e.target.value;
-                                }
-                                } />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div> */}
-
                     {/* Title */}
-
                     <InputTitle label="Title" edit="Add Item" id="clearitemtitle"
                       tempo={e => temp2 = e.target.value}>
                     </InputTitle>
-
-                    {/* <div className="form-group">
-                      <div className="row text-center mb-1 m-auto">
-                        <div className="col">
-                          <div className="row border">
-                            <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
-                              <label>Title</label>
-                            </div>
-                            <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="text" className="form-control border-0" id="clearitemtitle" onChange={e => temp2 = e.target.value} />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div> */}
-
                     {/* Link */}
-
                     <InputLink edit="Add Item" id="clearitemlink"></InputLink>
-
-                    {/* <div className="form-group">
-                      <div className="row text-center mb-1 m-auto">
-                        <div className="col">
-                          <div className="row border">
-                            <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
-                              <label>Link</label>
-                            </div>
-                            <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="text" className="form-control border-0" id="clearitemlink" onChange={e => temp3 = e.target.value} />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div> */}
-
                     {/* Descr. */}
-
                     <InputInfos label="Descr."
                       disField={disFieldIA}
                       stateDisBlk={e => {
@@ -6484,397 +4150,95 @@ class Main extends React.Component {
                       tempo={e => temp6 = e.target.value}
                       id="clearitemdescr">
                     </InputInfos>
-
-                    {/* <div className="form-group">
-                      <div className="row text-center mb-1 m-auto">
-                        <div className="col">
-                          <div className="row border">
-                            <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
-                              <label>Descr.</label>
-                            </div>
-
-                            <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="text" disabled={disFieldIA} className="form-control border-0" defaultValue={tempItemDescr} id="clearitemdescr" onChange={e => temp6 = e.target.value} />
-                            </div>
-                            <div className="col-2 border d-flex flex-column justify-content-center align-items-center">
-                              <label class="switch">
-                                <input type="checkbox" className="form-control" defaultChecked={noDescr} onClick={e => {
-                                  if (this.state.disFieldIA === false) {
-                                    this.setState({
-                                      disFieldIA: true
-                                    });
-                                    noDescr = true;
-                                  } else {
-                                    this.setState({
-                                      disFieldIA: false
-                                    });
-                                    noDescr = false;
-                                  }
-                                }} />
-                                <span class="slider round" title="Hide"></span>
-                              </label>
-                            </div>
-
-                          </div>
-                        </div>
-                      </div>
-                    </div> */}
-
                     {/* Video */}
                     <InputVideo></InputVideo>
-
-                    {/* <div className="form-group">
-                      <div className="row mb-1 m-auto">
-                        <div className="col">
-                          <div className="row border">
-                            <div className="col pt-1 pb-1 padlr latomenu d-flex flex-column justify-content-center align-items-center">
-                              <label>Video</label>
-                            </div>
-                            <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <label class="switch">
-                                <input type="checkbox" className="form-control" defaultChecked={tempItemVideo} onClick={e => {
-                                  if (tempItemVideo === false) {
-                                    temp4 = true;
-                                  } else {
-                                    temp4 = false;
-                                  }
-                                }} />
-                                <span class="slider round" title="Video Player"></span>
-                              </label>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="col-1"></div>
-                        <div className="col">
-                        </div>
-                      </div>
-                    </div> */}
-
                     {/* Hide */}
-                    {/* <div className="form-group">
-                      <div className="row mb-1 m-auto">
-                        <div className="col">
-                          <div className="row border">
-                            <div className="col col pt-1 pb-1 padlr latomenu d-flex flex-column justify-content-center align-items-center">
-                              <label>Hide</label>
-                            </div> */}
-
-                    <InputHide hideSwitch={tempItemHide}></InputHide>
-
-                    {/* <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <label class="switch">
-                                <input type="checkbox" className="form-control" defaultChecked={tempItemHide} onClick={e => {
-                                  if (tempItemHide === false) {
-                                    blockHide = true;
-                                  } else {
-                                    blockHide = false;
-                                  }
-                                }} />
-                                <span class="slider round"></span>
-                              </label>
-                            </div> */}
-
-                    {/* </div>
-                        </div>
-                        <div className="col-1"></div>
-                        <div className="col">
-                        </div>
-                      </div>
-                    </div> */}
-
+                    <InputSwitch hSwitch={tempItemHide} dSwitch={blockHide} swLabel={"Hide"}></InputSwitch>
                     {/* Category */}
                     <InputCat catMenuB={aCatMenuButtons}></InputCat>
-
-                    {/* <div className="form-group">
-                      <div className="row mb-1 m-auto">
-                        <div className="col">
-                          <div className="row border">
-                            <div className="col pt-1 pb-1 padlr latomenu d-flex flex-column justify-content-center align-items-center">
-                              <label>Category</label>
-                            </div>
-                            <div className="col d-flex flex-column justify-content-center align-items-center">
-                              {aCatMenuButtons}
-                            </div>
-                          </div>
-                        </div >
-                        <div className="col-1"></div>
-                        <div className="col">
-                        </div>
-                      </div>
-                    </div> */}
-
                     <Alert alertShow={this.state.alertShow} alertMsg={this.state.alertMsg} alertCol={this.state.alertCol}></Alert>
-
                   </form>
                 </div>
               </div>
-              {/* </ItemAddDialog> */}
             </EleDialog>
             {/* ITEM DEL DIALOG */}
             <EleDialog mainTheme="modal-main" footTheme="modal-footer" hideMidBtn={true} hideApply={false} hideClose={false}
               activityChanged={false} eleDiaShow={this.state.itemDelDiaShow}
               handleClose={() => this.hideModal("itemDel")} handleSave={this.applyItemDel}
               saveLabel="Remove">
-              {/* <ItemDelDialog itemDelDiaShow={this.state.itemDelDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("itemDel")} handleSave={this.applyItemDel}> */}
               <div className="modal-content noborder">
-
                 <ModalTitle title={"Permanently delete " + tempItemTitle + " item?"}></ModalTitle>
-
                 <div className="modal-body">
-
                   <Alert alertShow={this.state.alertShow} alertMsg={this.state.alertMsg} alertCol={this.state.alertCol}></Alert>
-
                 </div>
               </div>
-              {/* </ItemDelDialog> */}
             </EleDialog>
             {/* CAT EDIT DIALOG */}
             <EleDialog mainTheme="modal-main" footTheme="modal-footer" hideMidBtn={true} hideApply={false} hideClose={false}
               activityChanged={false} eleDiaShow={this.state.catEditDiaShow}
               handleClose={() => this.hideModal("catedit")} handleSave={this.applyCatEdit}
               saveLabel="Edit">
-              {/* <CatEditDialog catEditDiaShow={this.state.catEditDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("catedit")} handleSave={this.applyCatEdit}> */}
               <div className="modal-content noborder">
-
                 <ModalTitle title="Edit Category"></ModalTitle>
-
                 <div className="modal-body">
                   <form id="catEditForm">
-
                     <InputFile></InputFile>
-
-                    {/* <div className="form-group">
-                      <div className="row text-center mb-1 m-auto">
-                        <div className="col">
-                          <div className="row border">
-                            <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="file" className="form-control boxs border-0" name="icon" onChange={e => fileImg = e.target.files[0]} />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div> */}
-
                     <InputPosition edit="Edit Item" pos={currPos} id="clearcatswitchpos" ></InputPosition>
-
-                    {/* <div className="form-group">
-                      <div className="row text-center mb-1 m-auto">
-                        <div className="col">
-                          <div className="row border">
-                            <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
-                              <label>Pos</label>
-                            </div>
-                            <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="text" placeholder={currPos + 1} id="clearcatswitchpos" className="form-control border-0"
-                                onChange={e => {
-                                  temp = e.target.value;
-                                }
-                                } />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div> */}
-
                     <InputTitle label="Title" edit="Edit Item" tempTitle={tempCatTitle}
                       tempo={e => temp2 = e.target.value}>
                     </InputTitle>
-
-                    {/* <div className="form-group">
-                      <div className="row text-center mb-1 m-auto">
-                        <div className="col">
-                          <div className="row border">
-                            <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
-                              <label>Title</label>
-                            </div>
-                            <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="text" className="form-control border-0" defaultValue={tempCatTitle} onChange={e => temp2 = e.target.value} />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div> */}
-
-                    {/* <div className="form-group">
-                      <div className="row mb-1 m-auto">
-                        <div className="col">
-                          <div className="row border">
-                            <div className="col col pt-1 pb-1 padlr latomenu d-flex flex-column justify-content-center align-items-center">
-                              <label>Hide</label>
-                            </div> */}
-
-                    <InputHide hideSwitch={tempItemHide}></InputHide>
-
-                    {/* <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <label class="switch">
-                                <input type="checkbox" className="form-control" defaultChecked={tempItemHide} onClick={e => {
-                                  if (tempItemHide === false) {
-                                    blockHide = true;
-                                  } else {
-                                    blockHide = false;
-                                  }
-                                }} />
-                                <span class="slider round"></span>
-                              </label>
-                            </div> */}
-
-                    {/* </div>
-                        </div>
-                        <div className="col-1"></div>
-                        <div className="col">
-                        </div>
-                      </div>
-                    </div> */}
-
+                    <InputSwitch hideSwitch={tempItemHide} dSwitch={blockHide} swLabel={"Hide"}></InputSwitch>
                     <Alert alertShow={this.state.alertShow} alertMsg={this.state.alertMsg} alertCol={this.state.alertCol}></Alert>
-
                   </form>
                 </div>
               </div>
-              {/* </CatEditDialog> */}
             </EleDialog>
             {/* CAT ADD DIALOG */}
             <EleDialog mainTheme="modal-main" footTheme="modal-footer" hideMidBtn={true} hideApply={false} hideClose={false}
               activityChanged={false} eleDiaShow={this.state.catAddDiaShow}
               handleClose={() => this.hideModal("catadd")} handleSave={this.applyCatAdd}
               saveLabel="Add">
-              {/* <CatAddDialog catAddDiaShow={this.state.catAddDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("catadd")} handleSave={this.applyCatAdd}> */}
               <div className="modal-content noborder">
-
                 <ModalTitle title="Add Category"></ModalTitle>
-
                 <div className="modal-body">
                   <form id="catAddForm">
-
                     <InputFile></InputFile>
-
-                    {/* <div className="form-group">
-                      <div className="row text-center mb-1 m-auto">
-                        <div className="col">
-                          <div className="row border">
-                            <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="file" className="form-control boxs border-0" name="icon" onChange={e => fileImg = e.target.files[0]} />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div> */}
-
                     <InputPosition edit="Add Item" id="clearcatpos" ></InputPosition>
-
-                    {/* <div className="form-group">
-                      <div className="row text-center mb-1 m-auto">
-                        <div className="col">
-                          <div className="row border">
-                            <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
-                              <label>Pos</label>
-                            </div>
-                            <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="text" placeholder="Leave blank for last..." id="clearcatpos" className="form-control border-0"
-                                onChange={e => {
-                                  temp = e.target.value;
-                                }
-                                } />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div> */}
-
                     <InputTitle label="Title" edit="Add Item" id="clearcattitle"
                       tempo={e => temp2 = e.target.value}>
                     </InputTitle>
-
-                    {/* <div className="form-group">
-                      <div className="row text-center mb-1 m-auto">
-                        <div className="col">
-                          <div className="row border">
-                            <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
-                              <label>Title</label>
-                            </div>
-                            <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="text" className="form-control border-0" id="clearcattitle" onChange={e => temp2 = e.target.value} />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div> */}
-
-                    {/* <div className="form-group">
-                      <div className="row mb-1 m-auto">
-                        <div className="col">
-                          <div className="row border">
-                            <div className="col col pt-1 pb-1 padlr latomenu d-flex flex-column justify-content-center align-items-center">
-                              <label>Hide</label>
-                            </div> */}
-
-                    <InputHide hideSwitch={tempItemHide}></InputHide>
-
-                    {/* <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <label class="switch">
-                                <input type="checkbox" className="form-control" defaultChecked={tempItemHide} onClick={e => {
-                                  if (tempItemHide === false) {
-                                    blockHide = true;
-                                  } else {
-                                    blockHide = false;
-                                  }
-                                }} />
-                                <span class="slider round"></span>
-                              </label>
-                            </div> */}
-
-                    {/* </div>
-                        </div>
-                        <div className="col-1"></div>
-                        <div className="col">
-                        </div>
-                      </div>
-                    </div> */}
-
+                    <InputSwitch hideSwitch={tempItemHide} dSwitch={blockHide} swLabel={"Hide"}></InputSwitch>
                     <Alert alertShow={this.state.alertShow} alertMsg={this.state.alertMsg}
                       alertCol={this.state.alertCol}></Alert>
-
                   </form>
                 </div>
               </div>
-              {/* </CatAddDialog> */}
             </EleDialog>
             {/* CAT DEL DIALOG */}
             <EleDialog mainTheme="modal-main" footTheme="modal-footer" hideMidBtn={true} hideApply={false} hideClose={false}
               activityChanged={false} eleDiaShow={this.state.catDelDiaShow}
               handleClose={() => this.hideModal("catdel")} handleSave={this.applyCatDel}
               saveLabel="Remove">
-              {/* <CatDelDialog catDelDiaShow={this.state.catDelDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("catdel")} handleSave={this.applyCatDel}> */}
               <div className="modal-content noborder">
-
                 <ModalTitle title={"Permanently delete " + tempCatTitle + " category?"}></ModalTitle>
-
                 <div className="modal-body">
-
                   <Alert alertShow={this.state.alertShow} alertMsg={this.state.alertMsg} alertCol={this.state.alertCol}></Alert>
-
                 </div>
               </div>
-              {/* </CatDelDialog> */}
             </EleDialog>
             {/* ITEM OR CAT DIALOG */}
             <EleDialog mainTheme="modal-main" footTheme="modal-footer" hideMidBtn={false} hideApply={false} hideClose={false}
               activityChanged={false} eleDiaShow={this.state.iocDiaShow}
               handleClose={() => this.hideModal("itemorcat")} handleSave={this.addItem} handleMidBtn={this.catAddItem}
               saveLabel="Item" midBtnLabel="Category">
-              {/* <ItemOrCatDialog iocDiaShow={this.state.iocDiaShow} activityChanged={this.state.activityChanged} handleItem={this.addItem} handleCat={this.catAddItem} handleClose={() => this.hideModal("itemorcat")}> */}
               <div className="modal-content noborder">
-
                 <ModalTitle title="Add Item or Category?"></ModalTitle>
-
               </div>
-              {/* </ItemOrCatDialog> */}
             </EleDialog>
             {/* CREDITS DIALOG */}
             <EleDialog mainTheme="modal-main-dark" footTheme="modal-footer-dark" hideMidBtn={true} hideApply={true} hideClose={false}
               activityChanged={false} eleDiaShow={this.state.crsDiaShow}
               handleClose={() => this.hideModal("excrs")}>
-              {/* <CrsDialog crsDiaShow={this.state.crsDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("excrs")} handleSave={this.applyItemEdit}> */}
               <div className="modal-content noBG">
                 <div className="modal-header darkBG">
                   <h5 className="modal-title latowhite" >{spData.menuCreditsLabel}</h5>
@@ -6897,226 +4261,68 @@ class Main extends React.Component {
                   </div>
                 </div>
               </div>
-
-              {/* </CrsDialog> */}
             </EleDialog>
             {/* CREDITS ADD DIALOG */}
             <EleDialog mainTheme="modal-main" footTheme="modal-footer" hideMidBtn={true} hideApply={false} hideClose={false}
               activityChanged={false} eleDiaShow={this.state.crsAddDiaShow}
               handleClose={() => this.hideModal("crsadd")} handleSave={this.applyCrsAdd}
               saveLabel="Add">
-              {/* <CrsAddDialog crsAddDiaShow={this.state.crsAddDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("crsadd")} handleSave={this.applyCrsAdd}> */}
               <div className="modal-content noborder">
-
                 <ModalTitle title="Add Credit"></ModalTitle>
-
                 <div className="modal-body">
                   <form id="crsAddForm">
-
                     <InputPosition edit="Add Item" id="clearcrspos" ></InputPosition>
-
-                    {/* <div className="form-group">
-                      <div className="row text-center mb-1 m-auto">
-                        <div className="col">
-                          <div className="row border">
-                            <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
-                              <label>Pos</label>
-                            </div>
-                            <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="text" placeholder="Leave blank for last..." id="clearcrspos" className="form-control border-0"
-                                onChange={e => {
-                                  temp = e.target.value;
-                                }
-                                } />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div> */}
-
                     <InputTitle label="Title" edit="Add Item" id="clearcrstitle"
                       tempo={e => temp2 = e.target.value}>
                     </InputTitle>
-
-                    {/* <div className="form-group">
-                      <div className="row text-center mb-1 m-auto">
-                        <div className="col">
-                          <div className="row border">
-                            <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
-                              <label>Title</label>
-                            </div>
-                            <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="text" className="form-control border-0" id="clearcrstitle" onChange={e => temp2 = e.target.value} />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div> */}
-
                     <InputLink edit="Add Item" id="clearcrslink"></InputLink>
-
-                    {/* <div className="form-group">
-                      <div className="row text-center mb-1 m-auto">
-                        <div className="col">
-                          <div className="row border">
-                            <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
-                              <label>Link</label>
-                            </div>
-                            <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="text" className="form-control border-0" id="clearcrslink" onChange={e => temp3 = e.target.value} />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div> */}
-
                     {/* Descr. */}
                     <InputTitle label="Descr." edit="Add Item" tempTitle={tempItemTitle} id="clearcrsdescr"
                       tempo={e => temp4 = e.target.value}>
                     </InputTitle>
-
-                    {/* <div className="form-group">
-                      <div className="row text-center mb-1 m-auto">
-                        <div className="col">
-                          <div className="row border">
-                            <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
-                              <label>Descr.</label>
-                            </div>
-                            <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="text" className="form-control border-0" id="clearcrsdescr" onChange={e => temp4 = e.target.value} />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div> */}
-
                     <Alert alertShow={this.state.alertShow} alertMsg={this.state.alertMsg} alertCol={this.state.alertCol}></Alert>
-
                   </form>
                 </div>
               </div>
-              {/* </CrsAddDialog> */}
             </EleDialog>
             {/* CREDITS EDIT DIALOG */}
             <EleDialog mainTheme="modal-main" footTheme="modal-footer" hideMidBtn={true} hideApply={false} hideClose={false}
               activityChanged={false} eleDiaShow={this.state.crsEditDiaShow}
               handleClose={() => this.hideModal("crsedit")} handleSave={this.applyCrsEdit}
               saveLabel="Edit">
-              {/* <CrsEditDialog crsEditDiaShow={this.state.crsEditDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("crsedit")} handleSave={this.applyCrsEdit}> */}
               <div className="modal-content noborder">
-
                 <ModalTitle title="Edit Credit"></ModalTitle>
-
                 <div className="modal-body">
                   <form id="crsEditForm">
-
                     <InputPosition edit="Edit Item" pos={currPos} id="clearcrsswitchpos" ></InputPosition>
-                    {/* 
-                    <div className="form-group">
-                      <div className="row text-center mb-1 m-auto">
-                        <div className="col">
-                          <div className="row border">
-                            <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
-                              <label>Pos</label>
-                            </div>
-                            <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="text" placeholder={currPos + 1} id="clearcrsswitchpos" className="form-control border-0"
-                                onChange={e => {
-                                  temp = e.target.value;
-                                }
-                                } />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div> */}
-
                     <InputTitle label="Title" edit="Edit Item" tempTitle={tempCrsTitle}
                       tempo={e => temp2 = e.target.value}>
                     </InputTitle>
-
-                    {/* <div className="form-group">
-                      <div className="row text-center mb-1 m-auto">
-                        <div className="col">
-                          <div className="row border">
-                            <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
-                              <label>Title</label>
-                            </div>
-                            <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="text" className="form-control border-0" defaultValue={tempCrsTitle} onChange={e => temp2 = e.target.value} />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div> */}
-
                     <InputLink edit="Edit Item" tempLink={tempCrsLink} ></InputLink>
-
-                    {/* <div className="form-group">
-                      <div className="row text-center mb-1 m-auto">
-                        <div className="col">
-                          <div className="row border">
-                            <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
-                              <label>Link</label>
-                            </div>
-                            <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="text" className="form-control border-0" defaultValue={tempCrsLink} onChange={e => temp3 = e.target.value} />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div> */}
-
-                    {/* Descr. */}
                     <InputTitle label="Descr." edit="Edit Item" tempTitle={tempCrsDescr}
                       tempo={e => temp4 = e.target.value}>
                     </InputTitle>
-
-                    {/* <div className="form-group">
-                      <div className="row text-center mb-1 m-auto">
-                        <div className="col">
-                          <div className="row border">
-                            <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
-                              <label>Descr.</label>
-                            </div>
-                            <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="text" className="form-control border-0" defaultValue={tempCrsDescr} onChange={e => temp4 = e.target.value} />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div> */}
-
                     <Alert alertShow={this.state.alertShow} alertMsg={this.state.alertMsg} alertCol={this.state.alertCol}></Alert>
-
                   </form>
                 </div>
               </div>
-              {/* </CrsEditDialog> */}
             </EleDialog>
             {/* CREDITS DEL DIALOG */}
             <EleDialog mainTheme="modal-main" footTheme="modal-footer" hideMidBtn={true} hideApply={false} hideClose={false}
               activityChanged={false} eleDiaShow={this.state.crsDelDiaShow}
               handleClose={() => this.hideModal("crsdel")} handleSave={this.applyCrsDel}
               saveLabel="Remove">
-              {/* <CrsDelDialog crsDelDiaShow={this.state.crsDelDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("crsdel")} handleSave={this.applyCrsDel}> */}
               <div className="modal-content noborder">
-
                 <ModalTitle title={"Permanently delete " + tempCrsTitle + " credit?"}></ModalTitle>
-
                 <div className="modal-body">
-
                   <Alert alertShow={this.state.alertShow} alertMsg={this.state.alertMsg} alertCol={this.state.alertCol}></Alert>
-
                 </div>
               </div>
-              {/* </CrsDelDialog> */}
             </EleDialog>
             {/* SEARCH DIALOG */}
             <EleDialog mainTheme="modal-main-dark" footTheme="modal-footer darkBG" hideMidBtn={false} hideApply={false} hideClose={false}
               activityChanged={this.state.activityChanged} eleDiaShow={this.state.searchDiaShow} saveLabel="Search" midBtnLabel="Reset"
               handleClose={() => this.hideModal("search")} handleSave={this.itemSearch} handleMidBtn={this.itemSearchReset}>
-              {/* <SearchDialog searchDiaShow={this.state.searchDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("search")} handleSave={this.itemSearch} handleReset={this.itemSearchReset} > */}
               <div className="modal-content noborder">
                 <div className="modal-header-dark">
                   <h5 className="modal-title-dark" >{spData.menuSearchLabel}</h5>
@@ -7126,9 +4332,7 @@ class Main extends React.Component {
                     <div className="form-group stickydivtop">
                       <input type="text" className="form-control contenitore pt-2" ref={(input) => { this.searchInput = input; }} onChange={e => temp = e.target.value} placeholder={spData.menuSearchLabel + "..."} readOnly={this.state.onlyRead} />
                     </div>
-
                     <Alert alertShow={this.state.alertShow} alertMsg={this.state.alertMsg} alertCol={this.state.alertCol}></Alert>
-
                     {/* RESITEMS */}
                     <div className="textcenter">
                       {
@@ -7144,13 +4348,11 @@ class Main extends React.Component {
                   </form>
                 </div>
               </div>
-              {/* </SearchDialog> */}
             </EleDialog>
             {/* ITEM VIDEO DIALOG */}
             <EleDialog mainTheme="modal-main darkBG" footTheme="modal-footer-dark" hideMidBtn={true} hideApply={true} hideClose={false}
               activityChanged={false} eleDiaShow={this.state.itemVideoDiaShow}
               handleClose={() => this.hideModal("video")}>
-              {/* <ItemVideoDialog itemVideoDiaShow={this.state.itemVideoDiaShow} activityChanged={this.state.activityChanged} handleClose={() => this.hideModal("video")} handleSave={this.applyItemEdit}> */}
               <div className="modal-content darkBG">
                 <div className="row mb-1 m-1 modal-header-dark">
                   <div className="col">
@@ -7166,16 +4368,13 @@ class Main extends React.Component {
                     </div>
                   </div>
                 </div>
-
                 <div className="modal-body align-items-center darkBG">
                   <center>
                     <iframe width="100%" height="350" src={this.state.videoLink} frameborder="0" allowfullscreen="true" title="videoFrame"></iframe>
                   </center>
                 </div>
               </div>
-              {/* </ItemVideoDialog> */}
             </EleDialog>
-
             <div className="stickytop">
               {head}
               {buttons}
@@ -7187,373 +4386,9 @@ class Main extends React.Component {
           </section >
         </div >
       </>
-
     );
   }
 }
-
-// class LoginGear extends React.Component {
-//   // constructor(props) {
-//   //   super(props);
-//   // }
-//   render() {
-//     const gearClick = () => {
-//       this.props.handleShowButtons(true);
-//     }
-//     return (
-//       <img className="gear mt-2 mb-2" alt="Login" src="./img/gears.svg" onClick={() => gearClick()} />
-//     );
-//   }
-// }
-
-// class OverlayImg extends React.Component {
-
-//   render() {
-//     return (
-//       <img className="overlay" alt="Overlay" src={spData.LogoIcon} />
-//     );
-//   }
-// }
-
-// class RedPoint extends React.Component {
-//   render() {
-//     return (
-//       <img className="gear menux mt-2 mb-2" title="Hidden" alt="Hidden" src="./img/point.svg" />
-//     );
-//   }
-// }
-
-// class ItemRedPoint extends React.Component {
-//   render() {
-//     return (
-//       <div class="col-2 borderleft itemx d-flex flex-column justify-content-center align-items-center">
-//         <img className="itemx mt-2 mb-2" title="Hidden" alt="Hidden" src="./img/point.svg" />
-//       </div>
-//     );
-//   }
-// }
-
-// class LogoImg extends React.Component {
-//   // constructor(props) {
-//   //   super(props);
-//   // }
-//   link = spData.homeLink;
-//   render() {
-//     const logoClick = () => {
-//       window.location.href = spData.homeLink;
-//     }
-//     return (
-//       <img className="logo mt-2 mb-2" title="Home" alt="Logo" src={spData.LogoIcon}
-//         onClick={() => logoClick()} />
-//     );
-//   }
-// }
-
-// class CrsAdd extends React.Component {
-//   // constructor(props) {
-//   //   super(props);
-//   // }
-//   render() {
-//     let crsBtn = ""
-//     if (this.props.showItemsBtn === "ShowItemBtn") {
-//       crsBtn = (
-
-//         <div className="row stickydivtop">
-//           <button className="col extcredits solidgreen m-1"
-//             onClick={() => this.props.addItem()}>
-//             <img className="gear mt-2 mb-1" title="Add Item" alt="Add Item" src="./itemicons/plus.svg" />
-//             {/* <img className="plus mt-2 mb-1" title="Add Item" alt="Add Item" src="./itemicons/plus.svg" /> */}
-//             {/* <h5><font color="Chartreuse">Add Item</font></h5> */}
-//           </button>
-//         </div>
-
-//       )
-//     } else {
-//       crsBtn = "";
-//     }
-//     return (
-//       <>
-//         {crsBtn}
-//       </>
-//     );
-//   }
-// }
-
-// class ItmAdd extends React.Component {
-//   // constructor(props) {
-//   //   super(props);
-//   // }
-//   render() {
-//     let itmBtn = ""
-//     if (this.props.showItemsBtn === "ShowItemBtn") {
-//       itmBtn = (
-//         <button className="col button solidgreen m-1"
-//           onClick={() => this.props.addItem()}>
-//           <img className="gear mt-2 mb-2" title="Add Item" alt="Add Item" src="./itemicons/plus.svg" />
-//         </button>
-//       )
-//     } else {
-//       itmBtn = "";
-//     }
-//     return (
-//       <>
-//         {itmBtn}
-//       </>
-//     );
-//   }
-// }
-
-// class Cat extends React.Component {
-//   constructor(props) {
-//     super(props);
-//   }
-
-//   render() {
-//     const hide = this.props.itemHide ? <ItemRedPoint /> : ""
-//     let catBtn = ""
-//     if (this.props.showItemsBtn === "ShowItemBtn") {
-//       catBtn = (
-//         <div className="itemcontainer">
-//           <div className="iconcontainer box box2">
-//             <img className="items pointer" title={this.props.title} alt={this.props.title} src={this.props.icon}
-//               onClick={() => this.props.catCont(this.props.pos)} />
-//           </div>
-//           <h4>
-//             <div className="row lato text-center m-1">
-//               <div className="col">
-//                 <div className="row">
-//                   <div className="col d-flex flex-column justify-content-center align-items-center">
-//                     <b>{this.props.title}</b>
-//                   </div>
-//                   {hide}
-//                 </div>
-//               </div>
-//             </div>
-//           </h4>
-//           <div className="row btncontainer">
-//             <button className="col itembutton solidgreen m-1" onClick={() => this.props.catEditDel("CatEdit", this.props.pos)}>
-//               Edit
-//             </button>
-//             <button className="col-1 itembutton black m-1 pad01">
-//               {this.props.pos + 1}
-//             </button>
-//             <button className="col itembutton solidbrick m-1" onClick={() => this.props.catEditDel("CatDel", this.props.pos)}>
-//               Remove
-//             </button>
-//           </div>
-
-//         </div>
-//       )
-//     } else {
-//       catBtn = (
-//         <div className="itemcontainer">
-//           <div className="iconcontainer box box2">
-//             <img className="items pointer" title={this.props.title} alt={this.props.title} src={this.props.icon}
-//               onClick={() => this.props.catCont(this.props.pos)} />
-//           </div>
-//           <h4>
-//             <div className="row lato text-center m-1">
-//               <div className="col">
-//                 <div className="row">
-//                   <div className="col d-flex flex-column justify-content-center align-items-center">
-//                     <b>{this.props.title}</b>
-//                   </div>
-//                   {hide}
-//                 </div>
-//               </div>
-//             </div>
-//           </h4>
-//         </div>
-//       )
-//     }
-//     return (
-//       <>
-//         {(!this.props.itemHide || this.props.showItemsBtn === "ShowItemBtn") && catBtn}
-//         {/* {catBtn} */}
-//       </>
-//     );
-//   }
-// }
-
-// class Credit extends React.Component {
-//   constructor(props) {
-//     super(props);
-//   }
-
-//   render() {
-//     let creditBtn = ""
-//     if (this.props.showItemsBtn === "ShowItemBtn") {
-//       creditBtn = (
-//         <>
-//           <div className="row">
-//             <button className="col extcredits green m-1"
-//               onClick={() => {
-//                 window.open(this.props.link);
-//               }}>
-//               <h2><font color="white">
-//                 {this.props.title}
-//               </font></h2>
-//               <h5><font color="Chartreuse">{this.props.descr}</font></h5>
-//             </button>
-//           </div>
-//           <div className="row btncontainer">
-//             <button className="col itembutton solidgreen m-1" onClick={() => this.props.crsEditDel("CrsEdit", this.props.pos)}>
-//               Edit
-//             </button>
-//             <button className="col-1 itembutton black m-1 pad01">
-//               {this.props.pos + 1}
-//             </button>
-//             <button className="col itembutton solidbrick m-1" onClick={() => this.props.crsEditDel("CrsDel", this.props.pos)}>
-//               Remove
-//             </button>
-//           </div>
-//         </>
-//       )
-//     } else {
-//       creditBtn = (
-//         <div className="row">
-//           <button className="col extcredits green m-1"
-//             onClick={() => {
-//               window.open(this.props.link);
-//             }}>
-//             <h2><font color="white">
-//               {this.props.title}
-//             </font></h2>
-//             <h5><font color="Chartreuse">{this.props.descr}</font></h5>
-//           </button>
-//         </div>
-//       )
-//     }
-//     return (
-//       <>
-//         {creditBtn}
-//       </>
-//     );
-//   }
-// }
-
-// class Dropdown extends React.Component {
-//   toggleOpen = () => {
-//     dropDownIsOpen = !dropDownIsOpen;
-//   }
-//   render() {
-//     const showHideSearch = spData.noMenuSearch ? "d-none" : "d-block";
-//     const showHideCredits = spData.noMenuCredits ? "d-none" : "d-block";
-//     const menuClass = `dropdown-menu${dropDownIsOpen ? " show d-flex flex-column justify-content-center align-items-center" : " disNone"}`;
-//     return (
-//       <div className="dropdown" onClick={this.toggleOpen}>
-
-//         <button
-//           className="button indaco m-1 dropdown-toggle"
-//           id="menuButton"
-//           type="button"
-//           data-toggle="dropdown"
-//           aria-haspopup="true"
-//         >
-//           Menu
-//         </button>
-//         <div className={menuClass + " menuBG"} >
-
-//           <button className={showHideSearch + " col menuItem green m-1"}
-//             onClick={() => {
-//               this.props.search();
-//             }}>
-//             {spData.menuSearchLabel}
-//           </button>
-//           <button className={showHideCredits + " col menuItem blue m-1"}
-//             onClick={() => {
-//               this.props.crsShow();
-//             }}>
-//             {spData.menuCreditsLabel}
-//           </button>
-//         </div>
-//       </div>
-//     );
-//   }
-// }
-
-// class DropdownCat extends React.Component {
-//   changeText(selected) {
-//     this.setState({ selCat: selected });
-//   }
-
-//   toggleOpen = () => {
-//     catDropDownIsOpen = !catDropDownIsOpen;
-//   }
-
-//   render() {
-//     const menuClass = `dropdown-menu${/* this.state.isOpen */
-//       catDropDownIsOpen ? " show d-flex flex-column justify-content-start align-items-center" :
-//         " disNone"}`;
-
-//     return (
-//       <div className="dropdown" onClick={this.toggleOpen}>
-
-//         <button
-//           className="button indaco m-1 dropdown-toggle"
-//           id={this.props.id}
-//           type="button"
-//           data-toggle="dropdown"
-//           aria-haspopup="true"
-//         >
-//           {this.props.catName}
-//         </button>
-//         <div className={menuClass + " menuBG"}>
-//           <button className="col menuItem green m-1"
-//             onClick={(e) => {
-//               this.changeText("Root")
-//               this.props.setCat("Root", e);
-//             }}>
-//             Root
-//           </button>
-//           {
-//             this.props.items.map(({ id, title, icon }, i) => {
-//               return (
-//                 <button className="col menuItem green m-1"
-//                   onClick={(e) => {
-//                     this.changeText(title)
-//                     this.props.setCat(title, e);
-//                   }}>
-//                   {title}
-//                 </button>
-//               )
-//             })
-//           }
-//         </div>
-//       </div>
-//     );
-//   }
-// }
-
-// function Orologio() {
-//   const [dateState, setDateState] = useState(new Date());
-//   useEffect(() => {
-//     setInterval(() => setDateState(new Date()), 1000);
-//   }, []);
-//   return (
-//     <div className="Orologio">
-//       {/* <ClockIcon /> */}
-//       <p className="medfont">
-//         {dateState.toLocaleString('it-IT', {
-//           hour: 'numeric',
-//           minute: 'numeric',
-//           second: 'numeric',
-//           hour12: false,
-//         })}
-//       </p>
-//       {/* <CalenderIcon /> */}
-//       <p className="smallfont">
-//         {' '}
-//         {dateState.toLocaleDateString('it-IT', {
-//           weekday: 'short',
-//           day: 'numeric',
-//           month: 'short',
-//           year: 'numeric',
-//         })}
-//       </p>
-//     </div>
-//   );
-// }
 
 // ========================================
 
