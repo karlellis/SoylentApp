@@ -711,6 +711,7 @@ const InputHideBlocks = ({ hideSwitch }) => {
 }
 
 const InputSwitch = ({ hSwitch, dSwitch, swLabel }) => {
+  console.log(hSwitch);
   return (
     <div className="form-group">
       <div className="row mb-1 m-auto">
@@ -722,13 +723,7 @@ const InputSwitch = ({ hSwitch, dSwitch, swLabel }) => {
             <div className="col d-flex flex-column justify-content-center align-items-center">
               <label class="switch">
                 <input type="checkbox" className="form-control" defaultChecked={hSwitch}
-                  onClick={e => {
-                    if (hSwitch === false) {
-                      dSwitch = true;
-                    } else {
-                      dSwitch = false;
-                    }
-                  }} />
+                  onClick={dSwitch} />
                 <span class="slider round"></span>
               </label>
             </div>
@@ -2103,12 +2098,13 @@ class Main extends React.Component {
       }
       changes = true;
     }
-
+    console.log("CATFirst: " + categoryFirst);
     if (categoryFirst !== "none") {
       spData.catFirst = categoryFirst;
       this.setState({
         catFirst: categoryFirst
       })
+      categoryFirst = "none";
       changes = true;
     }
 
@@ -4033,7 +4029,16 @@ class Main extends React.Component {
                     {/* CAT BACK OPACITY */}
                     <InputOpacity opacity={spData.catOpacity} id="catOpRange" tempo={e => tempOpacity1 = e.target.value}></InputOpacity>
                     {/* CAT BEFORE ITEMS */}
-                    <InputSwitch hSwitch={spData.catFirst} dSwitch={categoryFirst} swLabel={"Category before Items"}></InputSwitch>
+                    <InputSwitch hSwitch={spData.catFirst}
+                      dSwitch={e => {
+                        if (spData.catFirst === false) {
+                          categoryFirst = true;
+                        } else {
+                          categoryFirst = false;
+                        }
+                      }}
+                      swLabel={"Category before Items"}>
+                    </InputSwitch>
                     <Alert alertShow={this.state.alertShow} alertMsg={this.state.alertMsg} alertCol={this.state.alertCol}></Alert>
                   </form>
                 </div>
@@ -4103,7 +4108,16 @@ class Main extends React.Component {
                       tempo={e => temp6 = e.target.value}>
                     </InputInfos>
                     <InputVideo></InputVideo>
-                    <InputSwitch hSwitch={tempItemHide} dSwitch={blockHide} swLabel={"Hide"}></InputSwitch>
+                    <InputSwitch hSwitch={tempItemHide}
+                      dSwitch={e => {
+                        if (tempItemHide === false) {
+                          blockHide = true;
+                        } else {
+                          blockHide = false;
+                        }
+                      }}
+                      swLabel={"Hide"}>
+                    </InputSwitch>
                     {/* Category */}
                     <InputCat catMenuB={eCatMenuButtons}></InputCat>
                     <Alert alertShow={this.state.alertShow} alertMsg={this.state.alertMsg} alertCol={this.state.alertCol}></Alert>
@@ -4153,7 +4167,16 @@ class Main extends React.Component {
                     {/* Video */}
                     <InputVideo></InputVideo>
                     {/* Hide */}
-                    <InputSwitch hSwitch={tempItemHide} dSwitch={blockHide} swLabel={"Hide"}></InputSwitch>
+                    <InputSwitch hSwitch={tempItemHide}
+                      dSwitch={e => {
+                        if (tempItemHide === false) {
+                          blockHide = true;
+                        } else {
+                          blockHide = false;
+                        }
+                      }}
+                      swLabel={"Hide"}>
+                    </InputSwitch>
                     {/* Category */}
                     <InputCat catMenuB={aCatMenuButtons}></InputCat>
                     <Alert alertShow={this.state.alertShow} alertMsg={this.state.alertMsg} alertCol={this.state.alertCol}></Alert>
@@ -4187,7 +4210,16 @@ class Main extends React.Component {
                     <InputTitle label="Title" edit="Edit Item" tempTitle={tempCatTitle}
                       tempo={e => temp2 = e.target.value}>
                     </InputTitle>
-                    <InputSwitch hideSwitch={tempItemHide} dSwitch={blockHide} swLabel={"Hide"}></InputSwitch>
+                    <InputSwitch hideSwitch={tempItemHide}
+                      dSwitch={e => {
+                        if (tempItemHide === false) {
+                          blockHide = true;
+                        } else {
+                          blockHide = false;
+                        }
+                      }}
+                      swLabel={"Hide"}>
+                    </InputSwitch>
                     <Alert alertShow={this.state.alertShow} alertMsg={this.state.alertMsg} alertCol={this.state.alertCol}></Alert>
                   </form>
                 </div>
