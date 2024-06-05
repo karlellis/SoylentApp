@@ -82,7 +82,7 @@ var spData = require("./initData.json");
 
 const Item = ({ showItemsBtn, pos, id, title, link, descr, icon, video, hidden, cat, itemEditDel, itemVideo, itemHide }) => {
   const [isActive, setIsActive] = useState(false);
-  const hide = hidden ? <ItemRedPoint /> : ""
+  const hide = hidden ? <ImgElement type={"iRedPoint"} /> : ""
   const linkOrVideo = video
     ?
     (<img className="items pointer" title={title} alt={title} src={icon}
@@ -184,7 +184,7 @@ const Item = ({ showItemsBtn, pos, id, title, link, descr, icon, video, hidden, 
 }
 
 const Cat = ({ showItemsBtn, pos, title, icon, hidden, catCont, catEditDel, itemHide }) => {
-  const hide = hidden ? <ItemRedPoint /> : ""
+  const hide = hidden ? <ImgElement type={"iRedPoint"} /> : ""
   let catBtn = ""
   if (showItemsBtn === "ShowItemBtn") {
     catBtn = (
@@ -313,7 +313,7 @@ const Element = ({ eleShow, children, mainBtn, id, sfondo, colore, z, colW }) =>
 
 const EditElement = ({ editEleShow, children, hidden }) => {
   const showHideClassName = editEleShow ? "d-block" : "d-none";
-  const hide = hidden ? "" : <RedPoint />
+  const hide = hidden ? "" : <ImgElement type={"redPoint"} />
   return (
     <div className={showHideClassName + " stretch d-flex justify-content-center align-items-center"}>
       {children} {hide}
@@ -711,7 +711,6 @@ const InputHideBlocks = ({ hideSwitch }) => {
 }
 
 const InputSwitch = ({ hSwitch, dSwitch, swLabel }) => {
-  console.log(hSwitch);
   return (
     <div className="form-group">
       <div className="row mb-1 m-auto">
@@ -831,33 +830,6 @@ const LoginGear = ({ handleShowButtons }) => {
   );
 }
 
-const OverlayImg = () => {
-  return (
-    <img className="overlay" alt="Overlay" src={spData.LogoIcon} />
-  );
-}
-
-const RedPoint = () => {
-  return (
-    <img className="gear menux mt-2 mb-2" title="Hidden" alt="Hidden" src="./img/point.svg" />
-  );
-}
-
-const ItemRedPoint = () => {
-  return (
-    <div class="col-2 borderleft itemx d-flex flex-column justify-content-center align-items-center">
-      <img className="itemx mt-2 mb-2" title="Hidden" alt="Hidden" src="./img/point.svg" />
-    </div>
-  );
-}
-
-const LogoImg = () => {
-  return (
-    <img className="logo mt-2 mb-2" title="Home" alt="Logo" src={spData.LogoIcon}
-      onClick={() => window.location.href = spData.homeLink} />
-  );
-}
-
 const SettingsGear = ({ showItemsBtn }) => {
   const whiteOrCol = showItemsBtn ? "./img/colGear.svg" : "./img/gear.svg"
   return (
@@ -882,6 +854,70 @@ const Alert = ({ alertShow, alertMsg, alertCol, children }) => {
     </div>
   );
 };
+
+const ImgElement = ({ type }) => {
+  let imma = "";
+  switch (type) {
+    case "overlay":
+      imma = (
+        <img className="overlay" alt="Overlay" src={spData.LogoIcon} />
+      )
+      break;
+    case "redPoint":
+      imma = (
+        <img className="gear menux mt-2 mb-2" title="Hidden" alt="Hidden" src="./img/point.svg" />
+      )
+      break;
+    case "iRedPoint":
+      imma = (
+        <div class="col-2 borderleft itemx d-flex flex-column justify-content-center align-items-center">
+          <img className="itemx mt-2 mb-2" title="Hidden" alt="Hidden" src="./img/point.svg" />
+        </div>
+      );
+      break;
+    case "logo":
+      imma = (
+        <img className="logo mt-2 mb-2" title="Home" alt="Logo" src={spData.LogoIcon}
+          onClick={() => window.location.href = spData.homeLink} />
+      );
+      break;
+    default:
+      imma = "";
+      break;
+  }
+  return (
+    <>
+      {imma}
+    </>
+  )
+}
+
+// const OverlayImg = () => {
+//   return (
+//     <img className="overlay" alt="Overlay" src={spData.LogoIcon} />
+//   );
+// }
+
+// const RedPoint = () => {
+//   return (
+//     <img className="gear menux mt-2 mb-2" title="Hidden" alt="Hidden" src="./img/point.svg" />
+//   );
+// }
+
+// const ItemRedPoint = () => {
+//   return (
+//     <div class="col-2 borderleft itemx d-flex flex-column justify-content-center align-items-center">
+//       <img className="itemx mt-2 mb-2" title="Hidden" alt="Hidden" src="./img/point.svg" />
+//     </div>
+//   );
+// }
+
+// const LogoImg = () => {
+//   return (
+//     <img className="logo mt-2 mb-2" title="Home" alt="Logo" src={spData.LogoIcon}
+//       onClick={() => window.location.href = spData.homeLink} />
+//   );
+// }
 
 // FUNCTIONS
 
@@ -3333,7 +3369,7 @@ class Main extends React.Component {
             </Element>
             {/* LOGO */}
             <Element eleShow={this.state.logoShow} mainBtn={this.state.mainBtn} id="HeadLogo" sfondo={spData.logoColor} colore="white" z={""} colW={spData.logoColW}>
-              <LogoImg />
+              <ImgElement type={"logo"} />
               <EditElement editEleShow={this.state.mainBtn} hidden={spData.logoShow}>
                 <button className="col latowhite flexbutton solidgreen m-1" onClick={() => this.showModal("logo")}>
                   Edit Logo
@@ -4210,7 +4246,7 @@ class Main extends React.Component {
                     <InputTitle label="Title" edit="Edit Item" tempTitle={tempCatTitle}
                       tempo={e => temp2 = e.target.value}>
                     </InputTitle>
-                    <InputSwitch hideSwitch={tempItemHide}
+                    <InputSwitch hSwitch={tempItemHide}
                       dSwitch={e => {
                         if (tempItemHide === false) {
                           blockHide = true;
@@ -4239,7 +4275,16 @@ class Main extends React.Component {
                     <InputTitle label="Title" edit="Add Item" id="clearcattitle"
                       tempo={e => temp2 = e.target.value}>
                     </InputTitle>
-                    <InputSwitch hideSwitch={tempItemHide} dSwitch={blockHide} swLabel={"Hide"}></InputSwitch>
+                    <InputSwitch hSwitch={tempItemHide}
+                      dSwitch={e => {
+                        if (tempItemHide === false) {
+                          blockHide = true;
+                        } else {
+                          blockHide = false;
+                        }
+                      }}
+                      swLabel={"Hide"}>
+                    </InputSwitch>
                     <Alert alertShow={this.state.alertShow} alertMsg={this.state.alertMsg}
                       alertCol={this.state.alertCol}></Alert>
                   </form>
@@ -4390,7 +4435,8 @@ class Main extends React.Component {
                   <div className="col">
                     <div className="row">
                       <div className="col-md-3 mb-1 d-flex flex-column justify-content-center align-items-center">
-                        <OverlayImg></OverlayImg>
+                        <ImgElement type={"overlay"}></ImgElement>
+                        {/* <OverlayImg></OverlayImg> */}
                       </div>
                       <div className="col-md latotitle d-flex flex-column justify-content-center align-items-center">
                         <center>"{tempItemTitle}"</center>
