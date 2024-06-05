@@ -191,7 +191,8 @@ const Cat = ({ showItemsBtn, pos, title, icon, hidden, catCont, catEditDel, item
       <div className="itemcontainer">
         <div className="iconcontainer box box2">
           <img className="items pointer" title={title} alt={title} src={icon}
-            onClick={() => catCont(pos)} />
+          onClick={catCont} />
+            {/* onClick={() => catCont(pos)} /> */}
         </div>
         <h4>
           <div className="row lato text-center m-1">
@@ -224,7 +225,7 @@ const Cat = ({ showItemsBtn, pos, title, icon, hidden, catCont, catEditDel, item
       <div className="itemcontainer">
         <div className="iconcontainer box box2">
           <img className="items pointer" title={title} alt={title} src={icon}
-            onClick={() => catCont(pos)} />
+            onClick={catCont} />
         </div>
         <h4>
           <div className="row lato text-center m-1">
@@ -1860,7 +1861,7 @@ class Main extends React.Component {
     if (items.length > 0) {
       let count = 0;
       for (let i = 0; i < items.length; i++) {
-        if (items[i].cat.toLowerCase().includes(cat.toLowerCase())) {
+        if (items[i].cat === cat) {
           newItem.icon = items[i].icon;
           newItem.title = items[i].title;
           newItem.link = items[i].link;
@@ -3436,7 +3437,7 @@ class Main extends React.Component {
               return (
                 <Cat showItemsBtn={this.state.itemsBtnShow} key={i} pos={i}
                   title={title} icon={icon} catEditDel={this.catEditDel}
-                  catCont={this.catCont} itemHide={hidden} hidden={hidden} />
+                  catCont={() => this.catCont(i)} itemHide={hidden} hidden={hidden} />
               )
             })
           }
@@ -3472,7 +3473,7 @@ class Main extends React.Component {
               return (
                 <Cat showItemsBtn={this.state.itemsBtnShow} key={i} pos={i}
                   title={title} icon={icon} catEditDel={this.catEditDel}
-                  catCont={this.catCont} itemHide={hidden} hidden={hidden} />
+                  catCont={() => this.catCont(i)} itemHide={hidden} hidden={hidden} />
               )
             })
           }
