@@ -46,6 +46,8 @@ var login = false;
 var array = [];
 var catArray = [];
 var catArrayLength = 0;
+var rootArray = [];
+var rootArrayLength = 0;
 var arrayAdd = [];
 var inPos = "";
 var blockHide = "none";
@@ -191,8 +193,8 @@ const Cat = ({ showItemsBtn, pos, title, icon, hidden, catCont, catEditDel, item
       <div className="itemcontainer">
         <div className="iconcontainer box box2">
           <img className="items pointer" title={title} alt={title} src={icon}
-          onClick={catCont} />
-            {/* onClick={() => catCont(pos)} /> */}
+            onClick={catCont} />
+          {/* onClick={() => catCont(pos)} /> */}
         </div>
         <h4>
           <div className="row lato text-center m-1">
@@ -370,7 +372,7 @@ const InputFile = () => {
   )
 }
 
-const InputPosition = ({ edit, pos, id }) => {
+const InputPosition = ({ edit, pos, aTempo, eTempo, id }) => {
   if (edit === "Add Item") {
     return (
       <div className="form-group">
@@ -1398,7 +1400,6 @@ class Main extends React.Component {
               for (let i = (index + 1); i < array.length; i++) {
                 (array[i].id)++;
               }
-
               tempIcon = "";
               array.splice(temp, 1);
               for (let i = (temp); i < array.length; i++) {
@@ -1408,7 +1409,9 @@ class Main extends React.Component {
               this.setState({ items: array });
               spData.items = noAddArray;
               console.log("index > temp = ", (index));
-              this.itemEditDel("itemEdit", newItem.id, (index))
+              temp = newItem.id;
+              currPos = index;
+              // this.itemEditDel("itemEdit", newItem.id, (index))
             } else {
               array = this.addAfter(array, index, newItem);
               for (let i = (index + 1); i < array.length; i++) {
@@ -1423,9 +1426,10 @@ class Main extends React.Component {
               this.setState({ items: array });
               spData.items = noAddArray;
               console.log("Index = ", index);
-              this.itemEditDel("itemEdit", newItem.id, index)
+              temp = newItem.id;
+              currPos = index;
+              // this.itemEditDel("itemEdit", newItem.id, index)
             }
-
             newItem = {
               "title": "",
               "link": "",
@@ -1439,14 +1443,13 @@ class Main extends React.Component {
           }
           inPos = "";
           cgPos = "";
-          currPos = "";
+          // currPos = "";
           temp2 = "";
           temp3 = "";
           temp4 = "";
           temp5 = tempCatTitle;
           temp6 = "";
           blockHide = "none";
-
           this.fireAlert("Changes Made!", "solidgreen");
         } else if (url === "icon" && op === "add") {
           // console.log("Icon add TEMP4: ", temp4);
@@ -1549,10 +1552,8 @@ class Main extends React.Component {
           this.fireAlert("Item added!", "solidgreen");
         } else if (url === "cat" && op === "edit") {
           if (fileImg !== null) {
-            // console.log("Cat edit!");
             array[currPos].icon = "./itemicons/" + nome;
           }
-          // console.log("temp2: ", temp2);
           if (temp2 !== "") {
             array[currPos].title = temp2;
             this.state.items.forEach(element => {
@@ -1564,7 +1565,7 @@ class Main extends React.Component {
           if (blockHide !== "none") {
             array[currPos].hidden = blockHide;
           }
-          if (temp !== "") {
+          if (cgPos !== "") {
             // console.log("CurrPos: ", currPos);
             // console.log("InPos: ", inPos);
             catNewItem.icon = array[currPos].icon;
@@ -1586,7 +1587,8 @@ class Main extends React.Component {
           }
           arrayAdd = [];
           temp2 = "";
-          temp = "";
+          inPos = "";
+          cgPos = "";
           fileImg = null;
           blockHide = "none";
           catNewItem = {
@@ -2232,6 +2234,7 @@ class Main extends React.Component {
 
   applyItemEdit = () => {
     array = [...this.state.items];
+    rootArray = [...this.state.rootItems];
     catArray = [...this.state.catItems];
     if (noDescr === true) {
       temp6 = "";
@@ -2256,18 +2259,20 @@ class Main extends React.Component {
       if (cgPos !== "") {
         if (temp5 === tempCatTitle) {
           inPos = parseInt(cgPos) - 1;
-          // console.log("Edit inPos: ", inPos, " currPos: ", currPos);
+          console.log("Edit inPos: ", inPos, " currPos: ", currPos);
           if (temp5 === "Root") {
-            if (inPos < arrayLength && inPos >= 0 && inPos !== currPos) {
+            rootArrayLength = rootArray.length;
+            if (inPos < rootArrayLength && inPos >= 0 /* && inPos !== currPos */) {
               this.saveImgFile(fileImg, "icon", "edit");
             } else {
               cgPos = "";
+              inPos = "";
               this.fireAlert("Check position!", "brick");
             }
           } else {
             catArrayLength = catArray.length;
             console.log("CatItemLength: ", catArrayLength);
-            if (inPos < catArrayLength && inPos >= 0 && inPos !== currPos) {
+            if (inPos < catArrayLength && inPos >= 0 /* && inPos !== currPos */) {
               this.saveImgFile(fileImg, "icon", "edit");
             } else {
               cgPos = "";
@@ -2347,7 +2352,13 @@ class Main extends React.Component {
   // CAT ACTIONS
 
   applyCatEdit = () => {
-    if (fileImg !== null || temp2 !== "" || temp !== "" || blockHide !== tempItemHide) {
+    console.log("fileIMG: ", fileImg);
+    console.log("temp2: ", temp2);
+    console.log("cgPos: ", cgPos);
+    console.log("blockHide: ", blockHide);
+    console.log("tempItemHide: ", tempItemHide);
+    if (fileImg !== null || temp2 !== "" || cgPos !== ""
+      || blockHide !== "none") {
       let dup = false;
       for (let i = 0; i < arrayLength; i++) {
         if (array[i].title.toLowerCase() === temp2.toLowerCase()) {
@@ -2355,24 +2366,29 @@ class Main extends React.Component {
           dup = true;
         }
       }
-      if (temp !== "") {
-        inPos = parseInt(temp) - 1;
-        // console.log("InPos: ", inPos);
-        if (inPos < arrayLength && inPos >= 0 && inPos !== currPos && !dup) {
-          this.saveImgFile(fileImg, "cat", "edit");
+      if (cgPos !== "") {
+        inPos = parseInt(cgPos) - 1;
+        console.log("CAT InPos: ", inPos);
+        if (inPos < arrayLength && inPos >= 0 /* && inPos !== currPos && !dup */) {
+          if (!dup) {
+            this.saveImgFile(fileImg, "cat", "edit");
+          } else {
+            this.fireAlert("CAT name duplicated!", "brick");
+          }
+          // this.saveImgFile(fileImg, "cat", "edit");
         } else {
-          this.fireAlert("No changes made or CAT name duplicated!", "solidblue");
+          this.fireAlert("Check position!", "brick");
         }
       } else {
         if (!dup) {
           this.saveImgFile(fileImg, "cat", "edit");
         } else {
-          this.fireAlert("No changes made or CAT name duplicated!", "solidblue");
+          this.fireAlert("CAT name duplicated!", "brick");
         }
       }
     } else {
       // console.log("fileImg - temp2 - temp are \"\"");
-      this.fireAlert("No changes made or CAT name duplicated!", "solidblue");
+      this.fireAlert("No changes made!", "solidblue");
     }
   }
 
@@ -2758,7 +2774,7 @@ class Main extends React.Component {
         this.setState({ addInfoDiaShow: true });
         break;
       case "itemEdit":
-        // console.log("CurrPos ", currPos);
+        console.log("CurrPos ", currPos);
         this.setState({
           cPos: currPos
         })
@@ -3187,7 +3203,7 @@ class Main extends React.Component {
         })
 
         tempCatTitle = temp5;
-        // console.log(" Category: ", );
+        console.log(" Category: ",);
         tempIcon = array[i].icon;
       }
     }
