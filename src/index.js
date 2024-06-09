@@ -681,7 +681,7 @@ const InputInfos = ({ label, disField, stateDisBlk, title, hideSwitch, tempo, id
   )
 }
 
-const InputHideBlocks = ({ hideSwitch }) => {
+const InputHideBlocks = ({ hideSwitch, switchClick }) => {
   return (
     <div className="form-group">
       <div className="row mb-1 m-auto">
@@ -693,13 +693,7 @@ const InputHideBlocks = ({ hideSwitch }) => {
             <div className="col d-flex flex-column justify-content-center align-items-center">
               <label class="switch">
                 <input type="checkbox" className="form-control" defaultChecked={!hideSwitch}
-                  onClick={e => {
-                    if (hideSwitch === false) {
-                      blockHide = true;
-                    } else {
-                      blockHide = false;
-                    }
-                  }} />
+                  onClick={switchClick} />
                 <span class="slider round" title="Hide"></span>
               </label>
             </div>
@@ -894,33 +888,6 @@ const ImgElement = ({ type }) => {
     </>
   )
 }
-
-// const OverlayImg = () => {
-//   return (
-//     <img className="overlay" alt="Overlay" src={spData.LogoIcon} />
-//   );
-// }
-
-// const RedPoint = () => {
-//   return (
-//     <img className="gear menux mt-2 mb-2" title="Hidden" alt="Hidden" src="./img/point.svg" />
-//   );
-// }
-
-// const ItemRedPoint = () => {
-//   return (
-//     <div class="col-2 borderleft itemx d-flex flex-column justify-content-center align-items-center">
-//       <img className="itemx mt-2 mb-2" title="Hidden" alt="Hidden" src="./img/point.svg" />
-//     </div>
-//   );
-// }
-
-// const LogoImg = () => {
-//   return (
-//     <img className="logo mt-2 mb-2" title="Home" alt="Logo" src={spData.LogoIcon}
-//       onClick={() => window.location.href = spData.homeLink} />
-//   );
-// }
 
 // FUNCTIONS
 
@@ -1369,10 +1336,12 @@ class Main extends React.Component {
             array[temp].link = temp3;
           }
           array[temp].video = temp4;
+          tempItemVideo = temp4;
           array[temp].cat = temp5;
           array[temp].descr = temp6;
           if (blockHide !== "none") {
             array[temp].hidden = blockHide;
+            tempItemHide = blockHide;
           }
           // console.log("SaveImageFile InPos: ", inPos);
           if (inPos !== "") {
@@ -1465,15 +1434,18 @@ class Main extends React.Component {
             newItem.hidden = false;
           }
           let index = 0;
-          // console.log("Insert pos=", (inPos));
+          console.log("Insert pos=", (inPos));
           if (arrayLength !== 0) {
-            if (tempCatTitle !== "Root") {
+            if (temp5 !== "Root") {
+              console.log("tempCatTitle = Cat", inPos);
               index = this.state.catItems[inPos].id;
             } else {
               index = this.state.rootItems[inPos].id;
             }
           }
           newItem.id = index;
+
+          console.log("Index iD=", (index));
           tempIcon = "";
           arrayAdd = this.addAfter(array, index, newItem);
           for (let i = (index + 1); i < arrayAdd.length; i++) {
@@ -1488,7 +1460,7 @@ class Main extends React.Component {
           temp2 = "";
           temp3 = "";
           temp4 = "";
-          temp5 = tempCatTitle;
+          tempCatTitle = temp5;
           temp6 = "";
           blockHide = "none";
           newItem = {
@@ -1564,6 +1536,7 @@ class Main extends React.Component {
           }
           if (blockHide !== "none") {
             array[currPos].hidden = blockHide;
+            tempItemHide = blockHide;
           }
           if (cgPos !== "") {
             // console.log("CurrPos: ", currPos);
@@ -1891,6 +1864,9 @@ class Main extends React.Component {
         this.setState({ rootItems: arrayAdd });
       } else {
         this.setState({ catItems: arrayAdd });
+      }
+      for (let ind = 0; ind < arrayAdd.length; ind++) {
+        console.log("catitems=", (arrayAdd[ind]));
       }
       arrayAdd = [];
       newItem = {
@@ -2243,8 +2219,8 @@ class Main extends React.Component {
     // console.log("fileImg: ", fileImg);
     // console.log("temp2: ", temp2);
     // console.log("temp3: ", temp3);
-    // console.log("temp4: ", temp4);
-    // console.log("tempItemVideo: ", tempItemVideo);
+    console.log("temp4: ", temp4);
+    console.log("tempItemVideo: ", tempItemVideo);
     // console.log("temp5: ", temp5);
     // console.log("tempCatTitle: ", tempCatTitle);
     // console.log("temp6: ", temp6);
@@ -2297,6 +2273,8 @@ class Main extends React.Component {
 
   applyItemAdd = (argo) => {
     console.log("Argo: ", argo);
+    rootArray = [...this.state.rootItems];
+    catArray = [...this.state.catItems];
     array = [...this.state.items];
     tempIcon = "";
     if (noDescr === true) {
@@ -2305,19 +2283,35 @@ class Main extends React.Component {
     if (fileImg !== null && temp2 !== "" && temp3 !== "") {
       if (temp !== "") {
         inPos = parseInt(temp) - 1;
-
+        if (temp5 === "Root") {
+          rootArrayLength = rootArray.length;
+          if (inPos < (rootArrayLength) && inPos >= 0) {
+            this.saveImgFile(fileImg, "icon", "add");
+          } else {
+            this.fireAlert("Check position.", "brick");
+          }
+        } else {
+          catArrayLength = catArray.length;
+          if (inPos < (catArrayLength) && inPos >= 0) {
+            this.saveImgFile(fileImg, "icon", "add");
+          } else {
+            this.fireAlert("Check position.", "brick");
+          }
+        }
         // console.log("InPos: ", inPos);
         // console.log("ArrayLength: ", arrayLength);
-        if (inPos <= (arrayLength) && inPos >= 0) {
-          this.saveImgFile(fileImg, "icon", "add");
-        } else {
-          this.fireAlert("Fill in all fields / Check position.", "brick");
-        }
+
+        // if (inPos <= (arrayLength) && inPos >= 0) {
+        //   this.saveImgFile(fileImg, "icon", "add");
+        // } else {
+        //   this.fireAlert("Fill in all fields / Check position.", "brick");
+        // }
+
       } else {
         this.saveImgFile(fileImg, "icon", "addlast");
       }
     } else {
-      this.fireAlert("Fill in all fields / Check position.", "brick");
+      this.fireAlert("Fill in all fields!", "brick");
     }
   }
 
@@ -2406,7 +2400,7 @@ class Main extends React.Component {
       if (temp !== "") {
         inPos = parseInt(temp) - 1;
         // console.log("AddCat (temp full) InPos: ", inPos);
-        if (inPos <= arrayLength && !dup && inPos >= 0) {
+        if (inPos < arrayLength && !dup && inPos >= 0) {
           this.saveImgFile(fileImg, "cat", "add");
         } else {
           this.fireAlert("Check Position!", "brick");
@@ -3287,7 +3281,8 @@ class Main extends React.Component {
     this.setState({
       catSel: catName
     })
-    // console.log("CatName: ", catName);
+    console.log("CatName: ", temp5);
+    this.itemCatSel(catName, spData.items);
   }
 
   search() {
@@ -3696,7 +3691,15 @@ class Main extends React.Component {
                       </div>
                     </div>
                     <InputOpacity opacity={spData.menuOpacity} id="menuOpRange" tempo={e => tempOpacity = e.target.value}></InputOpacity>
-                    <InputHideBlocks hideSwitch={spData.menuShow}></InputHideBlocks>
+                    <InputHideBlocks hideSwitch={spData.menuShow}
+                      switchClick={e => {
+                        if (spData.menuShow === false) {
+                          blockHide = true;
+                        } else {
+                          blockHide = false;
+                        }
+                      }}>
+                    </InputHideBlocks>
                     <Alert alertShow={this.state.alertShow} alertMsg={this.state.alertMsg} alertCol={this.state.alertCol}></Alert>
                   </form>
                 </div>
@@ -3726,7 +3729,15 @@ class Main extends React.Component {
                       </div>
                     </div>
                     <InputOpacity opacity={spData.headOpacity} id="titleOpRange" tempo={e => tempOpacity = e.target.value}></InputOpacity>
-                    <InputHideBlocks hideSwitch={spData.titleShow}></InputHideBlocks>
+                    <InputHideBlocks hideSwitch={spData.titleShow}
+                      switchClick={e => {
+                        if (spData.titleShow === false) {
+                          blockHide = true;
+                        } else {
+                          blockHide = false;
+                        }
+                      }}>
+                    </InputHideBlocks>
                     <Alert alertShow={this.state.alertShow} alertMsg={this.state.alertMsg} alertCol={this.state.alertCol}></Alert>
                   </form>
                 </div>
@@ -3754,7 +3765,15 @@ class Main extends React.Component {
                       </div>
                     </div>
                     <InputOpacity opacity={spData.clockOpacity} id="clockOpRange" tempo={e => tempOpacity = e.target.value}></InputOpacity>
-                    <InputHideBlocks hideSwitch={spData.clockShow}></InputHideBlocks>
+                    <InputHideBlocks hideSwitch={spData.clockShow}
+                      switchClick={e => {
+                        if (spData.clockShow === false) {
+                          blockHide = true;
+                        } else {
+                          blockHide = false;
+                        }
+                      }}>
+                    </InputHideBlocks>
                     <Alert alertShow={this.state.alertShow} alertMsg={this.state.alertMsg} alertCol={this.state.alertCol}></Alert>
                   </form>
                 </div>
@@ -3780,7 +3799,15 @@ class Main extends React.Component {
                       </div>
                     </div>
                     <InputOpacity opacity={spData.logoOpacity} id="logoOpRange" tempo={e => tempOpacity = e.target.value}></InputOpacity>
-                    <InputHideBlocks hideSwitch={spData.logoShow}></InputHideBlocks>
+                    <InputHideBlocks hideSwitch={spData.logoShow}
+                      switchClick={e => {
+                        if (spData.logoShow === false) {
+                          blockHide = true;
+                        } else {
+                          blockHide = false;
+                        }
+                      }}>
+                    </InputHideBlocks>
                     <Alert alertShow={this.state.alertShow} alertMsg={this.state.alertMsg} alertCol={this.state.alertCol}></Alert>
                   </form>
                 </div>
@@ -3863,7 +3890,15 @@ class Main extends React.Component {
                       </div>
                     </div>
                     <InputOpacity opacity={spData.footInfoOpacity} id="infoOpRange" tempo={e => tempOpacity = e.target.value}></InputOpacity>
-                    <InputHideBlocks hideSwitch={spData.infoShow}></InputHideBlocks>
+                    <InputHideBlocks hideSwitch={spData.infoShow}
+                      switchClick={e => {
+                        if (spData.infoShow === false) {
+                          blockHide = true;
+                        } else {
+                          blockHide = false;
+                        }
+                      }}>
+                    </InputHideBlocks>
                     <Alert alertShow={this.state.alertShow} alertMsg={this.state.alertMsg} alertCol={this.state.alertCol}></Alert>
                   </form>
                 </div>
@@ -3946,7 +3981,15 @@ class Main extends React.Component {
                       </div>
                     </div>
                     <InputOpacity opacity={spData.footAddOpacity} id="addInfoOpRange" tempo={e => tempOpacity = e.target.value}></InputOpacity>
-                    <InputHideBlocks hideSwitch={spData.addInfoShow}></InputHideBlocks>
+                    <InputHideBlocks hideSwitch={spData.addInfoShow}
+                      switchClick={e => {
+                        if (spData.addInfoShow === false) {
+                          blockHide = true;
+                        } else {
+                          blockHide = false;
+                        }
+                      }}>
+                    </InputHideBlocks>
                     <Alert alertShow={this.state.alertShow} alertMsg={this.state.alertMsg} alertCol={this.state.alertCol}></Alert>
                   </form>
                 </div>
