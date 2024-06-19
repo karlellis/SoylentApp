@@ -6,6 +6,16 @@ import "bootstrap/dist/css/bootstrap.min.css";
 // Bootstrap Bundle JS
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import "./index.css";
+
+import { hexToRgb, rgbToHex } from './methods/colorUtils';
+// import { saveConf, crsActions } from './methods/postUtils';
+// import { catItemActions } from './methods/catItemBackUtils';
+
+// import {
+//   fetchUpConfig, fetchDelPHP,
+//   hashUsrPsw, comparePassword, Orologio
+// } from './methods/functionUtils';
+
 const bcrypt = require("bcryptjs")
 var fileImg = null;
 var fileCatImg = null;
@@ -55,7 +65,6 @@ var categoryFirst = "none";
 var dropDownIsOpen = false;
 var catDropDownIsOpen = false;
 var currElement = "";
-// var currURL = window.location.href;
 var newItem = {
   "title": "",
   "link": "",
@@ -1280,9 +1289,9 @@ class Main extends React.Component {
     this.searchInput.focus();
   }
 
-  // ACTIONS
+  // POST UTILS
 
-  saveFile(file, url, key) {
+  saveConf(file, url, key) {
     fetchUpConfig(file, url, key)
       .then(res => {
         console.log("Config Saved!");
@@ -1293,7 +1302,7 @@ class Main extends React.Component {
       });;
   }
 
-  saveImgFile(file, url, op) {
+  catItemActions(file, url, op) {
     if (fileImg !== null) {
       fetchDelPHP(tempIcon, "./api/img-upload.php", url)
         .then(res => {
@@ -1316,7 +1325,7 @@ class Main extends React.Component {
     this.setState({
       activityChanged: true
     })
-    fetchUpPHP(file, "./api/img-upload.php", url)
+    fetchUpPHP(file, "./api/img-upload.php", url, nome)
       .then(res => {
         if (url === "logo" && op === "edit") {
           spData.LogoIcon = "./img/" + nome;
@@ -1627,7 +1636,7 @@ class Main extends React.Component {
           this.fireAlert("Cat added!", "solidgreen");
         } else if (url === "back" && op === "edit") {
           spData.backgroundImage = "./img/" + nome;
-          spData.backgroundColor = this.hexToRgb(tempColor) + ", 1)";
+          spData.backgroundColor = hexToRgb(tempColor) + ", 1)";
           this.setState({
             backStyle: {
               backgroundImage: "url(" + spData.backgroundImage + ")",
@@ -1653,7 +1662,7 @@ class Main extends React.Component {
           });
         } else if (url === "backcat" && op === "edit") {
           spData.catImage = "./img/" + nome;
-          spData.catColor = this.hexToRgb(tempCatColor) + ", 1)";
+          spData.catColor = hexToRgb(tempCatColor) + ", 1)";
           this.setState({
             catStyle: {
               backgroundImage: "url(" + spData.catImage + ")",
@@ -1678,13 +1687,13 @@ class Main extends React.Component {
             activityChanged: false
           });
         }
-        this.saveFile(spData, "./api/img-upload.php", "config");
+        this.saveConf(spData, "./api/img-upload.php", "config");
         fileCatImg = null;
         fileImg = null;
       });
   }
 
-  saveCrs(url, op) {
+  crsActions(url, op) {
     if (url === "crs" && op === "add") {
       CrsNewItem.title = temp2;
       CrsNewItem.link = temp3;
@@ -1743,28 +1752,30 @@ class Main extends React.Component {
       "link": "",
       "descr": ""
     };
-    this.saveFile(spData, "./api/img-upload.php", "config");
+    this.saveConf(spData, "./api/img-upload.php", "config");
   }
 
-  hexToRgb(hex) {
-    hex = hex.replace(/[^0-9A-F]/gi, '');
-    var bigint = parseInt(hex, 16);
-    var r = (bigint >> 16) & 255;
-    var g = (bigint >> 8) & 255;
-    var b = bigint & 255;
-    return "rgba(" + r + ", " + g + ", " + b;
-  }
+  // hexToRgb(hex) {
+  //   hex = hex.replace(/[^0-9A-F]/gi, '');
+  //   var bigint = parseInt(hex, 16);
+  //   var r = (bigint >> 16) & 255;
+  //   var g = (bigint >> 8) & 255;
+  //   var b = bigint & 255;
+  //   return "rgba(" + r + ", " + g + ", " + b;
+  // }
 
-  rgbToHex(rgb) {
-    // console.log("spData: ", spData);
-    // console.log("loginColor: ", spData.loginColor);
-    // console.log("logoColor: ", spData.logoColor);
-    rgb = rgb.replace(/[^\d,]/g, '').split(',');
-    var r = parseInt(rgb[0]);
-    var g = parseInt(rgb[1]);
-    var b = parseInt(rgb[2]);
-    return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
-  }
+  // rgbToHex(rgb) {
+  //   // console.log("spData: ", spData);
+  //   // console.log("loginColor: ", spData.loginColor);
+  //   // console.log("logoColor: ", spData.logoColor);
+  //   rgb = rgb.replace(/[^\d,]/g, '').split(',');
+  //   var r = parseInt(rgb[0]);
+  //   var g = parseInt(rgb[1]);
+  //   var b = parseInt(rgb[2]);
+  //   return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+  // }
+
+  // UTILS
 
   itemSearchReset = () => {
     document.getElementById('searchForm').reset();
@@ -1773,6 +1784,7 @@ class Main extends React.Component {
     this.setState({
       onlyRead: false
     })
+    // Keep Only This
     this.setState({
       activityChanged: false
     })
@@ -1865,9 +1877,9 @@ class Main extends React.Component {
       } else {
         this.setState({ catItems: arrayAdd });
       }
-      for (let ind = 0; ind < arrayAdd.length; ind++) {
-        console.log("catitems=", (arrayAdd[ind]));
-      }
+      // for (let ind = 0; ind < arrayAdd.length; ind++) {
+      //   console.log("catitems=", (arrayAdd[ind]));
+      // }
       arrayAdd = [];
       newItem = {
         "title": "",
@@ -1914,13 +1926,13 @@ class Main extends React.Component {
     if (temp2 !== "") {
       spData.menuCreditsLabel = temp2;
     }
-    spData.menuColor = this.hexToRgb(tempColor) + ", " + tempOpacity + ")";
+    spData.menuColor = hexToRgb(tempColor) + ", " + tempOpacity + ")";
     spData.menuOpacity = parseFloat(tempOpacity.replace(/,/g, "."));
     if (blockHide !== "none") {
       spData.menuShow = blockHide;
     }
     this.fireAlert("Changes Made!", "solidgreen");
-    this.saveFile(spData, "./api/img-upload.php", "config");
+    this.saveConf(spData, "./api/img-upload.php", "config");
     temp = "";
     temp2 = "";
     blockHide = "none";
@@ -1934,9 +1946,9 @@ class Main extends React.Component {
       spData.headTitle = temp;
     }
     // console.log("Titolo: " + spData.headTitle);
-    spData.headColor = this.hexToRgb(tempColor) + ", " + tempOpacity + ")";
+    spData.headColor = hexToRgb(tempColor) + ", " + tempOpacity + ")";
     spData.headOpacity = parseFloat(tempOpacity.replace(/,/g, "."))/* .toFixed(1) */;
-    spData.headTextColor = this.hexToRgb(tempTextColor) + ", 1)";
+    spData.headTextColor = hexToRgb(tempTextColor) + ", 1)";
     spData.headColW = tempColW;
     // console.log("Colore: " + spData.headColor);
     if (blockHide !== "none") {
@@ -1945,14 +1957,14 @@ class Main extends React.Component {
     blockHide = "none";
     temp = "";
     this.fireAlert("Changes Made!", "solidgreen");
-    this.saveFile(spData, "./api/img-upload.php", "config");
+    this.saveConf(spData, "./api/img-upload.php", "config");
   }
 
   saveLogo = () => {
     if (fileImg !== null) {
       tempIcon = spData.LogoIcon;
-      this.saveImgFile(fileImg, "logo", "edit");
-      spData.logoColor = this.hexToRgb(tempColor) + ", " + tempOpacity + ")";
+      this.catItemActions(fileImg, "logo", "edit");
+      spData.logoColor = hexToRgb(tempColor) + ", " + tempOpacity + ")";
       spData.logoOpacity = parseFloat(tempOpacity.replace(/,/g, "."));
       spData.logoColW = tempColW;
       if (blockHide !== "none") {
@@ -1960,7 +1972,7 @@ class Main extends React.Component {
       }
       blockHide = "none";
     } else {
-      spData.logoColor = this.hexToRgb(tempColor) + ", " + tempOpacity + ")";
+      spData.logoColor = hexToRgb(tempColor) + ", " + tempOpacity + ")";
       spData.logoOpacity = parseFloat(tempOpacity.replace(/,/g, "."));
       spData.logoColW = tempColW;
       if (blockHide !== "none") {
@@ -1968,21 +1980,21 @@ class Main extends React.Component {
       }
       blockHide = "none";
       this.fireAlert("Changes Made!", "solidgreen");
-      this.saveFile(spData, "./api/img-upload.php", "config");
+      this.saveConf(spData, "./api/img-upload.php", "config");
     }
   }
 
   saveClock = () => {
-    spData.clockColor = this.hexToRgb(tempColor) + ", " + tempOpacity + ")";
+    spData.clockColor = hexToRgb(tempColor) + ", " + tempOpacity + ")";
     spData.clockOpacity = parseFloat(tempOpacity.replace(/,/g, "."));
-    spData.clockTextColor = this.hexToRgb(tempTextColor) + ", 1)";
+    spData.clockTextColor = hexToRgb(tempTextColor) + ", 1)";
     spData.clockColW = tempColW;
     if (blockHide !== "none") {
       spData.clockShow = blockHide;
     }
     blockHide = "none";
     this.fireAlert("Changes Made!", "solidgreen");
-    this.saveFile(spData, "./api/img-upload.php", "config");
+    this.saveConf(spData, "./api/img-upload.php", "config");
   }
 
   saveBack = () => {
@@ -1990,7 +2002,7 @@ class Main extends React.Component {
 
     if (fileImg !== null) {
       tempIcon = spData.backgroundImage;
-      this.saveImgFile(fileImg, "back", "edit");
+      this.catItemActions(fileImg, "back", "edit");
       changes = true;
     }
 
@@ -1999,12 +2011,12 @@ class Main extends React.Component {
     console.log("Tempopacity1:", tempOpacity1);
     console.log("CatBackgroundOpacity:", spData.catOpacity.toString());
 
-    if (tempColor !== this.rgbToHex(spData.backgroundColor)
+    if (tempColor !== rgbToHex(spData.backgroundColor)
       || tempOpacity !== spData.backgroundOpacity.toString() || disable1 !== "none") {
       if (disable1 !== "none") {
         spData.noBackImage = disable1;
       }
-      spData.backgroundColor = this.hexToRgb(tempColor) + ", " + tempOpacity + ")";
+      spData.backgroundColor = hexToRgb(tempColor) + ", " + tempOpacity + ")";
       spData.backgroundOpacity = parseFloat(tempOpacity.replace(/,/g, "."));
       this.setState({
         activityChanged: true
@@ -2056,16 +2068,16 @@ class Main extends React.Component {
 
     if (fileCatImg !== null) {
       tempCatIcon = spData.catImage;
-      this.saveImgFile(fileCatImg, "backcat", "edit");
+      this.catItemActions(fileCatImg, "backcat", "edit");
       changes = true;
     }
 
-    if (tempCatColor !== this.rgbToHex(spData.catColor)
+    if (tempCatColor !== rgbToHex(spData.catColor)
       || tempOpacity1 !== spData.catOpacity.toString() || disable2 !== "none") {
       if (disable2 !== "none") {
         spData.noCatImage = disable2;
       }
-      spData.catColor = this.hexToRgb(tempCatColor) + ", " + tempOpacity1 + ")";
+      spData.catColor = hexToRgb(tempCatColor) + ", " + tempOpacity1 + ")";
       spData.catOpacity = parseFloat(tempOpacity1.replace(/,/g, "."));
       this.setState({
         activityChanged: true
@@ -2127,7 +2139,7 @@ class Main extends React.Component {
       this.fireAlert("No changes made!", "solidblue");
     } else {
       this.fireAlert("Changes Made!", "solidgreen");
-      this.saveFile(spData, "./api/img-upload.php", "config");
+      this.saveConf(spData, "./api/img-upload.php", "config");
     }
   }
 
@@ -2150,9 +2162,9 @@ class Main extends React.Component {
     if (temp3 !== "") {
       spData.footSubtitle2 = temp3;
     }
-    spData.footInfoColor = this.hexToRgb(tempColor) + ", " + tempOpacity + ")";
+    spData.footInfoColor = hexToRgb(tempColor) + ", " + tempOpacity + ")";
     spData.footInfoOpacity = parseFloat(tempOpacity.replace(/,/g, "."));
-    spData.footInfoTextColor = this.hexToRgb(tempTextColor) + ", 1)";
+    spData.footInfoTextColor = hexToRgb(tempTextColor) + ", 1)";
     spData.footInfoColW = tempColW;
     if (blockHide !== "none") {
       spData.infoShow = blockHide;
@@ -2165,7 +2177,7 @@ class Main extends React.Component {
     disable2 = "none";
     disable3 = "none";
     this.fireAlert("Changes Made!", "solidgreen");
-    this.saveFile(spData, "./api/img-upload.php", "config");
+    this.saveConf(spData, "./api/img-upload.php", "config");
   }
 
   saveAddInfo = () => {
@@ -2188,9 +2200,9 @@ class Main extends React.Component {
       spData.footAddSubtitle2 = temp3;
     }
 
-    spData.footAddColor = this.hexToRgb(tempColor) + ", " + tempOpacity + ")";
+    spData.footAddColor = hexToRgb(tempColor) + ", " + tempOpacity + ")";
     spData.footAddOpacity = parseFloat(tempOpacity.replace(/,/g, "."));
-    spData.footAddTextColor = this.hexToRgb(tempTextColor) + ", 1)";
+    spData.footAddTextColor = hexToRgb(tempTextColor) + ", 1)";
     spData.footAddColW = tempColW;
     if (blockHide !== "none") {
       spData.addInfoShow = blockHide;
@@ -2203,7 +2215,7 @@ class Main extends React.Component {
     disable2 = "none";
     disable3 = "none";
     this.fireAlert("Changes Made!", "solidgreen");
-    this.saveFile(spData, "./api/img-upload.php", "config");
+    this.saveConf(spData, "./api/img-upload.php", "config");
   }
 
   // ITEM ACTIONS
@@ -2239,7 +2251,7 @@ class Main extends React.Component {
           if (temp5 === "Root") {
             rootArrayLength = rootArray.length;
             if (inPos < rootArrayLength && inPos >= 0 /* && inPos !== currPos */) {
-              this.saveImgFile(fileImg, "icon", "edit");
+              this.catItemActions(fileImg, "icon", "edit");
             } else {
               cgPos = "";
               inPos = "";
@@ -2249,7 +2261,7 @@ class Main extends React.Component {
             catArrayLength = catArray.length;
             console.log("CatItemLength: ", catArrayLength);
             if (inPos < catArrayLength && inPos >= 0 /* && inPos !== currPos */) {
-              this.saveImgFile(fileImg, "icon", "edit");
+              this.catItemActions(fileImg, "icon", "edit");
             } else {
               cgPos = "";
               this.fireAlert("Check position!", "brick");
@@ -2263,7 +2275,7 @@ class Main extends React.Component {
         }
       } else {
         // console.log("cgPos === \"\"");
-        this.saveImgFile(fileImg, "icon", "edit");
+        this.catItemActions(fileImg, "icon", "edit");
       }
     } else {
       // console.log("fileImg - temp2 - temp3 are Null!!!");
@@ -2286,14 +2298,14 @@ class Main extends React.Component {
         if (temp5 === "Root") {
           rootArrayLength = rootArray.length;
           if (inPos < (rootArrayLength) && inPos >= 0) {
-            this.saveImgFile(fileImg, "icon", "add");
+            this.catItemActions(fileImg, "icon", "add");
           } else {
             this.fireAlert("Check position.", "brick");
           }
         } else {
           catArrayLength = catArray.length;
           if (inPos < (catArrayLength) && inPos >= 0) {
-            this.saveImgFile(fileImg, "icon", "add");
+            this.catItemActions(fileImg, "icon", "add");
           } else {
             this.fireAlert("Check position.", "brick");
           }
@@ -2308,7 +2320,7 @@ class Main extends React.Component {
         // }
 
       } else {
-        this.saveImgFile(fileImg, "icon", "addlast");
+        this.catItemActions(fileImg, "icon", "addlast");
       }
     } else {
       this.fireAlert("Fill in all fields!", "brick");
@@ -2339,7 +2351,7 @@ class Main extends React.Component {
     temp2 = "";
     temp3 = "";
     this.fireAlert("Item removed!", "solidgreen");
-    this.saveFile(spData, "./api/img-upload.php", "config");
+    this.saveConf(spData, "./api/img-upload.php", "config");
     setTimeout(() => this.setState({ itemDelDiaShow: false }), 1750);
   }
 
@@ -2365,7 +2377,7 @@ class Main extends React.Component {
         console.log("CAT InPos: ", inPos);
         if (inPos < arrayLength && inPos >= 0 /* && inPos !== currPos && !dup */) {
           if (!dup) {
-            this.saveImgFile(fileImg, "cat", "edit");
+            this.catItemActions(fileImg, "cat", "edit");
           } else {
             this.fireAlert("CAT name duplicated!", "brick");
           }
@@ -2375,7 +2387,7 @@ class Main extends React.Component {
         }
       } else {
         if (!dup) {
-          this.saveImgFile(fileImg, "cat", "edit");
+          this.catItemActions(fileImg, "cat", "edit");
         } else {
           this.fireAlert("CAT name duplicated!", "brick");
         }
@@ -2401,14 +2413,14 @@ class Main extends React.Component {
         inPos = parseInt(temp) - 1;
         // console.log("AddCat (temp full) InPos: ", inPos);
         if (inPos < arrayLength && !dup && inPos >= 0) {
-          this.saveImgFile(fileImg, "cat", "add");
+          this.catItemActions(fileImg, "cat", "add");
         } else {
           this.fireAlert("Check Position!", "brick");
         }
       } else {
         // console.log("AddCat (temp Empty) inPos: ", inPos);
         if (!dup) {
-          this.saveImgFile(fileImg, "cat", "addlast");
+          this.catItemActions(fileImg, "cat", "addlast");
         } else {
           this.fireAlert("CAT name duplicated!", "brick");
         }
@@ -2439,7 +2451,7 @@ class Main extends React.Component {
     temp2 = "";
     temp3 = "";
     this.fireAlert("Category removed!", "solidgreen");
-    this.saveFile(spData, "./api/img-upload.php", "config");
+    this.saveConf(spData, "./api/img-upload.php", "config");
     setTimeout(() => this.setState({ catDelDiaShow: false }), 1750);
   }
 
@@ -2451,7 +2463,7 @@ class Main extends React.Component {
         inPos = parseInt(cgPos) - 1;
         // console.log("InPos: ", inPos);
         if (inPos < arrayLength && inPos >= 0 && inPos !== currPos) {
-          this.saveCrs("crs", "edit");
+          this.crsActions("crs", "edit");
           this.fireAlert("Changes Made!", "solidgreen");
           this.setState({
             activityChanged: true
@@ -2460,7 +2472,7 @@ class Main extends React.Component {
           this.fireAlert("No changes made!", "solidblue");
         }
       } else {
-        this.saveCrs("crs", "edit");
+        this.crsActions("crs", "edit");
         this.fireAlert("Changes Made!", "solidgreen");
         this.setState({
           activityChanged: true
@@ -2480,7 +2492,7 @@ class Main extends React.Component {
         inPos = parseInt(temp) - 1;
         // console.log("InPos: ", inPos);
         if (inPos < arrayLength/*  && !dup */) {
-          this.saveCrs("crs", "add");
+          this.crsActions("crs", "add");
           this.fireAlert("Credit added!", "solidgreen");
           this.setState({
             activityChanged: true
@@ -2489,7 +2501,7 @@ class Main extends React.Component {
           this.fireAlert("Fill in all fields!", "brick");
         }
       } else {
-        this.saveCrs("crs", "addlast");
+        this.crsActions("crs", "addlast");
         this.fireAlert("Credit added!", "solidgreen");
         this.setState({
           activityChanged: true
@@ -2530,7 +2542,7 @@ class Main extends React.Component {
     temp4 = "";
 
     this.fireAlert("Credit removed!", "solidgreen");
-    this.saveFile(spData, "./api/img-upload.php", "config");
+    this.saveConf(spData, "./api/img-upload.php", "config");
     setTimeout(() => this.setState({ crsDelDiaShow: false }), 1750);
   }
 
@@ -2540,7 +2552,7 @@ class Main extends React.Component {
     if (login === false) {
       this.showModal("login");
       this.userInput.focus();
-      fetchDownCredentials("./api/img-upload.php");
+      fetchDownCredentials("./api/img-upload.php", credentials);
     } else {
       this.showMainButtons();
     }
@@ -2582,7 +2594,7 @@ class Main extends React.Component {
     if (usrTmp !== "" || pswTmp !== "") {
       // console.log("User: " + usrTmp)
       // console.log("Psw: " + pswTmp)
-      spData.loginColor = this.hexToRgb(tempColor) + ", " + tempOpacity + ")";
+      spData.loginColor = hexToRgb(tempColor) + ", " + tempOpacity + ")";
       spData.loginOpacity = parseFloat(tempOpacity.replace(/,/g, "."));
       hashUsrPsw(usrTmp, pswTmp)
         .then(result => {
@@ -2593,19 +2605,19 @@ class Main extends React.Component {
           credentials.password = result[1];
           // console.log("Psw: " + pswTmp)
           // console.log("PswHash: " + spData.password)
-          this.saveFile(credentials, "./api/img-upload.php", "credentials");
+          this.saveConf(credentials, "./api/img-upload.php", "credentials");
           usrTmp = "";
           pswTmp = "";
-          this.saveFile(spData, "./api/img-upload.php", "config");
+          this.saveConf(spData, "./api/img-upload.php", "config");
           this.fireAlert("Username and password changed successfully!", "solidgreen");
         })
         .catch(err => {
           console.log(err)
         })
     } else {
-      spData.loginColor = this.hexToRgb(tempColor) + ", " + tempOpacity + ")";
+      spData.loginColor = hexToRgb(tempColor) + ", " + tempOpacity + ")";
       spData.loginOpacity = parseFloat(tempOpacity.replace(/,/g, "."));
-      this.saveFile(spData, "./api/img-upload.php", "config");
+      this.saveConf(spData, "./api/img-upload.php", "config");
       this.fireAlert("Changes Made!", "solidgreen");
     }
   }
@@ -2644,9 +2656,9 @@ class Main extends React.Component {
           default:
           // will NOT execute because of the line preceding the switch.
         }
-        tempColor = this.rgbToHex(spData.headColor);
+        tempColor = rgbToHex(spData.headColor);
         tempOpacity = spData.headOpacity.toString();
-        tempTextColor = this.rgbToHex(spData.headTextColor);
+        tempTextColor = rgbToHex(spData.headTextColor);
         // console.log("Titolo Colore showModal:", this.rgbToHex(spData.headColor));
         this.setState({ titleDiaShow: true });
         break;
@@ -2654,12 +2666,12 @@ class Main extends React.Component {
         this.setState({ loginDiaShow: true });
         break;
       case "loginEdit":
-        tempColor = this.rgbToHex(spData.loginColor);
+        tempColor = rgbToHex(spData.loginColor);
         tempOpacity = spData.loginOpacity.toString();
         this.setState({ loginEditDiaShow: true });
         break;
       case "menu":
-        tempColor = this.rgbToHex(spData.menuColor);
+        tempColor = rgbToHex(spData.menuColor);
         tempOpacity = spData.menuOpacity.toString();
         this.setState({ menuDiaShow: true });
         break;
@@ -2693,7 +2705,7 @@ class Main extends React.Component {
           default:
           // will NOT execute because of the line preceding the switch.
         }
-        tempColor = this.rgbToHex(spData.logoColor);
+        tempColor = rgbToHex(spData.logoColor);
         tempOpacity = spData.logoOpacity.toString();
         this.setState({ logoDiaShow: true });
         break;
@@ -2727,9 +2739,9 @@ class Main extends React.Component {
           default:
           // will NOT execute because of the line preceding the switch.
         }
-        tempColor = this.rgbToHex(spData.footInfoColor);
+        tempColor = rgbToHex(spData.footInfoColor);
         tempOpacity = spData.footInfoOpacity.toString();
-        tempTextColor = this.rgbToHex(spData.footInfoTextColor);
+        tempTextColor = rgbToHex(spData.footInfoTextColor);
         this.setState({ infoDiaShow: true });
         break;
       case "addInfo":
@@ -2762,9 +2774,9 @@ class Main extends React.Component {
           default:
           // will NOT execute because of the line preceding the switch.
         }
-        tempColor = this.rgbToHex(spData.footAddColor);
+        tempColor = rgbToHex(spData.footAddColor);
         tempOpacity = spData.footAddOpacity.toString();
-        tempTextColor = this.rgbToHex(spData.footAddTextColor);
+        tempTextColor = rgbToHex(spData.footAddTextColor);
         this.setState({ addInfoDiaShow: true });
         break;
       case "itemEdit":
@@ -2814,9 +2826,9 @@ class Main extends React.Component {
         this.setState({ searchDiaShow: true });
         break;
       case "back":
-        tempColor = this.rgbToHex(spData.backgroundColor);
+        tempColor = rgbToHex(spData.backgroundColor);
         tempOpacity = spData.backgroundOpacity.toString();
-        tempCatColor = this.rgbToHex(spData.catColor);
+        tempCatColor = rgbToHex(spData.catColor);
         tempOpacity1 = spData.catOpacity.toString();
         this.setState({ backEditDiaShow: true });
         break;
@@ -2850,9 +2862,9 @@ class Main extends React.Component {
           default:
           // will NOT execute because of the line preceding the switch.
         }
-        tempColor = this.rgbToHex(spData.clockColor);
+        tempColor = rgbToHex(spData.clockColor);
         tempOpacity = spData.clockOpacity.toString();
-        tempTextColor = this.rgbToHex(spData.clockTextColor);
+        tempTextColor = rgbToHex(spData.clockTextColor);
         this.setState({ clockDiaShow: true });
         break;
       default:
@@ -3025,9 +3037,12 @@ class Main extends React.Component {
     tempColW = "";
     temp3 = "";
     temp4 = "";
-    this.setState({
-      activityChanged: false
-    });
+
+    // To Fix Search Button Enable after Video Play
+
+    // this.setState({
+    //   activityChanged: false
+    // });
   };
 
   // ACTION BUTTONS
@@ -3524,6 +3539,14 @@ class Main extends React.Component {
               </EditElement>
             </Element>
           </div>
+          <div className="row">
+            {/* VERSIONE */}
+            <section title="SoylentApp v1.5.2"
+              className="col mt-2 version latoplain d-flex justify-content-center align-items-center"
+              onClick={() => window.open("https://github.com/karlellis/SoylentApp")}>
+              <b>SoylentApp</b>&nbsp;v1.5.2
+            </section>
+          </div>
         </div>
       </div >
     )
@@ -3625,7 +3648,7 @@ class Main extends React.Component {
                     <div className="form-group">
                       <div className="row mb-1 m-auto">
                         <InputBackColor bcLabel="Back color" backColor={spData.loginColor}
-                          rgbToHex={this.rgbToHex} tempo={e => tempColor = e.target.value}></InputBackColor>
+                          rgbToHex={rgbToHex} tempo={e => tempColor = e.target.value}></InputBackColor>
                       </div>
                     </div>
                     <InputOpacity opacity={spData.loginOpacity} id="loginOpRange" tempo={e => tempOpacity = e.target.value}></InputOpacity>
@@ -3687,7 +3710,7 @@ class Main extends React.Component {
                     <div className="form-group">
                       <div className="row mb-1 m-auto">
                         <InputBackColor bcLabel="Back color" backColor={spData.menuColor}
-                          rgbToHex={this.rgbToHex} tempo={e => tempColor = e.target.value}></InputBackColor>
+                          rgbToHex={rgbToHex} tempo={e => tempColor = e.target.value}></InputBackColor>
                       </div>
                     </div>
                     <InputOpacity opacity={spData.menuOpacity} id="menuOpRange" tempo={e => tempOpacity = e.target.value}></InputOpacity>
@@ -3723,9 +3746,9 @@ class Main extends React.Component {
                     <div className="form-group">
                       <div className="row mb-1 m-auto">
                         <InputBackColor bcLabel="Back color" backColor={spData.headColor}
-                          rgbToHex={this.rgbToHex} tempo={e => tempColor = e.target.value}></InputBackColor>
+                          rgbToHex={rgbToHex} tempo={e => tempColor = e.target.value}></InputBackColor>
                         <div className="col-1"></div>
-                        <InputTextColor textColor={spData.headTextColor} rgbToHex={this.rgbToHex}></InputTextColor>
+                        <InputTextColor textColor={spData.headTextColor} rgbToHex={rgbToHex}></InputTextColor>
                       </div>
                     </div>
                     <InputOpacity opacity={spData.headOpacity} id="titleOpRange" tempo={e => tempOpacity = e.target.value}></InputOpacity>
@@ -3759,9 +3782,9 @@ class Main extends React.Component {
                     <div className="form-group">
                       <div className="row mb-1 m-auto">
                         <InputBackColor bcLabel="Back color" backColor={spData.clockColor}
-                          rgbToHex={this.rgbToHex} tempo={e => tempColor = e.target.value}></InputBackColor>
+                          rgbToHex={rgbToHex} tempo={e => tempColor = e.target.value}></InputBackColor>
                         <div className="col-1"></div>
-                        <InputTextColor textColor={spData.clockTextColor} rgbToHex={this.rgbToHex}></InputTextColor>
+                        <InputTextColor textColor={spData.clockTextColor} rgbToHex={rgbToHex}></InputTextColor>
                       </div>
                     </div>
                     <InputOpacity opacity={spData.clockOpacity} id="clockOpRange" tempo={e => tempOpacity = e.target.value}></InputOpacity>
@@ -3795,7 +3818,7 @@ class Main extends React.Component {
                     <div className="form-group">
                       <div className="row mb-1 m-auto">
                         <InputBackColor bcLabel="Back color" backColor={spData.logoColor}
-                          rgbToHex={this.rgbToHex} tempo={e => tempColor = e.target.value}></InputBackColor>
+                          rgbToHex={rgbToHex} tempo={e => tempColor = e.target.value}></InputBackColor>
                       </div>
                     </div>
                     <InputOpacity opacity={spData.logoOpacity} id="logoOpRange" tempo={e => tempOpacity = e.target.value}></InputOpacity>
@@ -3884,9 +3907,9 @@ class Main extends React.Component {
                     <div className="form-group">
                       <div className="row mb-1 m-auto">
                         <InputBackColor bcLabel="Back color" backColor={spData.footInfoColor}
-                          rgbToHex={this.rgbToHex} tempo={e => tempColor = e.target.value}></InputBackColor>
+                          rgbToHex={rgbToHex} tempo={e => tempColor = e.target.value}></InputBackColor>
                         <div className="col-1"></div>
-                        <InputTextColor textColor={spData.footInfoTextColor} rgbToHex={this.rgbToHex}></InputTextColor>
+                        <InputTextColor textColor={spData.footInfoTextColor} rgbToHex={rgbToHex}></InputTextColor>
                       </div>
                     </div>
                     <InputOpacity opacity={spData.footInfoOpacity} id="infoOpRange" tempo={e => tempOpacity = e.target.value}></InputOpacity>
@@ -3975,9 +3998,9 @@ class Main extends React.Component {
                     <div className="form-group">
                       <div className="row mb-1 m-auto">
                         <InputBackColor bcLabel="Back color" backColor={spData.footAddColor}
-                          rgbToHex={this.rgbToHex} tempo={e => tempColor = e.target.value}></InputBackColor>
+                          rgbToHex={rgbToHex} tempo={e => tempColor = e.target.value}></InputBackColor>
                         <div className="col-1"></div>
-                        <InputTextColor textColor={spData.footAddTextColor} rgbToHex={this.rgbToHex}></InputTextColor>
+                        <InputTextColor textColor={spData.footAddTextColor} rgbToHex={rgbToHex}></InputTextColor>
                       </div>
                     </div>
                     <InputOpacity opacity={spData.footAddOpacity} id="addInfoOpRange" tempo={e => tempOpacity = e.target.value}></InputOpacity>
@@ -4076,7 +4099,7 @@ class Main extends React.Component {
                     <div className="form-group">
                       <div className="row mb-1 m-auto">
                         <InputBackColor bcLabel="Main back color" backColor={spData.backgroundColor}
-                          rgbToHex={this.rgbToHex} tempo={e => tempColor = e.target.value}></InputBackColor>
+                          rgbToHex={rgbToHex} tempo={e => tempColor = e.target.value}></InputBackColor>
                       </div>
                     </div>
                     {/* MAIN BRIGHTNESS */}
@@ -4119,7 +4142,7 @@ class Main extends React.Component {
                     <div className="form-group">
                       <div className="row mb-1 m-auto">
                         <InputBackColor bcLabel="Cat/Credit back color" backColor={spData.catColor}
-                          rgbToHex={this.rgbToHex} tempo={e => tempCatColor = e.target.value}></InputBackColor>
+                          rgbToHex={rgbToHex} tempo={e => tempCatColor = e.target.value}></InputBackColor>
                       </div>
                     </div>
                     {/* CAT BACK OPACITY */}
