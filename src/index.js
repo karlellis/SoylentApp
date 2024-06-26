@@ -8,13 +8,14 @@ import "bootstrap/dist/js/bootstrap.bundle.min";
 import "./index.css";
 
 import { hexToRgb, rgbToHex } from './methods/colorUtils';
-// import { saveConf, crsActions } from './methods/postUtils';
-// import { catItemActions } from './methods/catItemBackUtils';
-
-// import {
-//   fetchUpConfig, fetchDelPHP,
-//   hashUsrPsw, comparePassword, Orologio
-// } from './methods/functionUtils';
+import {
+  Item, Cat, Credit, Element, EditElement, EleDialog
+} from './methods/elements';
+import { ImgElement, ModalTitle, InputFile, InputPosition, InputTitle,
+  InputLink, InputCat, InputWidth, InputBackColor,
+  InputTextColor, InputOpacity, InputVideo, InputInfos,
+  InputHideBlocks, InputSwitch, AddSym, LoginGear,
+  SettingsGear, Alert } from './methods/simpleComp';
 
 const bcrypt = require("bcryptjs")
 var fileImg = null;
@@ -87,679 +88,673 @@ var CrsNewItem = {
 };
 var nome = "";
 var credentials = require("./initSec.json");
-var spData = require("./initData.json");
+export var spData = require("./initData.json");
 
 // ELEMENTS
 
-const Item = ({ showItemsBtn, pos, id, title, link, descr, icon, video, hidden, cat, itemEditDel, itemVideo, itemHide }) => {
-  const [isActive, setIsActive] = useState(false);
-  const hide = hidden ? <ImgElement type={"iRedPoint"} /> : ""
-  const linkOrVideo = video
-    ?
-    (<img className="items pointer" title={title} alt={title} src={icon}
-      onClick={() => itemVideo(id, cat)} />)
-    :
-    (< a title={title} href={link} target="_blank" rel="noreferrer">
-      <img className="items" title={title}
-        alt={title} src={icon} />
-    </a>);
+// const Item = ({ showItemsBtn, pos, id, title, link, descr, icon, video,
+//   hidden, cat, itemEditDel, itemVideo, itemHide }) => {
+//   const [isActive, setIsActive] = useState(false);
+//   const hide = hidden ? <ImgElement type={"iRedPoint"} /> : ""
+//   const linkOrVideo = video
+//     ?
+//     (<img className="items pointer" title={title} alt={title} src={icon}
+//       onClick={() => itemVideo(id, cat)} />)
+//     :
+//     (< a title={title} href={link} target="_blank" rel="noreferrer">
+//       <img className="items" title={title}
+//         alt={title} src={icon} />
+//     </a>);
 
-  let itemBtn = "";
-  let descrTxt = "";
-  let titleTxt = "";
+//   let itemBtn = "";
+//   let descrTxt = "";
+//   let titleTxt = "";
 
-  if (descr !== "") {
-    descrTxt = (
-      <div className={`${isActive ? 'descr-shown row medfonts lato text-center m-auto' : 'descr-hidden'}`}
-        style={{
-          backgroundImage: "url(" + icon + ")",
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat'
-        }}>
-        <p style={{ backgroundColor: "rgba(0, 0, 0, 0.7)", margin: ".5rem", flexShrink: "inherit" }}>{descr}</p>
-      </div>
-    )
-    titleTxt = (
-      <h4>
-        <div className="row lato text-center m-1">
-          <div className="col">
-            <div className="row">
-              <div className="col d-flex flex-column justify-content-center align-items-center">
-                <b>{title}</b>
-              </div>
-              {hide}
-              <div className="col-2 borderleft pointer d-flex flex-column justify-content-center align-items-center"
-                onClick={() => setIsActive(!isActive)}>
-                <b>{isActive ? '-' : '+'}</b>
-              </div>
-            </div>
-          </div>
-        </div>
-      </h4>
-    )
-  } else {
-    descrTxt = "";
-    titleTxt = (
-      <h4>
-        <div className="row lato text-center m-1">
-          <div className="col">
-            <div className="row">
-              <div className="col d-flex flex-column justify-content-center align-items-center">
-                <b>{title}</b>
-              </div>
-              {hide}
-            </div>
-          </div>
-        </div>
-      </h4>
-    );
-  };
-  if (showItemsBtn === "ShowItemBtn") {
-    itemBtn = (
-      <div className="itemcontainer">
-        <div className="iconcontainer box box2">
-          {!isActive && linkOrVideo}
-          {descrTxt}
-        </div>
-        {titleTxt}
-        <div className="row btncontainer">
-          <button className="col itembutton solidgreen m-1" onClick={() => itemEditDel("itemEdit", id, pos)}>
-            Edit
-          </button>
-          <button className="col-1 itembutton black m-1 pad01">
-            {pos + 1}
-          </button>
-          <button className="col itembutton solidbrick m-1" onClick={() => itemEditDel("itemDel", id, pos)}>
-            Remove
-          </button>
-        </div>
-      </div>
-    )
-  } else {
-    itemBtn = (
-      <div className="itemcontainer">
-        <div className="iconcontainer box box2">
-          {!isActive && linkOrVideo}
-          {descrTxt}
-        </div>
-        {titleTxt}
-      </div>
-    )
-  }
-  // }
-  return (
-    <>
-      {(!itemHide || showItemsBtn === "ShowItemBtn") && itemBtn}
-    </>
-  );
-}
+//   if (descr !== "") {
+//     descrTxt = (
+//       <div className={`${isActive ? 'descr-shown row medfonts lato text-center m-auto' : 'descr-hidden'}`}
+//         style={{
+//           backgroundImage: "url(" + icon + ")",
+//           backgroundPosition: 'center',
+//           backgroundRepeat: 'no-repeat'
+//         }}>
+//         <p style={{ backgroundColor: "rgba(0, 0, 0, 0.7)", margin: ".5rem", flexShrink: "inherit" }}>{descr}</p>
+//       </div>
+//     )
+//     titleTxt = (
+//       <h4>
+//         <div className="row lato text-center m-1">
+//           <div className="col">
+//             <div className="row">
+//               <div className="col d-flex flex-column justify-content-center align-items-center">
+//                 <b>{title}</b>
+//               </div>
+//               {hide}
+//               <div className="col-2 borderleft pointer d-flex flex-column justify-content-center align-items-center"
+//                 onClick={() => setIsActive(!isActive)}>
+//                 <b>{isActive ? '-' : '+'}</b>
+//               </div>
+//             </div>
+//           </div>
+//         </div>
+//       </h4>
+//     )
+//   } else {
+//     descrTxt = "";
+//     titleTxt = (
+//       <h4>
+//         <div className="row lato text-center m-1">
+//           <div className="col">
+//             <div className="row">
+//               <div className="col d-flex flex-column justify-content-center align-items-center">
+//                 <b>{title}</b>
+//               </div>
+//               {hide}
+//             </div>
+//           </div>
+//         </div>
+//       </h4>
+//     );
+//   };
+//   if (showItemsBtn === "ShowItemBtn") {
+//     itemBtn = (
+//       <div className="itemcontainer">
+//         <div className="iconcontainer box box2">
+//           {!isActive && linkOrVideo}
+//           {descrTxt}
+//         </div>
+//         {titleTxt}
+//         <div className="row btncontainer">
+//           <button className="col itembutton solidgreen m-1" onClick={() => itemEditDel("itemEdit", id, pos)}>
+//             Edit
+//           </button>
+//           <button className="col-1 itembutton black m-1 pad01">
+//             {pos + 1}
+//           </button>
+//           <button className="col itembutton solidbrick m-1" onClick={() => itemEditDel("itemDel", id, pos)}>
+//             Remove
+//           </button>
+//         </div>
+//       </div>
+//     )
+//   } else {
+//     itemBtn = (
+//       <div className="itemcontainer">
+//         <div className="iconcontainer box box2">
+//           {!isActive && linkOrVideo}
+//           {descrTxt}
+//         </div>
+//         {titleTxt}
+//       </div>
+//     )
+//   }
+//   // }
+//   return (
+//     <>
+//       {(!itemHide || showItemsBtn === "ShowItemBtn") && itemBtn}
+//     </>
+//   );
+// }
 
-const Cat = ({ showItemsBtn, pos, title, icon, hidden, catCont, catEditDel, itemHide }) => {
-  const hide = hidden ? <ImgElement type={"iRedPoint"} /> : ""
-  let catBtn = ""
-  if (showItemsBtn === "ShowItemBtn") {
-    catBtn = (
-      <div className="itemcontainer">
-        <div className="iconcontainer box box2">
-          <img className="items pointer" title={title} alt={title} src={icon}
-            onClick={catCont} />
-          {/* onClick={() => catCont(pos)} /> */}
-        </div>
-        <h4>
-          <div className="row lato text-center m-1">
-            <div className="col">
-              <div className="row">
-                <div className="col d-flex flex-column justify-content-center align-items-center">
-                  <b>{title}</b>
-                </div>
-                {hide}
-              </div>
-            </div>
-          </div>
-        </h4>
-        <div className="row btncontainer">
-          <button className="col itembutton solidgreen m-1" onClick={() => catEditDel("CatEdit", pos)}>
-            Edit
-          </button>
-          <button className="col-1 itembutton black m-1 pad01">
-            {pos + 1}
-          </button>
-          <button className="col itembutton solidbrick m-1" onClick={() => catEditDel("CatDel", pos)}>
-            Remove
-          </button>
-        </div>
+// const Cat = ({ showItemsBtn, pos, title, icon, hidden, catCont, catEditDel, itemHide }) => {
+//   const hide = hidden ? <ImgElement type={"iRedPoint"} /> : ""
+//   let catBtn = ""
+//   if (showItemsBtn === "ShowItemBtn") {
+//     catBtn = (
+//       <div className="itemcontainer">
+//         <div className="iconcontainer box box2">
+//           <img className="items pointer" title={title} alt={title} src={icon}
+//             onClick={catCont} />
+//           {/* onClick={() => catCont(pos)} /> */}
+//         </div>
+//         <h4>
+//           <div className="row lato text-center m-1">
+//             <div className="col">
+//               <div className="row">
+//                 <div className="col d-flex flex-column justify-content-center align-items-center">
+//                   <b>{title}</b>
+//                 </div>
+//                 {hide}
+//               </div>
+//             </div>
+//           </div>
+//         </h4>
+//         <div className="row btncontainer">
+//           <button className="col itembutton solidgreen m-1" onClick={() => catEditDel("CatEdit", pos)}>
+//             Edit
+//           </button>
+//           <button className="col-1 itembutton black m-1 pad01">
+//             {pos + 1}
+//           </button>
+//           <button className="col itembutton solidbrick m-1" onClick={() => catEditDel("CatDel", pos)}>
+//             Remove
+//           </button>
+//         </div>
 
-      </div>
-    )
-  } else {
-    catBtn = (
-      <div className="itemcontainer">
-        <div className="iconcontainer box box2">
-          <img className="items pointer" title={title} alt={title} src={icon}
-            onClick={catCont} />
-        </div>
-        <h4>
-          <div className="row lato text-center m-1">
-            <div className="col">
-              <div className="row">
-                <div className="col d-flex flex-column justify-content-center align-items-center">
-                  <b>{title}</b>
-                </div>
-                {hide}
-              </div>
-            </div>
-          </div>
-        </h4>
-      </div>
-    )
-  }
-  return (
-    <>
-      {(!itemHide || showItemsBtn === "ShowItemBtn") && catBtn}
-    </>
-  );
+//       </div>
+//     )
+//   } else {
+//     catBtn = (
+//       <div className="itemcontainer">
+//         <div className="iconcontainer box box2">
+//           <img className="items pointer" title={title} alt={title} src={icon}
+//             onClick={catCont} />
+//         </div>
+//         <h4>
+//           <div className="row lato text-center m-1">
+//             <div className="col">
+//               <div className="row">
+//                 <div className="col d-flex flex-column justify-content-center align-items-center">
+//                   <b>{title}</b>
+//                 </div>
+//                 {hide}
+//               </div>
+//             </div>
+//           </div>
+//         </h4>
+//       </div>
+//     )
+//   }
+//   return (
+//     <>
+//       {(!itemHide || showItemsBtn === "ShowItemBtn") && catBtn}
+//     </>
+//   );
 
-}
+// }
 
-const Credit = ({ showItemsBtn, pos, title, link, descr, crsEditDel }) => {
-  let creditBtn = ""
-  if (showItemsBtn === "ShowItemBtn") {
-    creditBtn = (
-      <>
-        <div className="row">
-          <button className="col extcredits green m-1"
-            onClick={() => {
-              window.open(link);
-            }}>
-            <h2><font color="white">
-              {title}
-            </font></h2>
-            <h5><font color="Chartreuse">{descr}</font></h5>
-          </button>
-        </div>
-        <div className="row btncontainer">
-          <button className="col itembutton solidgreen m-1" onClick={() => crsEditDel("CrsEdit", pos)}>
-            Edit
-          </button>
-          <button className="col-1 itembutton black m-1 pad01">
-            {pos + 1}
-          </button>
-          <button className="col itembutton solidbrick m-1" onClick={() => crsEditDel("CrsDel", pos)}>
-            Remove
-          </button>
-        </div>
-      </>
-    )
-  } else {
-    creditBtn = (
-      <div className="row">
-        <button className="col extcredits green m-1"
-          onClick={() => {
-            window.open(link);
-          }}>
-          <h2><font color="white">
-            {title}
-          </font></h2>
-          <h5><font color="Chartreuse">{descr}</font></h5>
-        </button>
-      </div>
-    )
-  }
-  return (
-    <>
-      {creditBtn}
-    </>
-  );
-}
+// const Credit = ({ showItemsBtn, pos, title, link, descr, crsEditDel }) => {
+//   let creditBtn = ""
+//   if (showItemsBtn === "ShowItemBtn") {
+//     creditBtn = (
+//       <>
+//         <div className="row">
+//           <button className="col extcredits green m-1"
+//             onClick={() => {
+//               window.open(link);
+//             }}>
+//             <h2><font color="white">
+//               {title}
+//             </font></h2>
+//             <h5><font color="Chartreuse">{descr}</font></h5>
+//           </button>
+//         </div>
+//         <div className="row btncontainer">
+//           <button className="col itembutton solidgreen m-1" onClick={() => crsEditDel("CrsEdit", pos)}>
+//             Edit
+//           </button>
+//           <button className="col-1 itembutton black m-1 pad01">
+//             {pos + 1}
+//           </button>
+//           <button className="col itembutton solidbrick m-1" onClick={() => crsEditDel("CrsDel", pos)}>
+//             Remove
+//           </button>
+//         </div>
+//       </>
+//     )
+//   } else {
+//     creditBtn = (
+//       <div className="row">
+//         <button className="col extcredits green m-1"
+//           onClick={() => {
+//             window.open(link);
+//           }}>
+//           <h2><font color="white">
+//             {title}
+//           </font></h2>
+//           <h5><font color="Chartreuse">{descr}</font></h5>
+//         </button>
+//       </div>
+//     )
+//   }
+//   return (
+//     <>
+//       {creditBtn}
+//     </>
+//   );
+// }
 
-const Element = ({ eleShow, children, mainBtn, id, sfondo, colore, z, colW }) => {
-  const showHideClassName = eleShow ? "d-block" : "d-none";
-  const justifyCenterEnd = mainBtn ? "justify-content-end" : "justify-content-center";
-  return (
-    <section id={id} style={{ backgroundColor: sfondo, color: colore, zIndex: z }}
-      className={showHideClassName + " " + justifyCenterEnd + " " + colW + " latoplain d-flex flex-column align-items-center"}>
-      {children}
-    </section>
-  );
-};
+// const Element = ({ eleShow, children, mainBtn, id, sfondo, colore, z, colW }) => {
+//   const showHideClassName = eleShow ? "d-block" : "d-none";
+//   const justifyCenterEnd = mainBtn ? "justify-content-end" : "justify-content-center";
+//   return (
+//     <section id={id} style={{ backgroundColor: sfondo, color: colore, zIndex: z }}
+//       className={showHideClassName + " " + justifyCenterEnd + " " + colW + " latoplain d-flex flex-column align-items-center"}>
+//       {children}
+//     </section>
+//   );
+// };
 
-const EditElement = ({ editEleShow, children, hidden }) => {
-  const showHideClassName = editEleShow ? "d-block" : "d-none";
-  const hide = hidden ? "" : <ImgElement type={"redPoint"} />
-  return (
-    <div className={showHideClassName + " stretch d-flex justify-content-center align-items-center"}>
-      {children} {hide}
-    </div>
-  );
-};
+// const EditElement = ({ editEleShow, children, hidden }) => {
+//   const showHideClassName = editEleShow ? "d-block" : "d-none";
+//   const hide = hidden ? "" : <ImgElement type={"redPoint"} />
+//   return (
+//     <div className={showHideClassName + " stretch d-flex justify-content-center align-items-center"}>
+//       {children} {hide}
+//     </div>
+//   );
+// };
 
 // DIALOGS
 
-const EleDialog = ({ handleSave, handleMidBtn, handleClose, eleDiaShow, children, saveLabel, midBtnLabel,
-  activityChanged, hideApply, hideClose, hideMidBtn, footTheme, mainTheme }) => {
-  const showHideClassName = eleDiaShow ? "modal display-block" : "modal display-none";
-  const showHideApply = hideApply ? "display-none" : "display-block";
-  const showHideMidBtn = hideMidBtn ? "display-none" : "display-block";
-  const showHideClose = hideClose ? "display-none" : "display-block";
-  return (
-    <div className={showHideClassName}>
-      <section className={mainTheme}>
-        {children}
-        <div className={footTheme}>
-          <button type="button" disabled={(activityChanged) ? true : false} className={showHideApply + " btn btn-primary"} onClick={handleSave}>{saveLabel}</button>
-          <button type="button" className={showHideMidBtn + " btn btn-success"} onClick={handleMidBtn}>{midBtnLabel}</button>
-          <button type="button" className={showHideClose + " btn btn-secondary"} data-dismiss="modal" onClick={handleClose}>Close</button>
-        </div>
-      </section>
-    </div>
-  );
-};
+// const EleDialog = ({ handleSave, handleMidBtn, handleClose, eleDiaShow, children, saveLabel, midBtnLabel,
+//   activityChanged, hideApply, hideClose, hideMidBtn, footTheme, mainTheme }) => {
+//   const showHideClassName = eleDiaShow ? "modal display-block" : "modal display-none";
+//   const showHideApply = hideApply ? "display-none" : "display-block";
+//   const showHideMidBtn = hideMidBtn ? "display-none" : "display-block";
+//   const showHideClose = hideClose ? "display-none" : "display-block";
+//   return (
+//     <div className={showHideClassName}>
+//       <section className={mainTheme}>
+//         {children}
+//         <div className={footTheme}>
+//           <button type="button" disabled={(activityChanged) ? true : false} className={showHideApply + " btn btn-primary"} onClick={handleSave}>{saveLabel}</button>
+//           <button type="button" className={showHideMidBtn + " btn btn-success"} onClick={handleMidBtn}>{midBtnLabel}</button>
+//           <button type="button" className={showHideClose + " btn btn-secondary"} data-dismiss="modal" onClick={handleClose}>Close</button>
+//         </div>
+//       </section>
+//     </div>
+//   );
+// };
 
 // SIMPLE COMPONENTES
 
-const ModalTitle = ({ title }) => {
-  return (
-    <div className="modal-header">
-      <h5 className="modal-title" >{title}</h5>
-    </div>
-  )
-}
+// const ModalTitle = ({ title }) => {
+//   return (
+//     <div className="modal-header">
+//       <h5 className="modal-title" >{title}</h5>
+//     </div>
+//   )
+// }
 
-const InputFile = () => {
-  return (
-    <div className="form-group">
-      <div className="row text-center mb-1 m-auto">
-        <div className="col">
-          <div className="row border">
-            <div className="col d-flex flex-column justify-content-center align-items-center">
-              <input type="file" className="form-control boxs border-0" name="icon" onChange={e => fileImg = e.target.files[0]} />
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  )
-}
+// const InputFile = ({ fileIn }) => {
+//   return (
+//     <div className="form-group">
+//       <div className="row text-center mb-1 m-auto">
+//         <div className="col">
+//           <div className="row border">
+//             <div className="col d-flex flex-column justify-content-center align-items-center">
+//               <input type="file" className="form-control boxs border-0" name="icon"
+//                 onChange={fileIn} />
+//             </div>
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//   )
+// }
 
-const InputPosition = ({ edit, pos, aTempo, eTempo, id }) => {
-  if (edit === "Add Item") {
-    return (
-      <div className="form-group">
-        <div className="row text-center mb-1 m-auto">
-          <div className="col">
-            <div className="row border">
-              <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
-                <label>Pos</label>
-              </div>
-              <div className="col d-flex flex-column justify-content-center align-items-center">
-                <input type="text" placeholder="Leave blank for last..." id={id} className="form-control border-0"
-                  onChange={e => {
-                    temp = e.target.value;
-                  }
-                  } />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    )
-  } else {
-    return (
-      <div className="form-group">
-        <div className="row text-center mb-1 m-auto">
-          <div className="col">
-            <div className="row border">
-              <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
-                <label>Pos</label>
-              </div>
-              <div className="col d-flex flex-column justify-content-center align-items-center">
-                <input type="text" className="form-control border-0" placeholder={pos + 1} id={id}
-                  onChange={e => {
-                    cgPos = e.target.value;
-                  }
-                  } />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    )
-  }
-}
+// const InputPosition = ({ edit, pos, tempo, id }) => {
+//   if (edit === "Add Item") {
+//     return (
+//       <div className="form-group">
+//         <div className="row text-center mb-1 m-auto">
+//           <div className="col">
+//             <div className="row border">
+//               <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
+//                 <label>Pos</label>
+//               </div>
+//               <div className="col d-flex flex-column justify-content-center align-items-center">
+//                 <input type="text" placeholder="Leave blank for last..." id={id} className="form-control border-0"
+//                   onChange={tempo} />
+//               </div>
+//             </div>
+//           </div>
+//         </div>
+//       </div>
+//     )
+//   } else {
+//     return (
+//       <div className="form-group">
+//         <div className="row text-center mb-1 m-auto">
+//           <div className="col">
+//             <div className="row border">
+//               <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
+//                 <label>Pos</label>
+//               </div>
+//               <div className="col d-flex flex-column justify-content-center align-items-center">
+//                 <input type="text" className="form-control border-0" placeholder={pos + 1} id={id}
+//                   onChange={tempo} />
+//               </div>
+//             </div>
+//           </div>
+//         </div>
+//       </div>
+//     )
+//   }
+// }
 
-const InputTitle = ({ label, edit, tempTitle, id, tempo }) => {
-  if (edit === "Add Item") {
-    return (
-      <div className="form-group">
-        <div className="row text-center mb-1 m-auto">
-          <div className="col">
-            <div className="row border">
-              <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
-                <label>{label}</label>
-              </div>
-              <div className="col d-flex flex-column justify-content-center align-items-center">
-                <input type="text" className="form-control border-0" id={id} onChange={tempo} />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    )
-  } else {
-    return (
-      <div className="form-group">
-        <div className="row text-center mb-1 m-auto">
-          <div className="col">
-            <div className="row border">
-              <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
-                <label>{label}</label>
-              </div>
-              <div className="col d-flex flex-column justify-content-center align-items-center">
-                <input type="text" className="form-control border-0" defaultValue={tempTitle} id={id} onChange={tempo} />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    )
-  }
-}
+// const InputTitle = ({ label, edit, tempTitle, id, tempo }) => {
+//   if (edit === "Add Item") {
+//     return (
+//       <div className="form-group">
+//         <div className="row text-center mb-1 m-auto">
+//           <div className="col">
+//             <div className="row border">
+//               <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
+//                 <label>{label}</label>
+//               </div>
+//               <div className="col d-flex flex-column justify-content-center align-items-center">
+//                 <input type="text" className="form-control border-0" id={id} onChange={tempo} />
+//               </div>
+//             </div>
+//           </div>
+//         </div>
+//       </div>
+//     )
+//   } else {
+//     return (
+//       <div className="form-group">
+//         <div className="row text-center mb-1 m-auto">
+//           <div className="col">
+//             <div className="row border">
+//               <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
+//                 <label>{label}</label>
+//               </div>
+//               <div className="col d-flex flex-column justify-content-center align-items-center">
+//                 <input type="text" className="form-control border-0" defaultValue={tempTitle} id={id} onChange={tempo} />
+//               </div>
+//             </div>
+//           </div>
+//         </div>
+//       </div>
+//     )
+//   }
+// }
 
-const InputLink = ({ edit, tempLink, id }) => {
-  if (edit === "Add Item") {
-    return (
-      <div className="form-group">
-        <div className="row text-center mb-1 m-auto">
-          <div className="col">
-            <div className="row border">
-              <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
-                <label>Link</label>
-              </div>
-              <div className="col d-flex flex-column justify-content-center align-items-center">
-                <input type="text" className="form-control border-0" id={id} onChange={e => temp3 = e.target.value} />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    )
-  } else {
-    return (
-      <div className="form-group">
-        <div className="row text-center mb-1 m-auto">
-          <div className="col">
-            <div className="row border">
-              <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
-                <label>Link</label>
-              </div>
-              <div className="col d-flex flex-column justify-content-center align-items-center">
-                <input type="text" className="form-control border-0" defaultValue={tempLink} onChange={e => temp3 = e.target.value} />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    )
-  }
-}
+// const InputLink = ({ edit, tempLink, id, tempo }) => {
+//   if (edit === "Add Item") {
+//     return (
+//       <div className="form-group">
+//         <div className="row text-center mb-1 m-auto">
+//           <div className="col">
+//             <div className="row border">
+//               <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
+//                 <label>Link</label>
+//               </div>
+//               <div className="col d-flex flex-column justify-content-center align-items-center">
+//                 <input type="text" className="form-control border-0" id={id}
+//                   onChange={tempo} />
+//               </div>
+//             </div>
+//           </div>
+//         </div>
+//       </div>
+//     )
+//   } else {
+//     return (
+//       <div className="form-group">
+//         <div className="row text-center mb-1 m-auto">
+//           <div className="col">
+//             <div className="row border">
+//               <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
+//                 <label>Link</label>
+//               </div>
+//               <div className="col d-flex flex-column justify-content-center align-items-center">
+//                 <input type="text" className="form-control border-0" defaultValue={tempLink}
+//                   onChange={tempo} />
+//               </div>
+//             </div>
+//           </div>
+//         </div>
+//       </div>
+//     )
+//   }
+// }
 
-const InputCat = ({ catMenuB }) => {
-  return (
-    <div className="form-group">
-      <div className="row mb-1 m-auto">
-        <div className="col">
-          <div className="row border">
-            <div className="col pt-1 pb-1 padlr latomenu d-flex flex-column justify-content-center align-items-center">
-              <label>Category</label>
-            </div>
-            <div className="col d-flex flex-column justify-content-center align-items-center">
-              {catMenuB}
-            </div>
-          </div>
-        </div>
-        <div className="col-1"></div>
-        <div className="col">
-        </div>
-      </div>
-    </div>
-  )
-}
+// const InputCat = ({ catMenuB }) => {
+//   return (
+//     <div className="form-group">
+//       <div className="row mb-1 m-auto">
+//         <div className="col">
+//           <div className="row border">
+//             <div className="col pt-1 pb-1 padlr latomenu d-flex flex-column justify-content-center align-items-center">
+//               <label>Category</label>
+//             </div>
+//             <div className="col d-flex flex-column justify-content-center align-items-center">
+//               {catMenuB}
+//             </div>
+//           </div>
+//         </div>
+//         <div className="col-1"></div>
+//         <div className="col">
+//         </div>
+//       </div>
+//     </div>
+//   )
+// }
 
-const InputWidth = ({ idAuto, idCol1, idCol2, idCol3, idCol4, idCol5,
-  valAuto, valCol1, valCol2, valCol3, valCol4, valCol5 }) => {
-  return (
-    <div class="form-group" >
-      <div className="row text-center mb-1 m-auto">
-        <div className="col">
-          <div className="row border">
-            <div className="col-2 col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
-              <label>Width</label>
-            </div>
-            <div className="col pt-1 pb-1">
-              <div className="row m-auto">
-                <div className="col radio">
-                  <label class="radio-inline"> <input type="radio" name="blockWidth" id={idAuto} value={valAuto} onChange={e => tempColW = e.target.value} /> Auto </label>
-                </div>
-                <div className="col radio">
-                  <label class="radio-inline"> <input type="radio" name="blockWidth" id={idCol1} value={valCol1} onChange={e => tempColW = e.target.value} /> 1 </label>
-                </div>
-                <div className="col radio">
-                  <label class="radio-inline"> <input type="radio" name="blockWidth" id={idCol2} value={valCol2} onChange={e => tempColW = e.target.value} /> 2 </label>
-                </div>
-                <div className="col radio">
-                  <label class="radio-inline"> <input type="radio" name="blockWidth" id={idCol3} value={valCol3} onChange={e => tempColW = e.target.value} /> 3 </label>
-                </div>
-                <div className="col radio">
-                  <label class="radio-inline"> <input type="radio" name="blockWidth" id={idCol4} value={valCol4} onChange={e => tempColW = e.target.value} /> 4 </label>
-                </div>
-                <div className="col radio">
-                  <label class="radio-inline"> <input type="radio" name="blockWidth" id={idCol5} value={valCol5} onChange={e => tempColW = e.target.value} /> 5 </label>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  )
-}
+// const InputWidth = ({ idAuto, idCol1, idCol2, idCol3, idCol4, idCol5,
+//   valAuto, valCol1, valCol2, valCol3, valCol4, valCol5, tempoColW }) => {
+//   return (
+//     <div class="form-group" >
+//       <div className="row text-center mb-1 m-auto">
+//         <div className="col">
+//           <div className="row border">
+//             <div className="col-2 col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
+//               <label>Width</label>
+//             </div>
+//             <div className="col pt-1 pb-1">
+//               <div className="row m-auto">
+//                 <div className="col radio">
+//                   <label class="radio-inline"> <input type="radio" name="blockWidth" id={idAuto} value={valAuto} onChange={tempoColW} /> Auto </label>
+//                 </div>
+//                 <div className="col radio">
+//                   <label class="radio-inline"> <input type="radio" name="blockWidth" id={idCol1} value={valCol1} onChange={tempoColW} /> 1 </label>
+//                 </div>
+//                 <div className="col radio">
+//                   <label class="radio-inline"> <input type="radio" name="blockWidth" id={idCol2} value={valCol2} onChange={tempoColW} /> 2 </label>
+//                 </div>
+//                 <div className="col radio">
+//                   <label class="radio-inline"> <input type="radio" name="blockWidth" id={idCol3} value={valCol3} onChange={tempoColW} /> 3 </label>
+//                 </div>
+//                 <div className="col radio">
+//                   <label class="radio-inline"> <input type="radio" name="blockWidth" id={idCol4} value={valCol4} onChange={tempoColW} /> 4 </label>
+//                 </div>
+//                 <div className="col radio">
+//                   <label class="radio-inline"> <input type="radio" name="blockWidth" id={idCol5} value={valCol5} onChange={tempoColW} /> 5 </label>
+//                 </div>
+//               </div>
+//             </div>
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//   )
+// }
 
-const InputBackColor = ({ backColor, rgbToHex, bcLabel, tempo }) => {
-  return (
-    <div className="col">
-      <div className="row border">
-        <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
-          <label>{bcLabel}</label>
-        </div>
-        <div className="col d-flex flex-column justify-content-center align-items-center">
-          <input type="color" className="form-control border-0 p-0" defaultValue={rgbToHex(backColor)} onChange={tempo} />
-        </div>
-      </div>
-    </div>
-  )
-}
+// const InputBackColor = ({ backColor, rgbToHex, bcLabel, tempo }) => {
+//   return (
+//     <div className="col">
+//       <div className="row border">
+//         <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
+//           <label>{bcLabel}</label>
+//         </div>
+//         <div className="col d-flex flex-column justify-content-center align-items-center">
+//           <input type="color" className="form-control border-0 p-0" defaultValue={rgbToHex(backColor)} onChange={tempo} />
+//         </div>
+//       </div>
+//     </div>
+//   )
+// }
 
-const InputTextColor = ({ textColor, rgbToHex }) => {
-  return (
-    <div className="col">
-      <div className="row border">
-        <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
-          <label>Text color</label>
-        </div>
-        <div className="col d-flex flex-column justify-content-center align-items-center">
-          <input type="color" className="form-control border-0 p-0" defaultValue={rgbToHex(textColor)} onChange={e => tempTextColor = e.target.value} />
-        </div>
-      </div>
-    </div>
-  )
-}
+// const InputTextColor = ({ textColor, rgbToHex, tempo }) => {
+//   return (
+//     <div className="col">
+//       <div className="row border">
+//         <div className="col pt-1 pb-1 latomenu d-flex flex-column justify-content-center align-items-center">
+//           <label>Text color</label>
+//         </div>
+//         <div className="col d-flex flex-column justify-content-center align-items-center">
+//           <input type="color" className="form-control border-0 p-0" defaultValue={rgbToHex(textColor)} onChange={tempo} />
+//         </div>
+//       </div>
+//     </div>
+//   )
+// }
 
-const InputOpacity = ({ opacity, id, tempo }) => {
-  return (
-    <div className="form-group">
-      <div className="row mb-1 m-auto">
-        <div className="col">
-          <div className="row border">
-            <div className="col pt-1 pb-1 p-0 latomenu d-flex flex-column justify-content-center align-items-center">
-              <label>Opacity</label>
-            </div>
-            <div className="col d-flex flex-column justify-content-center align-items-center p-0">
-              <div className="row" style={{ width: "100%" }}>
-                <div className="col-1 d-flex flex-column justify-content-center align-items-center">
-                  <img className="plusminus" title="0" alt="0" src="./itemicons/rangeZero.svg" />
-                </div>
-                <div className="col d-flex flex-column justify-content-center align-items-center">
-                  <input type="range" class="form-range border-0 p-0" min="0" max="1" step="0.1" list="optickmarks" defaultValue={opacity} id={id} onChange={tempo} ></input>
-                  <datalist id="optickmarks">
-                    <option value={"0"}></option>
-                    <option value={"0.25"}></option>
-                    <option className="tick" value={"0.5"}></option>
-                    <option value={"0.75"}></option>
-                    <option value={"1"}></option>
-                  </datalist>
-                </div>
-                <div className="col-1 d-flex flex-column justify-content-center align-items-center">
-                  <img className="plusminus" title="1" alt="1" src="./itemicons/rangeOne.svg" />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  )
-}
+// const InputOpacity = ({ opacity, id, tempo }) => {
+//   return (
+//     <div className="form-group">
+//       <div className="row mb-1 m-auto">
+//         <div className="col">
+//           <div className="row border">
+//             <div className="col pt-1 pb-1 p-0 latomenu d-flex flex-column justify-content-center align-items-center">
+//               <label>Opacity</label>
+//             </div>
+//             <div className="col d-flex flex-column justify-content-center align-items-center p-0">
+//               <div className="row" style={{ width: "100%" }}>
+//                 <div className="col-1 d-flex flex-column justify-content-center align-items-center">
+//                   <img className="plusminus" title="0" alt="0" src="./itemicons/rangeZero.svg" />
+//                 </div>
+//                 <div className="col d-flex flex-column justify-content-center align-items-center">
+//                   <input type="range" class="form-range border-0 p-0" min="0" max="1" step="0.1" list="optickmarks" defaultValue={opacity} id={id} onChange={tempo} ></input>
+//                   <datalist id="optickmarks">
+//                     <option value={"0"}></option>
+//                     <option value={"0.25"}></option>
+//                     <option className="tick" value={"0.5"}></option>
+//                     <option value={"0.75"}></option>
+//                     <option value={"1"}></option>
+//                   </datalist>
+//                 </div>
+//                 <div className="col-1 d-flex flex-column justify-content-center align-items-center">
+//                   <img className="plusminus" title="1" alt="1" src="./itemicons/rangeOne.svg" />
+//                 </div>
+//               </div>
+//             </div>
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//   )
+// }
 
-const InputVideo = () => {
-  return (
-    <div className="form-group">
-      <div className="row mb-1 m-auto">
-        <div className="col">
-          <div className="row border">
-            <div className="col pt-1 pb-1 padlr latomenu d-flex flex-column justify-content-center
-             align-items-center">
-              <label>Video</label>
-            </div>
-            <div className="col d-flex flex-column justify-content-center align-items-center">
-              <label class="switch">
-                <input type="checkbox" className="form-control" defaultChecked={tempItemVideo}
-                  onClick={e => {
-                    if (tempItemVideo === false) {
-                      temp4 = true;
-                    } else {
-                      temp4 = false;
-                    }
-                  }} />
-                <span class="slider round" title="Video Player"></span>
-              </label>
-            </div>
-          </div>
-        </div>
-        <div className="col-1"></div>
-        <div className="col">
-        </div>
-      </div>
-    </div>
-  )
-}
+// const InputVideo = ({ tmpVideo, tempo }) => {
+//   return (
+//     <div className="form-group">
+//       <div className="row mb-1 m-auto">
+//         <div className="col">
+//           <div className="row border">
+//             <div className="col pt-1 pb-1 padlr latomenu d-flex flex-column justify-content-center
+//              align-items-center">
+//               <label>Video</label>
+//             </div>
+//             <div className="col d-flex flex-column justify-content-center align-items-center">
+//               <label class="switch">
+//                 <input type="checkbox" className="form-control" defaultChecked={tmpVideo}
+//                   onClick={tempo} />
+//                 <span class="slider round" title="Video Player"></span>
+//               </label>
+//             </div>
+//           </div>
+//         </div>
+//         <div className="col-1"></div>
+//         <div className="col">
+//         </div>
+//       </div>
+//     </div>
+//   )
+// }
 
-const InputInfos = ({ label, disField, stateDisBlk, title, hideSwitch, tempo, id }) => {
-  return (
-    <div className="form-group">
-      <div className="row text-center mb-1 m-auto">
-        <div className="col">
-          <div className="row border">
-            <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
-              <label>{label}</label>
-            </div>
-            <div className="col d-flex flex-column justify-content-center align-items-center">
-              <input type="text" disabled={disField} className="form-control border-0"
-                defaultValue={title} id={id} onChange={tempo} />
-            </div>
-            <div className="col-2 border d-flex flex-column justify-content-center align-items-center">
-              <label className="switch">
-                <input type="checkbox" className="form-control" defaultChecked={hideSwitch}
-                  onClick={stateDisBlk} />
-                <span class="slider round" title="Hide"></span>
-              </label>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  )
-}
+// const InputInfos = ({ label, disField, stateDisBlk, title, hideSwitch, tempo, id }) => {
+//   return (
+//     <div className="form-group">
+//       <div className="row text-center mb-1 m-auto">
+//         <div className="col">
+//           <div className="row border">
+//             <div className="col-2 latomenu d-flex flex-column justify-content-center align-items-center">
+//               <label>{label}</label>
+//             </div>
+//             <div className="col d-flex flex-column justify-content-center align-items-center">
+//               <input type="text" disabled={disField} className="form-control border-0"
+//                 defaultValue={title} id={id} onChange={tempo} />
+//             </div>
+//             <div className="col-2 border d-flex flex-column justify-content-center align-items-center">
+//               <label className="switch">
+//                 <input type="checkbox" className="form-control" defaultChecked={hideSwitch}
+//                   onClick={stateDisBlk} />
+//                 <span class="slider round" title="Hide"></span>
+//               </label>
+//             </div>
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//   )
+// }
 
-const InputHideBlocks = ({ hideSwitch, switchClick }) => {
-  return (
-    <div className="form-group">
-      <div className="row mb-1 m-auto">
-        <div className="col">
-          <div className="row border">
-            <div className="col col pt-1 pb-1 padlr latomenu d-flex flex-column justify-content-center align-items-center">
-              <label>Hide</label>
-            </div>
-            <div className="col d-flex flex-column justify-content-center align-items-center">
-              <label class="switch">
-                <input type="checkbox" className="form-control" defaultChecked={!hideSwitch}
-                  onClick={switchClick} />
-                <span class="slider round" title="Hide"></span>
-              </label>
-            </div>
-          </div>
-        </div>
-        <div className="col-1"></div>
-        <div className="col">
-        </div>
-      </div>
-    </div>
-  )
-}
+// const InputHideBlocks = ({ hideSwitch, switchClick }) => {
+//   return (
+//     <div className="form-group">
+//       <div className="row mb-1 m-auto">
+//         <div className="col">
+//           <div className="row border">
+//             <div className="col col pt-1 pb-1 padlr latomenu d-flex flex-column justify-content-center align-items-center">
+//               <label>Hide</label>
+//             </div>
+//             <div className="col d-flex flex-column justify-content-center align-items-center">
+//               <label class="switch">
+//                 <input type="checkbox" className="form-control" defaultChecked={!hideSwitch}
+//                   onClick={switchClick} />
+//                 <span class="slider round" title="Hide"></span>
+//               </label>
+//             </div>
+//           </div>
+//         </div>
+//         <div className="col-1"></div>
+//         <div className="col">
+//         </div>
+//       </div>
+//     </div>
+//   )
+// }
 
-const InputSwitch = ({ hSwitch, dSwitch, swLabel }) => {
-  return (
-    <div className="form-group">
-      <div className="row mb-1 m-auto">
-        <div className="col">
-          <div className="row border">
-            <div className="col col pt-1 pb-1 padlr latomenu d-flex flex-column justify-content-center align-items-center">
-              <label>{swLabel}</label>
-            </div>
-            <div className="col d-flex flex-column justify-content-center align-items-center">
-              <label class="switch">
-                <input type="checkbox" className="form-control" defaultChecked={hSwitch}
-                  onClick={dSwitch} />
-                <span class="slider round"></span>
-              </label>
-            </div>
-          </div>
-        </div>
-        <div className="col-1"></div>
-        <div className="col">
-        </div>
-      </div>
-    </div>
-  )
-}
+// const InputSwitch = ({ hSwitch, dSwitch, swLabel }) => {
+//   return (
+//     <div className="form-group">
+//       <div className="row mb-1 m-auto">
+//         <div className="col">
+//           <div className="row border">
+//             <div className="col col pt-1 pb-1 padlr latomenu d-flex flex-column justify-content-center align-items-center">
+//               <label>{swLabel}</label>
+//             </div>
+//             <div className="col d-flex flex-column justify-content-center align-items-center">
+//               <label class="switch">
+//                 <input type="checkbox" className="form-control" defaultChecked={hSwitch}
+//                   onClick={dSwitch} />
+//                 <span class="slider round"></span>
+//               </label>
+//             </div>
+//           </div>
+//         </div>
+//         <div className="col-1"></div>
+//         <div className="col">
+//         </div>
+//       </div>
+//     </div>
+//   )
+// }
 
-const AddSym = ({ showItemsBtn, addItem, addLabel }) => {
-  let plusBtn = "";
-  if (showItemsBtn === "ShowItemBtn") {
-    plusBtn = (
-      <button className="col extcredits solidgreen m-1"
-        onClick={addItem}>
-        <img className="gear mt-2 mb-2" title={addLabel} alt={addLabel} src="./itemicons/plus.svg" />
-      </button>
-    )
-  } else {
-    plusBtn = "";
-  }
-  return (
-    <>
-      {plusBtn}
-    </>
-  );
-}
+// const AddSym = ({ showItemsBtn, addItem, addLabel }) => {
+//   let plusBtn = "";
+//   if (showItemsBtn === "ShowItemBtn") {
+//     plusBtn = (
+//       <button className="col extcredits solidgreen m-1"
+//         onClick={addItem}>
+//         <img className="gear mt-2 mb-2" title={addLabel} alt={addLabel} src="./itemicons/plus.svg" />
+//       </button>
+//     )
+//   } else {
+//     plusBtn = "";
+//   }
+//   return (
+//     <>
+//       {plusBtn}
+//     </>
+//   );
+// }
+
+// DROPDOWNS MENU
 
 const Dropdown = ({ search, crsShow }) => {
   const showHideSearch = spData.noMenuSearch ? "d-none" : "d-block";
@@ -830,73 +825,74 @@ const DropdownCat = ({ items, id, catName, setCat }) => {
   );
 }
 
-const LoginGear = ({ handleShowButtons }) => {
-  return (
-    <img className="gear mt-2 mb-2" alt="Login" src="./img/gears.svg" onClick={() => handleShowButtons(true)} />
-  );
-}
+// const LoginGear = ({ handleShowButtons }) => {
+//   return (
+//     <img className="gear mt-2 mb-2" alt="Login" src="./img/gears.svg"
+//       onClick={() => handleShowButtons(true)} />
+//   );
+// }
 
-const SettingsGear = ({ showItemsBtn }) => {
-  const whiteOrCol = showItemsBtn ? "./img/colGear.svg" : "./img/gear.svg"
-  return (
-    <img className="gear mt-2 mb-2" alt="Settings" title="Settings" src={whiteOrCol} />
-  );
-}
+// const SettingsGear = ({ showItemsBtn }) => {
+//   const whiteOrCol = showItemsBtn ? "./img/colGear.svg" : "./img/gear.svg"
+//   return (
+//     <img className="gear mt-2 mb-2" alt="Settings" title="Settings" src={whiteOrCol} />
+//   );
+// }
 
-const Alert = ({ alertShow, alertMsg, alertCol, children }) => {
-  return (
-    <div className={`mb-2 ${alertShow ? 'alert-shown' : 'alert-hidden'}`} >
-      <div className="row text-center pt-2">
-        <div className="col">
-          <div className="row">
-            <section className={"col pt-2 contenitore " + alertCol + " latowhite d-flex justify-content-center align-items-center "}>
-              <div>
-                <p className="norfont">{alertMsg}</p>
-              </div>
-            </section>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
+// const Alert = ({ alertShow, alertMsg, alertCol, children }) => {
+//   return (
+//     <div className={`mb-2 ${alertShow ? 'alert-shown' : 'alert-hidden'}`} >
+//       <div className="row text-center pt-2">
+//         <div className="col">
+//           <div className="row">
+//             <section className={"col pt-2 contenitore " + alertCol + " latowhite d-flex justify-content-center align-items-center "}>
+//               <div>
+//                 <p className="norfont">{alertMsg}</p>
+//               </div>
+//             </section>
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
 
-const ImgElement = ({ type }) => {
-  let imma = "";
-  switch (type) {
-    case "overlay":
-      imma = (
-        <img className="overlay" alt="Overlay" src={spData.LogoIcon} />
-      )
-      break;
-    case "redPoint":
-      imma = (
-        <img className="gear menux mt-2 mb-2" title="Hidden" alt="Hidden" src="./img/point.svg" />
-      )
-      break;
-    case "iRedPoint":
-      imma = (
-        <div class="col-2 borderleft itemx d-flex flex-column justify-content-center align-items-center">
-          <img className="itemx mt-2 mb-2" title="Hidden" alt="Hidden" src="./img/point.svg" />
-        </div>
-      );
-      break;
-    case "logo":
-      imma = (
-        <img className="logo mt-2 mb-2" title="Home" alt="Logo" src={spData.LogoIcon}
-          onClick={() => window.location.href = spData.homeLink} />
-      );
-      break;
-    default:
-      imma = "";
-      break;
-  }
-  return (
-    <>
-      {imma}
-    </>
-  )
-}
+// const ImgElement = ({ type }) => {
+//   let imma = "";
+//   switch (type) {
+//     case "overlay":
+//       imma = (
+//         <img className="overlay" alt="Overlay" src={spData.LogoIcon} />
+//       )
+//       break;
+//     case "redPoint":
+//       imma = (
+//         <img className="gear menux mt-2 mb-2" title="Hidden" alt="Hidden" src="./img/point.svg" />
+//       )
+//       break;
+//     case "iRedPoint":
+//       imma = (
+//         <div class="col-2 borderleft itemx d-flex flex-column justify-content-center align-items-center">
+//           <img className="itemx mt-2 mb-2" title="Hidden" alt="Hidden" src="./img/point.svg" />
+//         </div>
+//       );
+//       break;
+//     case "logo":
+//       imma = (
+//         <img className="logo mt-2 mb-2" title="Home" alt="Logo" src={spData.LogoIcon}
+//           onClick={() => window.location.href = spData.homeLink} />
+//       );
+//       break;
+//     default:
+//       imma = "";
+//       break;
+//   }
+//   return (
+//     <>
+//       {imma}
+//     </>
+//   )
+// }
 
 // FUNCTIONS
 
@@ -3028,6 +3024,9 @@ class Main extends React.Component {
         this.setState({
           onlyRead: false
         })
+        this.setState({
+          activityChanged: false
+        });
         break;
       default:
       // will NOT execute because of the line preceding the switch.
@@ -3539,14 +3538,19 @@ class Main extends React.Component {
               </EditElement>
             </Element>
           </div>
-          <div className="row">
+          <section className="row">
             {/* VERSIONE */}
-            <section title="SoylentApp v1.5.2"
-              className="col mt-2 version latoplain d-flex justify-content-center align-items-center"
+            <div title="SoylentApp v1.5.3"
+              className="col mt-2 version latoplain d-flex justify-content-end align-items-center"
               onClick={() => window.open("https://github.com/karlellis/SoylentApp")}>
-              <b>SoylentApp</b>&nbsp;v1.5.2
-            </section>
-          </div>
+              <b>SoylentApp</b>
+            </div>
+            <div title="SoylentApp v1.5.3"
+              className="col mt-2 version latoplain d-flex justify-content-start align-items-center"
+              onClick={() => window.open("https://github.com/karlellis/SoylentApp")}>
+              v1.5.3
+            </div>
+          </section>
         </div>
       </div >
     )
@@ -3563,7 +3567,7 @@ class Main extends React.Component {
             <EleDialog mainTheme="modal-main" footTheme="modal-footer" hideMidBtn={true} hideApply={false} hideClose={false}
               activityChanged={false} eleDiaShow={this.state.loginDiaShow}
               handleClose={() => this.hideModal("login")} handleSave={this.loginCheck}
-              saveLabel="Apply">
+              saveLabel="Login">
               <div className="modal-content">
                 <ModalTitle title="Login"></ModalTitle>
                 <div className="modal-body">
@@ -3742,13 +3746,17 @@ class Main extends React.Component {
                       tempo={e => temp = e.target.value} >
                     </InputTitle>
                     <InputWidth idAuto="headColAuto" idCol1="headCol1" idCol2="headCol2" idCol3="headCol3" idCol4="headCol4" idCol5="headCol5"
-                      valAuto="col" valCol1="col-1" valCol2="col-2" valCol3="col-3" valCol4="col-4" valCol5="col-5"></InputWidth>
+                      valAuto="col" valCol1="col-1" valCol2="col-2" valCol3="col-3" valCol4="col-4" valCol5="col-5"
+                      tempoColW={e => { tempColW = e.target.value; }}>
+                    </InputWidth>
                     <div className="form-group">
                       <div className="row mb-1 m-auto">
                         <InputBackColor bcLabel="Back color" backColor={spData.headColor}
                           rgbToHex={rgbToHex} tempo={e => tempColor = e.target.value}></InputBackColor>
                         <div className="col-1"></div>
-                        <InputTextColor textColor={spData.headTextColor} rgbToHex={rgbToHex}></InputTextColor>
+                        <InputTextColor textColor={spData.headTextColor} rgbToHex={rgbToHex}
+                          tempo={e => { tempTextColor = e.target.value; }}>
+                        </InputTextColor>
                       </div>
                     </div>
                     <InputOpacity opacity={spData.headOpacity} id="titleOpRange" tempo={e => tempOpacity = e.target.value}></InputOpacity>
@@ -3777,14 +3785,18 @@ class Main extends React.Component {
                 <div className="modal-body">
                   <form id="clockForm">
                     <InputWidth idAuto="clockColAuto" idCol1="clockCol1" idCol2="clockCol2" idCol3="clockCol3" idCol4="clockCol4" idCol5="clockCol5"
-                      valAuto="col-md" valCol1="col-md-1" valCol2="col-md-2" valCol3="col-md-3" valCol4="col-md-4" valCol5="col-md-5"></InputWidth>
+                      valAuto="col-md" valCol1="col-md-1" valCol2="col-md-2" valCol3="col-md-3" valCol4="col-md-4" valCol5="col-md-5"
+                      tempoColW={e => { tempColW = e.target.value; }}>
+                    </InputWidth>
                     {/* Back & Text colors */}
                     <div className="form-group">
                       <div className="row mb-1 m-auto">
                         <InputBackColor bcLabel="Back color" backColor={spData.clockColor}
                           rgbToHex={rgbToHex} tempo={e => tempColor = e.target.value}></InputBackColor>
                         <div className="col-1"></div>
-                        <InputTextColor textColor={spData.clockTextColor} rgbToHex={rgbToHex}></InputTextColor>
+                        <InputTextColor textColor={spData.clockTextColor} rgbToHex={rgbToHex}
+                          tempo={e => { tempTextColor = e.target.value; }}>
+                        </InputTextColor>
                       </div>
                     </div>
                     <InputOpacity opacity={spData.clockOpacity} id="clockOpRange" tempo={e => tempOpacity = e.target.value}></InputOpacity>
@@ -3811,9 +3823,11 @@ class Main extends React.Component {
                 <ModalTitle title="Edit Logo"></ModalTitle>
                 <div className="modal-body">
                   <form id="logoForm">
-                    <InputFile></InputFile>
+                    <InputFile fileIn={e => { fileImg = e.target.files[0]; }}></InputFile>
                     <InputWidth idAuto="logoColAuto" idCol1="logoCol1" idCol2="logoCol2" idCol3="logoCol3" idCol4="logoCol4" idCol5="logoCol5"
-                      valAuto="col" valCol1="col-1" valCol2="col-2" valCol3="col-3" valCol4="col-4" valCol5="col-5"></InputWidth>
+                      valAuto="col" valCol1="col-1" valCol2="col-2" valCol3="col-3" valCol4="col-4" valCol5="col-5"
+                      tempoColW={e => { tempColW = e.target.value; }}>
+                    </InputWidth>
                     {/* Back color */}
                     <div className="form-group">
                       <div className="row mb-1 m-auto">
@@ -3903,13 +3917,17 @@ class Main extends React.Component {
                       tempo={e => temp3 = e.target.value}>
                     </InputInfos>
                     <InputWidth idAuto="infoColAuto" idCol1="infoCol1" idCol2="infoCol2" idCol3="infoCol3" idCol4="infoCol4" idCol5="infoCol5"
-                      valAuto="col" valCol1="col-1" valCol2="col-2" valCol3="col-3" valCol4="col-4" valCol5="col-5"></InputWidth>
+                      valAuto="col" valCol1="col-1" valCol2="col-2" valCol3="col-3" valCol4="col-4" valCol5="col-5"
+                      tempoColW={e => { tempColW = e.target.value; }}>
+                    </InputWidth>
                     <div className="form-group">
                       <div className="row mb-1 m-auto">
                         <InputBackColor bcLabel="Back color" backColor={spData.footInfoColor}
                           rgbToHex={rgbToHex} tempo={e => tempColor = e.target.value}></InputBackColor>
                         <div className="col-1"></div>
-                        <InputTextColor textColor={spData.footInfoTextColor} rgbToHex={rgbToHex}></InputTextColor>
+                        <InputTextColor textColor={spData.footInfoTextColor} rgbToHex={rgbToHex}
+                          tempo={e => { tempTextColor = e.target.value; }}>
+                        </InputTextColor>
                       </div>
                     </div>
                     <InputOpacity opacity={spData.footInfoOpacity} id="infoOpRange" tempo={e => tempOpacity = e.target.value}></InputOpacity>
@@ -3994,13 +4012,17 @@ class Main extends React.Component {
                       tempo={e => temp3 = e.target.value}>
                     </InputInfos>
                     <InputWidth idAuto="addInfoColAuto" idCol1="addInfoCol1" idCol2="addInfoCol2" idCol3="addInfoCol3" idCol4="addInfoCol4" idCol5="addInfoCol5"
-                      valAuto="col-md" valCol1="col-md-1" valCol2="col-md-2" valCol3="col-md-3" valCol4="col-md-4" valCol5="col-md-5"></InputWidth>
+                      valAuto="col-md" valCol1="col-md-1" valCol2="col-md-2" valCol3="col-md-3" valCol4="col-md-4" valCol5="col-md-5"
+                      tempoColW={e => { tempColW = e.target.value; }}>
+                    </InputWidth>
                     <div className="form-group">
                       <div className="row mb-1 m-auto">
                         <InputBackColor bcLabel="Back color" backColor={spData.footAddColor}
                           rgbToHex={rgbToHex} tempo={e => tempColor = e.target.value}></InputBackColor>
                         <div className="col-1"></div>
-                        <InputTextColor textColor={spData.footAddTextColor} rgbToHex={rgbToHex}></InputTextColor>
+                        <InputTextColor textColor={spData.footAddTextColor} rgbToHex={rgbToHex}
+                          tempo={e => { tempTextColor = e.target.value; }}>
+                        </InputTextColor>
                       </div>
                     </div>
                     <InputOpacity opacity={spData.footAddOpacity} id="addInfoOpRange" tempo={e => tempOpacity = e.target.value}></InputOpacity>
@@ -4199,13 +4221,16 @@ class Main extends React.Component {
                 <ModalTitle title="Edit Item"></ModalTitle>
                 <div className="modal-body">
                   <form id="itemEditForm">
-                    <InputFile></InputFile>
-                    <InputPosition edit="Edit Item" pos={this.state.cPos} id="clearitemswitchpos" ></InputPosition>
-
+                    <InputFile fileIn={e => { fileImg = e.target.files[0]; }} ></InputFile>
+                    <InputPosition edit="Edit Item" pos={this.state.cPos}
+                      tempo={e => { cgPos = e.target.value; }} id="clearitemswitchpos" >
+                    </InputPosition>
                     <InputTitle label="Title" edit="Edit Item" tempTitle={tempItemTitle}
                       tempo={e => temp2 = e.target.value} >
                     </InputTitle>
-                    <InputLink edit="Edit Item" tempLink={tempItemLink} ></InputLink>
+                    <InputLink edit="Edit Item" tempLink={tempItemLink}
+                      tempo={e => { temp3 = e.target.value; }} >
+                    </InputLink>
                     {/* Descr. */}
                     <InputInfos label="Descr."
                       disField={disFieldIE}
@@ -4226,7 +4251,15 @@ class Main extends React.Component {
                       hideSwitch={noDescr}
                       tempo={e => temp6 = e.target.value}>
                     </InputInfos>
-                    <InputVideo></InputVideo>
+                    <InputVideo tmpVideo={tempItemVideo}
+                      tempo={e => {
+                        if (tempItemVideo === false) {
+                          temp4 = true;
+                        } else {
+                          temp4 = false;
+                        }
+                      }}>
+                    </InputVideo>
                     <InputSwitch hSwitch={tempItemHide}
                       dSwitch={e => {
                         if (tempItemHide === false) {
@@ -4253,15 +4286,19 @@ class Main extends React.Component {
                 <ModalTitle title="Add Item"></ModalTitle>
                 <div className="modal-body">
                   <form id="itemAddForm">
-                    <InputFile></InputFile>
+                    <InputFile fileIn={e => { fileImg = e.target.files[0]; }} ></InputFile>
                     {/* Position */}
-                    <InputPosition edit="Add Item" pos={currPos} id="clearitempos" ></InputPosition>
+                    <InputPosition edit="Add Item" pos={currPos}
+                      tempo={e => { temp = e.target.value; }} id="clearitempos" >
+                    </InputPosition>
                     {/* Title */}
                     <InputTitle label="Title" edit="Add Item" id="clearitemtitle"
                       tempo={e => temp2 = e.target.value}>
                     </InputTitle>
                     {/* Link */}
-                    <InputLink edit="Add Item" id="clearitemlink"></InputLink>
+                    <InputLink edit="Add Item" id="clearitemlink"
+                      tempo={e => { temp3 = e.target.value; }}>
+                    </InputLink>
                     {/* Descr. */}
                     <InputInfos label="Descr."
                       disField={disFieldIA}
@@ -4284,7 +4321,15 @@ class Main extends React.Component {
                       id="clearitemdescr">
                     </InputInfos>
                     {/* Video */}
-                    <InputVideo></InputVideo>
+                    <InputVideo tmpVideo={tempItemVideo}
+                      tempo={e => {
+                        if (tempItemVideo === false) {
+                          temp4 = true;
+                        } else {
+                          temp4 = false;
+                        }
+                      }}>
+                    </InputVideo>
                     {/* Hide */}
                     <InputSwitch hSwitch={tempItemHide}
                       dSwitch={e => {
@@ -4324,8 +4369,10 @@ class Main extends React.Component {
                 <ModalTitle title="Edit Category"></ModalTitle>
                 <div className="modal-body">
                   <form id="catEditForm">
-                    <InputFile></InputFile>
-                    <InputPosition edit="Edit Item" pos={currPos} id="clearcatswitchpos" ></InputPosition>
+                    <InputFile fileIn={e => { fileImg = e.target.files[0]; }}></InputFile>
+                    <InputPosition edit="Edit Item" pos={currPos}
+                      tempo={e => { cgPos = e.target.value; }} id="clearcatswitchpos" >
+                    </InputPosition>
                     <InputTitle label="Title" edit="Edit Item" tempTitle={tempCatTitle}
                       tempo={e => temp2 = e.target.value}>
                     </InputTitle>
@@ -4353,8 +4400,10 @@ class Main extends React.Component {
                 <ModalTitle title="Add Category"></ModalTitle>
                 <div className="modal-body">
                   <form id="catAddForm">
-                    <InputFile></InputFile>
-                    <InputPosition edit="Add Item" id="clearcatpos" ></InputPosition>
+                    <InputFile fileIn={e => { fileImg = e.target.files[0]; }}></InputFile>
+                    <InputPosition edit="Add Item" id="clearcatpos"
+                      tempo={e => { temp = e.target.value; }}>
+                    </InputPosition>
                     <InputTitle label="Title" edit="Add Item" id="clearcattitle"
                       tempo={e => temp2 = e.target.value}>
                     </InputTitle>
@@ -4431,11 +4480,15 @@ class Main extends React.Component {
                 <ModalTitle title="Add Credit"></ModalTitle>
                 <div className="modal-body">
                   <form id="crsAddForm">
-                    <InputPosition edit="Add Item" id="clearcrspos" ></InputPosition>
+                    <InputPosition edit="Add Item" id="clearcrspos"
+                      tempo={e => { temp = e.target.value; }}>
+                    </InputPosition>
                     <InputTitle label="Title" edit="Add Item" id="clearcrstitle"
                       tempo={e => temp2 = e.target.value}>
                     </InputTitle>
-                    <InputLink edit="Add Item" id="clearcrslink"></InputLink>
+                    <InputLink edit="Add Item" id="clearcrslink"
+                      tempo={e => { temp3 = e.target.value; }}>
+                    </InputLink>
                     {/* Descr. */}
                     <InputTitle label="Descr." edit="Add Item" tempTitle={tempItemTitle} id="clearcrsdescr"
                       tempo={e => temp4 = e.target.value}>
@@ -4454,11 +4507,15 @@ class Main extends React.Component {
                 <ModalTitle title="Edit Credit"></ModalTitle>
                 <div className="modal-body">
                   <form id="crsEditForm">
-                    <InputPosition edit="Edit Item" pos={currPos} id="clearcrsswitchpos" ></InputPosition>
+                    <InputPosition edit="Edit Item" pos={currPos} id="clearcrsswitchpos"
+                      tempo={e => { cgPos = e.target.value; }}>
+                    </InputPosition>
                     <InputTitle label="Title" edit="Edit Item" tempTitle={tempCrsTitle}
                       tempo={e => temp2 = e.target.value}>
                     </InputTitle>
-                    <InputLink edit="Edit Item" tempLink={tempCrsLink} ></InputLink>
+                    <InputLink edit="Edit Item" tempLink={tempCrsLink}
+                      tempo={e => { temp3 = e.target.value; }}>
+                    </InputLink>
                     <InputTitle label="Descr." edit="Edit Item" tempTitle={tempCrsDescr}
                       tempo={e => temp4 = e.target.value}>
                     </InputTitle>
