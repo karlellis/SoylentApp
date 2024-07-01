@@ -432,6 +432,75 @@ export const AddSym = ({ showItemsBtn, addItem, addLabel }) => {
   );
 }
 
+export const Dropdown = ({ search, crsShow, drpIsOpen, oClickDrpIO }) => {
+  const showHideSearch = spData.noMenuSearch ? "d-none" : "d-block";
+  const showHideCredits = spData.noMenuCredits ? "d-none" : "d-block";
+  const menuClass = `dropdown-menu${drpIsOpen ? " show d-flex flex-column justify-content-center align-items-center" : " disNone"}`;
+  return (
+    <div className="dropdown"
+      onClick={oClickDrpIO}>
+      <button
+        className="button indaco m-1 dropdown-toggle"
+        id="menuButton"
+        type="button"
+        data-toggle="dropdown"
+        aria-haspopup="true"
+      >
+        Menu
+      </button>
+      <div className={menuClass + " menuBG"} >
+        <button className={showHideSearch + " col menuItem green m-1"}
+          onClick={search}>
+          {spData.menuSearchLabel}
+        </button>
+        <button className={showHideCredits + " col menuItem blue m-1"}
+          onClick={crsShow}>
+          {spData.menuCreditsLabel}
+        </button>
+      </div>
+    </div>
+  );
+}
+
+export const DropdownCat = ({ items, id, catName, setCat, drpIsOpen, oClickDrpIO }) => {
+  const menuClass = `dropdown-menu${drpIsOpen ? " show d-flex flex-column justify-content-start align-items-center" :
+    " disNone"}`;
+  return (
+    <div className="dropdown"
+      onClick={oClickDrpIO}>
+      <button
+        className="button indaco m-1 dropdown-toggle"
+        id={id}
+        type="button"
+        data-toggle="dropdown"
+        aria-haspopup="true"
+      >
+        {catName}
+      </button>
+      <div className={menuClass + " menuBG"}>
+        <button className="col menuItem green m-1"
+          onClick={(e) => {
+            setCat("Root", e);
+          }}>
+          Root
+        </button>
+        {
+          items.map(({ id, title, icon }, i) => {
+            return (
+              <button className="col menuItem green m-1"
+                onClick={(e) => {
+                  setCat(title, e);
+                }}>
+                {title}
+              </button>
+            )
+          })
+        }
+      </div>
+    </div>
+  );
+}
+
 export const LoginGear = ({ handleShowButtons }) => {
   return (
     <img className="gear mt-2 mb-2" alt="Login" src="./img/gears.svg"
