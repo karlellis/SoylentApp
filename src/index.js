@@ -20,7 +20,7 @@ import {
 } from './methods/simpleComp';
 import {
   fetchUpPHP, fetchUpConfig, fetchDelPHP, fetchDownCredentials,
-  hashUsrPsw, comparePassword, Orologio
+  hashUsrPsw, comparePassword, Orologio, FormChanges
 } from './methods/functions';
 
 const bcrypt = require("bcryptjs")
@@ -988,308 +988,338 @@ class Main extends React.Component {
   // HEAD ACTIONS
 
   saveMenu = () => {
-    if (disable1 !== "none") {
-      spData.noMenuSearch = disable1;
-    }
-    if (temp !== "") {
-      spData.menuSearchLabel = temp;
-    }
-    if (disable2 !== "none") {
-      spData.noMenuCredits = disable2;
-    }
-    if (temp2 !== "") {
-      spData.menuCreditsLabel = temp2;
-    }
-    spData.menuColor = hexToRgb(tempColor) + ", " + tempOpacity + ")";
-    spData.menuOpacity = parseFloat(tempOpacity.replace(/,/g, "."));
-    if (blockHide !== "none") {
-      spData.menuShow = blockHide;
-    }
-    this.fireAlert("Changes Made!", "solidgreen");
-    this.saveConf(spData, "./api/img-upload.php", "config");
-    temp = "";
-    temp2 = "";
-    blockHide = "none";
+    console.log("FormChanged?: ", FormChanges("menuForm"))
+    if (FormChanges("menuForm")) {
+      if (disable1 !== "none") {
+        spData.noMenuSearch = disable1;
+      }
+      if (temp !== "") {
+        spData.menuSearchLabel = temp;
+      }
+      if (disable2 !== "none") {
+        spData.noMenuCredits = disable2;
+      }
+      if (temp2 !== "") {
+        spData.menuCreditsLabel = temp2;
+      }
+      spData.menuColor = hexToRgb(tempColor) + ", " + tempOpacity + ")";
+      spData.menuOpacity = parseFloat(tempOpacity.replace(/,/g, "."));
+      if (blockHide !== "none") {
+        spData.menuShow = blockHide;
+      }
+      this.fireAlert("Changes Made!", "solidgreen");
+      this.saveConf(spData, "./api/img-upload.php", "config");
+      temp = "";
+      temp2 = "";
+      blockHide = "none";
 
-    disable1 = "none";
-    disable2 = "none";
+      disable1 = "none";
+      disable2 = "none";
+    } else {
+      this.fireAlert("No changes made!", "solidblue");
+    }
   }
 
   saveTitle = () => {
-    if (temp !== "") {
-      spData.headTitle = temp;
+    console.log("FormChanged?: ", FormChanges("titleForm"))
+    if (FormChanges("titleForm")) {
+      if (temp !== "") {
+        spData.headTitle = temp;
+      }
+      // console.log("Titolo: " + spData.headTitle);
+      spData.headColor = hexToRgb(tempColor) + ", " + tempOpacity + ")";
+      spData.headOpacity = parseFloat(tempOpacity.replace(/,/g, "."))/* .toFixed(1) */;
+      spData.headTextColor = hexToRgb(tempTextColor) + ", 1)";
+      spData.headColW = tempColW;
+      // console.log("Colore: " + spData.headColor);
+      if (blockHide !== "none") {
+        spData.titleShow = blockHide;
+      }
+      blockHide = "none";
+      temp = "";
+      this.fireAlert("Changes Made!", "solidgreen");
+      this.saveConf(spData, "./api/img-upload.php", "config");
+    } else {
+      this.fireAlert("No changes made!", "solidblue");
     }
-    // console.log("Titolo: " + spData.headTitle);
-    spData.headColor = hexToRgb(tempColor) + ", " + tempOpacity + ")";
-    spData.headOpacity = parseFloat(tempOpacity.replace(/,/g, "."))/* .toFixed(1) */;
-    spData.headTextColor = hexToRgb(tempTextColor) + ", 1)";
-    spData.headColW = tempColW;
-    // console.log("Colore: " + spData.headColor);
-    if (blockHide !== "none") {
-      spData.titleShow = blockHide;
-    }
-    blockHide = "none";
-    temp = "";
-    this.fireAlert("Changes Made!", "solidgreen");
-    this.saveConf(spData, "./api/img-upload.php", "config");
   }
 
   saveLogo = () => {
-    if (fileImg !== null) {
-      tempIcon = spData.LogoIcon;
-      this.catItemActions(fileImg, "logo", "edit");
-      spData.logoColor = hexToRgb(tempColor) + ", " + tempOpacity + ")";
-      spData.logoOpacity = parseFloat(tempOpacity.replace(/,/g, "."));
-      spData.logoColW = tempColW;
-      if (blockHide !== "none") {
-        spData.logoShow = blockHide;
+    if (FormChanges("logoForm")) {
+      if (fileImg !== null) {
+        tempIcon = spData.LogoIcon;
+        this.catItemActions(fileImg, "logo", "edit");
+        spData.logoColor = hexToRgb(tempColor) + ", " + tempOpacity + ")";
+        spData.logoOpacity = parseFloat(tempOpacity.replace(/,/g, "."));
+        spData.logoColW = tempColW;
+        if (blockHide !== "none") {
+          spData.logoShow = blockHide;
+        }
+        blockHide = "none";
+      } else {
+        spData.logoColor = hexToRgb(tempColor) + ", " + tempOpacity + ")";
+        spData.logoOpacity = parseFloat(tempOpacity.replace(/,/g, "."));
+        spData.logoColW = tempColW;
+        if (blockHide !== "none") {
+          spData.logoShow = blockHide;
+        }
+        blockHide = "none";
+        this.fireAlert("Changes Made!", "solidgreen");
+        this.saveConf(spData, "./api/img-upload.php", "config");
       }
-      blockHide = "none";
     } else {
-      spData.logoColor = hexToRgb(tempColor) + ", " + tempOpacity + ")";
-      spData.logoOpacity = parseFloat(tempOpacity.replace(/,/g, "."));
-      spData.logoColW = tempColW;
-      if (blockHide !== "none") {
-        spData.logoShow = blockHide;
-      }
-      blockHide = "none";
-      this.fireAlert("Changes Made!", "solidgreen");
-      this.saveConf(spData, "./api/img-upload.php", "config");
+      this.fireAlert("No changes made!", "solidblue");
     }
   }
 
   saveClock = () => {
-    spData.clockColor = hexToRgb(tempColor) + ", " + tempOpacity + ")";
-    spData.clockOpacity = parseFloat(tempOpacity.replace(/,/g, "."));
-    spData.clockTextColor = hexToRgb(tempTextColor) + ", 1)";
-    spData.clockColW = tempColW;
-    if (blockHide !== "none") {
-      spData.clockShow = blockHide;
+    if (FormChanges("clockForm")) {
+      spData.clockColor = hexToRgb(tempColor) + ", " + tempOpacity + ")";
+      spData.clockOpacity = parseFloat(tempOpacity.replace(/,/g, "."));
+      spData.clockTextColor = hexToRgb(tempTextColor) + ", 1)";
+      spData.clockColW = tempColW;
+      if (blockHide !== "none") {
+        spData.clockShow = blockHide;
+      }
+      blockHide = "none";
+      this.fireAlert("Changes Made!", "solidgreen");
+      this.saveConf(spData, "./api/img-upload.php", "config");
+    } else {
+      this.fireAlert("No changes made!", "solidblue");
     }
-    blockHide = "none";
-    this.fireAlert("Changes Made!", "solidgreen");
-    this.saveConf(spData, "./api/img-upload.php", "config");
   }
 
   saveBack = () => {
-    var changes = false;
+    if (FormChanges("backEditForm")) {
+      var changes = false;
 
-    if (fileImg !== null) {
-      tempIcon = spData.backgroundImage;
-      this.catItemActions(fileImg, "back", "edit");
-      changes = true;
-    }
-
-    console.log("Tempopacity:", tempOpacity);
-    console.log("BackgroundOpacity:", spData.backgroundOpacity.toString());
-    console.log("Tempopacity1:", tempOpacity1);
-    console.log("CatBackgroundOpacity:", spData.catOpacity.toString());
-
-    if (tempColor !== rgbToHex(spData.backgroundColor)
-      || tempOpacity !== spData.backgroundOpacity.toString() || disable1 !== "none") {
-      if (disable1 !== "none") {
-        spData.noBackImage = disable1;
+      if (fileImg !== null) {
+        tempIcon = spData.backgroundImage;
+        this.catItemActions(fileImg, "back", "edit");
+        changes = true;
       }
-      spData.backgroundColor = hexToRgb(tempColor) + ", " + tempOpacity + ")";
-      spData.backgroundOpacity = parseFloat(tempOpacity.replace(/,/g, "."));
-      this.setState({
-        activityChanged: true
-      })
 
-      if (spData.noBackImage) {
+      console.log("Tempopacity:", tempOpacity);
+      console.log("BackgroundOpacity:", spData.backgroundOpacity.toString());
+      console.log("Tempopacity1:", tempOpacity1);
+      console.log("CatBackgroundOpacity:", spData.catOpacity.toString());
+
+      if (tempColor !== rgbToHex(spData.backgroundColor)
+        || tempOpacity !== spData.backgroundOpacity.toString() || disable1 !== "none") {
+        if (disable1 !== "none") {
+          spData.noBackImage = disable1;
+        }
+        spData.backgroundColor = hexToRgb(tempColor) + ", " + tempOpacity + ")";
+        spData.backgroundOpacity = parseFloat(tempOpacity.replace(/,/g, "."));
         this.setState({
-          backStyle: {
-            backgroundImage: "none",
-            backgroundColor: spData.backgroundColor,
-            backgroundPosition: 'center',
-            backgroundSize: 'cover',
-            backgroundRepeat: 'no-repeat',
-            backgroundAttachment: "fixed",
-            position: "fixed",
-            padding: "0",
-            margin: "0",
-            top: "0",
-            left: "0",
-            width: "100%",
-            height: "100%",
-            filter: "brightness(" + spData.backgroundOpacity.toString() + "%)",
-            zIndex: "-1"
-          }
-        });
+          activityChanged: true
+        })
+
+        if (spData.noBackImage) {
+          this.setState({
+            backStyle: {
+              backgroundImage: "none",
+              backgroundColor: spData.backgroundColor,
+              backgroundPosition: 'center',
+              backgroundSize: 'cover',
+              backgroundRepeat: 'no-repeat',
+              backgroundAttachment: "fixed",
+              position: "fixed",
+              padding: "0",
+              margin: "0",
+              top: "0",
+              left: "0",
+              width: "100%",
+              height: "100%",
+              filter: "brightness(" + spData.backgroundOpacity.toString() + "%)",
+              zIndex: "-1"
+            }
+          });
+        } else {
+          this.setState({
+            backStyle: {
+              backgroundImage: "url(" + spData.backgroundImage + ")",
+              backgroundColor: spData.backgroundColor,
+              backgroundPosition: 'center',
+              backgroundSize: 'cover',
+              backgroundRepeat: 'no-repeat',
+              backgroundAttachment: "fixed",
+              position: "fixed",
+              padding: "0",
+              margin: "0",
+              top: "0",
+              left: "0",
+              width: "100%",
+              height: "100%",
+              filter: "brightness(" + spData.backgroundOpacity.toString() + "%)",
+              zIndex: "-1"
+            }
+          });
+        }
+        changes = true;
+      }
+
+      if (fileCatImg !== null) {
+        tempCatIcon = spData.catImage;
+        this.catItemActions(fileCatImg, "backcat", "edit");
+        changes = true;
+      }
+
+      if (tempCatColor !== rgbToHex(spData.catColor)
+        || tempOpacity1 !== spData.catOpacity.toString() || disable2 !== "none") {
+        if (disable2 !== "none") {
+          spData.noCatImage = disable2;
+        }
+        spData.catColor = hexToRgb(tempCatColor) + ", " + tempOpacity1 + ")";
+        spData.catOpacity = parseFloat(tempOpacity1.replace(/,/g, "."));
+        this.setState({
+          activityChanged: true
+        })
+        if (spData.noCatImage === true) {
+          this.setState({
+            catStyle: {
+              backgroundImage: "none",
+              backgroundColor: spData.catColor,
+              backgroundPosition: 'center',
+              backgroundSize: 'cover',
+              backgroundRepeat: 'no-repeat',
+              backgroundAttachment: "fixed",
+              position: "fixed",
+              padding: "0",
+              margin: "0",
+              top: "0",
+              left: "0",
+              width: "100%",
+              height: "100%",
+              opacity: spData.catOpacity.toString(),
+              zIndex: "-1"
+            }
+          });
+        } else {
+          this.setState({
+            catStyle: {
+              backgroundImage: "url(" + spData.catImage + ")",
+              backgroundColor: spData.catColor,
+              backgroundPosition: 'center',
+              backgroundSize: 'cover',
+              backgroundRepeat: 'no-repeat',
+              backgroundAttachment: "fixed",
+              position: "fixed",
+              padding: "0",
+              margin: "0",
+              top: "0",
+              left: "0",
+              width: "100%",
+              height: "100%",
+              opacity: spData.catOpacity.toString(),
+              zIndex: "-1"
+            }
+          });
+        }
+        changes = true;
+      }
+      console.log("CATFirst: " + categoryFirst);
+      if (categoryFirst !== "none") {
+        spData.catFirst = categoryFirst;
+        this.setState({
+          catFirst: categoryFirst
+        })
+        categoryFirst = "none";
+        changes = true;
+      }
+
+      if (!changes) {
+        this.fireAlert("No changes made!", "solidblue");
       } else {
-        this.setState({
-          backStyle: {
-            backgroundImage: "url(" + spData.backgroundImage + ")",
-            backgroundColor: spData.backgroundColor,
-            backgroundPosition: 'center',
-            backgroundSize: 'cover',
-            backgroundRepeat: 'no-repeat',
-            backgroundAttachment: "fixed",
-            position: "fixed",
-            padding: "0",
-            margin: "0",
-            top: "0",
-            left: "0",
-            width: "100%",
-            height: "100%",
-            filter: "brightness(" + spData.backgroundOpacity.toString() + "%)",
-            zIndex: "-1"
-          }
-        });
+        this.fireAlert("Changes Made!", "solidgreen");
+        this.saveConf(spData, "./api/img-upload.php", "config");
       }
-      changes = true;
-    }
-
-    if (fileCatImg !== null) {
-      tempCatIcon = spData.catImage;
-      this.catItemActions(fileCatImg, "backcat", "edit");
-      changes = true;
-    }
-
-    if (tempCatColor !== rgbToHex(spData.catColor)
-      || tempOpacity1 !== spData.catOpacity.toString() || disable2 !== "none") {
-      if (disable2 !== "none") {
-        spData.noCatImage = disable2;
-      }
-      spData.catColor = hexToRgb(tempCatColor) + ", " + tempOpacity1 + ")";
-      spData.catOpacity = parseFloat(tempOpacity1.replace(/,/g, "."));
-      this.setState({
-        activityChanged: true
-      })
-      if (spData.noCatImage === true) {
-        this.setState({
-          catStyle: {
-            backgroundImage: "none",
-            backgroundColor: spData.catColor,
-            backgroundPosition: 'center',
-            backgroundSize: 'cover',
-            backgroundRepeat: 'no-repeat',
-            backgroundAttachment: "fixed",
-            position: "fixed",
-            padding: "0",
-            margin: "0",
-            top: "0",
-            left: "0",
-            width: "100%",
-            height: "100%",
-            opacity: spData.catOpacity.toString(),
-            zIndex: "-1"
-          }
-        });
-      } else {
-        this.setState({
-          catStyle: {
-            backgroundImage: "url(" + spData.catImage + ")",
-            backgroundColor: spData.catColor,
-            backgroundPosition: 'center',
-            backgroundSize: 'cover',
-            backgroundRepeat: 'no-repeat',
-            backgroundAttachment: "fixed",
-            position: "fixed",
-            padding: "0",
-            margin: "0",
-            top: "0",
-            left: "0",
-            width: "100%",
-            height: "100%",
-            opacity: spData.catOpacity.toString(),
-            zIndex: "-1"
-          }
-        });
-      }
-      changes = true;
-    }
-    console.log("CATFirst: " + categoryFirst);
-    if (categoryFirst !== "none") {
-      spData.catFirst = categoryFirst;
-      this.setState({
-        catFirst: categoryFirst
-      })
-      categoryFirst = "none";
-      changes = true;
-    }
-
-    if (!changes) {
-      this.fireAlert("No changes made!", "solidblue");
     } else {
-      this.fireAlert("Changes Made!", "solidgreen");
-      this.saveConf(spData, "./api/img-upload.php", "config");
+      this.fireAlert("No changes made!", "solidblue");
     }
   }
 
   saveInfo = () => {
-    if (disable1 !== "none") {
-      spData.noFootTitle = disable1;
+    if (FormChanges("infoForm")) {
+      if (disable1 !== "none") {
+        spData.noFootTitle = disable1;
+      }
+      if (temp !== "") {
+        spData.footTitle = temp;
+      }
+      if (disable2 !== "none") {
+        spData.noFootSubtitle = disable2;
+      }
+      if (temp2 !== "") {
+        spData.footSubtitle = temp2;
+      }
+      if (disable3 !== "none") {
+        spData.noFootSubtitle2 = disable3;
+      }
+      if (temp3 !== "") {
+        spData.footSubtitle2 = temp3;
+      }
+      spData.footInfoColor = hexToRgb(tempColor) + ", " + tempOpacity + ")";
+      spData.footInfoOpacity = parseFloat(tempOpacity.replace(/,/g, "."));
+      spData.footInfoTextColor = hexToRgb(tempTextColor) + ", 1)";
+      spData.footInfoColW = tempColW;
+      if (blockHide !== "none") {
+        spData.infoShow = blockHide;
+      }
+      blockHide = "none";
+      temp = "";
+      temp2 = "";
+      temp3 = "";
+      disable1 = "none";
+      disable2 = "none";
+      disable3 = "none";
+      this.fireAlert("Changes Made!", "solidgreen");
+      this.saveConf(spData, "./api/img-upload.php", "config");
+    } else {
+      this.fireAlert("No changes made!", "solidblue");
     }
-    if (temp !== "") {
-      spData.footTitle = temp;
-    }
-    if (disable2 !== "none") {
-      spData.noFootSubtitle = disable2;
-    }
-    if (temp2 !== "") {
-      spData.footSubtitle = temp2;
-    }
-    if (disable3 !== "none") {
-      spData.noFootSubtitle2 = disable3;
-    }
-    if (temp3 !== "") {
-      spData.footSubtitle2 = temp3;
-    }
-    spData.footInfoColor = hexToRgb(tempColor) + ", " + tempOpacity + ")";
-    spData.footInfoOpacity = parseFloat(tempOpacity.replace(/,/g, "."));
-    spData.footInfoTextColor = hexToRgb(tempTextColor) + ", 1)";
-    spData.footInfoColW = tempColW;
-    if (blockHide !== "none") {
-      spData.infoShow = blockHide;
-    }
-    blockHide = "none";
-    temp = "";
-    temp2 = "";
-    temp3 = "";
-    disable1 = "none";
-    disable2 = "none";
-    disable3 = "none";
-    this.fireAlert("Changes Made!", "solidgreen");
-    this.saveConf(spData, "./api/img-upload.php", "config");
   }
 
   saveAddInfo = () => {
-    if (disable1 !== "none") {
-      spData.noFootAddTitle = disable1;
-    }
-    if (temp !== "") {
-      spData.footAddTitle = temp;
-    }
-    if (disable2 !== "none") {
-      spData.noFootAddSubtitle = disable2;
-    }
-    if (temp2 !== "") {
-      spData.footAddSubtitle = temp2;
-    }
-    if (disable3 !== "none") {
-      spData.noFootAddSubtitle2 = disable3;
-    }
-    if (temp3 !== "") {
-      spData.footAddSubtitle2 = temp3;
-    }
+    if (FormChanges("creditForm")) {
+      if (disable1 !== "none") {
+        spData.noFootAddTitle = disable1;
+      }
+      if (temp !== "") {
+        spData.footAddTitle = temp;
+      }
+      if (disable2 !== "none") {
+        spData.noFootAddSubtitle = disable2;
+      }
+      if (temp2 !== "") {
+        spData.footAddSubtitle = temp2;
+      }
+      if (disable3 !== "none") {
+        spData.noFootAddSubtitle2 = disable3;
+      }
+      if (temp3 !== "") {
+        spData.footAddSubtitle2 = temp3;
+      }
 
-    spData.footAddColor = hexToRgb(tempColor) + ", " + tempOpacity + ")";
-    spData.footAddOpacity = parseFloat(tempOpacity.replace(/,/g, "."));
-    spData.footAddTextColor = hexToRgb(tempTextColor) + ", 1)";
-    spData.footAddColW = tempColW;
-    if (blockHide !== "none") {
-      spData.addInfoShow = blockHide;
+      spData.footAddColor = hexToRgb(tempColor) + ", " + tempOpacity + ")";
+      spData.footAddOpacity = parseFloat(tempOpacity.replace(/,/g, "."));
+      spData.footAddTextColor = hexToRgb(tempTextColor) + ", 1)";
+      spData.footAddColW = tempColW;
+      if (blockHide !== "none") {
+        spData.addInfoShow = blockHide;
+      }
+      blockHide = "none";
+      temp = "";
+      temp2 = "";
+      temp3 = "";
+      disable1 = "none";
+      disable2 = "none";
+      disable3 = "none";
+      this.fireAlert("Changes Made!", "solidgreen");
+      this.saveConf(spData, "./api/img-upload.php", "config");
+    } else {
+      this.fireAlert("No changes made!", "solidblue");
     }
-    blockHide = "none";
-    temp = "";
-    temp2 = "";
-    temp3 = "";
-    disable1 = "none";
-    disable2 = "none";
-    disable3 = "none";
-    this.fireAlert("Changes Made!", "solidgreen");
-    this.saveConf(spData, "./api/img-upload.php", "config");
   }
 
   // ITEM ACTIONS
@@ -1665,34 +1695,38 @@ class Main extends React.Component {
   }
 
   loginEditCheck = () => {
-    if (usrTmp !== "" || pswTmp !== "") {
-      // console.log("User: " + usrTmp)
-      // console.log("Psw: " + pswTmp)
-      spData.loginColor = hexToRgb(tempColor) + ", " + tempOpacity + ")";
-      spData.loginOpacity = parseFloat(tempOpacity.replace(/,/g, "."));
-      hashUsrPsw(usrTmp, pswTmp, bcrypt)
-        .then(result => {
-          // console.log(result)
-          credentials.user = result[0];
-          // console.log("User: " + usrTmp)
-          // console.log("UserHash: " + spData.user)
-          credentials.password = result[1];
-          // console.log("Psw: " + pswTmp)
-          // console.log("PswHash: " + spData.password)
-          this.saveConf(credentials, "./api/img-upload.php", "credentials");
-          usrTmp = "";
-          pswTmp = "";
-          this.saveConf(spData, "./api/img-upload.php", "config");
-          this.fireAlert("Username and password changed successfully!", "solidgreen");
-        })
-        .catch(err => {
-          console.log(err)
-        })
+    if (FormChanges("loginEditForm")) {
+      if (usrTmp !== "" || pswTmp !== "") {
+        // console.log("User: " + usrTmp)
+        // console.log("Psw: " + pswTmp)
+        spData.loginColor = hexToRgb(tempColor) + ", " + tempOpacity + ")";
+        spData.loginOpacity = parseFloat(tempOpacity.replace(/,/g, "."));
+        hashUsrPsw(usrTmp, pswTmp, bcrypt)
+          .then(result => {
+            // console.log(result)
+            credentials.user = result[0];
+            // console.log("User: " + usrTmp)
+            // console.log("UserHash: " + spData.user)
+            credentials.password = result[1];
+            // console.log("Psw: " + pswTmp)
+            // console.log("PswHash: " + spData.password)
+            this.saveConf(credentials, "./api/img-upload.php", "credentials");
+            usrTmp = "";
+            pswTmp = "";
+            this.saveConf(spData, "./api/img-upload.php", "config");
+            this.fireAlert("Username and password changed successfully!", "solidgreen");
+          })
+          .catch(err => {
+            console.log(err)
+          })
+      } else {
+        spData.loginColor = hexToRgb(tempColor) + ", " + tempOpacity + ")";
+        spData.loginOpacity = parseFloat(tempOpacity.replace(/,/g, "."));
+        this.saveConf(spData, "./api/img-upload.php", "config");
+        this.fireAlert("Changes Made!", "solidgreen");
+      }
     } else {
-      spData.loginColor = hexToRgb(tempColor) + ", " + tempOpacity + ")";
-      spData.loginOpacity = parseFloat(tempOpacity.replace(/,/g, "."));
-      this.saveConf(spData, "./api/img-upload.php", "config");
-      this.fireAlert("Changes Made!", "solidgreen");
+      this.fireAlert("No changes made!", "solidblue");
     }
   }
 
