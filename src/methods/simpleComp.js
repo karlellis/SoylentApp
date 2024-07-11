@@ -203,7 +203,7 @@ export const InputCat = ({ catMenuB }) => {
 }
 
 export const InputWidth = ({ idAuto, idCol1, idCol2, idCol3, idCol4, idCol5,
-  valAuto, valCol1, valCol2, valCol3, valCol4, valCol5, tempoColW }) => {
+  valAuto, valCol1, valCol2, valCol3, valCol4, valCol5, tempoColW, tColW }) => {
   return (
     <div class="form-group" >
       <div className="row text-center mb-1 m-auto">
@@ -215,22 +215,34 @@ export const InputWidth = ({ idAuto, idCol1, idCol2, idCol3, idCol4, idCol5,
             <div className="col pt-1 pb-1">
               <div className="row m-auto">
                 <div className="col radio">
-                  <label class="radio-inline"> <input type="radio" name="blockWidth" id={idAuto} value={valAuto} onChange={tempoColW} /> Auto </label>
+                  <label class="radio-inline"> <input type="radio" name="blockWidth" id={idAuto}
+                    value={valAuto} onChange={tempoColW} checked={tColW === valAuto} 
+                    defaultChecked={tColW === valAuto} /> Auto </label>
                 </div>
                 <div className="col radio">
-                  <label class="radio-inline"> <input type="radio" name="blockWidth" id={idCol1} value={valCol1} onChange={tempoColW} /> 1 </label>
+                  <label class="radio-inline"> <input type="radio" name="blockWidth" id={idCol1}
+                    value={valCol1} onChange={tempoColW} checked={tColW === valCol1} 
+                    defaultChecked={tColW === valCol1}/> 1 </label>
                 </div>
                 <div className="col radio">
-                  <label class="radio-inline"> <input type="radio" name="blockWidth" id={idCol2} value={valCol2} onChange={tempoColW} /> 2 </label>
+                  <label class="radio-inline"> <input type="radio" name="blockWidth" id={idCol2}
+                    value={valCol2} onChange={tempoColW} checked={tColW === valCol2} 
+                    defaultChecked={tColW === valCol2}/> 2 </label>
                 </div>
                 <div className="col radio">
-                  <label class="radio-inline"> <input type="radio" name="blockWidth" id={idCol3} value={valCol3} onChange={tempoColW} /> 3 </label>
+                  <label class="radio-inline"> <input type="radio" name="blockWidth" id={idCol3}
+                    value={valCol3} onChange={tempoColW} checked={tColW === valCol3} 
+                    defaultChecked={tColW === valCol3}/> 3 </label>
                 </div>
                 <div className="col radio">
-                  <label class="radio-inline"> <input type="radio" name="blockWidth" id={idCol4} value={valCol4} onChange={tempoColW} /> 4 </label>
+                  <label class="radio-inline"> <input type="radio" name="blockWidth" id={idCol4}
+                    value={valCol4} onChange={tempoColW} checked={tColW === valCol4} 
+                    defaultChecked={tColW === valCol4}/> 4 </label>
                 </div>
                 <div className="col radio">
-                  <label class="radio-inline"> <input type="radio" name="blockWidth" id={idCol5} value={valCol5} onChange={tempoColW} /> 5 </label>
+                  <label class="radio-inline"> <input type="radio" name="blockWidth" id={idCol5}
+                    value={valCol5} onChange={tempoColW} checked={tColW === valCol5} 
+                    defaultChecked={tColW === valCol5}/> 5 </label>
                 </div>
               </div>
             </div>

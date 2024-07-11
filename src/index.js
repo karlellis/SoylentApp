@@ -72,6 +72,7 @@ var categoryFirst = "none";
 var dropDownIsOpen = false;
 var catDropDownIsOpen = false;
 var currElement = "";
+var changed = false;
 var newItem = {
   "title": "",
   "link": "",
@@ -1736,34 +1737,36 @@ class Main extends React.Component {
     switch (id) {
       case "title":
         tempColW = spData.headColW;
-        switch (spData.headColW) {
-          case "col":
-            radiobtn = document.getElementById("headColAuto");
-            radiobtn.checked = true;
-            break;
-          case "col-1":
-            radiobtn = document.getElementById("headCol1");
-            radiobtn.checked = true;
-            break;
-          case "col-2":
-            radiobtn = document.getElementById("headCol2");
-            radiobtn.checked = true;
-            break;
-          case "col-3":
-            radiobtn = document.getElementById("headCol3");
-            radiobtn.checked = true;
-            break;
-          case "col-4":
-            radiobtn = document.getElementById("headCol4");
-            radiobtn.checked = true;
-            break;
-          case "col-5":
-            radiobtn = document.getElementById("headCol5");
-            radiobtn.checked = true;
-            break;
-          default:
-          // will NOT execute because of the line preceding the switch.
-        }
+        console.log("tempColW = ", tempColW)
+        // switch (spData.headColW) {
+        //   case "col":
+        //     radiobtn = document.getElementById("headColAuto");
+        //     radiobtn.defaultChecked = true;
+        //     break;
+        //   case "col-1":
+        //     radiobtn = document.getElementById("headCol1");
+        //     radiobtn.defaultChecked = true;
+        //     break;
+        //   case "col-2":
+        //     radiobtn = document.getElementById("headCol2");
+        //     radiobtn.defaultChecked = true;
+        //     break;
+        //   case "col-3":
+        //     radiobtn = document.getElementById("headCol3");
+        //     radiobtn.defaultChecked = true;
+        //     break;
+        //   case "col-4":
+        //     radiobtn = document.getElementById("headCol4");
+        //     radiobtn.defaultChecked = true;
+        //     break;
+        //   case "col-5":
+        //     radiobtn = document.getElementById("headCol5");
+        //     radiobtn.defaultChecked = true;
+        //     break;
+        //   default:
+        //   // will NOT execute because of the line preceding the switch.
+        // }
+
         tempColor = rgbToHex(spData.headColor);
         tempOpacity = spData.headOpacity.toString();
         tempTextColor = rgbToHex(spData.headTextColor);
@@ -2859,7 +2862,7 @@ class Main extends React.Component {
                     </InputTitle>
                     <InputWidth idAuto="headColAuto" idCol1="headCol1" idCol2="headCol2" idCol3="headCol3" idCol4="headCol4" idCol5="headCol5"
                       valAuto="col" valCol1="col-1" valCol2="col-2" valCol3="col-3" valCol4="col-4" valCol5="col-5"
-                      tempoColW={e => { tempColW = e.target.value; }}>
+                      tempoColW={e => { tempColW = e.target.value; }} tColW={tempColW}>
                     </InputWidth>
                     <div className="form-group">
                       <div className="row mb-1 m-auto">
@@ -2898,7 +2901,9 @@ class Main extends React.Component {
                   <form id="clockForm">
                     <InputWidth idAuto="clockColAuto" idCol1="clockCol1" idCol2="clockCol2" idCol3="clockCol3" idCol4="clockCol4" idCol5="clockCol5"
                       valAuto="col-md" valCol1="col-md-1" valCol2="col-md-2" valCol3="col-md-3" valCol4="col-md-4" valCol5="col-md-5"
-                      tempoColW={e => { tempColW = e.target.value; }}>
+                      tempoColW={e => {
+                        tempColW = e.target.value;
+                      }}>
                     </InputWidth>
                     {/* Back & Text colors */}
                     <div className="form-group">

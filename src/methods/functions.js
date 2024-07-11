@@ -106,10 +106,11 @@ export function FormChanges(form) {
     if (!form || !form.nodeName || form.nodeName.toLowerCase() != "form") return null;
 
     // find changed elements
-    var changed = [], n, c, def, o, ol, opt;
+    var changed = [], n, c, def, o, ol, opt, prev;
     for (var e = 0, el = form.elements.length; e < el; e++) {
         n = form.elements[e];
         c = false;
+        prev = null;
 
         switch (n.nodeName.toLowerCase()) {
 
@@ -130,12 +131,22 @@ export function FormChanges(form) {
 
                 switch (n.type.toLowerCase()) {
                     case "checkbox":
-                        // checkbox / radio
-                        c = (n.checked != n.defaultChecked);
-                        break;
+                        // c = (n.checked != n.defaultChecked);
                     case "radio":
-                        // standard values
-                        c = (n.value != n.defaultValue);
+                        // checkbox / radio
+                        // console.log("RADIO N:", n)
+                        // n.addEventListener('change', function () {
+                        //     // (prev) ? console.log(prev.value): null;
+                        //     if (this !== prev) {
+                        //         prev = this;
+                        //     }
+                        //     console.log(this.value)
+                        //     c = true;
+                        // });
+                        console.log("n: ", n);
+                        console.log("n.checked: ", n.checked);
+                        console.log("n.defaultChecked: ",  n.defaultChecked);
+                        c = (n.checked != n.defaultChecked);
                         break;
                     default:
                         // standard values
