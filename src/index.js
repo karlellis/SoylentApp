@@ -1738,34 +1738,34 @@ class Main extends React.Component {
       case "title":
         tempColW = spData.headColW;
         console.log("tempColW = ", tempColW)
-        // switch (spData.headColW) {
-        //   case "col":
-        //     radiobtn = document.getElementById("headColAuto");
-        //     radiobtn.defaultChecked = true;
-        //     break;
-        //   case "col-1":
-        //     radiobtn = document.getElementById("headCol1");
-        //     radiobtn.defaultChecked = true;
-        //     break;
-        //   case "col-2":
-        //     radiobtn = document.getElementById("headCol2");
-        //     radiobtn.defaultChecked = true;
-        //     break;
-        //   case "col-3":
-        //     radiobtn = document.getElementById("headCol3");
-        //     radiobtn.defaultChecked = true;
-        //     break;
-        //   case "col-4":
-        //     radiobtn = document.getElementById("headCol4");
-        //     radiobtn.defaultChecked = true;
-        //     break;
-        //   case "col-5":
-        //     radiobtn = document.getElementById("headCol5");
-        //     radiobtn.defaultChecked = true;
-        //     break;
-        //   default:
-        //   // will NOT execute because of the line preceding the switch.
-        // }
+        switch (spData.headColW) {
+          case "col":
+            radiobtn = document.getElementById("headColAuto");
+            radiobtn.defaultChecked = true;
+            break;
+          case "col-1":
+            radiobtn = document.getElementById("headCol1");
+            radiobtn.defaultChecked = true;
+            break;
+          case "col-2":
+            radiobtn = document.getElementById("headCol2");
+            radiobtn.defaultChecked = true;
+            break;
+          case "col-3":
+            radiobtn = document.getElementById("headCol3");
+            radiobtn.defaultChecked = true;
+            break;
+          case "col-4":
+            radiobtn = document.getElementById("headCol4");
+            radiobtn.defaultChecked = true;
+            break;
+          case "col-5":
+            radiobtn = document.getElementById("headCol5");
+            radiobtn.defaultChecked = true;
+            break;
+          default:
+          // will NOT execute because of the line preceding the switch.
+        }
 
         tempColor = rgbToHex(spData.headColor);
         tempOpacity = spData.headOpacity.toString();
