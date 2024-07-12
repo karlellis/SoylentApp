@@ -72,7 +72,6 @@ var categoryFirst = "none";
 var dropDownIsOpen = false;
 var catDropDownIsOpen = false;
 var currElement = "";
-var changed = false;
 var newItem = {
   "title": "",
   "link": "",
@@ -103,6 +102,7 @@ class Main extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      changed: "",
       infoShow: false,
       addInfoShow: false,
       mainBtn: false,
@@ -1040,6 +1040,9 @@ class Main extends React.Component {
       temp = "";
       this.fireAlert("Changes Made!", "solidgreen");
       this.saveConf(spData, "./api/img-upload.php", "config");
+      this.setState({
+        changed: spData.headColW
+      });
     } else {
       this.fireAlert("No changes made!", "solidblue");
     }
@@ -1067,6 +1070,9 @@ class Main extends React.Component {
         blockHide = "none";
         this.fireAlert("Changes Made!", "solidgreen");
         this.saveConf(spData, "./api/img-upload.php", "config");
+        this.setState({
+          changed: spData.logoColW
+        });
       }
     } else {
       this.fireAlert("No changes made!", "solidblue");
@@ -1085,6 +1091,9 @@ class Main extends React.Component {
       blockHide = "none";
       this.fireAlert("Changes Made!", "solidgreen");
       this.saveConf(spData, "./api/img-upload.php", "config");
+      this.setState({
+        changed: spData.clockColW
+      });
     } else {
       this.fireAlert("No changes made!", "solidblue");
     }
@@ -1276,6 +1285,9 @@ class Main extends React.Component {
       disable3 = "none";
       this.fireAlert("Changes Made!", "solidgreen");
       this.saveConf(spData, "./api/img-upload.php", "config");
+      this.setState({
+        changed: spData.footInfoColW
+      });
     } else {
       this.fireAlert("No changes made!", "solidblue");
     }
@@ -1318,6 +1330,9 @@ class Main extends React.Component {
       disable3 = "none";
       this.fireAlert("Changes Made!", "solidgreen");
       this.saveConf(spData, "./api/img-upload.php", "config");
+      this.setState({
+        changed: spData.footAddColW
+      });
     } else {
       this.fireAlert("No changes made!", "solidblue");
     }
@@ -1737,31 +1752,35 @@ class Main extends React.Component {
     switch (id) {
       case "title":
         tempColW = spData.headColW;
-        console.log("tempColW = ", tempColW)
+        this.setState({
+          changed: spData.headColW
+        });
+        setTimeout(() => console.log("changed = ", this.state.changed), 500);
+
         switch (spData.headColW) {
           case "col":
             radiobtn = document.getElementById("headColAuto");
-            radiobtn.defaultChecked = true;
+            radiobtn.checked = true;
             break;
           case "col-1":
             radiobtn = document.getElementById("headCol1");
-            radiobtn.defaultChecked = true;
+            radiobtn.checked = true;
             break;
           case "col-2":
             radiobtn = document.getElementById("headCol2");
-            radiobtn.defaultChecked = true;
+            radiobtn.checked = true;
             break;
           case "col-3":
             radiobtn = document.getElementById("headCol3");
-            radiobtn.defaultChecked = true;
+            radiobtn.checked = true;
             break;
           case "col-4":
             radiobtn = document.getElementById("headCol4");
-            radiobtn.defaultChecked = true;
+            radiobtn.checked = true;
             break;
           case "col-5":
             radiobtn = document.getElementById("headCol5");
-            radiobtn.defaultChecked = true;
+            radiobtn.checked = true;
             break;
           default:
           // will NOT execute because of the line preceding the switch.
@@ -1788,6 +1807,11 @@ class Main extends React.Component {
         break;
       case "logo":
         tempColW = spData.logoColW;
+        this.setState({
+          changed: spData.logoColW
+        });
+        setTimeout(() => console.log("changed = ", this.state.changed), 500);
+
         switch (spData.logoColW) {
           case "col":
             radiobtn = document.getElementById("logoColAuto");
@@ -1822,6 +1846,11 @@ class Main extends React.Component {
         break;
       case "info":
         tempColW = spData.footInfoColW;
+        this.setState({
+          changed: spData.footInfoColW
+        });
+        setTimeout(() => console.log("changed = ", this.state.changed), 500);
+
         switch (spData.footInfoColW) {
           case "col":
             radiobtn = document.getElementById("infoColAuto");
@@ -1857,6 +1886,11 @@ class Main extends React.Component {
         break;
       case "addInfo":
         tempColW = spData.footAddColW;
+        this.setState({
+          changed: spData.footAddColW
+        });
+        setTimeout(() => console.log("changed = ", this.state.changed), 500);
+
         switch (spData.footAddColW) {
           case "col-md":
             radiobtn = document.getElementById("addInfoColAuto");
@@ -1945,6 +1979,11 @@ class Main extends React.Component {
         break;
       case "clock":
         tempColW = spData.clockColW;
+        this.setState({
+          changed: spData.clockColW
+        });
+        setTimeout(() => console.log("changed = ", this.state.changed), 500);
+
         switch (spData.clockColW) {
           case "col-md":
             radiobtn = document.getElementById("clockColAuto");
@@ -2862,7 +2901,7 @@ class Main extends React.Component {
                     </InputTitle>
                     <InputWidth idAuto="headColAuto" idCol1="headCol1" idCol2="headCol2" idCol3="headCol3" idCol4="headCol4" idCol5="headCol5"
                       valAuto="col" valCol1="col-1" valCol2="col-2" valCol3="col-3" valCol4="col-4" valCol5="col-5"
-                      tempoColW={e => { tempColW = e.target.value; }} tColW={tempColW}>
+                      tempoColW={e => { tempColW = e.target.value; }} tColW={this.state.changed}>
                     </InputWidth>
                     <div className="form-group">
                       <div className="row mb-1 m-auto">
@@ -2901,9 +2940,7 @@ class Main extends React.Component {
                   <form id="clockForm">
                     <InputWidth idAuto="clockColAuto" idCol1="clockCol1" idCol2="clockCol2" idCol3="clockCol3" idCol4="clockCol4" idCol5="clockCol5"
                       valAuto="col-md" valCol1="col-md-1" valCol2="col-md-2" valCol3="col-md-3" valCol4="col-md-4" valCol5="col-md-5"
-                      tempoColW={e => {
-                        tempColW = e.target.value;
-                      }}>
+                      tempoColW={e => { tempColW = e.target.value; }} tColW={this.state.changed}>
                     </InputWidth>
                     {/* Back & Text colors */}
                     <div className="form-group">
@@ -2943,7 +2980,7 @@ class Main extends React.Component {
                     <InputFile fileIn={e => { fileImg = e.target.files[0]; }}></InputFile>
                     <InputWidth idAuto="logoColAuto" idCol1="logoCol1" idCol2="logoCol2" idCol3="logoCol3" idCol4="logoCol4" idCol5="logoCol5"
                       valAuto="col" valCol1="col-1" valCol2="col-2" valCol3="col-3" valCol4="col-4" valCol5="col-5"
-                      tempoColW={e => { tempColW = e.target.value; }}>
+                      tempoColW={e => { tempColW = e.target.value; }} tColW={this.state.changed}>
                     </InputWidth>
                     {/* Back color */}
                     <div className="form-group">
@@ -3035,7 +3072,7 @@ class Main extends React.Component {
                     </InputInfos>
                     <InputWidth idAuto="infoColAuto" idCol1="infoCol1" idCol2="infoCol2" idCol3="infoCol3" idCol4="infoCol4" idCol5="infoCol5"
                       valAuto="col" valCol1="col-1" valCol2="col-2" valCol3="col-3" valCol4="col-4" valCol5="col-5"
-                      tempoColW={e => { tempColW = e.target.value; }}>
+                      tempoColW={e => { tempColW = e.target.value; }} tColW={this.state.changed}>
                     </InputWidth>
                     <div className="form-group">
                       <div className="row mb-1 m-auto">
@@ -3130,7 +3167,7 @@ class Main extends React.Component {
                     </InputInfos>
                     <InputWidth idAuto="addInfoColAuto" idCol1="addInfoCol1" idCol2="addInfoCol2" idCol3="addInfoCol3" idCol4="addInfoCol4" idCol5="addInfoCol5"
                       valAuto="col-md" valCol1="col-md-1" valCol2="col-md-2" valCol3="col-md-3" valCol4="col-md-4" valCol5="col-md-5"
-                      tempoColW={e => { tempColW = e.target.value; }}>
+                      tempoColW={e => { tempColW = e.target.value; }} tColW={this.state.changed}>
                     </InputWidth>
                     <div className="form-group">
                       <div className="row mb-1 m-auto">
