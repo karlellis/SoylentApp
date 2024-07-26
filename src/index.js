@@ -49,6 +49,7 @@ var tempColW = "";
 var radiobtn = "";
 var tempItemTitle = "";
 var tempItemDescr = "...";
+var tempHideDescr = true;
 var tempItemLink = "";
 var tempItemVideo = false;
 var tempCatTitle = "";
@@ -77,6 +78,7 @@ var newItem = {
   "link": "",
   "icon": "",
   "descr": "",
+  "hideDescr": true,
   "video": false,
   "cat": "Root",
   "id": 0,
@@ -435,14 +437,17 @@ class Main extends React.Component {
           }
           if (temp2 !== "") {
             array[temp].title = temp2;
+            tempItemTitle = array[temp].title;
           }
           if (temp3 !== "") {
             array[temp].link = temp3;
+            tempItemLink = array[temp].link;
           }
           array[temp].video = temp4;
           tempItemVideo = temp4;
           array[temp].cat = temp5;
           array[temp].descr = temp6;
+          array[temp].hideDescr = noDescr;
           if (blockHide !== "none") {
             array[temp].hidden = blockHide;
             tempItemHide = blockHide;
@@ -462,7 +467,9 @@ class Main extends React.Component {
             newItem.icon = array[temp].icon;
             newItem.title = array[temp].title;
             newItem.link = array[temp].link;
+            // console.log("TempItemTitle: ", tempItemTitle);
             newItem.descr = array[temp].descr;
+            newItem.hideDescr = array[temp].hideDescr;
             newItem.video = array[temp].video;
             newItem.cat = array[temp].cat;
             newItem.id = index;
@@ -508,6 +515,7 @@ class Main extends React.Component {
               "link": "",
               "icon": "",
               "descr": "",
+              "hideDescr": true,
               "video": false,
               "cat": "",
               "id": 0,
@@ -519,9 +527,10 @@ class Main extends React.Component {
           // currPos = "";
           temp2 = "";
           temp3 = "";
-          temp4 = "";
+          temp4 = tempItemVideo;
           temp5 = tempCatTitle;
           temp6 = "";
+          noDescr = tempHideDescr;
           blockHide = "none";
           this.fireAlert("Changes Made!", "solidgreen");
         } else if (url === "icon" && op === "add") {
@@ -530,6 +539,7 @@ class Main extends React.Component {
           newItem.title = temp2;
           newItem.link = temp3;
           newItem.descr = temp6;
+          newItem.hideDescr = noDescr;
           newItem.video = temp4;
           newItem.cat = temp5;
           if (blockHide !== "none") {
@@ -572,6 +582,7 @@ class Main extends React.Component {
             "link": "",
             "icon": "",
             "descr": "",
+            "hideDescr": true,
             "video": false,
             "cat": "",
             "id": 0,
@@ -586,6 +597,7 @@ class Main extends React.Component {
           newItem.title = temp2;
           newItem.link = temp3;
           newItem.descr = temp6;
+          newItem.hideDescr = noDescr;
           newItem.video = temp4;
           newItem.cat = temp5;
           if (blockHide !== "none") {
@@ -618,6 +630,7 @@ class Main extends React.Component {
             "link": "",
             "icon": "",
             "descr": "",
+            "hideDescr": true,
             "video": false,
             "cat": "",
             "id": 0,
@@ -632,6 +645,7 @@ class Main extends React.Component {
           }
           if (temp2 !== "") {
             array[currPos].title = temp2;
+            tempCatTitle = temp2;
             this.state.items.forEach(element => {
               if (element.cat === tempCatTitle) {
                 element.cat = temp2;
@@ -875,6 +889,7 @@ class Main extends React.Component {
           newItem.title = this.state.items[i].title;
           newItem.link = this.state.items[i].link;
           newItem.descr = this.state.items[i].descr;
+          newItem.hideDescr = this.state.items[i].hideDescr;
           newItem.video = this.state.items[i].video;
           newItem.cat = this.state.items[i].cat;
           newItem.id = this.state.items[i].id;
@@ -886,6 +901,7 @@ class Main extends React.Component {
             "link": "",
             "icon": "",
             "descr": "",
+            "hideDescr": true,
             "video": false,
             "cat": "",
             "id": 0,
@@ -902,6 +918,7 @@ class Main extends React.Component {
         "link": "",
         "icon": "",
         "descr": "",
+        "hideDescr": true,
         "video": false,
         "cat": "",
         "id": 0,
@@ -928,6 +945,7 @@ class Main extends React.Component {
           newItem.title = items[i].title;
           newItem.link = items[i].link;
           newItem.descr = items[i].descr;
+          newItem.hideDescr = items[i].hideDescr;
           newItem.video = items[i].video;
           newItem.cat = items[i].cat;
           newItem.id = items[i].id;
@@ -939,6 +957,7 @@ class Main extends React.Component {
             "link": "",
             "icon": "",
             "descr": "",
+            "hideDescr": true,
             "video": false,
             "cat": "Root",
             "id": 0,
@@ -961,6 +980,7 @@ class Main extends React.Component {
         "link": "",
         "icon": "",
         "descr": "",
+        "hideDescr": true,
         "video": false,
         "cat": "Root",
         "id": 0,
@@ -1344,15 +1364,16 @@ class Main extends React.Component {
     array = [...this.state.items];
     rootArray = [...this.state.rootItems];
     catArray = [...this.state.catItems];
-    if (noDescr === true) {
-      temp6 = "";
-    }
+
+    // if (noDescr === true) {
+    //   temp6 = "";
+    // }
 
     // console.log("fileImg: ", fileImg);
     // console.log("temp2: ", temp2);
     // console.log("temp3: ", temp3);
-    console.log("temp4: ", temp4);
-    console.log("tempItemVideo: ", tempItemVideo);
+    // console.log("temp4: ", temp4);
+    // console.log("tempItemVideo: ", tempItemVideo);
     // console.log("temp5: ", temp5);
     // console.log("tempCatTitle: ", tempCatTitle);
     // console.log("temp6: ", temp6);
@@ -1361,9 +1382,10 @@ class Main extends React.Component {
     // console.log("blockHide: ", blockHide);
     // console.log("tempItemHide: ", tempItemHide);
 
-    if (fileImg !== null || temp2 !== "" || temp3 !== "" || temp4 !== tempItemVideo ||
-      temp5 !== tempCatTitle || temp6 !== tempItemDescr || cgPos !== "" ||
-      blockHide !== tempItemHide) {
+    // if (fileImg !== null || temp2 !== "" || temp3 !== "" || temp4 !== tempItemVideo ||
+    //   temp5 !== tempCatTitle || temp6 !== tempItemDescr || cgPos !== "" ||
+    //   blockHide !== tempItemHide) {
+    if (FormChanges("itemEditForm") || temp5 !== tempCatTitle) {
       if (cgPos !== "") {
         if (temp5 === tempCatTitle) {
           inPos = parseInt(cgPos) - 1;
@@ -1409,9 +1431,11 @@ class Main extends React.Component {
     catArray = [...this.state.catItems];
     array = [...this.state.items];
     tempIcon = "";
-    if (noDescr === true) {
-      temp6 = "";
-    }
+
+    // if (noDescr === true) {
+    //   temp6 = "";
+    // }
+
     if (fileImg !== null && temp2 !== "" && temp3 !== "") {
       if (temp !== "") {
         inPos = parseInt(temp) - 1;
@@ -1483,8 +1507,9 @@ class Main extends React.Component {
     console.log("cgPos: ", cgPos);
     console.log("blockHide: ", blockHide);
     console.log("tempItemHide: ", tempItemHide);
-    if (fileImg !== null || temp2 !== "" || cgPos !== ""
-      || blockHide !== "none") {
+    // if (fileImg !== null || temp2 !== "" || cgPos !== ""
+    //   || blockHide !== "none") {
+    if (FormChanges("catEditForm")) {
       let dup = false;
       for (let i = 0; i < arrayLength; i++) {
         if (array[i].title.toLowerCase() === temp2.toLowerCase()) {
@@ -1755,7 +1780,7 @@ class Main extends React.Component {
         this.setState({
           changed: spData.headColW
         });
-        setTimeout(() => console.log("changed = ", this.state.changed), 500);
+        // setTimeout(() => console.log("changed = ", this.state.changed), 500);
 
         switch (spData.headColW) {
           case "col":
@@ -1849,7 +1874,7 @@ class Main extends React.Component {
         this.setState({
           changed: spData.footInfoColW
         });
-        setTimeout(() => console.log("changed = ", this.state.changed), 500);
+        // setTimeout(() => console.log("changed = ", this.state.changed), 500);
 
         switch (spData.footInfoColW) {
           case "col":
@@ -2095,6 +2120,7 @@ class Main extends React.Component {
       case "itemEdit":
         this.setState({ itemEditDiaShow: false });
         temp = "";
+        blockHide = "none";
         document.getElementById('itemEditForm').reset();
         break;
       case "itemDel":
@@ -2109,6 +2135,9 @@ class Main extends React.Component {
       case "catedit":
         this.setState({ catEditDiaShow: false });
         document.getElementById('catEditForm').reset();
+        cgPos = "";
+        temp2 = "";
+        inPos = "";
         break;
       case "catdel":
         this.setState({ catDelDiaShow: false });
@@ -2340,10 +2369,11 @@ class Main extends React.Component {
         // console.log("App name: ", tempItemTitle);
         tempItemLink = array[i].link;
         tempItemDescr = array[i].descr;
+        tempHideDescr = array[i].hideDescr;
         tempItemHide = array[i].hidden;
         // console.log("Item Hide: ", tempItemHide);
         // console.log("HideBlock: ", blockHide);
-        if (tempItemDescr === "") {
+        if (tempHideDescr === true) {
           noDescr = true;
           this.setState({
             disFieldIE: true
@@ -2365,7 +2395,8 @@ class Main extends React.Component {
         })
 
         tempCatTitle = temp5;
-        console.log(" Category: ",);
+        console.log(" Category: ", tempCatTitle);
+        console.log(" BlockHide: ", blockHide);
         tempIcon = array[i].icon;
       }
     }
@@ -2622,10 +2653,10 @@ class Main extends React.Component {
           }
           {/* APPS */}
           {
-            this.state.rootItems.map(({ id, title, link, descr, cat, icon, video, hidden }, i) => {
+            this.state.rootItems.map(({ id, title, link, descr, hideDescr, cat, icon, video, hidden }, i) => {
               return (
                 <Item showItemsBtn={this.state.itemsBtnShow} key={i} pos={i} id={id}
-                  title={title} link={link} descr={descr} cat={cat} icon={icon} video={video}
+                  title={title} link={link} descr={descr} hideDescr={hideDescr} cat={cat} icon={icon} video={video}
                   itemEditDel={this.itemEditDel} itemVideo={this.itemVideo} itemHide={hidden} hidden={hidden} />
               )
             })
@@ -2638,10 +2669,10 @@ class Main extends React.Component {
         <>
           {/* APPS */}
           {
-            this.state.rootItems.map(({ id, title, link, descr, cat, icon, video, hidden }, i) => {
+            this.state.rootItems.map(({ id, title, link, descr, hideDescr, cat, icon, video, hidden }, i) => {
               return (
                 <Item showItemsBtn={this.state.itemsBtnShow} key={i} pos={i} id={id}
-                  title={title} link={link} descr={descr} cat={cat} icon={icon} video={video}
+                  title={title} link={link} descr={descr} hideDescr={hideDescr} cat={cat} icon={icon} video={video}
                   itemEditDel={this.itemEditDel} itemVideo={this.itemVideo} itemHide={hidden} hidden={hidden} />
               )
             })
@@ -2694,15 +2725,15 @@ class Main extends React.Component {
           </div>
           <section className="row">
             {/* VERSIONE */}
-            <div title="SoylentApp v1.5.3"
+            <div title="SoylentApp v1.5.4"
               className="col mt-2 version latoplain d-flex justify-content-end align-items-center"
               onClick={() => window.open("https://github.com/karlellis/SoylentApp")}>
               <b>SoylentApp</b>
             </div>
-            <div title="SoylentApp v1.5.3"
+            <div title="SoylentApp v1.5.4"
               className="col mt-2 version latoplain d-flex justify-content-start align-items-center"
               onClick={() => window.open("https://github.com/karlellis/SoylentApp")}>
-              v1.5.3
+              v1.5.4
             </div>
           </section>
         </div>
@@ -3354,10 +3385,10 @@ class Main extends React.Component {
                       <AddSym showItemsBtn={this.state.itemsBtnShow} addItem={this.addItem} addLabel={"Add Item"} />
                     </div>
                     {
-                      this.state.catItems.map(({ id, title, link, descr, cat, icon, video, hidden }, i) => {
+                      this.state.catItems.map(({ id, title, link, descr, hideDescr, cat, icon, video, hidden }, i) => {
                         return (
                           <Item showItemsBtn={this.state.itemsBtnShow} key={i} pos={i} id={id}
-                            title={title} link={link} descr={descr} cat={cat} icon={icon} video={video}
+                            title={title} link={link} descr={descr} hideDescr={hideDescr} cat={cat} icon={icon} video={video}
                             itemVideo={this.itemVideo} itemEditDel={this.itemEditDel} itemHide={hidden} hidden={hidden} />
                         )
                       })
@@ -3402,7 +3433,7 @@ class Main extends React.Component {
                         }
                       }}
                       title={tempItemDescr}
-                      hideSwitch={noDescr}
+                      hideSwitch={tempHideDescr}
                       tempo={e => temp6 = e.target.value}>
                     </InputInfos>
                     <InputVideo tmpVideo={tempItemVideo}
@@ -3707,10 +3738,10 @@ class Main extends React.Component {
                     {/* RESITEMS */}
                     <div className="textcenter">
                       {
-                        this.state.resItems.map(({ id, title, link, descr, icon, video, hidden }, i) => {
+                        this.state.resItems.map(({ id, title, link, descr, hideDescr, icon, video, hidden }, i) => {
                           return (
                             <Item key={i} pos={i} id={id}
-                              title={title} link={link} descr={descr} cat={"Search"} icon={icon} video={video}
+                              title={title} link={link} descr={descr} hideDescr={hideDescr} cat={"Search"} icon={icon} video={video}
                               itemVideo={this.itemVideo} itemHide={hidden} hidden={hidden} />
                           )
                         })

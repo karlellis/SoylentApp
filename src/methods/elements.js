@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { ImgElement } from '../methods/simpleComp';
 
-export const Item = ({ showItemsBtn, pos, id, title, link, descr, icon, video,
+export const Item = ({ showItemsBtn, pos, id, title, link, descr, hideDescr, icon, video,
     hidden, cat, itemEditDel, itemVideo, itemHide }) => {
     const [isActive, setIsActive] = useState(false);
     const hide = hidden ? <ImgElement type={"iRedPoint"} /> : ""
@@ -19,7 +19,9 @@ export const Item = ({ showItemsBtn, pos, id, title, link, descr, icon, video,
     let descrTxt = "";
     let titleTxt = "";
 
-    if (descr !== "") {
+
+    // if (descr !== "") {
+    if (hideDescr === false) {
         descrTxt = (
             <div className={`${isActive ? 'descr-shown row medfonts lato text-center m-auto' : 'descr-hidden'}`}
                 style={{
