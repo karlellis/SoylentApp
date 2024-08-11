@@ -1439,8 +1439,8 @@ class Main extends React.Component {
     }
   }
 
-  applyItemAdd = (argo) => {
-    console.log("Argo: ", argo);
+  applyItemAdd = () => {
+    // console.log("Argo: ", argo);
     rootArray = [...this.state.rootItems];
     catArray = [...this.state.catItems];
     array = [...this.state.items];
@@ -2176,6 +2176,7 @@ class Main extends React.Component {
         document.getElementById('itemEditForm').reset();
         break;
       case "itemDel":
+        blockHide = "none";
         this.setState({ itemDelDiaShow: false });
         break;
       case "itemAdd":
@@ -2201,6 +2202,7 @@ class Main extends React.Component {
         blockHide = "none";
         break;
       case "catdel":
+        blockHide = "none";
         this.setState({ catDelDiaShow: false });
         break;
       case "catadd":
@@ -2807,15 +2809,15 @@ class Main extends React.Component {
           </div>
           <section className="row">
             {/* VERSIONE */}
-            <div title="SoylentApp v1.5.6"
+            <div title="SoylentApp v1.5.7"
               className="col mt-2 version latoplain d-flex justify-content-end align-items-center"
               onClick={() => window.open("https://github.com/karlellis/SoylentApp")}>
               <b>SoylentApp</b>
             </div>
-            <div title="SoylentApp v1.5.6"
+            <div title="SoylentApp v1.5.7"
               className="col mt-2 version latoplain d-flex justify-content-start align-items-center"
               onClick={() => window.open("https://github.com/karlellis/SoylentApp")}>
-              v1.5.6
+              v1.5.7
             </div>
           </section>
         </div>
@@ -3547,7 +3549,7 @@ class Main extends React.Component {
             {/* ITEM ADD DIALOG */}
             <EleDialog mainTheme="modal-main" footTheme="modal-footer" hideMidBtn={true} hideApply={false} hideClose={false}
               activityChanged={false} eleDiaShow={this.state.itemAddDiaShow}
-              handleClose={() => this.hideModal("itemAdd")} handleSave={() => this.applyItemAdd("test")}
+              handleClose={() => this.hideModal("itemAdd")} handleSave={() => this.applyItemAdd()}
               saveLabel="Add">
               <div className="modal-content noborder">
                 <ModalTitle title="Add Item"></ModalTitle>
