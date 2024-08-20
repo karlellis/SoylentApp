@@ -396,7 +396,7 @@ class Main extends React.Component {
         this.itemCatSel("Root", spData.items);
         // console.log("Save Conf. result=", res);
         // console.log("TempCat= ", tempCatTitle);
-      });;
+      });
   }
 
   catItemActions(file, url, op) {

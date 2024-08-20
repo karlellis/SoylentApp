@@ -67,10 +67,5 @@
     "noCatImage": false,
     "items": [],
     "cats": [],
-    "creditsItems": [],
-    "itemAdd": {
-        "title": "Add Item",
-        "link": "https://Add_Item",
-        "icon": "./itemicons/ac_add.svg"
-    }
+    "creditsItems": []
 }
