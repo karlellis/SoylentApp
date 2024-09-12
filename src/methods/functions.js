@@ -7,7 +7,8 @@ export async function fetchUpPHP(file, url, key) {
     await fetch(url, {
         method: 'POST',
         headers: {
-            'Accept': '*/*'
+            'Accept': 'application/json'
+            // 'Accept': '*/*'
         },
         body: data
     }).then((response) => response.json())
@@ -22,7 +23,8 @@ export async function fetchUpConfig(file, url, key) {
     await fetch(url, {
         method: 'POST',
         headers: {
-            'Accept': '*/*'
+            'Accept': 'application/json'
+            // 'Accept': '*/*'
         },
         body: data
     }).then((response) => response.json())
@@ -36,7 +38,8 @@ export async function fetchDelPHP(itemIcon, url, key) {
     await fetch(url, {
         method: 'POST',
         headers: {
-            'Accept': '*/*'
+            'Accept': 'application/json'
+            // 'Accept': '*/*'
         },
         body: data
     }).then((response) => response.json())
@@ -48,7 +51,8 @@ export async function fetchDownCredentials(url) {
     await fetch(url, {
         method: 'GET',
         headers: {
-            'Accept': '*/*'
+            'Accept': 'application/json'
+            // 'Accept': '*/*'
         },
     }).then((response) => response.json())
         .then((json) => {
