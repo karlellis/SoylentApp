@@ -149,14 +149,14 @@ export function FormChanges(form) {
                         // });
                         console.log("Form Item: ", n);
                         console.log("item.checked: ", n.checked);
-                        console.log("item.defaultChecked: ",  n.defaultChecked);
+                        console.log("item.defaultChecked: ", n.defaultChecked);
                         c = (n.checked !== n.defaultChecked);
                         break;
                     default:
                         // standard values
                         console.log("Form Item: ", n);
                         console.log("item.value: ", n.value);
-                        console.log("item.defaultValue: ",  n.defaultValue);
+                        console.log("item.defaultValue: ", n.defaultValue);
                         c = (n.value !== n.defaultValue);
                         break;
                 }
