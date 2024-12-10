@@ -104,7 +104,7 @@ export function Orologio() {
 }
 
 export function FormChanges(form) {
-
+    let currValue;
     // get form
     if (typeof form == "string") form = document.getElementById(form);
     if (!form || !form.nodeName || form.nodeName.toLowerCase() !== "form") return null;
@@ -155,7 +155,9 @@ export function FormChanges(form) {
                     default:
                         // standard values
                         console.log("Form Item: ", n);
-                        console.log("item.value: ", n.value);
+                        // console.log("item.value: ", n.value);
+                        currValue = n.value;
+                        console.log("item.value: ", currValue);
                         console.log("item.defaultValue: ", n.defaultValue);
                         c = (n.value !== n.defaultValue);
                         break;
@@ -166,12 +168,18 @@ export function FormChanges(form) {
         if (c) changed.push(n);
     }
     console.log("Changed: ", changed);
-    let modified;
+    console.log("N.Value: ", currValue);
+    console.log("N.Checked: ", n.checked);
+    let values = [];
     if (changed.length === 0) {
-        modified = false;
+        values[0] = false;
+        // values[1] = currValue;
+        // modified = false;
     } else {
-        modified = true;
+        values[0] = true;
+        values[1] = currValue;
+        // modified = true;
     }
-    return modified;
+    return values;
 
 }

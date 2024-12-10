@@ -392,10 +392,14 @@ class Main extends React.Component {
     fetchUpConfig(file, url, key)
       .then(res => {
         console.log("Config Saved!");
-        this.itemCatSel(tempCatTitle, spData.items);
+        // REFRESH ALL ITEMS CATEGORY
+        this.state.cats.forEach(element => {
+          this.itemCatSel(element.title, spData.items);
+        })
+        // this.itemCatSel(tempCatTitle, spData.items);
         this.itemCatSel("Root", spData.items);
         // console.log("Save Conf. result=", res);
-        // console.log("TempCat= ", tempCatTitle);
+        // console.log("SaveTempCat= ", tempCatTitle);
       });
   }
 
@@ -445,9 +449,18 @@ class Main extends React.Component {
           }
           array[temp].video = temp4;
           tempItemVideo = temp4;
+
+          console.log("Actions TempCAT = " + tempCatTitle);
           array[temp].cat = temp5;
+          tempCatTitle = temp5;
+
+          console.log("TempItemDescr = " + temp6);
           array[temp].descr = temp6;
+          tempItemDescr = temp6;
+
           array[temp].hideDescr = noDescr;
+          tempHideDescr = noDescr;
+
           if (blockHide !== "none") {
             array[temp].hidden = blockHide;
             tempItemHide = blockHide;
@@ -527,11 +540,18 @@ class Main extends React.Component {
           // currPos = "";
           temp2 = "";
           temp3 = "";
-          temp4 = tempItemVideo;
-          temp5 = tempCatTitle;
-          temp6 = "";
-          noDescr = tempHideDescr;
-          blockHide = "none";
+
+          // temp4 = tempItemVideo;
+          // temp5 = tempCatTitle;
+          // temp6 = tempItemDescr;
+          // noDescr = tempHideDescr;
+          // blockHide = tempItemHide;
+
+          // temp4 = tempItemVideo;
+          // temp5 = tempCatTitle;
+          // temp6 = "";
+          // noDescr = tempHideDescr;
+          // blockHide = "none";
           this.fireAlert("Changes Made!", "solidgreen");
         } else if (url === "icon" && op === "add") {
           // console.log("Icon add TEMP4: ", temp4);
@@ -980,8 +1000,10 @@ class Main extends React.Component {
       count = 0;
       if (cat === "Root") {
         this.setState({ rootItems: arrayAdd });
+        console.log("Root Items Refreshed");
       } else {
         this.setState({ catItems: arrayAdd });
+        console.log(cat + " Items Refreshed");
       }
       // for (let ind = 0; ind < arrayAdd.length; ind++) {
       //   console.log("catitems=", (arrayAdd[ind]));
@@ -1021,8 +1043,8 @@ class Main extends React.Component {
   // HEAD ACTIONS
 
   saveMenu = () => {
-    console.log("FormChanged?: ", FormChanges("menuForm"))
-    if (FormChanges("menuForm")) {
+    console.log("FormChanged?: ", FormChanges("menuForm")[0])
+    if (FormChanges("menuForm")[0]) {
       if (disable1 !== "none") {
         spData.noMenuSearch = disable1;
       }
@@ -1054,8 +1076,8 @@ class Main extends React.Component {
   }
 
   saveTitle = () => {
-    console.log("FormChanged?: ", FormChanges("titleForm"))
-    if (FormChanges("titleForm")) {
+    console.log("FormChanged?: ", FormChanges("titleForm")[0])
+    if (FormChanges("titleForm")[0]) {
       if (temp !== "") {
         spData.headTitle = temp;
       }
@@ -1081,7 +1103,7 @@ class Main extends React.Component {
   }
 
   saveLogo = () => {
-    if (FormChanges("logoForm")) {
+    if (FormChanges("logoForm")[0]) {
       if (fileImg !== null) {
         tempIcon = spData.LogoIcon;
         this.catItemActions(fileImg, "logo", "edit");
@@ -1112,7 +1134,7 @@ class Main extends React.Component {
   }
 
   saveClock = () => {
-    if (FormChanges("clockForm")) {
+    if (FormChanges("clockForm")[0]) {
       spData.clockColor = hexToRgb(tempColor) + ", " + tempOpacity + ")";
       spData.clockOpacity = parseFloat(tempOpacity.replace(/,/g, "."));
       spData.clockTextColor = hexToRgb(tempTextColor) + ", 1)";
@@ -1132,7 +1154,7 @@ class Main extends React.Component {
   }
 
   saveBack = () => {
-    if (FormChanges("backEditForm")) {
+    if (FormChanges("backEditForm")[0]) {
       var changes = false;
 
       if (fileImg !== null) {
@@ -1284,7 +1306,7 @@ class Main extends React.Component {
   }
 
   saveInfo = () => {
-    if (FormChanges("infoForm")) {
+    if (FormChanges("infoForm")[0]) {
       if (disable1 !== "none") {
         spData.noFootTitle = disable1;
       }
@@ -1328,7 +1350,7 @@ class Main extends React.Component {
   }
 
   saveAddInfo = () => {
-    if (FormChanges("creditForm")) {
+    if (FormChanges("creditForm")[0]) {
       if (disable1 !== "none") {
         spData.noFootAddTitle = disable1;
       }
@@ -1399,7 +1421,7 @@ class Main extends React.Component {
     // if (fileImg !== null || temp2 !== "" || temp3 !== "" || temp4 !== tempItemVideo ||
     //   temp5 !== tempCatTitle || temp6 !== tempItemDescr || cgPos !== "" ||
     //   blockHide !== tempItemHide) {
-    if (FormChanges("itemEditForm") || temp5 !== tempCatTitle) {
+    if (FormChanges("itemEditForm")[0] || temp5 !== tempCatTitle) {
       if (cgPos !== "") {
         if (temp5 === tempCatTitle) {
           inPos = parseInt(cgPos) - 1;
@@ -1529,7 +1551,7 @@ class Main extends React.Component {
     console.log("tempItemHide: ", tempItemHide);
     // if (fileImg !== null || temp2 !== "" || cgPos !== ""
     //   || blockHide !== "none") {
-    if (FormChanges("catEditForm")) {
+    if (FormChanges("catEditForm")[0]) {
       let dup = false;
       for (let i = 0; i < arrayLength; i++) {
         if (array[i].title.toLowerCase() === temp2.toLowerCase()) {
@@ -1629,7 +1651,7 @@ class Main extends React.Component {
   // CREDITS ACTIONS
 
   applyCrsEdit = () => {
-    if (FormChanges("crsEditForm")) {
+    if (FormChanges("crsEditForm")[0]) {
       // if (temp2 !== tempCrsTitle || temp3 !== tempCrsLink || temp4 !== tempCrsDescr || cgPos !== "") {
       if (cgPos !== "") {
         inPos = parseInt(cgPos) - 1;
@@ -1763,7 +1785,7 @@ class Main extends React.Component {
   }
 
   loginEditCheck = () => {
-    if (FormChanges("loginEditForm")) {
+    if (FormChanges("loginEditForm")[0]) {
       if (usrTmp !== "" || pswTmp !== "") {
         // console.log("User: " + usrTmp)
         // console.log("Psw: " + pswTmp)
@@ -2809,15 +2831,15 @@ class Main extends React.Component {
           </div>
           <section className="row">
             {/* VERSIONE */}
-            <div title="SoylentApp v1.5.9"
+            <div title="SoylentApp v1.6.0"
               className="col mt-2 version latoplain d-flex justify-content-end align-items-center"
               onClick={() => window.open("https://github.com/karlellis/SoylentApp")}>
               <b>SoylentApp</b>
             </div>
-            <div title="SoylentApp v1.5.9"
+            <div title="SoylentApp v1.6.0"
               className="col mt-2 version latoplain d-flex justify-content-start align-items-center"
               onClick={() => window.open("https://github.com/karlellis/SoylentApp")}>
-              v1.5.9
+              v1.6.0 
             </div>
           </section>
         </div>
@@ -3871,7 +3893,7 @@ class Main extends React.Component {
                 </div>
                 <div className="modal-body align-items-center darkBG">
                   <center>
-                    <iframe id="myvideo" class="iframeStyle"
+                    <iframe id="myvideo" class="iframeStyle" 
                       src={this.state.videoLink} frameborder="0"
                       allowfullscreen="true" title="videoFrame">
                     </iframe>
