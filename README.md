@@ -1,6 +1,8 @@
 # Soylent Application
 Configurable simple CMS for easy link access.
 
+![alt text](https://github.com/karlellis/SoylentApp/blob/master/SoyAppScr.png?raw=true)
+
 System requirements:
 - Web Server Apache or Nginx or online Hosting.
 - PHP 7.4 or higher.
