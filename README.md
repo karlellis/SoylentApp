@@ -38,4 +38,6 @@ To update to a new release:
 - .htaccess
 4) Refresh the page. Update is complete.
 
-Follow the /public/doc for more details.
+Follow the [/public/doc](https://github.com/karlellis/SoylentApp/tree/master/public/doc) for more details.
+
+Have a good day!
