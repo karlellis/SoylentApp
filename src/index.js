@@ -394,7 +394,8 @@ class Main extends React.Component {
         console.log("Config Saved!");
         // REFRESH ALL ITEMS CATEGORY
         this.state.cats.forEach(element => {
-          this.itemCatSel(element.title, spData.items);
+          if (element.title === tempCatTitle)
+            this.itemCatSel(element.title, spData.items);
         })
         // this.itemCatSel(tempCatTitle, spData.items);
         this.itemCatSel("Root", spData.items);
@@ -452,7 +453,7 @@ class Main extends React.Component {
 
           console.log("Actions TempCAT = " + tempCatTitle);
           array[temp].cat = temp5;
-          tempCatTitle = temp5;
+          // tempCatTitle = temp5;
 
           console.log("TempItemDescr = " + temp6);
           array[temp].descr = temp6;
@@ -2831,15 +2832,15 @@ class Main extends React.Component {
           </div>
           <section className="row">
             {/* VERSIONE */}
-            <div title="SoylentApp v1.6.0"
+            <div title="SoylentApp v1.6.1"
               className="col mt-2 version latoplain d-flex justify-content-end align-items-center"
               onClick={() => window.open("https://github.com/karlellis/SoylentApp")}>
               <b>SoylentApp</b>
             </div>
-            <div title="SoylentApp v1.6.0"
+            <div title="SoylentApp v1.6.1"
               className="col mt-2 version latoplain d-flex justify-content-start align-items-center"
               onClick={() => window.open("https://github.com/karlellis/SoylentApp")}>
-              v1.6.0 
+              v1.6.1
             </div>
           </section>
         </div>
@@ -3633,7 +3634,25 @@ class Main extends React.Component {
                       swLabel={"Hide"}>
                     </InputSwitch>
                     {/* Category */}
-                    <InputCat catMenuB={aCatMenuButtons}></InputCat>
+                    <div className="form-group">
+                      <div className="row mb-1 m-auto">
+                        <div className="col">
+                          <div className="row border">
+                            <div className="col pt-1 pb-1 padlr latomenu d-flex flex-column justify-content-center align-items-center">
+                              <label>Category</label>
+                            </div>
+                            <div className="col d-flex flex-column justify-content-center align-items-center">
+                              {tempCatTitle}
+                              {/* {catMenuB} */}
+                            </div>
+                          </div>
+                        </div>
+                        <div className="col-1"></div>
+                        <div className="col">
+                        </div>
+                      </div>
+                    </div>
+                    {/* <InputCat catMenuB={aCatMenuButtons}></InputCat> */}
                     <Alert alertShow={this.state.alertShow} alertMsg={this.state.alertMsg} alertCol={this.state.alertCol}></Alert>
                   </form>
                 </div>
@@ -3893,7 +3912,7 @@ class Main extends React.Component {
                 </div>
                 <div className="modal-body align-items-center darkBG">
                   <center>
-                    <iframe id="myvideo" class="iframeStyle" 
+                    <iframe id="myvideo" class="iframeStyle"
                       src={this.state.videoLink} frameborder="0"
                       allowfullscreen="true" title="videoFrame">
                     </iframe>
