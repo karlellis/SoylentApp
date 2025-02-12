@@ -2923,7 +2923,10 @@ class Main extends React.Component {
                             </div>
                             <div className="col d-flex flex-column justify-content-center align-items-center">
                               <input type="text" className="form-control border-0"
-                                ref={(input) => { this.userChangeInput = input; }} onChange={e => usrTmp = e.target.value} autocomplete="off" />
+                                ref={(input) => { this.userChangeInput = input; }} onChange={e => {
+                                  usrTmp = e.target.value;
+                                  changeFlag = true;
+                                }} autocomplete="off" />
                             </div>
                           </div>
                         </div>
@@ -2938,7 +2941,10 @@ class Main extends React.Component {
                               <label>Psw</label>
                             </div>
                             <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="password" autocomplete="new-password" className="form-control border-0" onChange={e => pswTmp = e.target.value} />
+                              <input type="password" autocomplete="new-password" className="form-control border-0" onChange={e => {
+                                pswTmp = e.target.value;
+                                changeFlag = true;
+                              }} />
                             </div>
                           </div>
                         </div>
