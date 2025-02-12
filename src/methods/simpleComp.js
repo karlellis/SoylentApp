@@ -405,6 +405,11 @@ export const InputInfos = ({ label, disField, stateDisBlk, title, hideSwitch, te
     // Assign your variable here
     changeFlag = true;
   };
+  const handleChange2 = (event) => {
+    stateDisBlk(event);
+    // Assign your variable here
+    changeFlag = true;
+  };
   return (
     <div className="form-group">
       <div className="row text-center mb-1 m-auto">
@@ -420,7 +425,7 @@ export const InputInfos = ({ label, disField, stateDisBlk, title, hideSwitch, te
             <div className="col-2 border d-flex flex-column justify-content-center align-items-center">
               <label className="switch">
                 <input type="checkbox" className="form-control" defaultChecked={hideSwitch}
-                  onClick={stateDisBlk} />
+                  onClick={handleChange2} />
                 <span class="slider round" title="Hide"></span>
               </label>
             </div>

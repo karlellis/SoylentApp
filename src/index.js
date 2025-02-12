@@ -3542,13 +3542,13 @@ class Main extends React.Component {
                           });
                           noDescr = false;
                         }
-                        changeFlag = true;
+                        // changeFlag = true;
                       }}
                       title={tempItemDescr}
                       hideSwitch={tempHideDescr}
                       tempo={e => {
                         temp6 = e.target.value
-                        changeFlag = true;
+                        // changeFlag = true;
                       }}>
                     </InputInfos>
                     <InputVideo tmpVideo={tempItemVideo}
@@ -3558,7 +3558,7 @@ class Main extends React.Component {
                         } else {
                           temp4 = false;
                         }
-                        changeFlag = true;
+                        // changeFlag = true;
                       }}>
                     </InputVideo>
                     <InputSwitch hSwitch={tempItemHide}
@@ -3568,7 +3568,7 @@ class Main extends React.Component {
                         } else {
                           blockHide = false;
                         }
-                        changeFlag = true;
+                        // changeFlag = true;
                       }}
                       swLabel={"Hide"}>
                     </InputSwitch>
