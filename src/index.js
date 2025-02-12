@@ -97,6 +97,7 @@ var CrsNewItem = {
 export var nome = "";
 export var credentials = require("./initSec.json");
 export var spData = require("./initData.json");
+export var changeFlag = false;
 
 // MAIN
 
@@ -399,6 +400,7 @@ class Main extends React.Component {
         })
         // this.itemCatSel(tempCatTitle, spData.items);
         this.itemCatSel("Root", spData.items);
+        changeFlag = false;
         // console.log("Save Conf. result=", res);
         // console.log("SaveTempCat= ", tempCatTitle);
       });
@@ -1044,8 +1046,8 @@ class Main extends React.Component {
   // HEAD ACTIONS
 
   saveMenu = () => {
-    console.log("FormChanged?: ", FormChanges("menuForm")[0])
-    if (FormChanges("menuForm")[0]) {
+    // console.log("FormChanged?: ", FormChanges("menuForm")[0])
+    if (/* FormChanges("menuForm")[0] */changeFlag) {
       if (disable1 !== "none") {
         spData.noMenuSearch = disable1;
       }
@@ -1077,8 +1079,8 @@ class Main extends React.Component {
   }
 
   saveTitle = () => {
-    console.log("FormChanged?: ", FormChanges("titleForm")[0])
-    if (FormChanges("titleForm")[0]) {
+    // console.log("FormChanged?: ", FormChanges("titleForm")[0])
+    if (/* FormChanges("titleForm")[0] */changeFlag) {
       if (temp !== "") {
         spData.headTitle = temp;
       }
@@ -1104,7 +1106,7 @@ class Main extends React.Component {
   }
 
   saveLogo = () => {
-    if (FormChanges("logoForm")[0]) {
+    if (/* FormChanges("logoForm")[0] */changeFlag) {
       if (fileImg !== null) {
         tempIcon = spData.LogoIcon;
         this.catItemActions(fileImg, "logo", "edit");
@@ -1135,7 +1137,7 @@ class Main extends React.Component {
   }
 
   saveClock = () => {
-    if (FormChanges("clockForm")[0]) {
+    if (/* FormChanges("clockForm")[0] */changeFlag) {
       spData.clockColor = hexToRgb(tempColor) + ", " + tempOpacity + ")";
       spData.clockOpacity = parseFloat(tempOpacity.replace(/,/g, "."));
       spData.clockTextColor = hexToRgb(tempTextColor) + ", 1)";
@@ -1155,7 +1157,7 @@ class Main extends React.Component {
   }
 
   saveBack = () => {
-    if (FormChanges("backEditForm")[0]) {
+    if (/* FormChanges("backEditForm")[0] */changeFlag) {
       var changes = false;
 
       if (fileImg !== null) {
@@ -1307,7 +1309,7 @@ class Main extends React.Component {
   }
 
   saveInfo = () => {
-    if (FormChanges("infoForm")[0]) {
+    if (/* FormChanges("infoForm")[0] */changeFlag) {
       if (disable1 !== "none") {
         spData.noFootTitle = disable1;
       }
@@ -1351,7 +1353,7 @@ class Main extends React.Component {
   }
 
   saveAddInfo = () => {
-    if (FormChanges("creditForm")[0]) {
+    if (/* FormChanges("creditForm")[0] */changeFlag) {
       if (disable1 !== "none") {
         spData.noFootAddTitle = disable1;
       }
@@ -1422,7 +1424,7 @@ class Main extends React.Component {
     // if (fileImg !== null || temp2 !== "" || temp3 !== "" || temp4 !== tempItemVideo ||
     //   temp5 !== tempCatTitle || temp6 !== tempItemDescr || cgPos !== "" ||
     //   blockHide !== tempItemHide) {
-    if (FormChanges("itemEditForm")[0] || temp5 !== tempCatTitle) {
+    if (/* FormChanges("itemEditForm")[0] || temp5 !== tempCatTitle || */ changeFlag) {
       if (cgPos !== "") {
         if (temp5 === tempCatTitle) {
           inPos = parseInt(cgPos) - 1;
@@ -1552,7 +1554,7 @@ class Main extends React.Component {
     console.log("tempItemHide: ", tempItemHide);
     // if (fileImg !== null || temp2 !== "" || cgPos !== ""
     //   || blockHide !== "none") {
-    if (FormChanges("catEditForm")[0]) {
+    if (/* FormChanges("catEditForm")[0] */changeFlag) {
       let dup = false;
       for (let i = 0; i < arrayLength; i++) {
         if (array[i].title.toLowerCase() === temp2.toLowerCase()) {
@@ -1652,7 +1654,7 @@ class Main extends React.Component {
   // CREDITS ACTIONS
 
   applyCrsEdit = () => {
-    if (FormChanges("crsEditForm")[0]) {
+    if (/* FormChanges("crsEditForm")[0] */changeFlag) {
       // if (temp2 !== tempCrsTitle || temp3 !== tempCrsLink || temp4 !== tempCrsDescr || cgPos !== "") {
       if (cgPos !== "") {
         inPos = parseInt(cgPos) - 1;
@@ -1786,7 +1788,7 @@ class Main extends React.Component {
   }
 
   loginEditCheck = () => {
-    if (FormChanges("loginEditForm")[0]) {
+    if (/* FormChanges("loginEditForm")[0] */changeFlag) {
       if (usrTmp !== "" || pswTmp !== "") {
         // console.log("User: " + usrTmp)
         // console.log("Psw: " + pswTmp)
@@ -2325,6 +2327,7 @@ class Main extends React.Component {
     temp4 = "";
     fileCatImg = null;
     fileImg = null;
+    changeFlag = false;
     // To Fix Search Button Enable after Video Play
 
     // this.setState({
@@ -2587,6 +2590,7 @@ class Main extends React.Component {
     })
     console.log("CatName: ", temp5);
     this.itemCatSel(catName, spData.items);
+    changeFlag = true;
   }
 
   search() {
@@ -2832,15 +2836,15 @@ class Main extends React.Component {
           </div>
           <section className="row">
             {/* VERSIONE */}
-            <div title="SoylentApp v1.6.1"
+            <div title="SoylentApp v1.6.2"
               className="col mt-2 version latoplain d-flex justify-content-end align-items-center"
               onClick={() => window.open("https://github.com/karlellis/SoylentApp")}>
               <b>SoylentApp</b>
             </div>
-            <div title="SoylentApp v1.6.1"
+            <div title="SoylentApp v1.6.2"
               className="col mt-2 version latoplain d-flex justify-content-start align-items-center"
               onClick={() => window.open("https://github.com/karlellis/SoylentApp")}>
-              v1.6.1
+              v1.6.2
             </div>
           </section>
         </div>
@@ -3538,10 +3542,14 @@ class Main extends React.Component {
                           });
                           noDescr = false;
                         }
+                        changeFlag = true;
                       }}
                       title={tempItemDescr}
                       hideSwitch={tempHideDescr}
-                      tempo={e => temp6 = e.target.value}>
+                      tempo={e => {
+                        temp6 = e.target.value
+                        changeFlag = true;
+                      }}>
                     </InputInfos>
                     <InputVideo tmpVideo={tempItemVideo}
                       tempo={e => {
@@ -3550,6 +3558,7 @@ class Main extends React.Component {
                         } else {
                           temp4 = false;
                         }
+                        changeFlag = true;
                       }}>
                     </InputVideo>
                     <InputSwitch hSwitch={tempItemHide}
@@ -3559,6 +3568,7 @@ class Main extends React.Component {
                         } else {
                           blockHide = false;
                         }
+                        changeFlag = true;
                       }}
                       swLabel={"Hide"}>
                     </InputSwitch>

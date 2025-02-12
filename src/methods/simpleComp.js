@@ -1,4 +1,4 @@
-import { spData } from '../';
+import { spData, changeFlag } from '../';
 
 export const ImgElement = ({ type }) => {
   let imma = "";
@@ -46,6 +46,12 @@ export const ModalTitle = ({ title }) => {
 }
 
 export const InputFile = ({ fileIn }) => {
+  const handleChange = (event) => {
+    fileIn(event);
+    // Assign your variable here
+    changeFlag = true;
+  };
+
   return (
     <div className="form-group">
       <div className="row text-center mb-1 m-auto">
@@ -53,7 +59,7 @@ export const InputFile = ({ fileIn }) => {
           <div className="row border">
             <div className="col d-flex flex-column justify-content-center align-items-center">
               <input type="file" className="form-control boxs border-0" name="icon"
-                onChange={fileIn} />
+                onChange={handleChange} />
             </div>
           </div>
         </div>
@@ -63,6 +69,11 @@ export const InputFile = ({ fileIn }) => {
 }
 
 export const InputPosition = ({ edit, pos, tempo, id }) => {
+  const handleChange = (event) => {
+    tempo(event);
+    // Assign your variable here
+    changeFlag = true;
+  };
   if (edit === "Add Item") {
     return (
       <div className="form-group">
@@ -74,7 +85,7 @@ export const InputPosition = ({ edit, pos, tempo, id }) => {
               </div>
               <div className="col d-flex flex-column justify-content-center align-items-center">
                 <input type="text" placeholder="Leave blank for last..." id={id} className="form-control border-0"
-                  onChange={tempo} />
+                  onChange={handleChange} />
               </div>
             </div>
           </div>
@@ -92,7 +103,7 @@ export const InputPosition = ({ edit, pos, tempo, id }) => {
               </div>
               <div className="col d-flex flex-column justify-content-center align-items-center">
                 <input type="text" className="form-control border-0" placeholder={pos + 1} id={id}
-                  onChange={tempo} />
+                  onChange={handleChange} />
               </div>
             </div>
           </div>
@@ -103,6 +114,11 @@ export const InputPosition = ({ edit, pos, tempo, id }) => {
 }
 
 export const InputTitle = ({ label, edit, tempTitle, id, tempo }) => {
+  const handleChange = (event) => {
+    tempo(event);
+    // Assign your variable here
+    changeFlag = true;
+  };
   if (edit === "Add Item") {
     return (
       <div className="form-group">
@@ -113,7 +129,7 @@ export const InputTitle = ({ label, edit, tempTitle, id, tempo }) => {
                 <label>{label}</label>
               </div>
               <div className="col d-flex flex-column justify-content-center align-items-center">
-                <input type="text" className="form-control border-0" id={id} onChange={tempo} />
+                <input type="text" className="form-control border-0" id={id} onChange={handleChange} />
               </div>
             </div>
           </div>
@@ -130,7 +146,7 @@ export const InputTitle = ({ label, edit, tempTitle, id, tempo }) => {
                 <label>{label}</label>
               </div>
               <div className="col d-flex flex-column justify-content-center align-items-center">
-                <input type="text" className="form-control border-0" defaultValue={tempTitle} id={id} onChange={tempo} />
+                <input type="text" className="form-control border-0" defaultValue={tempTitle} id={id} onChange={handleChange} />
               </div>
             </div>
           </div>
@@ -141,6 +157,11 @@ export const InputTitle = ({ label, edit, tempTitle, id, tempo }) => {
 }
 
 export const InputLink = ({ edit, tempLink, id, tempo }) => {
+  const handleChange = (event) => {
+    tempo(event);
+    // Assign your variable here
+    changeFlag = true;
+  };
   if (edit === "Add Item") {
     return (
       <div className="form-group">
@@ -152,7 +173,7 @@ export const InputLink = ({ edit, tempLink, id, tempo }) => {
               </div>
               <div className="col d-flex flex-column justify-content-center align-items-center">
                 <input type="text" className="form-control border-0" id={id}
-                  onChange={tempo} />
+                  onChange={handleChange} />
               </div>
             </div>
           </div>
@@ -170,7 +191,7 @@ export const InputLink = ({ edit, tempLink, id, tempo }) => {
               </div>
               <div className="col d-flex flex-column justify-content-center align-items-center">
                 <input type="text" className="form-control border-0" defaultValue={tempLink}
-                  onChange={tempo} />
+                  onChange={handleChange} />
               </div>
             </div>
           </div>
@@ -181,6 +202,11 @@ export const InputLink = ({ edit, tempLink, id, tempo }) => {
 }
 
 export const InputCat = ({ catMenuB }) => {
+  // const handleChange = (event) => {
+  //   catMenuB(event);
+  //   // Assign your variable here
+  //   changeFlag = true;
+  // };
   return (
     <div className="form-group">
       <div className="row mb-1 m-auto">
@@ -191,6 +217,7 @@ export const InputCat = ({ catMenuB }) => {
             </div>
             <div className="col d-flex flex-column justify-content-center align-items-center">
               {catMenuB}
+              {/* {handleChange} */}
             </div>
           </div>
         </div>
@@ -204,6 +231,11 @@ export const InputCat = ({ catMenuB }) => {
 
 export const InputWidth = ({ idAuto, idCol1, idCol2, idCol3, idCol4, idCol5,
   valAuto, valCol1, valCol2, valCol3, valCol4, valCol5, tempoColW, tColW }) => {
+  const handleChange = (event) => {
+    tempoColW(event);
+    // Assign your variable here
+    changeFlag = true;
+  };
   return (
     <div class="form-group" >
       <div className="row text-center mb-1 m-auto">
@@ -216,32 +248,32 @@ export const InputWidth = ({ idAuto, idCol1, idCol2, idCol3, idCol4, idCol5,
               <div className="row m-auto">
                 <div className="col radio">
                   <label class="radio-inline"> <input type="radio" name="blockWidth" id={idAuto}
-                    value={valAuto} onChange={tempoColW} /* checked={tColW === valAuto} */
+                    value={valAuto} onChange={handleChange} /* checked={tColW === valAuto} */
                     defaultChecked={tColW === valAuto} /> Auto </label>
                 </div>
                 <div className="col radio">
                   <label class="radio-inline"> <input type="radio" name="blockWidth" id={idCol1}
-                    value={valCol1} onChange={tempoColW} /* checked={tColW === valCol1} */
+                    value={valCol1} onChange={handleChange} /* checked={tColW === valCol1} */
                     defaultChecked={tColW === valCol1} /> 1 </label>
                 </div>
                 <div className="col radio">
                   <label class="radio-inline"> <input type="radio" name="blockWidth" id={idCol2}
-                    value={valCol2} onChange={tempoColW} /* checked={tColW === valCol2} */
+                    value={valCol2} onChange={handleChange} /* checked={tColW === valCol2} */
                     defaultChecked={tColW === valCol2} /> 2 </label>
                 </div>
                 <div className="col radio">
                   <label class="radio-inline"> <input type="radio" name="blockWidth" id={idCol3}
-                    value={valCol3} onChange={tempoColW} /* checked={tColW === valCol3} */
+                    value={valCol3} onChange={handleChange} /* checked={tColW === valCol3} */
                     defaultChecked={tColW === valCol3} /> 3 </label>
                 </div>
                 <div className="col radio">
                   <label class="radio-inline"> <input type="radio" name="blockWidth" id={idCol4}
-                    value={valCol4} onChange={tempoColW} /* checked={tColW === valCol4} */
+                    value={valCol4} onChange={handleChange} /* checked={tColW === valCol4} */
                     defaultChecked={tColW === valCol4} /> 4 </label>
                 </div>
                 <div className="col radio">
                   <label class="radio-inline"> <input type="radio" name="blockWidth" id={idCol5}
-                    value={valCol5} onChange={tempoColW} /* checked={tColW === valCol5} */
+                    value={valCol5} onChange={handleChange} /* checked={tColW === valCol5} */
                     defaultChecked={tColW === valCol5} /> 5 </label>
                 </div>
               </div>
@@ -254,6 +286,11 @@ export const InputWidth = ({ idAuto, idCol1, idCol2, idCol3, idCol4, idCol5,
 }
 
 export const InputBackColor = ({ backColor, rgbToHex, bcLabel, tempo }) => {
+  const handleChange = (event) => {
+    tempo(event);
+    // Assign your variable here
+    changeFlag = true;
+  };
   return (
     <div className="col">
       <div className="row border">
@@ -261,7 +298,7 @@ export const InputBackColor = ({ backColor, rgbToHex, bcLabel, tempo }) => {
           <label>{bcLabel}</label>
         </div>
         <div className="col d-flex flex-column justify-content-center align-items-center">
-          <input type="color" className="form-control border-0 p-0" defaultValue={rgbToHex(backColor)} onChange={tempo} />
+          <input type="color" className="form-control border-0 p-0" defaultValue={rgbToHex(backColor)} onChange={handleChange} />
         </div>
       </div>
     </div>
@@ -269,6 +306,11 @@ export const InputBackColor = ({ backColor, rgbToHex, bcLabel, tempo }) => {
 }
 
 export const InputTextColor = ({ textColor, rgbToHex, tempo }) => {
+  const handleChange = (event) => {
+    tempo(event);
+    // Assign your variable here
+    changeFlag = true;
+  };
   return (
     <div className="col">
       <div className="row border">
@@ -276,7 +318,7 @@ export const InputTextColor = ({ textColor, rgbToHex, tempo }) => {
           <label>Text color</label>
         </div>
         <div className="col d-flex flex-column justify-content-center align-items-center">
-          <input type="color" className="form-control border-0 p-0" defaultValue={rgbToHex(textColor)} onChange={tempo} />
+          <input type="color" className="form-control border-0 p-0" defaultValue={rgbToHex(textColor)} onChange={handleChange} />
         </div>
       </div>
     </div>
@@ -284,6 +326,11 @@ export const InputTextColor = ({ textColor, rgbToHex, tempo }) => {
 }
 
 export const InputOpacity = ({ opacity, id, tempo }) => {
+  const handleChange = (event) => {
+    tempo(event);
+    // Assign your variable here
+    changeFlag = true;
+  };
   return (
     <div className="form-group">
       <div className="row mb-1 m-auto">
@@ -298,7 +345,8 @@ export const InputOpacity = ({ opacity, id, tempo }) => {
                   <img className="plusminus" title="0" alt="0" src="./itemicons/rangeZero.svg" />
                 </div>
                 <div className="col d-flex flex-column justify-content-center align-items-center">
-                  <input type="range" class="form-range border-0 p-0" min="0" max="1" step="0.1" list="optickmarks" defaultValue={opacity} id={id} onChange={tempo} ></input>
+                  <input type="range" class="form-range border-0 p-0" min="0" max="1" step="0.1" list="optickmarks"
+                    defaultValue={opacity} id={id} onChange={handleChange} ></input>
                   <datalist id="optickmarks">
                     <option value={"0"}></option>
                     <option value={"0.25"}></option>
@@ -320,6 +368,11 @@ export const InputOpacity = ({ opacity, id, tempo }) => {
 }
 
 export const InputVideo = ({ tmpVideo, tempo }) => {
+  const handleChange = (event) => {
+    tempo(event);
+    // Assign your variable here
+    changeFlag = true;
+  };
   return (
     <div className="form-group">
       <div className="row mb-1 m-auto">
@@ -332,7 +385,7 @@ export const InputVideo = ({ tmpVideo, tempo }) => {
             <div className="col d-flex flex-column justify-content-center align-items-center">
               <label class="switch">
                 <input type="checkbox" className="form-control" defaultChecked={tmpVideo}
-                  onClick={tempo} />
+                  onClick={handleChange} />
                 <span class="slider round" title="Video Player"></span>
               </label>
             </div>
@@ -347,6 +400,11 @@ export const InputVideo = ({ tmpVideo, tempo }) => {
 }
 
 export const InputInfos = ({ label, disField, stateDisBlk, title, hideSwitch, tempo, id }) => {
+  const handleChange = (event) => {
+    tempo(event);
+    // Assign your variable here
+    changeFlag = true;
+  };
   return (
     <div className="form-group">
       <div className="row text-center mb-1 m-auto">
@@ -357,7 +415,7 @@ export const InputInfos = ({ label, disField, stateDisBlk, title, hideSwitch, te
             </div>
             <div className="col d-flex flex-column justify-content-center align-items-center">
               <input type="text" disabled={disField} className="form-control border-0"
-                defaultValue={title} id={id} onChange={tempo} />
+                defaultValue={title} id={id} onChange={handleChange} />
             </div>
             <div className="col-2 border d-flex flex-column justify-content-center align-items-center">
               <label className="switch">
@@ -374,6 +432,11 @@ export const InputInfos = ({ label, disField, stateDisBlk, title, hideSwitch, te
 }
 
 export const InputHideBlocks = ({ hideSwitch, switchClick }) => {
+  const handleChange = (event) => {
+    switchClick(event);
+    // Assign your variable here
+    changeFlag = true;
+  };
   return (
     <div className="form-group">
       <div className="row mb-1 m-auto">
@@ -385,7 +448,7 @@ export const InputHideBlocks = ({ hideSwitch, switchClick }) => {
             <div className="col d-flex flex-column justify-content-center align-items-center">
               <label class="switch">
                 <input type="checkbox" className="form-control" defaultChecked={!hideSwitch}
-                  onClick={switchClick} />
+                  onClick={handleChange} />
                 <span class="slider round" title="Hide"></span>
               </label>
             </div>
@@ -400,6 +463,11 @@ export const InputHideBlocks = ({ hideSwitch, switchClick }) => {
 }
 
 export const InputSwitch = ({ hSwitch, dSwitch, swLabel }) => {
+  const handleChange = (event) => {
+    dSwitch(event);
+    // Assign your variable here
+    changeFlag = true;
+  };
   return (
     <div className="form-group">
       <div className="row mb-1 m-auto">
@@ -411,7 +479,7 @@ export const InputSwitch = ({ hSwitch, dSwitch, swLabel }) => {
             <div className="col d-flex flex-column justify-content-center align-items-center">
               <label class="switch">
                 <input type="checkbox" className="form-control" defaultChecked={hSwitch}
-                  onClick={dSwitch} />
+                  onClick={handleChange} />
                 <span class="slider round"></span>
               </label>
             </div>
