@@ -1590,6 +1590,7 @@ class Main extends React.Component {
 
   applyCatAdd = () => {
     array = [...this.state.cats];
+    arrayLength = (array.length);
     tempIcon = "";
     if (fileImg !== null && temp2 !== "") {
       let dup = false;
@@ -2836,15 +2837,15 @@ class Main extends React.Component {
           </div>
           <section className="row">
             {/* VERSIONE */}
-            <div title="SoylentApp v1.6.2"
+            <div title="SoylentApp v1.6.3"
               className="col mt-2 version latoplain d-flex justify-content-end align-items-center"
               onClick={() => window.open("https://github.com/karlellis/SoylentApp")}>
               <b>SoylentApp</b>
             </div>
-            <div title="SoylentApp v1.6.2"
+            <div title="SoylentApp v1.6.3"
               className="col mt-2 version latoplain d-flex justify-content-start align-items-center"
               onClick={() => window.open("https://github.com/karlellis/SoylentApp")}>
-              v1.6.2
+              v1.6.3
             </div>
           </section>
         </div>
