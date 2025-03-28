@@ -2837,15 +2837,15 @@ class Main extends React.Component {
           </div>
           <section className="row">
             {/* VERSIONE */}
-            <div title="SoylentApp v1.6.3"
+            <div title="SoylentApp v1.6.4"
               className="col mt-2 version latoplain d-flex justify-content-end align-items-center"
               onClick={() => window.open("https://github.com/karlellis/SoylentApp")}>
               <b>SoylentApp</b>
             </div>
-            <div title="SoylentApp v1.6.3"
+            <div title="SoylentApp v1.6.4"
               className="col mt-2 version latoplain d-flex justify-content-start align-items-center"
               onClick={() => window.open("https://github.com/karlellis/SoylentApp")}>
-              v1.6.3
+              v1.6.4
             </div>
           </section>
         </div>
@@ -3361,7 +3361,11 @@ class Main extends React.Component {
                               <label>Main pic</label>
                             </div>
                             <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="file" disabled={disFieldB} id="files" className="form-control boxs border-0" name="icon" onChange={e => fileImg = e.target.files[0]} />
+                              <input type="file" disabled={disFieldB} id="files" className="form-control boxs border-0" name="icon"
+                                onChange={e => {
+                                  fileImg = e.target.files[0];
+                                  changeFlag = true;
+                                }} />
                             </div>
 
                             <div className="col-2 border d-flex flex-column justify-content-center align-items-center">
@@ -3377,7 +3381,8 @@ class Main extends React.Component {
                                       disFieldB: false
                                     });
                                     disable1 = false;
-                                  }
+                                  };
+                                  changeFlag = true;
                                 }} />
                                 <span class="slider round" title="No image"></span>
                               </label>
@@ -3396,7 +3401,11 @@ class Main extends React.Component {
                               <label>Cats/Credit pic</label>
                             </div>
                             <div className="col d-flex flex-column justify-content-center align-items-center">
-                              <input type="file" disabled={disFieldBC} id="catfiles" className="form-control boxs border-0" name="icon" onChange={e => fileCatImg = e.target.files[0]} />
+                              <input type="file" disabled={disFieldBC} id="catfiles" className="form-control boxs border-0" name="icon"
+                                onChange={e => {
+                                  fileCatImg = e.target.files[0];
+                                  changeFlag = true;
+                                }} />
                             </div>
                             <div className="col-2 border d-flex flex-column justify-content-center align-items-center">
                               <label class="switch">
@@ -3411,7 +3420,8 @@ class Main extends React.Component {
                                       disFieldBC: false
                                     });
                                     disable2 = false;
-                                  }
+                                  };
+                                  changeFlag = true;
                                 }} />
                                 <span class="slider round" title="No image"></span>
                               </label>
@@ -3443,7 +3453,12 @@ class Main extends React.Component {
                                   <img className="plusminus" title="-" alt="-" src="./itemicons/rangeMinus.svg" />
                                 </div>
                                 <div className="col d-flex flex-column justify-content-center align-items-center p-0">
-                                  <input type="range" className="form-range border-0 p-0" min="0" max="200" step="10" list="tickmarks" defaultValue={spData.backgroundOpacity} id="backOpRange" onChange={e => tempOpacity = e.target.value} ></input>
+                                  <input type="range" className="form-range border-0 p-0" min="0" max="200" step="10" list="tickmarks" defaultValue={spData.backgroundOpacity} id="backOpRange"
+                                    onChange={e => {
+                                      tempOpacity = e.target.value;
+                                      changeFlag = true;
+                                    }} >
+                                  </input>
                                   <datalist id="tickmarks">
                                     <option value={"0"}></option>
                                     <option value={"50"}></option>
