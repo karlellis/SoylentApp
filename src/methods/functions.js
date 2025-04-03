@@ -147,18 +147,18 @@ export function FormChanges(form) {
                         //     console.log(this.value)
                         //     c = true;
                         // });
-                        console.log("Form Item: ", n);
-                        console.log("item.checked: ", n.checked);
-                        console.log("item.defaultChecked: ", n.defaultChecked);
+                        // console.log("Form Item: ", n);
+                        // console.log("item.checked: ", n.checked);
+                        // console.log("item.defaultChecked: ", n.defaultChecked);
                         c = (n.checked !== n.defaultChecked);
                         break;
                     default:
                         // standard values
-                        console.log("Form Item: ", n);
+                        // console.log("Form Item: ", n);
                         // console.log("item.value: ", n.value);
                         currValue = n.value;
-                        console.log("item.value: ", currValue);
-                        console.log("item.defaultValue: ", n.defaultValue);
+                        // console.log("item.value: ", currValue);
+                        // console.log("item.defaultValue: ", n.defaultValue);
                         c = (n.value !== n.defaultValue);
                         break;
                 }
@@ -167,9 +167,9 @@ export function FormChanges(form) {
 
         if (c) changed.push(n);
     }
-    console.log("Changed: ", changed);
-    console.log("N.Value: ", currValue);
-    console.log("N.Checked: ", n.checked);
+    // console.log("Changed: ", changed);
+    // console.log("N.Value: ", currValue);
+    // console.log("N.Checked: ", n.checked);
     let values = [];
     if (changed.length === 0) {
         values[0] = false;

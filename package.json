@@ -1,6 +1,6 @@
 {
   "name": "soy-app",
-  "version": "1.6.4",
+  "version": "1.6.5",
   "homepage": "./",
   "private": true,
   "dependencies": {
@@ -9,7 +9,7 @@
     "@testing-library/user-event": "^13.5.0",
     "bcryptjs": "^2.4.3",
     "bootstrap": "^5.3.1",
-    "crypto-browserify": "^3.12.0",
+    "crypto-browserify": "^3.12.1",
     "path": "^0.12.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

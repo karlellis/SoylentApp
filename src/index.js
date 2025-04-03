@@ -453,11 +453,11 @@ class Main extends React.Component {
           array[temp].video = temp4;
           tempItemVideo = temp4;
 
-          console.log("Actions TempCAT = " + tempCatTitle);
+          // console.log("Actions TempCAT = " + tempCatTitle);
           array[temp].cat = temp5;
           // tempCatTitle = temp5;
 
-          console.log("TempItemDescr = " + temp6);
+          // console.log("TempItemDescr = " + temp6);
           array[temp].descr = temp6;
           tempItemDescr = temp6;
 
@@ -504,7 +504,7 @@ class Main extends React.Component {
               noAddArray = [...array];
               this.setState({ items: array });
               spData.items = noAddArray;
-              console.log("index > temp = ", (index));
+              // console.log("index > temp = ", (index));
               temp = newItem.id;
               currPos = index;
               // this.itemEditDel("itemEdit", newItem.id, (index))
@@ -521,7 +521,7 @@ class Main extends React.Component {
               noAddArray = [...array];
               this.setState({ items: array });
               spData.items = noAddArray;
-              console.log("Index = ", index);
+              // console.log("Index = ", index);
               temp = newItem.id;
               currPos = index;
               // this.itemEditDel("itemEdit", newItem.id, index)
@@ -571,10 +571,10 @@ class Main extends React.Component {
             newItem.hidden = false;
           }
           let index = 0;
-          console.log("Insert pos=", (inPos));
+          // console.log("Insert pos=", (inPos));
           if (arrayLength !== 0) {
             if (temp5 !== "Root") {
-              console.log("tempCatTitle = Cat", inPos);
+              // console.log("tempCatTitle = Cat", inPos);
               index = this.state.catItems[inPos].id;
             } else {
               index = this.state.rootItems[inPos].id;
@@ -582,7 +582,7 @@ class Main extends React.Component {
           }
           newItem.id = index;
 
-          console.log("Index iD=", (index));
+          // console.log("Index iD=", (index));
           tempIcon = "";
           arrayAdd = this.addAfter(array, index, newItem);
           for (let i = (index + 1); i < arrayAdd.length; i++) {
@@ -1003,10 +1003,10 @@ class Main extends React.Component {
       count = 0;
       if (cat === "Root") {
         this.setState({ rootItems: arrayAdd });
-        console.log("Root Items Refreshed");
+        // console.log("Root Items Refreshed");
       } else {
         this.setState({ catItems: arrayAdd });
-        console.log(cat + " Items Refreshed");
+        // console.log(cat + " Items Refreshed");
       }
       // for (let ind = 0; ind < arrayAdd.length; ind++) {
       //   console.log("catitems=", (arrayAdd[ind]));
@@ -1166,10 +1166,10 @@ class Main extends React.Component {
         changes = true;
       }
 
-      console.log("Tempopacity:", tempOpacity);
-      console.log("BackgroundOpacity:", spData.backgroundOpacity.toString());
-      console.log("Tempopacity1:", tempOpacity1);
-      console.log("CatBackgroundOpacity:", spData.catOpacity.toString());
+      // console.log("Tempopacity:", tempOpacity);
+      // console.log("BackgroundOpacity:", spData.backgroundOpacity.toString());
+      // console.log("Tempopacity1:", tempOpacity1);
+      // console.log("CatBackgroundOpacity:", spData.catOpacity.toString());
 
       if (tempColor !== rgbToHex(spData.backgroundColor)
         || tempOpacity !== spData.backgroundOpacity.toString() || disable1 !== "none") {
@@ -1285,7 +1285,7 @@ class Main extends React.Component {
         }
         changes = true;
       }
-      console.log("CATFirst: " + categoryFirst);
+      // console.log("CATFirst: " + categoryFirst);
       if (categoryFirst !== "none") {
         spData.catFirst = categoryFirst;
         this.setState({
@@ -1428,7 +1428,7 @@ class Main extends React.Component {
       if (cgPos !== "") {
         if (temp5 === tempCatTitle) {
           inPos = parseInt(cgPos) - 1;
-          console.log("Edit inPos: ", inPos, " currPos: ", currPos);
+          // console.log("Edit inPos: ", inPos, " currPos: ", currPos);
           if (temp5 === "Root") {
             rootArrayLength = rootArray.length;
             if (inPos < rootArrayLength && inPos >= 0 /* && inPos !== currPos */) {
@@ -1440,7 +1440,7 @@ class Main extends React.Component {
             }
           } else {
             catArrayLength = catArray.length;
-            console.log("CatItemLength: ", catArrayLength);
+            // console.log("CatItemLength: ", catArrayLength);
             if (inPos < catArrayLength && inPos >= 0 /* && inPos !== currPos */) {
               this.catItemActions(fileImg, "icon", "edit");
             } else {
@@ -1547,11 +1547,11 @@ class Main extends React.Component {
   // CAT ACTIONS
 
   applyCatEdit = () => {
-    console.log("fileIMG: ", fileImg);
-    console.log("temp2: ", temp2);
-    console.log("cgPos: ", cgPos);
-    console.log("blockHide: ", blockHide);
-    console.log("tempItemHide: ", tempItemHide);
+    // console.log("fileIMG: ", fileImg);
+    // console.log("temp2: ", temp2);
+    // console.log("cgPos: ", cgPos);
+    // console.log("blockHide: ", blockHide);
+    // console.log("tempItemHide: ", tempItemHide);
     // if (fileImg !== null || temp2 !== "" || cgPos !== ""
     //   || blockHide !== "none") {
     if (/* FormChanges("catEditForm")[0] */changeFlag) {
@@ -1564,7 +1564,7 @@ class Main extends React.Component {
       }
       if (cgPos !== "") {
         inPos = parseInt(cgPos) - 1;
-        console.log("CAT InPos: ", inPos);
+        // console.log("CAT InPos: ", inPos);
         if (inPos < arrayLength && inPos >= 0 /* && inPos !== currPos && !dup */) {
           if (!dup) {
             this.catItemActions(fileImg, "cat", "edit");
@@ -1888,7 +1888,7 @@ class Main extends React.Component {
         this.setState({
           changed: spData.logoColW
         });
-        setTimeout(() => console.log("changed = ", this.state.changed), 500);
+        // setTimeout(() => console.log("changed = ", this.state.changed), 500);
 
         switch (spData.logoColW) {
           case "col":
@@ -1967,7 +1967,7 @@ class Main extends React.Component {
         this.setState({
           changed: spData.footAddColW
         });
-        setTimeout(() => console.log("changed = ", this.state.changed), 500);
+        // setTimeout(() => console.log("changed = ", this.state.changed), 500);
 
         switch (spData.footAddColW) {
           case "col-md":
@@ -2003,7 +2003,7 @@ class Main extends React.Component {
         this.setState({ addInfoDiaShow: true });
         break;
       case "itemEdit":
-        console.log("CurrPos ", currPos);
+        // console.log("CurrPos ", currPos);
         this.setState({
           cPos: currPos
         })
@@ -2061,7 +2061,7 @@ class Main extends React.Component {
         this.setState({
           changed: spData.clockColW
         });
-        setTimeout(() => console.log("changed = ", this.state.changed), 500);
+        // setTimeout(() => console.log("changed = ", this.state.changed), 500);
 
         switch (spData.clockColW) {
           case "col-md":
@@ -2504,8 +2504,8 @@ class Main extends React.Component {
         })
 
         tempCatTitle = temp5;
-        console.log(" Category: ", tempCatTitle);
-        console.log(" BlockHide: ", blockHide);
+        // console.log(" Category: ", tempCatTitle);
+        // console.log(" BlockHide: ", blockHide);
         tempIcon = array[i].icon;
       }
     }
@@ -2837,15 +2837,15 @@ class Main extends React.Component {
           </div>
           <section className="row">
             {/* VERSIONE */}
-            <div title="SoylentApp v1.6.4"
+            <div title="SoylentApp v1.6.5"
               className="col mt-2 version latoplain d-flex justify-content-end align-items-center"
               onClick={() => window.open("https://github.com/karlellis/SoylentApp")}>
               <b>SoylentApp</b>
             </div>
-            <div title="SoylentApp v1.6.4"
+            <div title="SoylentApp v1.6.5"
               className="col mt-2 version latoplain d-flex justify-content-start align-items-center"
               onClick={() => window.open("https://github.com/karlellis/SoylentApp")}>
-              v1.6.4
+              v1.6.5
             </div>
           </section>
         </div>
