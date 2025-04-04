@@ -2837,15 +2837,15 @@ class Main extends React.Component {
           </div>
           <section className="row">
             {/* VERSIONE */}
-            <div title="SoylentApp v1.6.5"
+            <div title="SoylentApp v1.6.6"
               className="col mt-2 version latoplain d-flex justify-content-end align-items-center"
               onClick={() => window.open("https://github.com/karlellis/SoylentApp")}>
               <b>SoylentApp</b>
             </div>
-            <div title="SoylentApp v1.6.5"
+            <div title="SoylentApp v1.6.6"
               className="col mt-2 version latoplain d-flex justify-content-start align-items-center"
               onClick={() => window.open("https://github.com/karlellis/SoylentApp")}>
-              v1.6.5
+              v1.6.6
             </div>
           </section>
         </div>
