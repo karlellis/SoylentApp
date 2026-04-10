@@ -1,4 +1,20 @@
 <?php
+// ini_set('session.save_path', 'C:\lighttpd\sessions'); // Solo per lighttpd da commentare in produzione
+session_start(); // Fondamentale anche qui!
+
+// Controlla se l'utente è autorizzato
+if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
+    session_write_close(); // Chiudi prima di uscire
+    http_response_code(401);
+    echo json_encode(["status" => "error", "message" => "Non autorizzato!"]);
+    exit;
+}
+
+// 2. RILASCIA IL LOCK QUI! 
+// Questo permette alla fetch successiva (es. fetchUpPHP) di partire
+// mentre questa sta ancora finendo di processare (es. cancellando un file).
+session_write_close(); 
+
 $actual_href = (empty($_SERVER['HTTPS']) ? 'http' : 'https') . "://$_SERVER[HTTP_HOST]";
 
 header("Content-Type: application/json");
@@ -36,7 +52,8 @@ $_POST = array_replace($default2, $_POST);
 $_FILES = array_replace($default, $_FILES);
 $_GET = array_replace($default3, $_GET);
 
-$credentials = json_decode(file_get_contents('../sec/sec.json'), true);
+// Commented to enanche security
+// $credentials = json_decode(file_get_contents('../sec/sec.json'), true);
 
 $response = array();
 if ($_FILES['logo']) {
@@ -233,36 +250,62 @@ if ($_FILES['logo']) {
             );
         }
     }
-} else if ($_POST['credentials']) {
-    $json = $_POST["credentials"];
-    $error = null;
-    if (is_array($_POST) && !empty($_POST["credentials"]["error"])) {
-        $error = $_POST["credentials"]["error"];
-    }
+} else if (isset($_POST['update_credentials'])) {
+    $newUser = $_POST['new_user'];
+    $newPass = $_POST['new_pass'];
 
-    if ($error > 0) {
-        $response = array(
-            "status" => "error",
-            "error" => true,
-            "message" => "Error uploading credentials file!"
-        );
+    // Genera gli hash in modo sicuro sul server
+    $hashedUser = password_hash($newUser, PASSWORD_BCRYPT);
+    $hashedPass = password_hash($newPass, PASSWORD_BCRYPT);
+
+    $newData = array(
+        "user" => $hashedUser,
+        "password" => $hashedPass
+    );
+
+    // Converte in JSON e salva
+    $jsonString = json_encode($newData, JSON_PRETTY_PRINT);
+    
+    if (file_put_contents("../sec/sec.json", $jsonString)) {
+        echo json_encode(["status" => "success", "message" => "CredentialsJsonOk"]);
     } else {
-        //write json to file
-        if (file_put_contents("../sec/sec.json", $json)) {
-            $response = array(
-                "status" => "success",
-                "error" => false,
-                "message" => "CredentialsJsonOk",
-            );
-        } else {
-            $response = array(
-                "status" => "error",
-                "error" => true,
-                "message" => "CredentialsJsonError"
-            );
-        }
+        echo json_encode(["status" => "error", "message" => "CredentialsJsonError"]);
     }
-} else if ($_POST['logo']) {
+    exit;
+} 
+
+// else if ($_POST['credentials']) {
+//     $json = $_POST["credentials"];
+//     $error = null;
+//     if (is_array($_POST) && !empty($_POST["credentials"]["error"])) {
+//         $error = $_POST["credentials"]["error"];
+//     }
+
+//     if ($error > 0) {
+//         $response = array(
+//             "status" => "error",
+//             "error" => true,
+//             "message" => "Error uploading credentials file!"
+//         );
+//     } else {
+//         //write json to file
+//         if (file_put_contents("../sec/sec.json", $json)) {
+//             $response = array(
+//                 "status" => "success",
+//                 "error" => false,
+//                 "message" => "CredentialsJsonOk",
+//             );
+//         } else {
+//             $response = array(
+//                 "status" => "error",
+//                 "error" => true,
+//                 "message" => "CredentialsJsonError"
+//             );
+//         }
+//     }
+// } 
+
+else if ($_POST['logo']) {
     $del_name = $_POST["logo"];
     $error = null;
     if (is_array($_POST) && !empty($_POST["logo"]["error"])) {
@@ -428,14 +471,22 @@ if ($_FILES['logo']) {
         //     );
         // }
     }
-} else if ($_GET) {
-    $response = $credentials;
-} else {
+}
+//  else if ($_GET) {
+//     $response = array(
+//         "status" => "error",
+//         "error" => true,
+//         "message" => "RequestError"
+//     );
+//     // $response = $credentials;
+// } 
+else {
     $response = array(
         "status" => "error",
         "error" => true,
         "message" => "RequestError"
     );
 }
-
+header('Content-Type: application/json');
 echo json_encode($response);
+exit;

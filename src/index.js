@@ -19,11 +19,13 @@ import {
   SettingsGear, Dropdown, DropdownCat, Alert
 } from './methods/simpleComp';
 import {
-  fetchUpPHP, fetchUpConfig, fetchDelPHP, fetchDownCredentials,
-  hashUsrPsw, comparePassword, Orologio, FormChanges
+  fetchUpPHP, fetchUpConfig, fetchDelPHP, Orologio, fetchAuth, updateCredentials
+  // fetchUpPHP, fetchUpConfig, fetchDelPHP, fetchDownCredentials,
+  // hashUsrPsw, comparePassword, Orologio, FormChanges
 } from './methods/functions';
+// import { useRef } from "react";
 
-const bcrypt = require("bcryptjs")
+// const bcrypt = require("bcryptjs")
 var fileImg = null;
 var fileCatImg = null;
 var cgPos = "";
@@ -94,10 +96,11 @@ var CrsNewItem = {
   "link": "",
   "descr": ""
 };
-export var nome = "";
-export var credentials = require("./initSec.json");
-export var spData = require("./initData.json");
-export var changeFlag = false;
+// export var nome = "";
+// export var credentials = require("./initSec.json");
+var spData = require("./initData.json");
+// export var changeFlag = false;
+// const changeFlagRef = useRef(false);
 
 // MAIN
 
@@ -206,6 +209,7 @@ class Main extends React.Component {
         zIndex: "-1"
       }
     }
+    this.changeFlagRef = { current: false };
     this.itemEditDel = this.itemEditDel.bind(this);
     this.addItem = this.addItem.bind(this);
     // this.itemOrCat = this.itemOrCat.bind(this);
@@ -223,162 +227,168 @@ class Main extends React.Component {
     this.loginSession = this.loginSession.bind(this);
   }
 
-  componentDidMount() {
-    fetch('./config/data.json').then(response => {
-      response.json().then(settings => {
-        // console.log(settings);
-        spData = settings;
-        // console.log("Apps: ", settings.items);
+  async componentDidMount() {
+    try {
+      const response = await fetch('./config/data.json');
+      const settings = await response.json();
+      // fetch('./config/data.json').then(response => {
+      // response.json().then(settings => {
+      // console.log(settings);
+      spData = settings;
+      // console.log("Apps: ", settings.items);
+      this.setState({
+        infoShow: spData.infoShow,
+        addInfoShow: spData.addInfoShow,
+        mainBtn: spData.mainBtn,
+        catFirst: spData.catFirst,
+        itemsBtnShow: spData.itemsBtnShow,
+        menuShow: spData.menuShow,
+        titleShow: spData.titleShow,
+        logoShow: spData.logoShow,
+        clockShow: spData.clockShow,
+        items: spData.items,
+        cats: spData.cats,
+        creditsItems: spData.creditsItems,
+        disFieldB: spData.noBackImage,
+        disFieldBC: spData.noCatImage,
+        disFieldT: spData.noFootTitle,
+        disFieldT2: spData.noFootSubtitle,
+        disFieldT3: spData.noFootSubtitle2,
+        disFieldC: spData.noFootAddTitle,
+        disFieldC2: spData.noFootAddSubtitle,
+        disFieldC3: spData.noFootAddSubtitle2,
+        disFieldMS: spData.noMenuSearch,
+        disFieldMC: spData.noMenuCredits
+      });
+      document.title = spData.headTitle;
+      if (!spData.noFootTitle) {
+        document.querySelector('meta[name="description"]').setAttribute("content", spData.footTitle);
+      } else if (!spData.noFootSubtitle) {
+        document.querySelector('meta[name="description"]').setAttribute("content", spData.footSubtitle);
+      } else if (!spData.noFootSubtitle2) {
+        document.querySelector('meta[name="description"]').setAttribute("content", spData.footSubtitle2);
+      }
+      // console.log("BGOpacity:", (1 - spData.backgroundOpacity).toString());
+      if (spData.noBackImage) {
         this.setState({
-          infoShow: spData.infoShow,
-          addInfoShow: spData.addInfoShow,
-          mainBtn: spData.mainBtn,
-          catFirst: spData.catFirst,
-          itemsBtnShow: spData.itemsBtnShow,
-          menuShow: spData.menuShow,
-          titleShow: spData.titleShow,
-          logoShow: spData.logoShow,
-          clockShow: spData.clockShow,
-          items: spData.items,
-          cats: spData.cats,
-          creditsItems: spData.creditsItems,
-          disFieldB: spData.noBackImage,
-          disFieldBC: spData.noCatImage,
-          disFieldT: spData.noFootTitle,
-          disFieldT2: spData.noFootSubtitle,
-          disFieldT3: spData.noFootSubtitle2,
-          disFieldC: spData.noFootAddTitle,
-          disFieldC2: spData.noFootAddSubtitle,
-          disFieldC3: spData.noFootAddSubtitle2,
-          disFieldMS: spData.noMenuSearch,
-          disFieldMC: spData.noMenuCredits
+          backStyle: {
+            backgroundImage: "none",
+            backgroundColor: spData.backgroundColor,
+            backgroundPosition: 'center',
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat',
+            backgroundAttachment: "fixed",
+            position: "fixed",
+            padding: "0",
+            margin: "0",
+            top: "0",
+            left: "0",
+            width: "100%",
+            height: "100%",
+            filter: "brightness(" + spData.backgroundOpacity.toString() + "%)",
+            zIndex: "-1"
+          }
         });
-        document.title = spData.headTitle;
-        if (!spData.noFootTitle) {
-          document.querySelector('meta[name="description"]').setAttribute("content", spData.footTitle);
-        } else if (!spData.noFootSubtitle) {
-          document.querySelector('meta[name="description"]').setAttribute("content", spData.footSubtitle);
-        } else if (!spData.noFootSubtitle2) {
-          document.querySelector('meta[name="description"]').setAttribute("content", spData.footSubtitle2);
-        }
-        // console.log("BGOpacity:", (1 - spData.backgroundOpacity).toString());
-        if (spData.noBackImage) {
-          this.setState({
-            backStyle: {
-              backgroundImage: "none",
-              backgroundColor: spData.backgroundColor,
-              backgroundPosition: 'center',
-              backgroundSize: 'cover',
-              backgroundRepeat: 'no-repeat',
-              backgroundAttachment: "fixed",
-              position: "fixed",
-              padding: "0",
-              margin: "0",
-              top: "0",
-              left: "0",
-              width: "100%",
-              height: "100%",
-              filter: "brightness(" + spData.backgroundOpacity.toString() + "%)",
-              zIndex: "-1"
-            }
-          });
-        } else {
-          this.setState({
-            backStyle: {
-              backgroundImage: "url(" + spData.backgroundImage + ")",
-              backgroundColor: spData.backgroundColor,
-              backgroundPosition: 'center',
-              backgroundSize: 'cover',
-              backgroundRepeat: 'no-repeat',
-              backgroundAttachment: "fixed",
-              position: "fixed",
-              padding: "0",
-              margin: "0",
-              top: "0",
-              left: "0",
-              width: "100%",
-              height: "100%",
-              filter: "brightness(" + spData.backgroundOpacity.toString() + "%)",
-              zIndex: "-1"
-            }
-          });
-        }
-
-        if (spData.noCatImage) {
-          this.setState({
-            catStyle: {
-              backgroundImage: "none",
-              backgroundColor: spData.catColor,
-              backgroundPosition: 'center',
-              backgroundSize: 'cover',
-              backgroundRepeat: 'no-repeat',
-              backgroundAttachment: "fixed",
-              position: "fixed",
-              padding: "0",
-              margin: "0",
-              top: "0",
-              left: "0",
-              width: "100%",
-              height: "100%",
-              opacity: spData.catOpacity.toString(),
-              zIndex: "-1"
-            }
-          });
-        } else {
-          this.setState({
-            catStyle: {
-              backgroundImage: "url(" + spData.catImage + ")",
-              backgroundColor: spData.catColor,
-              backgroundPosition: 'center',
-              backgroundSize: 'cover',
-              backgroundRepeat: 'no-repeat',
-              backgroundAttachment: "fixed",
-              position: "fixed",
-              padding: "0",
-              margin: "0",
-              top: "0",
-              left: "0",
-              width: "100%",
-              height: "100%",
-              opacity: spData.catOpacity.toString(),
-              zIndex: "-1"
-            }
-          });
-        }
-
-        // RESET FORMS TO CURRENT SETTINGS
-        document.getElementById('loginForm').reset();
-        document.getElementById('loginEditForm').reset();
-        document.getElementById('titleForm').reset();
-        document.getElementById('logoForm').reset();
-        document.getElementById('menuForm').reset();
-        document.getElementById('infoForm').reset();
-        document.getElementById('creditForm').reset();
-        document.getElementById('itemEditForm').reset();
-        document.getElementById('itemAddForm').reset();
-        document.getElementById('catEditForm').reset();
-        document.getElementById('catAddForm').reset();
-        document.getElementById('crsEditForm').reset();
-        document.getElementById('crsAddForm').reset();
-        document.getElementById('backEditForm').reset();
-        document.getElementById('clockForm').reset();
-        document.getElementById('searchForm').reset();
-        this.itemCatSel("Root", spData.items);
-        document.addEventListener('click', e => {
-          currElement = document.elementFromPoint(e.clientX, e.clientY).id;
-          this.hideDropdown();
-        }, { passive: true });
-        // console.log("Items: ", this.state.items);
-        // console.log("Root Items: ", this.state.rootItems);
-        // console.log("Check password: ", comparePassword("admin", password));
-        // console.log("Hashed first password: ", hashPassword(password));
-        // console.log("loginColor: ", spData.loginColor);
-      })
-        .catch(error => {
-          window.location.reload(true);
-          console.error("Errore: ", error);
+      } else {
+        this.setState({
+          backStyle: {
+            backgroundImage: "url(" + spData.backgroundImage + ")",
+            backgroundColor: spData.backgroundColor,
+            backgroundPosition: 'center',
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat',
+            backgroundAttachment: "fixed",
+            position: "fixed",
+            padding: "0",
+            margin: "0",
+            top: "0",
+            left: "0",
+            width: "100%",
+            height: "100%",
+            filter: "brightness(" + spData.backgroundOpacity.toString() + "%)",
+            zIndex: "-1"
+          }
         });
-    })
+      }
+
+      if (spData.noCatImage) {
+        this.setState({
+          catStyle: {
+            backgroundImage: "none",
+            backgroundColor: spData.catColor,
+            backgroundPosition: 'center',
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat',
+            backgroundAttachment: "fixed",
+            position: "fixed",
+            padding: "0",
+            margin: "0",
+            top: "0",
+            left: "0",
+            width: "100%",
+            height: "100%",
+            opacity: spData.catOpacity.toString(),
+            zIndex: "-1"
+          }
+        });
+      } else {
+        this.setState({
+          catStyle: {
+            backgroundImage: "url(" + spData.catImage + ")",
+            backgroundColor: spData.catColor,
+            backgroundPosition: 'center',
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat',
+            backgroundAttachment: "fixed",
+            position: "fixed",
+            padding: "0",
+            margin: "0",
+            top: "0",
+            left: "0",
+            width: "100%",
+            height: "100%",
+            opacity: spData.catOpacity.toString(),
+            zIndex: "-1"
+          }
+        });
+      }
+
+      // RESET FORMS TO CURRENT SETTINGS
+      document.getElementById('loginForm').reset();
+      document.getElementById('loginEditForm').reset();
+      document.getElementById('titleForm').reset();
+      document.getElementById('logoForm').reset();
+      document.getElementById('menuForm').reset();
+      document.getElementById('infoForm').reset();
+      document.getElementById('creditForm').reset();
+      document.getElementById('itemEditForm').reset();
+      document.getElementById('itemAddForm').reset();
+      document.getElementById('catEditForm').reset();
+      document.getElementById('catAddForm').reset();
+      document.getElementById('crsEditForm').reset();
+      document.getElementById('crsAddForm').reset();
+      document.getElementById('backEditForm').reset();
+      document.getElementById('clockForm').reset();
+      document.getElementById('searchForm').reset();
+      this.itemCatSel("Root", spData.items);
+      document.addEventListener('click', e => {
+        currElement = document.elementFromPoint(e.clientX, e.clientY).id;
+        this.hideDropdown();
+      }, { passive: true });
+      // console.log("Items: ", this.state.items);
+      // console.log("Root Items: ", this.state.rootItems);
+      // console.log("Check password: ", comparePassword("admin", password));
+      // console.log("Hashed first password: ", hashPassword(password));
+      // console.log("loginColor: ", spData.loginColor);
+      // })
+      // .catch(error => {
+      //   window.location.reload(true);
+      //   console.error("Errore: ", error);
+      // });
+      // })
+    } catch (error) {
+      console.error("Error loading the data:", error);
+    }
   }
 
   componentDidUpdate() {
@@ -388,441 +398,444 @@ class Main extends React.Component {
   }
 
   // POST UTILS
+  async saveConf(file, url, key) {
+    try {
+      const res = await fetchUpConfig(file, url, key);
 
-  saveConf(file, url, key) {
-    fetchUpConfig(file, url, key)
-      .then(res => {
-        console.log("Config Saved!");
-        // REFRESH ALL ITEMS CATEGORY
-        this.state.cats.forEach(element => {
-          if (element.title === tempCatTitle)
-            this.itemCatSel(element.title, spData.items);
-        })
-        // this.itemCatSel(tempCatTitle, spData.items);
-        this.itemCatSel("Root", spData.items);
-        changeFlag = false;
-        // console.log("Save Conf. result=", res);
-        // console.log("SaveTempCat= ", tempCatTitle);
-      });
+      console.log("Config Saved!");
+      // REFRESH ALL ITEMS CATEGORY
+      this.state.cats.forEach(element => {
+        if (element.title === tempCatTitle)
+          this.itemCatSel(element.title, spData.items);
+      })
+      this.itemCatSel("Root", spData.items);
+      // changeFlag = false;
+      this.changeFlagRef.current = false;
+      // console.log("Save Conf. result=", res);
+      // console.log("SaveTempCat= ", tempCatTitle);
+    } catch (err) {
+      console.error("Error saving config:", err);
+    }
   }
 
-  catItemActions(file, url, op) {
-    if (fileImg !== null) {
-      fetchDelPHP(tempIcon, "./api/img-upload.php", url)
-        .then(res => {
-          // console.log("Seems deleted!");
-          // console.log("Delete result=", res);
-        });
+  async catItemActions(file, url, op) {
+    try {
+      if (fileImg !== null) {
+        const res = await fetchDelPHP(tempIcon, "./api/img-upload.php", url);
+        // console.log("Seems deleted!");
+        // console.log("Delete result=", res);
+      }
+      if (fileCatImg !== null) {
+        const resCat = await fetchDelPHP(tempCatIcon, "./api/img-upload.php", url);
+        // console.log("Seems deleted!");
+        // console.log("Delete result=", res);
+      }
+      tempIcon = "";
+      tempCatIcon = "";
+      this.fireAlert("Loading data... Please wait.", "solidblue");
+      // this.setState({
+      //   activityChanged: true
+      // })
 
-    }
-    if (fileCatImg !== null) {
-      fetchDelPHP(tempCatIcon, "./api/img-upload.php", url)
-        .then(res => {
-          // console.log("Seems deleted!");
-          // console.log("Delete result=", res);
-        });
-
-    }
-    tempIcon = "";
-    tempCatIcon = "";
-    this.fireAlert("Loading data... Please wait.", "solidblue");
-    // this.setState({
-    //   activityChanged: true
-    // })
-    fetchUpPHP(file, "./api/img-upload.php", url)
-      .then(res => {
-        if (url === "logo" && op === "edit") {
-          spData.LogoIcon = "./img/" + nome;
-          this.fireAlert("Changes Made!", "solidgreen");
-          // this.setState({
-          //   activityChanged: false
-          // });
-        } else if (url === "icon" && op === "edit") {
-          if (fileImg !== null) {
-            // console.log("Icon edit TEMP4: ", temp4);
-            array[temp].icon = "./itemicons/" + nome;
-          }
-          if (temp2 !== "") {
-            array[temp].title = temp2;
-            tempItemTitle = array[temp].title;
-          }
-          if (temp3 !== "") {
-            array[temp].link = temp3;
-            tempItemLink = array[temp].link;
-          }
-          array[temp].video = temp4;
-          tempItemVideo = temp4;
-
-          // console.log("Actions TempCAT = " + tempCatTitle);
-          array[temp].cat = temp5;
-          // tempCatTitle = temp5;
-
-          // console.log("TempItemDescr = " + temp6);
-          array[temp].descr = temp6;
-          tempItemDescr = temp6;
-
-          array[temp].hideDescr = noDescr;
-          tempHideDescr = noDescr;
-
-          if (blockHide !== "none") {
-            array[temp].hidden = blockHide;
-            tempItemHide = blockHide;
-          }
-          // console.log("SaveImageFile InPos: ", inPos);
-          if (inPos !== "") {
-            let index = 0;
-            if (tempCatTitle !== "Root") {
-              // console.log("tempCatTitle !== Root", inPos);
-              index = this.state.catItems[inPos].id;
-            } else {
-              // console.log("tempCatTitle === Root", inPos);
-              index = this.state.rootItems[inPos].id;
-            }
-            // console.log("Index: ", index);
-            // console.log("temp: ", temp);
-            newItem.icon = array[temp].icon;
-            newItem.title = array[temp].title;
-            newItem.link = array[temp].link;
-            // console.log("TempItemTitle: ", tempItemTitle);
-            newItem.descr = array[temp].descr;
-            newItem.hideDescr = array[temp].hideDescr;
-            newItem.video = array[temp].video;
-            newItem.cat = array[temp].cat;
-            newItem.id = index;
-            newItem.hidden = array[temp].hidden;
-            var noAddArray = [];
-            if (index > temp) {
-              array = this.addAfter(array, index + 1, newItem);
-              for (let i = (index + 1); i < array.length; i++) {
-                (array[i].id)++;
-              }
-              tempIcon = "";
-              array.splice(temp, 1);
-              for (let i = (temp); i < array.length; i++) {
-                (array[i].id)--;
-              }
-              noAddArray = [...array];
-              this.setState({ items: array });
-              spData.items = noAddArray;
-              // console.log("index > temp = ", (index));
-              temp = newItem.id;
-              currPos = index;
-              // this.itemEditDel("itemEdit", newItem.id, (index))
-            } else {
-              array = this.addAfter(array, index, newItem);
-              for (let i = (index + 1); i < array.length; i++) {
-                (array[i].id)++;
-              }
-              tempIcon = "";
-              array.splice(temp + 1, 1);
-              for (let i = (temp + 1); i < array.length; i++) {
-                (array[i].id)--;
-              }
-              noAddArray = [...array];
-              this.setState({ items: array });
-              spData.items = noAddArray;
-              // console.log("Index = ", index);
-              temp = newItem.id;
-              currPos = index;
-              // this.itemEditDel("itemEdit", newItem.id, index)
-            }
-            newItem = {
-              "title": "",
-              "link": "",
-              "icon": "",
-              "descr": "",
-              "hideDescr": true,
-              "video": false,
-              "cat": "",
-              "id": 0,
-              "hidden": false
-            };
-          }
-          inPos = "";
-          cgPos = "";
-          // currPos = "";
-          temp2 = "";
-          temp3 = "";
-
-          // temp4 = tempItemVideo;
-          // temp5 = tempCatTitle;
-          // temp6 = tempItemDescr;
-          // noDescr = tempHideDescr;
-          // blockHide = tempItemHide;
-
-          // temp4 = tempItemVideo;
-          // temp5 = tempCatTitle;
-          // temp6 = "";
-          // noDescr = tempHideDescr;
-          // blockHide = "none";
-          this.fireAlert("Changes Made!", "solidgreen");
-        } else if (url === "icon" && op === "add") {
-          // console.log("Icon add TEMP4: ", temp4);
-          newItem.icon = "./itemicons/" + nome;
-          newItem.title = temp2;
-          newItem.link = temp3;
-          newItem.descr = temp6;
-          newItem.hideDescr = noDescr;
-          newItem.video = temp4;
-          newItem.cat = temp5;
-          if (blockHide !== "none") {
-            newItem.hidden = blockHide;
-          } else {
-            newItem.hidden = false;
-          }
-          let index = 0;
-          // console.log("Insert pos=", (inPos));
-          if (arrayLength !== 0) {
-            if (temp5 !== "Root") {
-              // console.log("tempCatTitle = Cat", inPos);
-              index = this.state.catItems[inPos].id;
-            } else {
-              index = this.state.rootItems[inPos].id;
-            }
-          }
-          newItem.id = index;
-
-          // console.log("Index iD=", (index));
-          tempIcon = "";
-          arrayAdd = this.addAfter(array, index, newItem);
-          for (let i = (index + 1); i < arrayAdd.length; i++) {
-            (arrayAdd[i].id)++;
-          }
-          this.setState({ items: arrayAdd });
-          spData.items = arrayAdd;
-          arrayAdd = [];
-          arrayLength++;
-          inPos = "";
-          temp = "";
-          temp2 = "";
-          temp3 = "";
-          temp4 = "";
-          tempCatTitle = temp5;
-          temp6 = "";
-          blockHide = "none";
-          newItem = {
-            "title": "",
-            "link": "",
-            "icon": "",
-            "descr": "",
-            "hideDescr": true,
-            "video": false,
-            "cat": "",
-            "id": 0,
-            "hidden": false
-          };
-          this.setState({ disFieldIA: true });
-          document.getElementById('itemAddForm').reset();
-          this.fireAlert("Item added!", "solidgreen");
-        } else if (url === "icon" && op === "addlast") {
-          // console.log("Icon addLast TEMP4: ", temp4);
-          newItem.icon = "./itemicons/" + nome;
-          newItem.title = temp2;
-          newItem.link = temp3;
-          newItem.descr = temp6;
-          newItem.hideDescr = noDescr;
-          newItem.video = temp4;
-          newItem.cat = temp5;
-          if (blockHide !== "none") {
-            newItem.hidden = blockHide;
-          } else {
-            newItem.hidden = false;
-          }
-          newItem.id = arrayLength;
-          inPos = arrayLength;
-          // console.log("Pos: ", inPos);
-          tempIcon = "";
-          arrayAdd = this.addAfter(array, inPos, newItem);
-          this.setState({ items: arrayAdd });
-          spData.items = arrayAdd;
-          // console.log("Array: ", array);
-          // console.log("ArrayAdd: ", arrayAdd);
-          // console.log("CatItems: ", spData.items);
-          arrayAdd = [];
-          arrayLength = arrayLength + 1;
-          inPos = "";
-          temp = "";
-          temp2 = "";
-          temp3 = "";
-          temp4 = "";
-          temp5 = tempCatTitle;
-          temp6 = "";
-          blockHide = "none";
-          newItem = {
-            "title": "",
-            "link": "",
-            "icon": "",
-            "descr": "",
-            "hideDescr": true,
-            "video": false,
-            "cat": "",
-            "id": 0,
-            "hidden": false
-          };
-          this.setState({ disFieldIA: true });
-          document.getElementById('itemAddForm').reset();
-          this.fireAlert("Item added!", "solidgreen");
-        } else if (url === "cat" && op === "edit") {
-          if (fileImg !== null) {
-            array[currPos].icon = "./itemicons/" + nome;
-          }
-          if (temp2 !== "") {
-            array[currPos].title = temp2;
-            this.state.items.forEach(element => {
-              if (element.cat === tempCatTitle) {
-                element.cat = temp2;
-              }
-            });
-            tempCatTitle = temp2;
-          }
-          if (blockHide !== "none") {
-            array[currPos].hidden = blockHide;
-            tempItemHide = blockHide;
-          }
-          if (cgPos !== "") {
-            // console.log("CurrPos: ", currPos);
-            // console.log("InPos: ", inPos);
-            catNewItem.icon = array[currPos].icon;
-            catNewItem.title = array[currPos].title;
-            catNewItem.hidden = array[currPos].hidden;
-            if (inPos > currPos) {
-              arrayAdd = this.addAfter(array, inPos + 1, catNewItem);
-              tempIcon = "";
-              arrayAdd.splice(currPos, 1);
-              this.setState({ cats: arrayAdd });
-              spData.cats = arrayAdd;
-            } else {
-              arrayAdd = this.addAfter(array, inPos, catNewItem);
-              tempIcon = "";
-              arrayAdd.splice(currPos + 1, 1);
-              this.setState({ cats: arrayAdd });
-              spData.cats = arrayAdd;
-            }
-          }
-          arrayAdd = [];
-          temp2 = "";
-          inPos = "";
-          cgPos = "";
-          fileImg = null;
-          blockHide = "none";
-          catNewItem = {
-            "title": "",
-            "icon": "",
-            "hidden": false
-          };
-          this.fireAlert("Changes Made!", "solidgreen");
-        } else if (url === "cat" && op === "add") {
-          // console.log("CatAdd in Pos: ", inPos);
-          catNewItem.icon = "./itemicons/" + nome;
-          catNewItem.title = temp2;
-          if (blockHide !== "none") {
-            catNewItem.hidden = blockHide;
-          } else {
-            catNewItem.hidden = false;
-          }
-          tempIcon = "";
-          arrayAdd = this.addAfter(array, inPos, catNewItem);
-          // console.log("Insert pos=", (inPos));
-          this.setState({ cats: arrayAdd });
-          spData.cats = arrayAdd;
-          arrayAdd = [];
-          temp2 = "";
-          temp = "";
-          blockHide = "none";
-          catNewItem = {
-            "title": "",
-            "icon": "",
-            "hidden": false
-          };
-          document.getElementById('catAddForm').reset();
-          this.fireAlert("Cat added!", "solidgreen");
-        } else if (url === "cat" && op === "addlast") {
-          // console.log("CatAddLast...");
-          catNewItem.icon = "./itemicons/" + nome;
-          catNewItem.title = temp2;
-          if (blockHide !== "none") {
-            catNewItem.hidden = blockHide;
-          } else {
-            catNewItem.hidden = false;
-          }
-          // console.log("CatNewItem: ", catNewItem);
-          inPos = array.length;
-          // console.log("Pos: ", inPos);
-          tempIcon = "";
-          arrayAdd = this.addAfter(array, inPos, catNewItem);
-          this.setState({ cats: arrayAdd });
-          spData.cats = arrayAdd;
-          // console.log("Array: ", array);
-          // console.log("ArrayAdd: ", arrayAdd);
-          // console.log("CatItems: ", spData.cats);
-          arrayAdd = [];
-          temp2 = "";
-          inPos = "";
-          blockHide = "none";
-          catNewItem = {
-            "title": "",
-            "icon": "",
-            "hidden": false
-          };
-          document.getElementById('catAddForm').reset();
-          this.fireAlert("Cat added!", "solidgreen");
-        } else if (url === "back" && op === "edit") {
-          spData.backgroundImage = "./img/" + nome;
-          spData.backgroundColor = hexToRgb(tempColor) + ", 1)";
-          this.setState({
-            backStyle: {
-              backgroundImage: "url(" + spData.backgroundImage + ")",
-              backgroundColor: spData.backgroundColor,
-              backgroundPosition: 'center',
-              backgroundSize: 'cover',
-              backgroundRepeat: 'no-repeat',
-              backgroundAttachment: "fixed",
-              position: "fixed",
-              padding: "0",
-              margin: "0",
-              top: "0",
-              left: "0",
-              width: "100%",
-              height: "100%",
-              filter: "brightness(" + spData.backgroundOpacity.toString() + "%)",
-              zIndex: "-1"
-            }
-          });
-          this.fireAlert("Changes Made!", "solidgreen");
-          // this.setState({
-          //   activityChanged: false
-          // });
-        } else if (url === "backcat" && op === "edit") {
-          spData.catImage = "./img/" + nome;
-          spData.catColor = hexToRgb(tempCatColor) + ", 1)";
-          this.setState({
-            catStyle: {
-              backgroundImage: "url(" + spData.catImage + ")",
-              backgroundColor: spData.catColor,
-              backgroundPosition: 'center',
-              backgroundSize: 'cover',
-              backgroundRepeat: 'no-repeat',
-              backgroundAttachment: "fixed",
-              position: "fixed",
-              padding: "0",
-              margin: "0",
-              top: "0",
-              left: "0",
-              width: "100%",
-              height: "100%",
-              opacity: spData.catOpacity.toString(),
-              zIndex: "-1"
-            }
-          });
-          this.fireAlert("Changes Made!", "solidgreen");
-          // this.setState({
-          //   activityChanged: false
-          // });
+      const nome = await fetchUpPHP(file, "./api/img-upload.php", url);
+      console.log("Upload completato, nome file:", nome); // Debug
+      // .then(res => {
+      if (url === "logo" && op === "edit") {
+        spData.LogoIcon = "./img/" + nome;
+        this.fireAlert("Changes Made!", "solidgreen");
+        // this.setState({
+        //   activityChanged: false
+        // });
+      } else if (url === "icon" && op === "edit") {
+        if (fileImg !== null) {
+          // console.log("Icon edit TEMP4: ", temp4);
+          array[temp].icon = "./itemicons/" + nome;
         }
-        this.saveConf(spData, "./api/img-upload.php", "config");
-        fileCatImg = null;
+        if (temp2 !== "") {
+          array[temp].title = temp2;
+          tempItemTitle = array[temp].title;
+        }
+        if (temp3 !== "") {
+          array[temp].link = temp3;
+          tempItemLink = array[temp].link;
+        }
+        array[temp].video = temp4;
+        tempItemVideo = temp4;
+
+        // console.log("Actions TempCAT = " + tempCatTitle);
+        array[temp].cat = temp5;
+        // tempCatTitle = temp5;
+
+        // console.log("TempItemDescr = " + temp6);
+        array[temp].descr = temp6;
+        tempItemDescr = temp6;
+
+        array[temp].hideDescr = noDescr;
+        tempHideDescr = noDescr;
+
+        if (blockHide !== "none") {
+          array[temp].hidden = blockHide;
+          tempItemHide = blockHide;
+        }
+        // console.log("SaveImageFile InPos: ", inPos);
+        if (inPos !== "") {
+          let index = 0;
+          if (tempCatTitle !== "Root") {
+            // console.log("tempCatTitle !== Root", inPos);
+            index = this.state.catItems[inPos].id;
+          } else {
+            // console.log("tempCatTitle === Root", inPos);
+            index = this.state.rootItems[inPos].id;
+          }
+          // console.log("Index: ", index);
+          // console.log("temp: ", temp);
+          newItem.icon = array[temp].icon;
+          newItem.title = array[temp].title;
+          newItem.link = array[temp].link;
+          // console.log("TempItemTitle: ", tempItemTitle);
+          newItem.descr = array[temp].descr;
+          newItem.hideDescr = array[temp].hideDescr;
+          newItem.video = array[temp].video;
+          newItem.cat = array[temp].cat;
+          newItem.id = index;
+          newItem.hidden = array[temp].hidden;
+          var noAddArray = [];
+          if (index > temp) {
+            array = this.addAfter(array, index + 1, newItem);
+            for (let i = (index + 1); i < array.length; i++) {
+              (array[i].id)++;
+            }
+            tempIcon = "";
+            array.splice(temp, 1);
+            for (let i = (temp); i < array.length; i++) {
+              (array[i].id)--;
+            }
+            noAddArray = [...array];
+            this.setState({ items: array });
+            spData.items = noAddArray;
+            // console.log("index > temp = ", (index));
+            temp = newItem.id;
+            currPos = index;
+            // this.itemEditDel("itemEdit", newItem.id, (index))
+          } else {
+            array = this.addAfter(array, index, newItem);
+            for (let i = (index + 1); i < array.length; i++) {
+              (array[i].id)++;
+            }
+            tempIcon = "";
+            array.splice(temp + 1, 1);
+            for (let i = (temp + 1); i < array.length; i++) {
+              (array[i].id)--;
+            }
+            noAddArray = [...array];
+            this.setState({ items: array });
+            spData.items = noAddArray;
+            // console.log("Index = ", index);
+            temp = newItem.id;
+            currPos = index;
+            // this.itemEditDel("itemEdit", newItem.id, index)
+          }
+          newItem = {
+            "title": "",
+            "link": "",
+            "icon": "",
+            "descr": "",
+            "hideDescr": true,
+            "video": false,
+            "cat": "",
+            "id": 0,
+            "hidden": false
+          };
+        }
+        inPos = "";
+        cgPos = "";
+        // currPos = "";
+        temp2 = "";
+        temp3 = "";
+
+        // temp4 = tempItemVideo;
+        // temp5 = tempCatTitle;
+        // temp6 = tempItemDescr;
+        // noDescr = tempHideDescr;
+        // blockHide = tempItemHide;
+
+        // temp4 = tempItemVideo;
+        // temp5 = tempCatTitle;
+        // temp6 = "";
+        // noDescr = tempHideDescr;
+        // blockHide = "none";
+        this.fireAlert("Changes Made!", "solidgreen");
+      } else if (url === "icon" && op === "add") {
+        // console.log("Icon add TEMP4: ", temp4);
+        newItem.icon = "./itemicons/" + nome;
+        newItem.title = temp2;
+        newItem.link = temp3;
+        newItem.descr = temp6;
+        newItem.hideDescr = noDescr;
+        newItem.video = temp4;
+        newItem.cat = temp5;
+        if (blockHide !== "none") {
+          newItem.hidden = blockHide;
+        } else {
+          newItem.hidden = false;
+        }
+        let index = 0;
+        // console.log("Insert pos=", (inPos));
+        if (arrayLength !== 0) {
+          if (temp5 !== "Root") {
+            // console.log("tempCatTitle = Cat", inPos);
+            index = this.state.catItems[inPos].id;
+          } else {
+            index = this.state.rootItems[inPos].id;
+          }
+        }
+        newItem.id = index;
+
+        // console.log("Index iD=", (index));
+        tempIcon = "";
+        arrayAdd = this.addAfter(array, index, newItem);
+        for (let i = (index + 1); i < arrayAdd.length; i++) {
+          (arrayAdd[i].id)++;
+        }
+        this.setState({ items: arrayAdd });
+        spData.items = arrayAdd;
+        arrayAdd = [];
+        arrayLength++;
+        inPos = "";
+        temp = "";
+        temp2 = "";
+        temp3 = "";
+        temp4 = "";
+        tempCatTitle = temp5;
+        temp6 = "";
+        blockHide = "none";
+        newItem = {
+          "title": "",
+          "link": "",
+          "icon": "",
+          "descr": "",
+          "hideDescr": true,
+          "video": false,
+          "cat": "",
+          "id": 0,
+          "hidden": false
+        };
+        this.setState({ disFieldIA: true });
+        document.getElementById('itemAddForm').reset();
+        this.fireAlert("Item added!", "solidgreen");
+      } else if (url === "icon" && op === "addlast") {
+        // console.log("Icon addLast TEMP4: ", temp4);
+        newItem.icon = "./itemicons/" + nome;
+        newItem.title = temp2;
+        newItem.link = temp3;
+        newItem.descr = temp6;
+        newItem.hideDescr = noDescr;
+        newItem.video = temp4;
+        newItem.cat = temp5;
+        if (blockHide !== "none") {
+          newItem.hidden = blockHide;
+        } else {
+          newItem.hidden = false;
+        }
+        newItem.id = arrayLength;
+        inPos = arrayLength;
+        // console.log("Pos: ", inPos);
+        tempIcon = "";
+        arrayAdd = this.addAfter(array, inPos, newItem);
+        this.setState({ items: arrayAdd });
+        spData.items = arrayAdd;
+        // console.log("Array: ", array);
+        // console.log("ArrayAdd: ", arrayAdd);
+        // console.log("CatItems: ", spData.items);
+        arrayAdd = [];
+        arrayLength = arrayLength + 1;
+        inPos = "";
+        temp = "";
+        temp2 = "";
+        temp3 = "";
+        temp4 = "";
+        temp5 = tempCatTitle;
+        temp6 = "";
+        blockHide = "none";
+        newItem = {
+          "title": "",
+          "link": "",
+          "icon": "",
+          "descr": "",
+          "hideDescr": true,
+          "video": false,
+          "cat": "",
+          "id": 0,
+          "hidden": false
+        };
+        this.setState({ disFieldIA: true });
+        document.getElementById('itemAddForm').reset();
+        this.fireAlert("Item added!", "solidgreen");
+      } else if (url === "cat" && op === "edit") {
+        if (fileImg !== null) {
+          array[currPos].icon = "./itemicons/" + nome;
+        }
+        if (temp2 !== "") {
+          array[currPos].title = temp2;
+          this.state.items.forEach(element => {
+            if (element.cat === tempCatTitle) {
+              element.cat = temp2;
+            }
+          });
+          tempCatTitle = temp2;
+        }
+        if (blockHide !== "none") {
+          array[currPos].hidden = blockHide;
+          tempItemHide = blockHide;
+        }
+        if (cgPos !== "") {
+          // console.log("CurrPos: ", currPos);
+          // console.log("InPos: ", inPos);
+          catNewItem.icon = array[currPos].icon;
+          catNewItem.title = array[currPos].title;
+          catNewItem.hidden = array[currPos].hidden;
+          if (inPos > currPos) {
+            arrayAdd = this.addAfter(array, inPos + 1, catNewItem);
+            tempIcon = "";
+            arrayAdd.splice(currPos, 1);
+            this.setState({ cats: arrayAdd });
+            spData.cats = arrayAdd;
+          } else {
+            arrayAdd = this.addAfter(array, inPos, catNewItem);
+            tempIcon = "";
+            arrayAdd.splice(currPos + 1, 1);
+            this.setState({ cats: arrayAdd });
+            spData.cats = arrayAdd;
+          }
+        }
+        arrayAdd = [];
+        temp2 = "";
+        inPos = "";
+        cgPos = "";
         fileImg = null;
-      });
+        blockHide = "none";
+        catNewItem = {
+          "title": "",
+          "icon": "",
+          "hidden": false
+        };
+        this.fireAlert("Changes Made!", "solidgreen");
+      } else if (url === "cat" && op === "add") {
+        // console.log("CatAdd in Pos: ", inPos);
+        catNewItem.icon = "./itemicons/" + nome;
+        catNewItem.title = temp2;
+        if (blockHide !== "none") {
+          catNewItem.hidden = blockHide;
+        } else {
+          catNewItem.hidden = false;
+        }
+        tempIcon = "";
+        arrayAdd = this.addAfter(array, inPos, catNewItem);
+        // console.log("Insert pos=", (inPos));
+        this.setState({ cats: arrayAdd });
+        spData.cats = arrayAdd;
+        arrayAdd = [];
+        temp2 = "";
+        temp = "";
+        blockHide = "none";
+        catNewItem = {
+          "title": "",
+          "icon": "",
+          "hidden": false
+        };
+        document.getElementById('catAddForm').reset();
+        this.fireAlert("Cat added!", "solidgreen");
+      } else if (url === "cat" && op === "addlast") {
+        // console.log("CatAddLast...");
+        catNewItem.icon = "./itemicons/" + nome;
+        catNewItem.title = temp2;
+        if (blockHide !== "none") {
+          catNewItem.hidden = blockHide;
+        } else {
+          catNewItem.hidden = false;
+        }
+        // console.log("CatNewItem: ", catNewItem);
+        inPos = array.length;
+        // console.log("Pos: ", inPos);
+        tempIcon = "";
+        arrayAdd = this.addAfter(array, inPos, catNewItem);
+        this.setState({ cats: arrayAdd });
+        spData.cats = arrayAdd;
+        // console.log("Array: ", array);
+        // console.log("ArrayAdd: ", arrayAdd);
+        // console.log("CatItems: ", spData.cats);
+        arrayAdd = [];
+        temp2 = "";
+        inPos = "";
+        blockHide = "none";
+        catNewItem = {
+          "title": "",
+          "icon": "",
+          "hidden": false
+        };
+        document.getElementById('catAddForm').reset();
+        this.fireAlert("Cat added!", "solidgreen");
+      } else if (url === "back" && op === "edit") {
+        spData.backgroundImage = "./img/" + nome;
+        spData.backgroundColor = hexToRgb(tempColor) + ", 1)";
+        this.setState({
+          backStyle: {
+            backgroundImage: "url(" + spData.backgroundImage + ")",
+            backgroundColor: spData.backgroundColor,
+            backgroundPosition: 'center',
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat',
+            backgroundAttachment: "fixed",
+            position: "fixed",
+            padding: "0",
+            margin: "0",
+            top: "0",
+            left: "0",
+            width: "100%",
+            height: "100%",
+            filter: "brightness(" + spData.backgroundOpacity.toString() + "%)",
+            zIndex: "-1"
+          }
+        });
+        this.fireAlert("Changes Made!", "solidgreen");
+        // this.setState({
+        //   activityChanged: false
+        // });
+      } else if (url === "backcat" && op === "edit") {
+        spData.catImage = "./img/" + nome;
+        spData.catColor = hexToRgb(tempCatColor) + ", 1)";
+        this.setState({
+          catStyle: {
+            backgroundImage: "url(" + spData.catImage + ")",
+            backgroundColor: spData.catColor,
+            backgroundPosition: 'center',
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat',
+            backgroundAttachment: "fixed",
+            position: "fixed",
+            padding: "0",
+            margin: "0",
+            top: "0",
+            left: "0",
+            width: "100%",
+            height: "100%",
+            opacity: spData.catOpacity.toString(),
+            zIndex: "-1"
+          }
+        });
+        this.fireAlert("Changes Made!", "solidgreen");
+        // this.setState({
+        //   activityChanged: false
+        // });
+      }
+      this.saveConf(spData, "./api/img-upload.php", "config");
+      fileCatImg = null;
+      fileImg = null;
+      // });
+    } catch (err) {
+      console.error(err);
+      this.fireAlert("Session expired or server error!", "brick");
+    }
   }
 
   crsActions(url, op) {
@@ -1047,7 +1060,7 @@ class Main extends React.Component {
 
   saveMenu = () => {
     // console.log("FormChanged?: ", FormChanges("menuForm")[0])
-    if (/* FormChanges("menuForm")[0] */changeFlag) {
+    if (/* FormChanges("menuForm")[0] */this.changeFlagRef.current) {
       if (disable1 !== "none") {
         spData.noMenuSearch = disable1;
       }
@@ -1080,7 +1093,7 @@ class Main extends React.Component {
 
   saveTitle = () => {
     // console.log("FormChanged?: ", FormChanges("titleForm")[0])
-    if (/* FormChanges("titleForm")[0] */changeFlag) {
+    if (/* FormChanges("titleForm")[0] */this.changeFlagRef.current) {
       if (temp !== "") {
         spData.headTitle = temp;
       }
@@ -1106,7 +1119,7 @@ class Main extends React.Component {
   }
 
   saveLogo = () => {
-    if (/* FormChanges("logoForm")[0] */changeFlag) {
+    if (/* FormChanges("logoForm")[0] */this.changeFlagRef.current) {
       if (fileImg !== null) {
         tempIcon = spData.LogoIcon;
         this.catItemActions(fileImg, "logo", "edit");
@@ -1137,7 +1150,7 @@ class Main extends React.Component {
   }
 
   saveClock = () => {
-    if (/* FormChanges("clockForm")[0] */changeFlag) {
+    if (/* FormChanges("clockForm")[0] */this.changeFlagRef.current) {
       spData.clockColor = hexToRgb(tempColor) + ", " + tempOpacity + ")";
       spData.clockOpacity = parseFloat(tempOpacity.replace(/,/g, "."));
       spData.clockTextColor = hexToRgb(tempTextColor) + ", 1)";
@@ -1157,7 +1170,7 @@ class Main extends React.Component {
   }
 
   saveBack = () => {
-    if (/* FormChanges("backEditForm")[0] */changeFlag) {
+    if (/* FormChanges("backEditForm")[0] */this.changeFlagRef.current) {
       var changes = false;
 
       if (fileImg !== null) {
@@ -1309,7 +1322,7 @@ class Main extends React.Component {
   }
 
   saveInfo = () => {
-    if (/* FormChanges("infoForm")[0] */changeFlag) {
+    if (/* FormChanges("infoForm")[0] */this.changeFlagRef.current) {
       if (disable1 !== "none") {
         spData.noFootTitle = disable1;
       }
@@ -1353,7 +1366,7 @@ class Main extends React.Component {
   }
 
   saveAddInfo = () => {
-    if (/* FormChanges("creditForm")[0] */changeFlag) {
+    if (/* FormChanges("creditForm")[0] */this.changeFlagRef.current) {
       if (disable1 !== "none") {
         spData.noFootAddTitle = disable1;
       }
@@ -1424,7 +1437,7 @@ class Main extends React.Component {
     // if (fileImg !== null || temp2 !== "" || temp3 !== "" || temp4 !== tempItemVideo ||
     //   temp5 !== tempCatTitle || temp6 !== tempItemDescr || cgPos !== "" ||
     //   blockHide !== tempItemHide) {
-    if (/* FormChanges("itemEditForm")[0] || temp5 !== tempCatTitle || */ changeFlag) {
+    if (/* FormChanges("itemEditForm")[0] || temp5 !== tempCatTitle || */ this.changeFlagRef.current) {
       if (cgPos !== "") {
         if (temp5 === tempCatTitle) {
           inPos = parseInt(cgPos) - 1;
@@ -1554,7 +1567,7 @@ class Main extends React.Component {
     // console.log("tempItemHide: ", tempItemHide);
     // if (fileImg !== null || temp2 !== "" || cgPos !== ""
     //   || blockHide !== "none") {
-    if (/* FormChanges("catEditForm")[0] */changeFlag) {
+    if (/* FormChanges("catEditForm")[0] */this.changeFlagRef.current) {
       let dup = false;
       for (let i = 0; i < arrayLength; i++) {
         if (array[i].title.toLowerCase() === temp2.toLowerCase()) {
@@ -1655,7 +1668,7 @@ class Main extends React.Component {
   // CREDITS ACTIONS
 
   applyCrsEdit = () => {
-    if (/* FormChanges("crsEditForm")[0] */changeFlag) {
+    if (/* FormChanges("crsEditForm")[0] */this.changeFlagRef.current) {
       // if (temp2 !== tempCrsTitle || temp3 !== tempCrsLink || temp4 !== tempCrsDescr || cgPos !== "") {
       if (cgPos !== "") {
         inPos = parseInt(cgPos) - 1;
@@ -1750,79 +1763,173 @@ class Main extends React.Component {
     if (login === false) {
       this.showModal("login");
       this.userInput.focus();
-      fetchDownCredentials("./api/img-upload.php", credentials);
+      // fetchDownCredentials("./api/img-upload.php", credentials);
     } else {
       this.showMainButtons();
     }
   }
 
-  loginCheck = () => {
+  loginCheck = async () => {
+    const formData = new FormData();
+    formData.append('action', 'login');
+    formData.append('username', usrTmp);
+    formData.append('password', pswTmp);
     // console.log("Login User: " + usrTmp);
     // console.log("Login Psw: " + pswTmp);
-    comparePassword(pswTmp, credentials.password, bcrypt)
-      .then(pass => {
-        comparePassword(usrTmp, credentials.user, bcrypt)
-          .then(user => {
-            // console.log("PassResult: ", pass)
-            // console.log("UserResult: ", user)
-            if (user && pass && login === false) {
-              login = true;
-              usrTmp = "";
-              pswTmp = "";
-              this.showMainButtons();
-              this.hideModal("login");
-            } else {
-              // if (!user) {
-              // console.log("WRONG User: " + usrTmp);
-              // }
-              // if (!pass) {
-              // console.log("WRONG Psw: " + pswTmp)
-              // }
-              this.fireAlert("Wrong user name or password!", "brick");
-              login = false;
-            }
-          })
-      })
-      .catch(err => {
-        console.log(err)
-      })
+
+    try {
+      const data = await fetchAuth("./api/login.php", formData);
+      if (data.authenticated) {
+        login = true;
+        this.showMainButtons();
+        this.hideModal("login");
+      } else {
+        this.fireAlert("Access denied!", "brick");
+      }
+    } catch (err) {
+      console.error("Errore server:", err);
+    }
+
+    // fetch("./api/login.php", {
+    //   method: "POST",
+    //   body: formData,
+    //   credentials: 'include'
+    // })
+    //   .then(res => res.json())
+    //   .then(data => {
+    //     if (data.authenticated) {
+    //       login = true;
+    //       this.showMainButtons();
+    //       this.hideModal("login");
+    //     } else {
+    //       this.fireAlert("Accesso negato!", "brick");
+    //     }
+    //   })
+    //   .catch(err => console.error("Errore server:", err));
   }
 
-  loginEditCheck = () => {
-    if (/* FormChanges("loginEditForm")[0] */changeFlag) {
-      if (usrTmp !== "" || pswTmp !== "") {
-        // console.log("User: " + usrTmp)
-        // console.log("Psw: " + pswTmp)
-        spData.loginColor = hexToRgb(tempColor) + ", " + tempOpacity + ")";
-        spData.loginOpacity = parseFloat(tempOpacity.replace(/,/g, "."));
-        hashUsrPsw(usrTmp, pswTmp, bcrypt)
-          .then(result => {
-            // console.log(result)
-            credentials.user = result[0];
-            // console.log("User: " + usrTmp)
-            // console.log("UserHash: " + spData.user)
-            credentials.password = result[1];
-            // console.log("Psw: " + pswTmp)
-            // console.log("PswHash: " + spData.password)
-            this.saveConf(credentials, "./api/img-upload.php", "credentials");
-            usrTmp = "";
-            pswTmp = "";
-            this.saveConf(spData, "./api/img-upload.php", "config");
-            this.fireAlert("Username and password changed successfully!", "solidgreen");
-          })
-          .catch(err => {
-            console.log(err)
-          })
-      } else {
-        spData.loginColor = hexToRgb(tempColor) + ", " + tempOpacity + ")";
-        spData.loginOpacity = parseFloat(tempOpacity.replace(/,/g, "."));
-        this.saveConf(spData, "./api/img-upload.php", "config");
+  // loginCheck = () => {
+  //   // console.log("Login User: " + usrTmp);
+  //   // console.log("Login Psw: " + pswTmp);
+  //   comparePassword(pswTmp, credentials.password, bcrypt)
+  //     .then(pass => {
+  //       comparePassword(usrTmp, credentials.user, bcrypt)
+  //         .then(user => {
+  //           // console.log("PassResult: ", pass)
+  //           // console.log("UserResult: ", user)
+  //           if (user && pass && login === false) {
+  //             login = true;
+  //             usrTmp = "";
+  //             pswTmp = "";
+  //             this.showMainButtons();
+  //             this.hideModal("login");
+  //           } else {
+  //             // if (!user) {
+  //             // console.log("WRONG User: " + usrTmp);
+  //             // }
+  //             // if (!pass) {
+  //             // console.log("WRONG Psw: " + pswTmp)
+  //             // }
+  //             this.fireAlert("Wrong user name or password!", "brick");
+  //             login = false;
+  //           }
+  //         })
+  //     })
+  //     .catch(err => {
+  //       console.log(err)
+  //     })
+  // }
+
+  loginEditCheck = async () => {
+    if (/* FormChanges("loginEditForm")[0] */this.changeFlagRef.current) {
+      spData.loginColor = hexToRgb(tempColor) + ", " + tempOpacity + ")";
+      spData.loginOpacity = parseFloat(tempOpacity.replace(/,/g, "."));
+
+      // if (usrTmp !== "" || pswTmp !== "") {
+      //   // console.log("User: " + usrTmp)
+      //   // console.log("Psw: " + pswTmp)
+      //   // spData.loginColor = hexToRgb(tempColor) + ", " + tempOpacity + ")";
+      //   // spData.loginOpacity = parseFloat(tempOpacity.replace(/,/g, "."));
+      //   const formData = new FormData();
+      //   formData.append('update_credentials', 'true');
+      //   formData.append('new_user', usrTmp); // In chiaro
+      //   formData.append('new_pass', pswTmp); // In chiaro
+
+      //   fetch("./api/img-upload.php", {
+      //     method: "POST",
+      //     body: formData,
+      //     credentials: 'include'
+      //   })
+      //     .then(res => res.json())
+      //     .then(data => {
+      //       if (data.status === "success") {
+      //         this.fireAlert("Credenziali aggiornate!", "solidgreen");
+      //         usrTmp = ""; pswTmp = "";
+      //       }
+      //     });
+      // } else {
+      //   spData.loginColor = hexToRgb(tempColor) + ", " + tempOpacity + ")";
+      //   spData.loginOpacity = parseFloat(tempOpacity.replace(/,/g, "."));
+      //   this.saveConf(spData, "./api/img-upload.php", "config");
+      //   this.fireAlert("Changes Made!", "solidgreen");
+      // }
+      try {
+        // Se l'utente ha compilato i campi per cambiare user/psw
+        if (usrTmp !== "" || pswTmp !== "") {
+          const data = await updateCredentials(usrTmp, pswTmp, "./api/img-upload.php");
+          if (data.status === "success") {
+            this.fireAlert("Credentials updated!", "solidgreen");
+            usrTmp = ""; pswTmp = "";
+          }
+        }
+
+        // Salva sempre anche la config (colori, ecc.)
+        await fetchUpConfig(spData, "./api/img-upload.php", "config");
         this.fireAlert("Changes Made!", "solidgreen");
+
+      } catch (err) {
+        this.fireAlert("Session expired or server error!", "brick");
       }
     } else {
       this.fireAlert("No changes made!", "solidblue");
     }
   }
+
+  // loginEditCheck = () => {
+  //   if (/* FormChanges("loginEditForm")[0] */changeFlag) {
+  //     if (usrTmp !== "" || pswTmp !== "") {
+  //       // console.log("User: " + usrTmp)
+  //       // console.log("Psw: " + pswTmp)
+  //       spData.loginColor = hexToRgb(tempColor) + ", " + tempOpacity + ")";
+  //       spData.loginOpacity = parseFloat(tempOpacity.replace(/,/g, "."));
+  //       hashUsrPsw(usrTmp, pswTmp, bcrypt)
+  //         .then(result => {
+  //           // console.log(result)
+  //           credentials.user = result[0];
+  //           // console.log("User: " + usrTmp)
+  //           // console.log("UserHash: " + spData.user)
+  //           credentials.password = result[1];
+  //           // console.log("Psw: " + pswTmp)
+  //           // console.log("PswHash: " + spData.password)
+  //           this.saveConf(credentials, "./api/img-upload.php", "credentials");
+  //           usrTmp = "";
+  //           pswTmp = "";
+  //           this.saveConf(spData, "./api/img-upload.php", "config");
+  //           this.fireAlert("Username and password changed successfully!", "solidgreen");
+  //         })
+  //         .catch(err => {
+  //           console.log(err)
+  //         })
+  //     } else {
+  //       spData.loginColor = hexToRgb(tempColor) + ", " + tempOpacity + ")";
+  //       spData.loginOpacity = parseFloat(tempOpacity.replace(/,/g, "."));
+  //       this.saveConf(spData, "./api/img-upload.php", "config");
+  //       this.fireAlert("Changes Made!", "solidgreen");
+  //     }
+  //   } else {
+  //     this.fireAlert("No changes made!", "solidblue");
+  //   }
+  // }
 
   // SHOW MODALS
 
@@ -2328,7 +2435,8 @@ class Main extends React.Component {
     temp4 = "";
     fileCatImg = null;
     fileImg = null;
-    changeFlag = false;
+    this.changeFlagRef.current = false;
+    // changeFlag = false;
     // To Fix Search Button Enable after Video Play
 
     // this.setState({
@@ -2591,7 +2699,8 @@ class Main extends React.Component {
     })
     console.log("CatName: ", temp5);
     this.itemCatSel(catName, spData.items);
-    changeFlag = true;
+    this.changeFlagRef.current = true;
+    // changeFlag = true;
   }
 
   search() {
@@ -2648,7 +2757,7 @@ class Main extends React.Component {
     let menuButtons = (
       <>
         <Dropdown search={this.search} crsShow={() => this.showModal("exCrs")}
-          refresh={this.state.refresh} drpIsOpen={dropDownIsOpen} oClickDrpIO={() => dropDownIsOpen = !dropDownIsOpen} />
+          refresh={this.state.refresh} drpIsOpen={dropDownIsOpen} oClickDrpIO={() => dropDownIsOpen = !dropDownIsOpen} spData={spData}/>
       </>
     );
 
@@ -2658,11 +2767,11 @@ class Main extends React.Component {
         oClickDrpIO={() => catDropDownIsOpen = !catDropDownIsOpen} />
     )
 
-    let aCatMenuButtons = (
-      <DropdownCat items={this.state.cats} catName={this.state.catSel} id="addCatMenuButton"
-        setCat={this.setCat} refresh={this.state.refresh} drpIsOpen={catDropDownIsOpen}
-        oClickDrpIO={() => catDropDownIsOpen = !catDropDownIsOpen} />
-    )
+    // let aCatMenuButtons = (
+    //   <DropdownCat items={this.state.cats} catName={this.state.catSel} id="addCatMenuButton"
+    //     setCat={this.setCat} refresh={this.state.refresh} drpIsOpen={catDropDownIsOpen}
+    //     oClickDrpIO={() => catDropDownIsOpen = !catDropDownIsOpen} />
+    // )
 
     // PAGE HEAD
 
@@ -2692,7 +2801,7 @@ class Main extends React.Component {
             </Element>
             {/* LOGO */}
             <Element eleShow={this.state.logoShow} mainBtn={this.state.mainBtn} id="HeadLogo" sfondo={spData.logoColor} colore="white" z={""} colW={spData.logoColW}>
-              <ImgElement type={"logo"} />
+              <ImgElement type={"logo"} spData={spData}/>
               <EditElement editEleShow={this.state.mainBtn} hidden={spData.logoShow}>
                 <button className="col latowhite flexbutton solidgreen m-1" onClick={() => this.showModal("logo")}>
                   Edit Logo
@@ -2837,15 +2946,15 @@ class Main extends React.Component {
           </div>
           <section className="row">
             {/* VERSIONE */}
-            <div title="SoylentApp v1.6.6"
+            <div title="SoylentApp v1.7.0"
               className="col mt-2 version latoplain d-flex justify-content-end align-items-center"
               onClick={() => window.open("https://github.com/karlellis/SoylentApp")}>
               <b>SoylentApp</b>
             </div>
-            <div title="SoylentApp v1.6.6"
+            <div title="SoylentApp v1.7.0"
               className="col mt-2 version latoplain d-flex justify-content-start align-items-center"
               onClick={() => window.open("https://github.com/karlellis/SoylentApp")}>
-              v1.6.6
+              v1.7.0
             </div>
           </section>
         </div>
@@ -2858,7 +2967,7 @@ class Main extends React.Component {
       <>
         <noscript>You need to enable JavaScript to run this app.</noscript>
         <div style={this.state.backStyle}></div>
-        <div class="contenitore">
+        <div className="contenitore">
           <section>
             {/* LOGIN DIALOG */}
             <EleDialog mainTheme="modal-main" footTheme="modal-footer" hideMidBtn={true} hideApply={false} hideClose={false}
@@ -2926,7 +3035,8 @@ class Main extends React.Component {
                               <input type="text" className="form-control border-0"
                                 ref={(input) => { this.userChangeInput = input; }} onChange={e => {
                                   usrTmp = e.target.value;
-                                  changeFlag = true;
+                                  this.changeFlagRef.current = true;
+                                  // changeFlag = true;
                                 }} autocomplete="off" />
                             </div>
                           </div>
@@ -2944,7 +3054,8 @@ class Main extends React.Component {
                             <div className="col d-flex flex-column justify-content-center align-items-center">
                               <input type="password" autocomplete="new-password" className="form-control border-0" onChange={e => {
                                 pswTmp = e.target.value;
-                                changeFlag = true;
+                                this.changeFlagRef.current = true;
+                                // changeFlag = true;
                               }} />
                             </div>
                           </div>
@@ -2955,10 +3066,10 @@ class Main extends React.Component {
                     <div className="form-group">
                       <div className="row mb-1 m-auto">
                         <InputBackColor bcLabel="Back color" backColor={spData.loginColor}
-                          rgbToHex={rgbToHex} tempo={e => tempColor = e.target.value}></InputBackColor>
+                          rgbToHex={rgbToHex} tempo={e => tempColor = e.target.value} changeFlagRef={this.changeFlagRef}></InputBackColor>
                       </div>
                     </div>
-                    <InputOpacity opacity={spData.loginOpacity} id="loginOpRange" tempo={e => tempOpacity = e.target.value}></InputOpacity>
+                    <InputOpacity opacity={spData.loginOpacity} id="loginOpRange" tempo={e => tempOpacity = e.target.value} changeFlagRef={this.changeFlagRef}></InputOpacity>
                     <Alert alertShow={this.state.alertShow} alertMsg={this.state.alertMsg} alertCol={this.state.alertCol}></Alert>
                   </form>
                 </div>
@@ -2991,7 +3102,7 @@ class Main extends React.Component {
                       }}
                       title={spData.menuSearchLabel}
                       hideSwitch={spData.noMenuSearch}
-                      tempo={e => temp = e.target.value}>
+                      tempo={e => temp = e.target.value} changeFlagRef={this.changeFlagRef}>
                     </InputInfos>
                     {/* Credit */}
                     <InputInfos label="Credits"
@@ -3011,16 +3122,16 @@ class Main extends React.Component {
                       }}
                       title={spData.menuCreditsLabel}
                       hideSwitch={spData.noMenuCredits}
-                      tempo={e => temp2 = e.target.value}>
+                      tempo={e => temp2 = e.target.value} changeFlagRef={this.changeFlagRef}>
                     </InputInfos>
                     {/* Back color */}
                     <div className="form-group">
                       <div className="row mb-1 m-auto">
                         <InputBackColor bcLabel="Back color" backColor={spData.menuColor}
-                          rgbToHex={rgbToHex} tempo={e => tempColor = e.target.value}></InputBackColor>
+                          rgbToHex={rgbToHex} tempo={e => tempColor = e.target.value} changeFlagRef={this.changeFlagRef}></InputBackColor>
                       </div>
                     </div>
-                    <InputOpacity opacity={spData.menuOpacity} id="menuOpRange" tempo={e => tempOpacity = e.target.value}></InputOpacity>
+                    <InputOpacity opacity={spData.menuOpacity} id="menuOpRange" tempo={e => tempOpacity = e.target.value} changeFlagRef={this.changeFlagRef}></InputOpacity>
                     <InputHideBlocks hideSwitch={spData.menuShow}
                       switchClick={e => {
                         if (spData.menuShow === false) {
@@ -3028,7 +3139,7 @@ class Main extends React.Component {
                         } else {
                           blockHide = false;
                         }
-                      }}>
+                      }} changeFlagRef={this.changeFlagRef}>
                     </InputHideBlocks>
                     <Alert alertShow={this.state.alertShow} alertMsg={this.state.alertMsg} alertCol={this.state.alertCol}></Alert>
                   </form>
@@ -3046,23 +3157,23 @@ class Main extends React.Component {
                 <div className="modal-body">
                   <form id="titleForm" onKeyDown={this.handleKeyDown}>
                     <InputTitle label="Name" edit="Edit Item" tempTitle={spData.headTitle}
-                      tempo={e => temp = e.target.value} >
+                      tempo={e => temp = e.target.value} changeFlagRef={this.changeFlagRef}>
                     </InputTitle>
                     <InputWidth idAuto="headColAuto" idCol1="headCol1" idCol2="headCol2" idCol3="headCol3" idCol4="headCol4" idCol5="headCol5"
                       valAuto="col" valCol1="col-1" valCol2="col-2" valCol3="col-3" valCol4="col-4" valCol5="col-5"
-                      tempoColW={e => { tempColW = e.target.value; }} tColW={this.state.changed}>
+                      tempoColW={e => { tempColW = e.target.value; }} tColW={this.state.changed} changeFlagRef={this.changeFlagRef}>
                     </InputWidth>
                     <div className="form-group">
                       <div className="row mb-1 m-auto">
                         <InputBackColor bcLabel="Back color" backColor={spData.headColor}
-                          rgbToHex={rgbToHex} tempo={e => tempColor = e.target.value}></InputBackColor>
+                          rgbToHex={rgbToHex} tempo={e => tempColor = e.target.value} changeFlagRef={this.changeFlagRef}></InputBackColor>
                         <div className="col-1"></div>
                         <InputTextColor textColor={spData.headTextColor} rgbToHex={rgbToHex}
-                          tempo={e => { tempTextColor = e.target.value; }}>
+                          tempo={e => { tempTextColor = e.target.value; }} changeFlagRef={this.changeFlagRef}>
                         </InputTextColor>
                       </div>
                     </div>
-                    <InputOpacity opacity={spData.headOpacity} id="titleOpRange" tempo={e => tempOpacity = e.target.value}></InputOpacity>
+                    <InputOpacity opacity={spData.headOpacity} id="titleOpRange" tempo={e => tempOpacity = e.target.value} changeFlagRef={this.changeFlagRef}></InputOpacity>
                     <InputHideBlocks hideSwitch={spData.titleShow}
                       switchClick={e => {
                         if (spData.titleShow === false) {
@@ -3070,7 +3181,7 @@ class Main extends React.Component {
                         } else {
                           blockHide = false;
                         }
-                      }}>
+                      }} changeFlagRef={this.changeFlagRef}>
                     </InputHideBlocks>
                     <Alert alertShow={this.state.alertShow} alertMsg={this.state.alertMsg} alertCol={this.state.alertCol}></Alert>
                   </form>
@@ -3089,20 +3200,20 @@ class Main extends React.Component {
                   <form id="clockForm">
                     <InputWidth idAuto="clockColAuto" idCol1="clockCol1" idCol2="clockCol2" idCol3="clockCol3" idCol4="clockCol4" idCol5="clockCol5"
                       valAuto="col-md" valCol1="col-md-1" valCol2="col-md-2" valCol3="col-md-3" valCol4="col-md-4" valCol5="col-md-5"
-                      tempoColW={e => { tempColW = e.target.value; }} tColW={this.state.changed}>
+                      tempoColW={e => { tempColW = e.target.value; }} tColW={this.state.changed} changeFlagRef={this.changeFlagRef}>
                     </InputWidth>
                     {/* Back & Text colors */}
                     <div className="form-group">
                       <div className="row mb-1 m-auto">
                         <InputBackColor bcLabel="Back color" backColor={spData.clockColor}
-                          rgbToHex={rgbToHex} tempo={e => tempColor = e.target.value}></InputBackColor>
+                          rgbToHex={rgbToHex} tempo={e => tempColor = e.target.value} changeFlagRef={this.changeFlagRef}></InputBackColor>
                         <div className="col-1"></div>
                         <InputTextColor textColor={spData.clockTextColor} rgbToHex={rgbToHex}
-                          tempo={e => { tempTextColor = e.target.value; }}>
+                          tempo={e => { tempTextColor = e.target.value; }} changeFlagRef={this.changeFlagRef}>
                         </InputTextColor>
                       </div>
                     </div>
-                    <InputOpacity opacity={spData.clockOpacity} id="clockOpRange" tempo={e => tempOpacity = e.target.value}></InputOpacity>
+                    <InputOpacity opacity={spData.clockOpacity} id="clockOpRange" tempo={e => tempOpacity = e.target.value} changeFlagRef={this.changeFlagRef}></InputOpacity>
                     <InputHideBlocks hideSwitch={spData.clockShow}
                       switchClick={e => {
                         if (spData.clockShow === false) {
@@ -3110,7 +3221,7 @@ class Main extends React.Component {
                         } else {
                           blockHide = false;
                         }
-                      }}>
+                      }} changeFlagRef={this.changeFlagRef}>
                     </InputHideBlocks>
                     <Alert alertShow={this.state.alertShow} alertMsg={this.state.alertMsg} alertCol={this.state.alertCol}></Alert>
                   </form>
@@ -3126,19 +3237,19 @@ class Main extends React.Component {
                 <ModalTitle title="Edit Logo"></ModalTitle>
                 <div className="modal-body">
                   <form id="logoForm">
-                    <InputFile fileIn={e => { fileImg = e.target.files[0]; }}></InputFile>
+                    <InputFile fileIn={e => { fileImg = e.target.files[0]; }} changeFlagRef={this.changeFlagRef}></InputFile>
                     <InputWidth idAuto="logoColAuto" idCol1="logoCol1" idCol2="logoCol2" idCol3="logoCol3" idCol4="logoCol4" idCol5="logoCol5"
                       valAuto="col" valCol1="col-1" valCol2="col-2" valCol3="col-3" valCol4="col-4" valCol5="col-5"
-                      tempoColW={e => { tempColW = e.target.value; }} tColW={this.state.changed}>
+                      tempoColW={e => { tempColW = e.target.value; }} tColW={this.state.changed} changeFlagRef={this.changeFlagRef}>
                     </InputWidth>
                     {/* Back color */}
                     <div className="form-group">
                       <div className="row mb-1 m-auto">
                         <InputBackColor bcLabel="Back color" backColor={spData.logoColor}
-                          rgbToHex={rgbToHex} tempo={e => tempColor = e.target.value}></InputBackColor>
+                          rgbToHex={rgbToHex} tempo={e => tempColor = e.target.value} changeFlagRef={this.changeFlagRef}></InputBackColor>
                       </div>
                     </div>
-                    <InputOpacity opacity={spData.logoOpacity} id="logoOpRange" tempo={e => tempOpacity = e.target.value}></InputOpacity>
+                    <InputOpacity opacity={spData.logoOpacity} id="logoOpRange" tempo={e => tempOpacity = e.target.value} changeFlagRef={this.changeFlagRef}></InputOpacity>
                     <InputHideBlocks hideSwitch={spData.logoShow}
                       switchClick={e => {
                         if (spData.logoShow === false) {
@@ -3146,7 +3257,7 @@ class Main extends React.Component {
                         } else {
                           blockHide = false;
                         }
-                      }}>
+                      }} changeFlagRef={this.changeFlagRef}>
                     </InputHideBlocks>
                     <Alert alertShow={this.state.alertShow} alertMsg={this.state.alertMsg} alertCol={this.state.alertCol}></Alert>
                   </form>
@@ -3179,7 +3290,7 @@ class Main extends React.Component {
                       }}
                       title={spData.footTitle}
                       hideSwitch={spData.noFootTitle}
-                      tempo={e => temp = e.target.value}>
+                      tempo={e => temp = e.target.value} changeFlagRef={this.changeFlagRef}>
                     </InputInfos>
                     <InputInfos label="Info #2"
                       disField={disFieldT2}
@@ -3198,7 +3309,7 @@ class Main extends React.Component {
                       }}
                       title={spData.footSubtitle}
                       hideSwitch={spData.noFootSubtitle}
-                      tempo={e => temp2 = e.target.value}>
+                      tempo={e => temp2 = e.target.value} changeFlagRef={this.changeFlagRef}>
                     </InputInfos>
                     <InputInfos label="Info #3"
                       disField={disFieldT3}
@@ -3217,23 +3328,23 @@ class Main extends React.Component {
                       }}
                       title={spData.footSubtitle2}
                       hideSwitch={spData.noFootSubtitle2}
-                      tempo={e => temp3 = e.target.value}>
+                      tempo={e => temp3 = e.target.value} changeFlagRef={this.changeFlagRef}>
                     </InputInfos>
                     <InputWidth idAuto="infoColAuto" idCol1="infoCol1" idCol2="infoCol2" idCol3="infoCol3" idCol4="infoCol4" idCol5="infoCol5"
                       valAuto="col" valCol1="col-1" valCol2="col-2" valCol3="col-3" valCol4="col-4" valCol5="col-5"
-                      tempoColW={e => { tempColW = e.target.value; }} tColW={this.state.changed}>
+                      tempoColW={e => { tempColW = e.target.value; }} tColW={this.state.changed} changeFlagRef={this.changeFlagRef}>
                     </InputWidth>
                     <div className="form-group">
                       <div className="row mb-1 m-auto">
                         <InputBackColor bcLabel="Back color" backColor={spData.footInfoColor}
-                          rgbToHex={rgbToHex} tempo={e => tempColor = e.target.value}></InputBackColor>
+                          rgbToHex={rgbToHex} tempo={e => tempColor = e.target.value} changeFlagRef={this.changeFlagRef}></InputBackColor>
                         <div className="col-1"></div>
                         <InputTextColor textColor={spData.footInfoTextColor} rgbToHex={rgbToHex}
-                          tempo={e => { tempTextColor = e.target.value; }}>
+                          tempo={e => { tempTextColor = e.target.value; }} changeFlagRef={this.changeFlagRef}>
                         </InputTextColor>
                       </div>
                     </div>
-                    <InputOpacity opacity={spData.footInfoOpacity} id="infoOpRange" tempo={e => tempOpacity = e.target.value}></InputOpacity>
+                    <InputOpacity opacity={spData.footInfoOpacity} id="infoOpRange" tempo={e => tempOpacity = e.target.value} changeFlagRef={this.changeFlagRef}></InputOpacity>
                     <InputHideBlocks hideSwitch={spData.infoShow}
                       switchClick={e => {
                         if (spData.infoShow === false) {
@@ -3241,7 +3352,7 @@ class Main extends React.Component {
                         } else {
                           blockHide = false;
                         }
-                      }}>
+                      }} changeFlagRef={this.changeFlagRef}>
                     </InputHideBlocks>
                     <Alert alertShow={this.state.alertShow} alertMsg={this.state.alertMsg} alertCol={this.state.alertCol}></Alert>
                   </form>
@@ -3274,7 +3385,7 @@ class Main extends React.Component {
                       }}
                       title={spData.footAddTitle}
                       hideSwitch={spData.noFootAddTitle}
-                      tempo={e => temp = e.target.value}>
+                      tempo={e => temp = e.target.value} changeFlagRef={this.changeFlagRef}>
                     </InputInfos>
                     <InputInfos label="Add Info #2"
                       disField={disFieldC2}
@@ -3293,7 +3404,7 @@ class Main extends React.Component {
                       }}
                       title={spData.footAddSubtitle}
                       hideSwitch={spData.noFootAddSubtitle}
-                      tempo={e => temp2 = e.target.value}>
+                      tempo={e => temp2 = e.target.value} changeFlagRef={this.changeFlagRef}>
                     </InputInfos>
                     <InputInfos label="Add Info #3"
                       disField={disFieldC3}
@@ -3312,23 +3423,23 @@ class Main extends React.Component {
                       }}
                       title={spData.footAddSubtitle2}
                       hideSwitch={spData.noFootAddSubtitle2}
-                      tempo={e => temp3 = e.target.value}>
+                      tempo={e => temp3 = e.target.value} changeFlagRef={this.changeFlagRef}>
                     </InputInfos>
                     <InputWidth idAuto="addInfoColAuto" idCol1="addInfoCol1" idCol2="addInfoCol2" idCol3="addInfoCol3" idCol4="addInfoCol4" idCol5="addInfoCol5"
                       valAuto="col-md" valCol1="col-md-1" valCol2="col-md-2" valCol3="col-md-3" valCol4="col-md-4" valCol5="col-md-5"
-                      tempoColW={e => { tempColW = e.target.value; }} tColW={this.state.changed}>
+                      tempoColW={e => { tempColW = e.target.value; }} tColW={this.state.changed} changeFlagRef={this.changeFlagRef}>
                     </InputWidth>
                     <div className="form-group">
                       <div className="row mb-1 m-auto">
                         <InputBackColor bcLabel="Back color" backColor={spData.footAddColor}
-                          rgbToHex={rgbToHex} tempo={e => tempColor = e.target.value}></InputBackColor>
+                          rgbToHex={rgbToHex} tempo={e => tempColor = e.target.value} changeFlagRef={this.changeFlagRef}></InputBackColor>
                         <div className="col-1"></div>
                         <InputTextColor textColor={spData.footAddTextColor} rgbToHex={rgbToHex}
-                          tempo={e => { tempTextColor = e.target.value; }}>
+                          tempo={e => { tempTextColor = e.target.value; }} changeFlagRef={this.changeFlagRef}>
                         </InputTextColor>
                       </div>
                     </div>
-                    <InputOpacity opacity={spData.footAddOpacity} id="addInfoOpRange" tempo={e => tempOpacity = e.target.value}></InputOpacity>
+                    <InputOpacity opacity={spData.footAddOpacity} id="addInfoOpRange" tempo={e => tempOpacity = e.target.value} changeFlagRef={this.changeFlagRef}></InputOpacity>
                     <InputHideBlocks hideSwitch={spData.addInfoShow}
                       switchClick={e => {
                         if (spData.addInfoShow === false) {
@@ -3336,7 +3447,7 @@ class Main extends React.Component {
                         } else {
                           blockHide = false;
                         }
-                      }}>
+                      }} changeFlagRef={this.changeFlagRef}>
                     </InputHideBlocks>
                     <Alert alertShow={this.state.alertShow} alertMsg={this.state.alertMsg} alertCol={this.state.alertCol}></Alert>
                   </form>
@@ -3364,12 +3475,13 @@ class Main extends React.Component {
                               <input type="file" disabled={disFieldB} id="files" className="form-control boxs border-0" name="icon"
                                 onChange={e => {
                                   fileImg = e.target.files[0];
-                                  changeFlag = true;
+                                  this.changeFlagRef.current = true;
+                                  // changeFlag = true;
                                 }} />
                             </div>
 
                             <div className="col-2 border d-flex flex-column justify-content-center align-items-center">
-                              <label class="switch">
+                              <label className="switch">
                                 <input type="checkbox" className="form-control" defaultChecked={spData.noBackImage} onClick={e => {
                                   if (this.state.disFieldB === false) {
                                     this.setState({
@@ -3382,9 +3494,10 @@ class Main extends React.Component {
                                     });
                                     disable1 = false;
                                   };
-                                  changeFlag = true;
+                                  this.changeFlagRef.current = true;
+                                  // changeFlag = true;
                                 }} />
-                                <span class="slider round" title="No image"></span>
+                                <span className="slider round" title="No image"></span>
                               </label>
                             </div>
 
@@ -3404,11 +3517,12 @@ class Main extends React.Component {
                               <input type="file" disabled={disFieldBC} id="catfiles" className="form-control boxs border-0" name="icon"
                                 onChange={e => {
                                   fileCatImg = e.target.files[0];
-                                  changeFlag = true;
+                                  this.changeFlagRef.current = true;
+                                  // changeFlag = true;
                                 }} />
                             </div>
                             <div className="col-2 border d-flex flex-column justify-content-center align-items-center">
-                              <label class="switch">
+                              <label className="switch">
                                 <input type="checkbox" className="form-control" defaultChecked={spData.noCatImage} onClick={e => {
                                   if (this.state.disFieldBC === false) {
                                     this.setState({
@@ -3421,9 +3535,10 @@ class Main extends React.Component {
                                     });
                                     disable2 = false;
                                   };
-                                  changeFlag = true;
+                                  this.changeFlagRef.current = true;
+                                  // changeFlag = true;
                                 }} />
-                                <span class="slider round" title="No image"></span>
+                                <span className="slider round" title="No image"></span>
                               </label>
                             </div>
                           </div>
@@ -3434,7 +3549,7 @@ class Main extends React.Component {
                     <div className="form-group">
                       <div className="row mb-1 m-auto">
                         <InputBackColor bcLabel="Main back color" backColor={spData.backgroundColor}
-                          rgbToHex={rgbToHex} tempo={e => tempColor = e.target.value}></InputBackColor>
+                          rgbToHex={rgbToHex} tempo={e => tempColor = e.target.value} changeFlagRef={this.changeFlagRef}></InputBackColor>
                       </div>
                     </div>
                     {/* MAIN BRIGHTNESS */}
@@ -3456,7 +3571,8 @@ class Main extends React.Component {
                                   <input type="range" className="form-range border-0 p-0" min="0" max="200" step="10" list="tickmarks" defaultValue={spData.backgroundOpacity} id="backOpRange"
                                     onChange={e => {
                                       tempOpacity = e.target.value;
-                                      changeFlag = true;
+                                      this.changeFlagRef.current = true;
+                                      // changeFlag = true;
                                     }} >
                                   </input>
                                   <datalist id="tickmarks">
@@ -3482,11 +3598,11 @@ class Main extends React.Component {
                     <div className="form-group">
                       <div className="row mb-1 m-auto">
                         <InputBackColor bcLabel="Cat/Credit back color" backColor={spData.catColor}
-                          rgbToHex={rgbToHex} tempo={e => tempCatColor = e.target.value}></InputBackColor>
+                          rgbToHex={rgbToHex} tempo={e => tempCatColor = e.target.value} changeFlagRef={this.changeFlagRef}></InputBackColor>
                       </div>
                     </div>
                     {/* CAT BACK OPACITY */}
-                    <InputOpacity opacity={spData.catOpacity} id="catOpRange" tempo={e => tempOpacity1 = e.target.value}></InputOpacity>
+                    <InputOpacity opacity={spData.catOpacity} id="catOpRange" tempo={e => tempOpacity1 = e.target.value} changeFlagRef={this.changeFlagRef}></InputOpacity>
                     {/* CAT BEFORE ITEMS */}
                     <InputSwitch hSwitch={spData.catFirst}
                       dSwitch={e => {
@@ -3496,7 +3612,7 @@ class Main extends React.Component {
                           categoryFirst = false;
                         }
                       }}
-                      swLabel={"Category before Items"}>
+                      swLabel={"Category before Items"} changeFlagRef={this.changeFlagRef}>
                     </InputSwitch>
                     <Alert alertShow={this.state.alertShow} alertMsg={this.state.alertMsg} alertCol={this.state.alertCol}></Alert>
                   </form>
@@ -3539,15 +3655,15 @@ class Main extends React.Component {
                 <ModalTitle title="Edit Item"></ModalTitle>
                 <div className="modal-body">
                   <form id="itemEditForm">
-                    <InputFile fileIn={e => { fileImg = e.target.files[0]; }} ></InputFile>
+                    <InputFile fileIn={e => { fileImg = e.target.files[0]; }} changeFlagRef={this.changeFlagRef} ></InputFile>
                     <InputPosition edit="Edit Item" pos={this.state.cPos}
-                      tempo={e => { cgPos = e.target.value; }} id="clearitemswitchpos" >
+                      tempo={e => { cgPos = e.target.value; }} id="clearitemswitchpos" changeFlagRef={this.changeFlagRef} >
                     </InputPosition>
                     <InputTitle label="Title" edit="Edit Item" tempTitle={tempItemTitle}
-                      tempo={e => temp2 = e.target.value} >
+                      tempo={e => temp2 = e.target.value} changeFlagRef={this.changeFlagRef}>
                     </InputTitle>
                     <InputLink edit="Edit Item" tempLink={tempItemLink}
-                      tempo={e => { temp3 = e.target.value; }} >
+                      tempo={e => { temp3 = e.target.value; }} changeFlagRef={this.changeFlagRef}>
                     </InputLink>
                     {/* Descr. */}
                     <InputInfos label="Descr."
@@ -3571,7 +3687,7 @@ class Main extends React.Component {
                       tempo={e => {
                         temp6 = e.target.value
                         // changeFlag = true;
-                      }}>
+                      }} changeFlagRef={this.changeFlagRef}>
                     </InputInfos>
                     <InputVideo tmpVideo={tempItemVideo}
                       tempo={e => {
@@ -3581,7 +3697,7 @@ class Main extends React.Component {
                           temp4 = false;
                         }
                         // changeFlag = true;
-                      }}>
+                      }} changeFlagRef={this.changeFlagRef}>
                     </InputVideo>
                     <InputSwitch hSwitch={tempItemHide}
                       dSwitch={e => {
@@ -3592,7 +3708,7 @@ class Main extends React.Component {
                         }
                         // changeFlag = true;
                       }}
-                      swLabel={"Hide"}>
+                      swLabel={"Hide"} changeFlagRef={this.changeFlagRef}>
                     </InputSwitch>
                     {/* Category */}
                     <InputCat catMenuB={eCatMenuButtons}></InputCat>
@@ -3610,18 +3726,18 @@ class Main extends React.Component {
                 <ModalTitle title="Add Item"></ModalTitle>
                 <div className="modal-body">
                   <form id="itemAddForm">
-                    <InputFile fileIn={e => { fileImg = e.target.files[0]; }} ></InputFile>
+                    <InputFile fileIn={e => { fileImg = e.target.files[0]; }} changeFlagRef={this.changeFlagRef}></InputFile>
                     {/* Position */}
                     <InputPosition edit="Add Item" pos={currPos}
-                      tempo={e => { temp = e.target.value; }} id="clearitempos" >
+                      tempo={e => { temp = e.target.value; }} id="clearitempos" changeFlagRef={this.changeFlagRef}>
                     </InputPosition>
                     {/* Title */}
                     <InputTitle label="Title" edit="Add Item" id="clearitemtitle"
-                      tempo={e => temp2 = e.target.value}>
+                      tempo={e => temp2 = e.target.value} changeFlagRef={this.changeFlagRef}>
                     </InputTitle>
                     {/* Link */}
                     <InputLink edit="Add Item" id="clearitemlink"
-                      tempo={e => { temp3 = e.target.value; }}>
+                      tempo={e => { temp3 = e.target.value; }} changeFlagRef={this.changeFlagRef}>
                     </InputLink>
                     {/* Descr. */}
                     <InputInfos label="Descr."
@@ -3642,7 +3758,7 @@ class Main extends React.Component {
                       title=""
                       hideSwitch={noDescr}
                       tempo={e => temp6 = e.target.value}
-                      id="clearitemdescr">
+                      id="clearitemdescr" changeFlagRef={this.changeFlagRef}>
                     </InputInfos>
                     {/* Video */}
                     <InputVideo tmpVideo={tempItemVideo}
@@ -3652,7 +3768,7 @@ class Main extends React.Component {
                         } else {
                           temp4 = false;
                         }
-                      }}>
+                      }} changeFlagRef={this.changeFlagRef}>
                     </InputVideo>
                     {/* Hide */}
                     <InputSwitch hSwitch={tempItemHide}
@@ -3663,7 +3779,7 @@ class Main extends React.Component {
                           blockHide = false;
                         }
                       }}
-                      swLabel={"Hide"}>
+                      swLabel={"Hide"} changeFlagRef={this.changeFlagRef}>
                     </InputSwitch>
                     {/* Category */}
                     <div className="form-group">
@@ -3711,12 +3827,12 @@ class Main extends React.Component {
                 <ModalTitle title="Edit Category"></ModalTitle>
                 <div className="modal-body">
                   <form id="catEditForm">
-                    <InputFile fileIn={e => { fileImg = e.target.files[0]; }}></InputFile>
+                    <InputFile fileIn={e => { fileImg = e.target.files[0]; }} changeFlagRef={this.changeFlagRef}></InputFile>
                     <InputPosition edit="Edit Item" pos={currPos}
-                      tempo={e => { cgPos = e.target.value; }} id="clearcatswitchpos" >
+                      tempo={e => { cgPos = e.target.value; }} id="clearcatswitchpos" changeFlagRef={this.changeFlagRef}>
                     </InputPosition>
                     <InputTitle label="Title" edit="Edit Item" tempTitle={tempCatTitle}
-                      tempo={e => temp2 = e.target.value}>
+                      tempo={e => temp2 = e.target.value} changeFlagRef={this.changeFlagRef}>
                     </InputTitle>
                     <InputSwitch hSwitch={tempItemHide}
                       dSwitch={e => {
@@ -3726,7 +3842,7 @@ class Main extends React.Component {
                           blockHide = false;
                         }
                       }}
-                      swLabel={"Hide"}>
+                      swLabel={"Hide"} changeFlagRef={this.changeFlagRef}>
                     </InputSwitch>
                     <Alert alertShow={this.state.alertShow} alertMsg={this.state.alertMsg} alertCol={this.state.alertCol}></Alert>
                   </form>
@@ -3742,12 +3858,12 @@ class Main extends React.Component {
                 <ModalTitle title="Add Category"></ModalTitle>
                 <div className="modal-body">
                   <form id="catAddForm">
-                    <InputFile fileIn={e => { fileImg = e.target.files[0]; }}></InputFile>
+                    <InputFile fileIn={e => { fileImg = e.target.files[0]; }} changeFlagRef={this.changeFlagRef}></InputFile>
                     <InputPosition edit="Add Item" id="clearcatpos"
-                      tempo={e => { temp = e.target.value; }}>
+                      tempo={e => { temp = e.target.value; }} changeFlagRef={this.changeFlagRef}>
                     </InputPosition>
                     <InputTitle label="Title" edit="Add Item" id="clearcattitle"
-                      tempo={e => temp2 = e.target.value}>
+                      tempo={e => temp2 = e.target.value} changeFlagRef={this.changeFlagRef}>
                     </InputTitle>
                     <InputSwitch hSwitch={tempItemHide}
                       dSwitch={e => {
@@ -3757,7 +3873,7 @@ class Main extends React.Component {
                           blockHide = false;
                         }
                       }}
-                      swLabel={"Hide"}>
+                      swLabel={"Hide"} changeFlagRef={this.changeFlagRef}>
                     </InputSwitch>
                     <Alert alertShow={this.state.alertShow} alertMsg={this.state.alertMsg}
                       alertCol={this.state.alertCol}></Alert>
@@ -3823,17 +3939,17 @@ class Main extends React.Component {
                 <div className="modal-body">
                   <form id="crsAddForm">
                     <InputPosition edit="Add Item" id="clearcrspos"
-                      tempo={e => { temp = e.target.value; }}>
+                      tempo={e => { temp = e.target.value; }} changeFlagRef={this.changeFlagRef}>
                     </InputPosition>
                     <InputTitle label="Title" edit="Add Item" id="clearcrstitle"
-                      tempo={e => temp2 = e.target.value}>
+                      tempo={e => temp2 = e.target.value} changeFlagRef={this.changeFlagRef}>
                     </InputTitle>
                     <InputLink edit="Add Item" id="clearcrslink"
-                      tempo={e => { temp3 = e.target.value; }}>
+                      tempo={e => { temp3 = e.target.value; }} changeFlagRef={this.changeFlagRef}>
                     </InputLink>
                     {/* Descr. */}
                     <InputTitle label="Descr." edit="Add Item" tempTitle={tempItemTitle} id="clearcrsdescr"
-                      tempo={e => temp4 = e.target.value}>
+                      tempo={e => temp4 = e.target.value} changeFlagRef={this.changeFlagRef}>
                     </InputTitle>
                     <Alert alertShow={this.state.alertShow} alertMsg={this.state.alertMsg} alertCol={this.state.alertCol}></Alert>
                   </form>
@@ -3850,16 +3966,16 @@ class Main extends React.Component {
                 <div className="modal-body">
                   <form id="crsEditForm">
                     <InputPosition edit="Edit Item" pos={currPos} id="clearcrsswitchpos"
-                      tempo={e => { cgPos = e.target.value; }}>
+                      tempo={e => { cgPos = e.target.value; }} changeFlagRef={this.changeFlagRef}>
                     </InputPosition>
                     <InputTitle label="Title" edit="Edit Item" tempTitle={tempCrsTitle}
-                      tempo={e => temp2 = e.target.value}>
+                      tempo={e => temp2 = e.target.value} changeFlagRef={this.changeFlagRef}>
                     </InputTitle>
                     <InputLink edit="Edit Item" tempLink={tempCrsLink}
-                      tempo={e => { temp3 = e.target.value; }}>
+                      tempo={e => { temp3 = e.target.value; }} changeFlagRef={this.changeFlagRef}>
                     </InputLink>
                     <InputTitle label="Descr." edit="Edit Item" tempTitle={tempCrsDescr}
-                      tempo={e => temp4 = e.target.value}>
+                      tempo={e => temp4 = e.target.value} changeFlagRef={this.changeFlagRef}>
                     </InputTitle>
                     <Alert alertShow={this.state.alertShow} alertMsg={this.state.alertMsg} alertCol={this.state.alertCol}></Alert>
                   </form>
@@ -3917,7 +4033,7 @@ class Main extends React.Component {
                   <div className="col">
                     <div className="row">
                       <div className="col-md-3 mb-1 d-flex flex-column justify-content-center align-items-center">
-                        <ImgElement type={"overlay"}></ImgElement>
+                        <ImgElement type={"overlay"} spData={spData}></ImgElement>
                       </div>
                       <div className="col-md latotitle d-flex flex-column justify-content-center align-items-center">
                         <center>"{tempItemTitle}"</center>
@@ -3944,7 +4060,7 @@ class Main extends React.Component {
                 </div>
                 <div className="modal-body align-items-center darkBG">
                   <center>
-                    <iframe id="myvideo" class="iframeStyle"
+                    <iframe id="myvideo" className="iframeStyle"
                       src={this.state.videoLink} frameborder="0"
                       allowfullscreen="true" title="videoFrame">
                     </iframe>
