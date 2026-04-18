@@ -28,15 +28,15 @@ To update to a new release:
 - img
 - itemicons
 - sec
-3) Delete and replace all the remaining folders and files with the ones that come with the new release:
+3) Delete all the remaining folders and files.
+4) Replace the deleted folders and files with the ones that come with the new release:
 - api
-- static
-- asset-manifest.json
+- asset
 - index.html
 - manifest.json
 - robots.txt
 - .htaccess
-4) Refresh the page. Update is complete.
+5) Refresh the page. Update is complete.
 
 Follow the [/public/doc](https://github.com/karlellis/SoylentApp/tree/master/public/doc) for more details.
 
