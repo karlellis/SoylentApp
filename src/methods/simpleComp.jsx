@@ -1,11 +1,9 @@
-// import { spData, changeFlag } from '../';
-// import { changeFlag } from '../';
 export const ImgElement = ({ type, spData }) => {
   let imma = "";
   switch (type) {
     case "overlay":
       imma = (
-        <img className="overlay" alt="Overlay" src={spData.LogoIcon} />
+        <img className="overlay" alt="Overlay" src={spData.LogoIcon || null} />
       )
       break;
     case "redPoint":
@@ -22,7 +20,7 @@ export const ImgElement = ({ type, spData }) => {
       break;
     case "logo":
       imma = (
-        <img className="logo mt-2 mb-2" title="Home" alt="Logo" src={spData.LogoIcon}
+        <img className="logo mt-2 mb-2" title="Home" alt="Logo" src={spData.LogoIcon || null}
           onClick={() => window.location.href = spData.homeLink} />
       );
       break;
@@ -45,7 +43,7 @@ export const ModalTitle = ({ title }) => {
   )
 }
 
-export const InputFile = ({ fileIn, changeFlagRef}) => {
+export const InputFile = ({ fileIn, changeFlagRef }) => {
   const handleChange = (event) => {
     fileIn(event);
     // Assign your variable here
@@ -332,7 +330,7 @@ export const InputTextColor = ({ textColor, rgbToHex, tempo, changeFlagRef }) =>
   )
 }
 
-export const InputOpacity = ({ opacity, id, tempo, changeFlagRef }) => {
+export const InputOpacity = ({ opacity, id, tempo, changeFlagRef, dialog }) => {
   const handleChange = (event) => {
     tempo(event);
     // Assign your variable here
@@ -345,7 +343,10 @@ export const InputOpacity = ({ opacity, id, tempo, changeFlagRef }) => {
         <div className="col">
           <div className="row border">
             <div className="col pt-1 pb-1 p-0 latomenu d-flex flex-column justify-content-center align-items-center">
-              <label>Opacity</label>
+              <label>
+                {dialog === "main" ? "Cat/Credit opacity" : "Opacity"}
+              </label>
+              {/* <label>Opacity</label> */}
             </div>
             <div className="col d-flex flex-column justify-content-center align-items-center p-0">
               <div className="row" style={{ width: "100%" }}>

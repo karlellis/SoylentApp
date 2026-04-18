@@ -1,4 +1,3 @@
-// import { nome, credentials } from '../';
 import { useState, useEffect } from 'react';
 
 // Funzione base interna per gestire la sessione

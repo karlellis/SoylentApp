@@ -1,19 +1,17 @@
 <?php
-// ini_set('session.save_path', 'C:\lighttpd\sessions'); // Solo per lighttpd da commentare in produzione
-session_start(); // Fondamentale anche qui!
+// ini_set('session.save_path', 'C:\lighttpd\sessions'); // Just for lighttpd (comment for production)
+session_start(); // for login session
 
-// Controlla se l'utente è autorizzato
+// Check if the user is authenticated
 if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
-    session_write_close(); // Chiudi prima di uscire
+    session_write_close(); // Close before leave
     http_response_code(401);
-    echo json_encode(["status" => "error", "message" => "Non autorizzato!"]);
+    echo json_encode(["status" => "error", "message" => "Access denied!"]);
     exit;
 }
 
-// 2. RILASCIA IL LOCK QUI! 
-// Questo permette alla fetch successiva (es. fetchUpPHP) di partire
-// mentre questa sta ancora finendo di processare (es. cancellando un file).
-session_write_close(); 
+// Release the LOCK! 
+session_write_close();
 
 $actual_href = (empty($_SERVER['HTTPS']) ? 'http' : 'https') . "://$_SERVER[HTTP_HOST]";
 
@@ -52,9 +50,6 @@ $_POST = array_replace($default2, $_POST);
 $_FILES = array_replace($default, $_FILES);
 $_GET = array_replace($default3, $_GET);
 
-// Commented to enanche security
-// $credentials = json_decode(file_get_contents('../sec/sec.json'), true);
-
 $response = array();
 if ($_FILES['logo']) {
     $upload_dir = '../img/';
@@ -72,7 +67,6 @@ if ($_FILES['logo']) {
         $no_sp_name = preg_replace('/\s+/', '-', $logo_name);
         $random_name = rand(1000, 1000000) . "-" . $no_sp_name;
         $upload_name = $upload_dir . $random_name;
-        // $upload_name = preg_replace('/\s+/', '-', $upload_name);
 
         if (move_uploaded_file($logo_tmp_name, $upload_name)) {
             $response = array(
@@ -105,7 +99,6 @@ if ($_FILES['logo']) {
         $no_sp_name = preg_replace('/\s+/', '-', $back_name);
         $random_name = rand(1000, 1000000) . "-" . $no_sp_name;
         $upload_name = $upload_dir . $random_name;
-        // $upload_name = preg_replace('/\s+/', '-', $upload_name);
 
         if (move_uploaded_file($back_tmp_name, $upload_name)) {
             $response = array(
@@ -254,7 +247,7 @@ if ($_FILES['logo']) {
     $newUser = $_POST['new_user'];
     $newPass = $_POST['new_pass'];
 
-    // Genera gli hash in modo sicuro sul server
+    // Generates the hash on the server
     $hashedUser = password_hash($newUser, PASSWORD_BCRYPT);
     $hashedPass = password_hash($newPass, PASSWORD_BCRYPT);
 
@@ -263,49 +256,16 @@ if ($_FILES['logo']) {
         "password" => $hashedPass
     );
 
-    // Converte in JSON e salva
+    // convert in JSON and save
     $jsonString = json_encode($newData, JSON_PRETTY_PRINT);
-    
+
     if (file_put_contents("../sec/sec.json", $jsonString)) {
         echo json_encode(["status" => "success", "message" => "CredentialsJsonOk"]);
     } else {
         echo json_encode(["status" => "error", "message" => "CredentialsJsonError"]);
     }
     exit;
-} 
-
-// else if ($_POST['credentials']) {
-//     $json = $_POST["credentials"];
-//     $error = null;
-//     if (is_array($_POST) && !empty($_POST["credentials"]["error"])) {
-//         $error = $_POST["credentials"]["error"];
-//     }
-
-//     if ($error > 0) {
-//         $response = array(
-//             "status" => "error",
-//             "error" => true,
-//             "message" => "Error uploading credentials file!"
-//         );
-//     } else {
-//         //write json to file
-//         if (file_put_contents("../sec/sec.json", $json)) {
-//             $response = array(
-//                 "status" => "success",
-//                 "error" => false,
-//                 "message" => "CredentialsJsonOk",
-//             );
-//         } else {
-//             $response = array(
-//                 "status" => "error",
-//                 "error" => true,
-//                 "message" => "CredentialsJsonError"
-//             );
-//         }
-//     }
-// } 
-
-else if ($_POST['logo']) {
+} else if ($_POST['logo']) {
     $del_name = $_POST["logo"];
     $error = null;
     if (is_array($_POST) && !empty($_POST["logo"]["error"])) {
@@ -416,19 +376,6 @@ else if ($_POST['logo']) {
             $response = json_decode($data);
             // echo 'File not found!';
         }
-        // if (unlink("." . $del_name)) {
-        //     $response = array(
-        //         "status" => "success",
-        //         "error" => false,
-        //         "message" => "IconDeleteOk",
-        //     );
-        // } else {
-        //     $response = array(
-        //         "status" => "error",
-        //         "error" => true,
-        //         "message" => "IconDeleteError"
-        //     );
-        // }
     }
 } else if ($_POST['icon']) {
     $del_name = $_POST["icon"];
@@ -457,30 +404,8 @@ else if ($_POST['logo']) {
             $response = json_decode($data);
             // echo 'File not found!';
         }
-        // if (unlink("." . $del_name)) {
-        //     $response = array(
-        //         "status" => "success",
-        //         "error" => false,
-        //         "message" => "IconDeleteOk",
-        //     );
-        // } else {
-        //     $response = array(
-        //         "status" => "error",
-        //         "error" => true,
-        //         "message" => "IconDeleteError"
-        //     );
-        // }
     }
-}
-//  else if ($_GET) {
-//     $response = array(
-//         "status" => "error",
-//         "error" => true,
-//         "message" => "RequestError"
-//     );
-//     // $response = $credentials;
-// } 
-else {
+} else {
     $response = array(
         "status" => "error",
         "error" => true,

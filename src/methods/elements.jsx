@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ImgElement } from '../methods/simpleComp';
+import { ImgElement } from './simpleComp';
 
 export const Item = ({ showItemsBtn, pos, id, title, link, descr, hideDescr, icon, video,
     hidden, cat, itemEditDel, itemVideo, itemHide }) => {
